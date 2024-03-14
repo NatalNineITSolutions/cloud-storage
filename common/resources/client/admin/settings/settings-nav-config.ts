@@ -11,7 +11,6 @@ export interface SettingsNavItem {
 
 const filteredSettingsNavConfig: (SettingsNavItem | false)[] = [
   {label: message('General'), to: 'general'},
-  ...AppSettingsNavConfig,
   getBootstrapData().settings.billing.integrated && {
     label: message('Subscriptions'),
     to: 'subscriptions',
@@ -24,23 +23,6 @@ const filteredSettingsNavConfig: (SettingsNavItem | false)[] = [
   {label: message('Uploading'), to: 'uploading'},
   {label: message('Outgoing email'), to: 'outgoing-email'},
   {label: message('Cache'), to: 'cache'},
-  {label: message('Analytics'), to: 'analytics'},
-  {label: message('Logging'), to: 'logging'},
-  {label: message('Queue'), to: 'queue'},
-  {label: message('Recaptcha'), to: 'recaptcha'},
-  {label: message('GDPR'), to: 'gdpr'},
-  {
-    label: message('Menus'),
-    to: '/admin/appearance/menus',
-  },
-  {
-    label: message('Seo'),
-    to: '/admin/appearance/seo-settings',
-  },
-  {
-    label: message('Themes'),
-    to: '/admin/appearance/themes',
-  },
 ].filter(Boolean);
 
 export const SettingsNavConfig = filteredSettingsNavConfig as SettingsNavItem[];
