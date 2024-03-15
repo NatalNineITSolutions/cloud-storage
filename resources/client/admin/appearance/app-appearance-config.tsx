@@ -16,59 +16,7 @@ export const AppAppearanceConfig: IAppearanceConfig = {
     navigationRoutes: ['s', 'drive'],
   },
   sections: {
-    'landing-page': {
-      label: message('Landing Page'),
-      position: 1,
-      previewRoute: '/',
-      routes: [
-        {path: 'landing-page', element: <LandingPageSectionGeneral />},
-        {
-          path: 'landing-page/action-buttons',
-          element: <LandingPageSectionActionButtons />,
-        },
-        {
-          path: 'landing-page/primary-features',
-          element: <LandingPageSectionPrimaryFeatures />,
-        },
-        {
-          path: 'landing-page/secondary-features',
-          element: <LandingPageSecondaryFeatures />,
-        },
-      ],
-      buildBreadcrumb: (pathname, formValue) => {
-        const parts = pathname.split('/').filter(p => !!p);
-        const sectionName = parts.pop();
-        // admin/appearance
-        const breadcrumb: AppearanceEditorBreadcrumbItem[] = [
-          {
-            label: message('Landing page'),
-            location: 'landing-page',
-          },
-        ];
-        if (sectionName === 'action-buttons') {
-          breadcrumb.push({
-            label: message('Action buttons'),
-            location: 'landing-page/action-buttons',
-          });
-        }
-
-        if (sectionName === 'primary-features') {
-          breadcrumb.push({
-            label: message('Primary features'),
-            location: 'landing-page/primary-features',
-          });
-        }
-
-        if (sectionName === 'secondary-features') {
-          breadcrumb.push({
-            label: message('Secondary features'),
-            location: 'landing-page/secondary-features',
-          });
-        }
-
-        return breadcrumb;
-      },
-    },
+    
     // missing label will get added by deepMerge from default config
     // @ts-ignore
     menus: {

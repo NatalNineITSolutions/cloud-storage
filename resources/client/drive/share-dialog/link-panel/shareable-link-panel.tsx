@@ -53,17 +53,6 @@ export function ShareableLinkPanel({
             <Trans message="Create shareable link" />
           )}
         </Switch>
-        {linkExists && (
-          <Button
-            variant="link"
-            color="primary"
-            onClick={() => {
-              setActivePanel('linkSettings');
-            }}
-          >
-            <Trans message="Link settings" />
-          </Button>
-        )}
       </div>
       <ShareableLinkInput autoFocus={focusInput} link={query.data?.link} />
     </div>

@@ -114,15 +114,6 @@ export function LoginPage({onTwoFactorChallenge}: Props) {
           <Trans message="Continue" />
         </Button>
       </Form>
-      <SocialAuthSection
-        dividerMessage={
-          social.compact_buttons ? (
-            <Trans message="Or sign in with" />
-          ) : (
-            <Trans message="OR" />
-          )
-        }
-      />
     </AuthLayout>
   );
 }
