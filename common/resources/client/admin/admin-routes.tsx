@@ -15,7 +15,7 @@ import {GeneralSettings} from './settings/pages/general-settings';
 import {ThemeEditor} from './appearance/sections/themes/theme-editor';
 import {AppSettingsRoutes} from '@app/admin/settings/app-settings-routes';
 import {SubscriptionSettings} from './settings/pages/subscription-settings';
-import {LocalizationSettings} from './settings/pages/localization-settings';
+// import {LocalizationSettings} from './settings/pages/localization-settings';
 import {AuthenticationSettings} from './settings/pages/authentication-settings';
 import {UploadingSettings} from './settings/pages/uploading-settings/uploading-settings';
 import {OutgoingEmailSettings} from './settings/pages/mail-settings/outgoing-email-settings';
@@ -256,7 +256,7 @@ const AdminRouteConfig: RouteObject[] = [
           {index: true, element: <Navigate to="general" replace />},
           {path: 'general', element: <GeneralSettings />},
           {path: 'subscriptions', element: <SubscriptionSettings />},
-          {path: 'localization', element: <LocalizationSettings />},
+          // {path: 'localization', element: <LocalizationSettings />},
           {path: 'authentication', element: <AuthenticationSettings />},
           {path: 'uploading', element: <UploadingSettings />},
           {path: 'outgoing-email', element: <OutgoingEmailSettings />},

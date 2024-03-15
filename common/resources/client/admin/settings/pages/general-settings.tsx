@@ -26,12 +26,6 @@ export function GeneralSettings() {
       }
     >
       <SiteUrlSection />
-      <SettingsSeparator />
-      <HomepageSection />
-      <SettingsSeparator />
-      <ThemeSection />
-      <SettingsSeparator />
-      <SitemapSection />
     </SettingsPanel>
   );
 }
@@ -93,11 +87,6 @@ function HomepageSection() {
         {homepage.options.map(option => (
           <Option key={option.value} value={option.value}>
             <Trans {...option.label} />
-          </Option>
-        ))}
-        {data?.menuItemCategories?.map(category => (
-          <Option key={category.type} value={category.type}>
-            {category.name}
           </Option>
         ))}
       </FormSelect>
