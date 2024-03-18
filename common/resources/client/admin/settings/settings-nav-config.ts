@@ -15,7 +15,7 @@ const filteredSettingsNavConfig: (SettingsNavItem | false)[] = [
     label: message('Subscriptions'),
     to: 'subscriptions',
   },
-  {label: message('Localization'), to: 'localization'},
+  // {label: message('Localization'), to: 'localization'},
   {
     label: message('Authentication'),
     to: 'authentication',

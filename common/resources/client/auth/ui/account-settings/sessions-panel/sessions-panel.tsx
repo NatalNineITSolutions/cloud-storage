@@ -36,44 +36,44 @@ export function SessionsPanel({user}: Props) {
     </div>
   );
 
-  return (
-    <AccountSettingsPanel
-      id={AccountSettingsId.Sessions}
-      title={<Trans message="Active sessions" />}
-    >
-      <p className="text-sm">
-        <Trans message="If necessary, you may log out of all of your other browser sessions across all of your devices. Your recent sessions are listed below. If you feel your account has been compromised, you should also update your password." />
-      </p>
-      <div className="my-30">
-        {isLoading ? (
-          <div className="min-h-60">
-            <ProgressCircle isIndeterminate />
-          </div>
-        ) : (
-          sessionList
-        )}
-      </div>
-      <Button
-        variant="outline"
-        color="primary"
-        disabled={checkingPasswordStatus || logoutOther.isPending}
-        onClick={() => {
-          withConfirmedPassword(password => {
-            logoutOther.mutate(
-              {password: password!},
-              {
-                onSuccess: () => {
-                  toast(message('Logged out other sessions.'));
-                },
-              },
-            );
-          });
-        }}
-      >
-        <Trans message="Logout other sessions" />
-      </Button>
-    </AccountSettingsPanel>
-  );
+  // return (
+  //   <AccountSettingsPanel
+  //     id={AccountSettingsId.Sessions}
+  //     title={<Trans message="Active sessions" />}
+  //   >
+  //     <p className="text-sm">
+  //       <Trans message="If necessary, you may log out of all of your other browser sessions across all of your devices. Your recent sessions are listed below. If you feel your account has been compromised, you should also update your password." />
+  //     </p>
+  //     <div className="my-30">
+  //       {isLoading ? (
+  //         <div className="min-h-60">
+  //           <ProgressCircle isIndeterminate />
+  //         </div>
+  //       ) : (
+  //         sessionList
+  //       )}
+  //     </div>
+  //     <Button
+  //       variant="outline"
+  //       color="primary"
+  //       disabled={checkingPasswordStatus || logoutOther.isPending}
+  //       onClick={() => {
+  //         withConfirmedPassword(password => {
+  //           logoutOther.mutate(
+  //             {password: password!},
+  //             {
+  //               onSuccess: () => {
+  //                 toast(message('Logged out other sessions.'));
+  //               },
+  //             },
+  //           );
+  //         });
+  //       }}
+  //     >
+  //       <Trans message="Logout other sessions" />
+  //     </Button>
+  //   </AccountSettingsPanel>
+  // );
 }
 
 interface SessionItemProps {

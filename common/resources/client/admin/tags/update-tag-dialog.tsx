@@ -27,23 +27,18 @@ export function UpdateTagDialog({tag}: UpdateTagDialogProps) {
 
   return (
     <Dialog>
-      <DialogHeader>
+      {/* <DialogHeader>
         <Trans message="Update “:name“ tag" values={{name: tag.name}} />
-      </DialogHeader>
+      </DialogHeader> */}
       <DialogBody>
         <CrupdateTagForm
           formId={formId}
           form={form as any}
           onSubmit={values => {
-            updateTag.mutate(values as UpdateTagPayload, {
-              onSuccess: () => {
-                close();
-              },
-            });
           }}
         />
       </DialogBody>
-      <DialogFooter>
+      {/* <DialogFooter>
         <Button
           onClick={() => {
             close();
@@ -51,16 +46,8 @@ export function UpdateTagDialog({tag}: UpdateTagDialogProps) {
         >
           <Trans message="Cancel" />
         </Button>
-        <Button
-          form={formId}
-          disabled={updateTag.isPending}
-          variant="flat"
-          color="primary"
-          type="submit"
-        >
-          <Trans message="Save" />
-        </Button>
-      </DialogFooter>
+       
+      </DialogFooter> */}
     </Dialog>
   );
 }

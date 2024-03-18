@@ -147,10 +147,10 @@ function PrivateUploadSection() {
       </Option>
       {/* <Option value="ftp">FTP</Option>
       <Option value="digitalocean_s3">DigitalOcean Spaces</Option>
-      <Option value="backblaze_s3">Backblaze</Option>
+      <Option value="backblaze_s3">Backblaze</Option> */}
       <Option value="s3">Amazon S3 (Or compatible service)</Option>
-      <Option value="dropbox">Dropbox</Option> */}
-      <Option value="rackspace">Rackspace</Option>
+      {/* <Option value="dropbox">Dropbox</Option>
+      <Option value="rackspace">Rackspace</Option> */}
     </FormSelect>
   );
 }
@@ -177,9 +177,9 @@ function PublicUploadSection() {
         <Trans message="Local Disk (Default)" />
       </Option>
       <Option value="s3">Amazon S3</Option>
-      <Option value="ftp">FTP</Option>
-      <Option value="digitalocean_s3">DigitalOcean Spaces</Option>
-      <Option value="backblaze_s3">Backblaze</Option>
+      {/* <Option value="ftp">FTP</Option>
+      <Option value="digitalocean_s3">DigitalOcean Spaces</Option> */}
+      {/* <Option value="backblaze_s3">Backblaze</Option> */}
     </FormSelect>
   );
 }

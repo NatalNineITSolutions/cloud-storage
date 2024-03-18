@@ -31,7 +31,6 @@ interface InvariantAdProps {
 const InvariantAd = memo(
   ({slot, adCode, className}: InvariantAdProps) => {
     const ref = useRef<HTMLDivElement>(null);
-
     const id = useId();
 
     useEffect(() => {

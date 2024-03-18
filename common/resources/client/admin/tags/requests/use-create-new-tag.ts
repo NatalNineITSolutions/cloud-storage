@@ -17,18 +17,7 @@ interface Response extends BackendResponse {
 interface Payload extends Partial<Tag> {}
 
 export function useCreateNewTag(form: UseFormReturn<Payload>) {
-  const {trans} = useTrans();
-  return useMutation({
-    mutationFn: (props: Payload) => createNewTag(props),
-    onSuccess: () => {
-      toast(trans(message('Tag created')));
-      queryClient.invalidateQueries({queryKey: DatatableDataQueryKey('tags')});
-    },
-    onError: err => onFormQueryError(err, form),
-  });
+  
 }
 
-function createNewTag(payload: Payload): Promise<Response> {
-  payload.name = slugifyString(payload.name!);
-  return apiClient.post('tags', payload).then(r => r.data);
-}
+

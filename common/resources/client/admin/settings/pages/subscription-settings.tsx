@@ -29,9 +29,9 @@ export function SubscriptionSettings() {
           <Tab>
             <Trans message="General" />
           </Tab>
-          <Tab>
+          {/* <Tab>
             <Trans message="Invoices" />
-          </Tab>
+          </Tab> */}
         </TabList>
         <TabPanels className="pt-30">
           <TabPanel>
@@ -53,7 +53,7 @@ export function SubscriptionSettings() {
               placeholder={trans({message: 'Add new card...'})}
             />
           </TabPanel>
-          <TabPanel>
+          {/* <TabPanel>
             <FormTextField
               inputElementType="textarea"
               rows={5}
@@ -70,7 +70,7 @@ export function SubscriptionSettings() {
               }
               name="client.billing.invoice.notes"
             />
-          </TabPanel>
+          </TabPanel> */}
         </TabPanels>
       </Tabs>
     </SettingsPanel>

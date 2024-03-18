@@ -39,19 +39,19 @@ export const AppAppearanceConfig: IAppearanceConfig = {
       } as MenuSectionConfig,
     },
     // @ts-ignore
-    'seo-settings': {
-      config: {
-        pages: [
-          {
-            key: 'landing-page',
-            label: message('Landing page'),
-          },
-          {
-            key: 'shareable-link-page',
-            label: message('Shareable link page'),
-          },
-        ],
-      } as SeoSettingsSectionConfig,
-    },
+    // 'seo-settings': {
+    //   config: {
+    //     pages: [
+    //       {
+    //         key: 'landing-page',
+    //         label: message('Landing page'),
+    //       },
+    //       {
+    //         key: 'shareable-link-page',
+    //         label: message('Shareable link page'),
+    //       },
+    //     ],
+    //   } as SeoSettingsSectionConfig,
+    // },
   },
 };

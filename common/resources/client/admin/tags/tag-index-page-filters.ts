@@ -12,26 +12,26 @@ import {
 
 export const TagIndexPageFilters = (types: TagType[]): BackendFilter[] => {
   return [
-    {
-      key: 'type',
-      label: message('Type'),
-      description: message('Type of the tag'),
-      defaultOperator: FilterOperator.ne,
-      control: {
-        type: FilterControlType.Select,
-        defaultValue: types[0].name,
-        options: types.map(type => ({
-          key: type.name,
-          label: message(type.name),
-          value: type.name,
-        })),
-      },
-    },
-    createdAtFilter({
-      description: message('Date tag was created'),
-    }),
-    updatedAtFilter({
-      description: message('Date tag was last updated'),
-    }),
+    // {
+    //   key: 'type',
+    //   label: message('Type'),
+    //   description: message('Type of the tag'),
+    //   defaultOperator: FilterOperator.ne,
+    //   control: {
+    //     type: FilterControlType.Select,
+    //     defaultValue: types[0].name,
+    //     options: types.map(type => ({
+    //       key: type.name,
+    //       label: message(type.name),
+    //       value: type.name,
+    //     })),
+    //   },
+    // },
+    // // createdAtFilter({
+    //   description: message('Date tag was created'),
+    // }),
+    // updatedAtFilter({
+    //   description: message('Date tag was last updated'),
+    // }),
   ];
 };
