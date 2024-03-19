@@ -10,9 +10,9 @@ export function ExternalLink({
   target = '_blank',
   ...domProps
 }: ExternalLinkProps) {
-  return (
-    <a className={LinkStyle} target={target} {...domProps}>
-      {children}
-    </a>
-  );
+  // return (
+  //   <a className={LinkStyle} target={target} {...domProps}>
+  //     {children}
+  //   </a>
+  // );
 }

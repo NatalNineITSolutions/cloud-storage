@@ -78,7 +78,17 @@ export function useShareAction(entries: DriveEntry[]): EntryAction | undefined {
     activePage === TrashPage
   )
     return;
+    return {
+      label: message('Share'),
+      icon: PersonAddIcon,
+      key: 'share',
+      execute: () => {
+        driveState().setActiveActionDialog('share', entries);
+      },
+    };
+  
 }
+
 
 function useGetLinkAction(entries: DriveEntry[]): EntryAction | undefined {
   const activePage = useDriveStore(s => s.activePage);
