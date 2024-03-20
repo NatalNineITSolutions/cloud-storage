@@ -28,17 +28,17 @@ export const SvgIcon = forwardRef<SVGSVGElement, SvgIconProps & {attr?: {}}>(
 
     return (
       <svg
-        // aria-hidden={!title}
-        // focusable={false}
-        // xmlns="http://www.w3.org/2000/svg"
-        // viewBox={viewBox || '0 0 24 24'}
-        // {...attr}
-        // {...svgProps}
+        aria-hidden={!title}
+        focusable={false}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={viewBox || '0 0 24 24'}
+        {...attr}
+        {...svgProps}
         className={clsx('svg-icon', className, getSizeClassName(size))}
-        // style={{
-        //   color,
-        //   ...style,
-        // }}
+        style={{
+          color,
+          ...style,
+        }}
         ref={ref}
         height={height || '1em'}
         width={width || '1em'}
