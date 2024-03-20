@@ -42,5 +42,81 @@ export function SharePanel({className, entry}: SharePanelProps) {
 
   // show user's email, instead of name in the chip
   const displayWith = (chip: ChipValue) => chip.description || chip.name;
+  return (
+    <div className={className}>
+      <ChipField
+        value={chips}
+        onChange={setChips}
+        isAsync
+        isLoading={query.fetchStatus === 'fetching'}
+        inputValue={inputValue}
+        onInputValueChange={setInputValue}
+        suggestions={query.data?.results}
+        displayWith={displayWith}
+        validateWith={chip => {
+          const invalid = !isEmail(chip.description);
+          return {
+            ...chip,
+            invalid,
+            errorMessage: invalid
+              ? trans({message: 'Not a valid email'})
+              : undefined,
+          };
+        }}
+        placeholder={trans({message: 'Enter email addresses'})}
+        label={<Trans message="Invite people" />}
+      >
+        {user => (
+          <Item
+            value={user.id}
+            startIcon={<Avatar circle src={user.image} alt="" />}
+            description={user.description}
+          >
+            {user.name}
+          </Item>
+        )}
+      </ChipField>
+      <div className="mt-14 flex items-center justify-between gap-14">
+        <PermissionSelector
+          onChange={setSelectedPermission}
+          value={selectedPermission}
+        />
+        {chips.length ? (
+          <Button
+            variant="flat"
+            color="primary"
+            size="sm"
+            disabled={isSharing || !allEmailsValid}
+            onClick={() => {
+              setIsSharing(true);
+              shareEntry.mutate(
+                {
+                  emails: chips.map(c => displayWith(c)),
+                  permissions: selectedPermission.value,
+                  entryId: entry.id,
+                },
+                {
+                  onSuccess: () => {
+                    setChips([]);
+                  },
+                  onSettled: () => {
+                    setIsSharing(false);
+                  },
+                },
+              );
+            }}
+          >
+            <Trans message="Share" />
+          </Button>
+        ) : null}
+      </div>
+      <MemberList className="mt-30" entry={entry} />
+    </div>
+  );
+
+
+
+
+
 
 }
