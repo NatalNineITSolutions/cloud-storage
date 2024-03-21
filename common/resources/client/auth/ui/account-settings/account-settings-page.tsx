@@ -62,9 +62,9 @@ export function AccountSettingsPage() {
                     <TwoFactorStepper user={data.user} />
                   </div>
                 </AccountSettingsPanel> */}
-                <SessionsPanel user={data.user} />
-                <LocalizationPanel user={data.user} />
-                <AccessTokenPanel user={data.user} />
+                {/* <SessionsPanel user={data.user} /> */}
+                {/* <LocalizationPanel user={data.user} /> */}
+                {/* <AccessTokenPanel user={data.user} /> */}
                 <DangerZonePanel />
               </main>
             </div>

@@ -37,62 +37,62 @@ export function LocalizationPanel({user}: Props) {
   const localizations = data?.localizations || [];
   const timezones = data?.timezones || {};
 
-  // return (
-  //   <AccountSettingsPanel
-  //     id={AccountSettingsId.LocationAndLanguage}
-  //     title={<Trans message="Date, time and language" />}
-  //     actions={
-  //       <Button
-  //         type="submit"
-  //         variant="flat"
-  //         color="primary"
-  //         form={formId}
-  //         disabled={updateDetails.isPending || !form.formState.isValid}
-  //       >
-  //         <Trans message="Save" />
-  //       </Button>
-  //     }
-  //   >
-  //     <Form
-  //       form={form}
-  //       onSubmit={newDetails => {
-  //         updateDetails.mutate(newDetails);
-  //         changeLocale.mutate({locale: newDetails.language});
-  //       }}
-  //       id={formId}
-  //     >
-  //       <FormSelect
-  //         className="mb-24"
-  //         selectionMode="single"
-  //         name="language"
-  //         label={<Trans message="Language" />}
-  //       >
-  //         {localizations.map(localization => (
-  //           <Option key={localization.language} value={localization.language}>
-  //             {localization.name}
-  //           </Option>
-  //         ))}
-  //       </FormSelect>
-  //       <FormSelect
-  //         className="mb-24"
-  //         selectionMode="single"
-  //         name="country"
-  //         label={<Trans message="Country" />}
-  //         showSearchField
-  //         searchPlaceholder={trans(message('Search countries'))}
-  //       >
-  //         {countries.map(country => (
-  //           <Option key={country.code} value={country.code}>
-  //             {country.name}
-  //           </Option>
-  //         ))}
-  //       </FormSelect>
-  //       <TimezoneSelect
-  //         label={<Trans message="Timezone" />}
-  //         name="timezone"
-  //         timezones={timezones}
-  //       />
-  //     </Form>
-  //   </AccountSettingsPanel>
-  // );
+  return (
+    <AccountSettingsPanel
+      id={AccountSettingsId.LocationAndLanguage}
+      title={<Trans message="Date, time and language" />}
+      actions={
+        <Button
+          type="submit"
+          variant="flat"
+          color="primary"
+          form={formId}
+          disabled={updateDetails.isPending || !form.formState.isValid}
+        >
+          <Trans message="Save" />
+        </Button>
+      }
+    >
+      <Form
+        form={form}
+        onSubmit={newDetails => {
+          updateDetails.mutate(newDetails);
+          changeLocale.mutate({locale: newDetails.language});
+        }}
+        id={formId}
+      >
+        <FormSelect
+          className="mb-24"
+          selectionMode="single"
+          name="language"
+          label={<Trans message="Language" />}
+        >
+          {localizations.map(localization => (
+            <Option key={localization.language} value={localization.language}>
+              {localization.name}
+            </Option>
+          ))}
+        </FormSelect>
+        <FormSelect
+          className="mb-24"
+          selectionMode="single"
+          name="country"
+          label={<Trans message="Country" />}
+          showSearchField
+          searchPlaceholder={trans(message('Search countries'))}
+        >
+          {countries.map(country => (
+            <Option key={country.code} value={country.code}>
+              {country.name}
+            </Option>
+          ))}
+        </FormSelect>
+        <TimezoneSelect
+          label={<Trans message="Timezone" />}
+          name="timezone"
+          timezones={timezones}
+        />
+      </Form>
+    </AccountSettingsPanel>
+  );
 }

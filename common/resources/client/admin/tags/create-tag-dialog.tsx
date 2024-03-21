@@ -24,13 +24,13 @@ export function CreateTagDialog() {
   });
   const createNewTag = useCreateNewTag(form);
 
-  // return (
-  //   <Dialog>
-  //     <DialogHeader>
-  //       <Trans message="Add new tag" />
-  //     </DialogHeader>
+  return (
+    <Dialog>
+      <DialogHeader>
+        <Trans message="Add new tag" />
+      </DialogHeader>
       
       
-  //   </Dialog>
-  // );
+    </Dialog>
+  );
 }

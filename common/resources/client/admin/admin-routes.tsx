@@ -28,14 +28,14 @@ import {UpdateUserPage} from './users/update-user-page';
 import {CreateUserPage} from './users/create-user-page';
 import {LocalizationIndex} from './translations/localization-index';
 import {TranslationManagementPage} from './translations/translation-management-page';
-// import {AdsPage} from './ads/ads-page';
+import {AdsPage} from './ads/ads-page';
 import React from 'react';
 import {FullPageLoader} from '../ui/progress/full-page-loader';
 import {SectionList} from './appearance/section-list';
 import {RolesIndexPage} from './roles/roles-index-page';
 import {EditRolePage} from './roles/crupdate-role-page/edit-role-page';
 import {CreateRolePage} from './roles/crupdate-role-page/create-role-page';
-// import {TagIndexPage} from './tags/tag-index-page';
+import {TagIndexPage} from './tags/tag-index-page';
 import {FileEntryIndexPage} from './file-entry/file-entry-index-page';
 import {SubscriptionsIndexPage} from './subscriptions/subscriptions-index-page';
 import {PlansIndexPage} from './plans/plans-index-page';
@@ -209,7 +209,7 @@ const AdminRouteConfig: RouteObject[] = [
         path: 'tags',
         element: (
           <AuthRoute permission="tags.update">
-            {/* <TagIndexPage /> */}
+            <TagIndexPage />
           </AuthRoute>
         ),
       },
@@ -240,7 +240,7 @@ const AdminRouteConfig: RouteObject[] = [
         path: 'ads',
         element: (
           <AuthRoute permission="settings.update">
-            {/* <AdsPage /> */}
+            <AdsPage />
           </AuthRoute>
         ),
       },
