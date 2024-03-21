@@ -1,15 +1,15 @@
 import './App.css';
 import React from 'react';
 import {createRoot, hydrateRoot} from 'react-dom/client';
-import {CommonProvider} from '@common/core/common-provider';
+import {CommonProvider} from '../../common/resources/client/core/common-provider';
 import {LandingPageContent} from './landing/landing-page-content';
 import * as Sentry from '@sentry/react';
-import {rootEl} from '@common/core/root-el';
-import {getBootstrapData} from '@common/core/bootstrap-data/use-backend-bootstrap-data';
-import {ignoredSentryErrors} from '@common/errors/ignored-sentry-errors';
+import {rootEl} from '../../common/resources/client/core/root-el';
+import {getBootstrapData} from '../../common/resources/client/core/bootstrap-data/use-backend-bootstrap-data';
+import {ignoredSentryErrors} from '../../common/resources/client/errors/ignored-sentry-errors';
 import {BrowserRouter} from 'react-router-dom';
-import {AppRoutes} from '@app/app-routes';
-import {Product} from '@common/billing/product';
+import {AppRoutes} from '../../resources/client/app-routes';
+import {Product} from '../../common/resources/client/billing/product';
 import {FetchShareableLinkPageResponse} from '@app/drive/shareable-link/queries/use-shareable-link-page';
 import {FetchCustomPageResponse} from '@common/custom-page/use-custom-page';
 

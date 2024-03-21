@@ -31,7 +31,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     rollupOptions: {
-      external: ['puppeteer', 'ioredis', '@common/core/common-provider', '@common/core/root-el', '@common/core/bootstrap-data/use-backend-bootstrap-data', '@common/errors/ignored-sentry-errors', '@app/app-routes'],
+      external: ['puppeteer', 'ioredis'],
     },
   },
   plugins: [
