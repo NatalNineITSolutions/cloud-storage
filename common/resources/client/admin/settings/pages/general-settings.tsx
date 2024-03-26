@@ -26,7 +26,7 @@ export function GeneralSettings() {
       }
     >
       <SiteUrlSection />
-      <HomepageSection />
+      {/* <HomepageSection /> */}
 
     </SettingsPanel>
   );

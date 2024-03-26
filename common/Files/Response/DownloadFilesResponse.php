@@ -44,6 +44,8 @@ class DownloadFilesResponse
         // downloading multiple files from s3 will error out without this
         $options->setZeroHeader(true);
 
+        dd($options);
+
         $timestamp = Carbon::now()->getTimestamp();
         $zip = new ZipStream("download-$timestamp.zip", $options);
 
