@@ -37,14 +37,13 @@ class DownloadFilesResponse
 
     private function streamZip(Collection $entries): void
     {
+        dd($entries);
         header('X-Accel-Buffering: no');
         $options = new Archive();
         $options->setSendHttpHeaders(true);
 
         // downloading multiple files from s3 will error out without this
         $options->setZeroHeader(true);
-
-        dd($options);
 
         $timestamp = Carbon::now()->getTimestamp();
         $zip = new ZipStream("download-$timestamp.zip", $options);

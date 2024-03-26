@@ -81,8 +81,8 @@ function PlanList({plans, selectedPeriod}: PlanListProps) {
             key={plan.id}
             {...opacityAnimation}
             className={clsx(
-              'w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350',
-              plan.recommended ? 'py-56' : 'py-28',
+              'w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350 h-[800px]',
+              plan.recommended ? 'py-28' : 'py-28',
               isFirst && 'ml-auto',
               isLast && 'mr-auto'
             )}
