@@ -41,6 +41,15 @@ return [
     */
 
     'disks' => [
+
+        's3' => [
+            'driver' => 's3',
+            'key' => 'AKIA5YFYUXDUXEAWN3UT',
+            'secret' => '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',
+            'region' => 'ap-south-1',
+            'bucket' => 'jebin',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
