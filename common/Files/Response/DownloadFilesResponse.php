@@ -69,54 +69,6 @@ class DownloadFilesResponse
         $zip->finish();
     }
 
-   /* private function fillZip(ZipStream $zip, Collection $entries): void
-    {
-        $entries->each(function (FileEntry $entry) use ($zip) {
-            if ($entry->type === 'folder') {
-                Log::info("Processing folder: " . $entry->name);
-
-                // this will load all children, nested at any level, so no need to do a recursive loop
-                $entry
-                    ->allChildren()
-                    ->select([
-                        'id',
-                        'name',
-                        'extension',
-                        'path',
-                        'type',
-                        'file_name',
-                        'disk_prefix',
-                    ])
-                    ->orderBy('path', 'asc')
-                    ->chunk(300, function (Collection $chunk) use (
-                        $zip,
-                        $entry,
-                    ) {
-                        $chunk->each(function (FileEntry $childEntry) use (
-                            $zip,
-                            $entry,
-                            $chunk,
-                        ) {
-                            $path = $this->transformPath(
-                                $childEntry,
-                                $entry,
-                                $chunk,
-                            );
-                            if ($childEntry->type === 'folder') {
-                                // add empty folder in case it has no children
-                                $zip->addFile("$path/", '');
-                            } else {
-                                $this->addFileToZip($childEntry, $zip, $path);
-                            }
-                        });
-                    });
-            } else {
-                Log::info("Adding file to zip: " . $entry->getNameWithExtension());
-
-                $this->addFileToZip($entry, $zip);
-            }
-        });
-    }*/
     
     private function fillZip(ZipStream $zip, Collection $entries): void
     {
@@ -208,50 +160,6 @@ class DownloadFilesResponse
     }
     
     /*
-
-   private function addFileToZip(
-        FileEntry $entry,
-        ZipStream $zip,
-        string|null $path = null,
-    ): void {
-        if (!$path) {
-            $path = $entry->getNameWithExtension();
-        }
-        Log::info("Addingg file to zip: $path");
-
-        $parts = pathinfo($path);
-        $basename = $parts['basename'];
-        $filename = $parts['filename'];
-        $extension = $parts['extension'];
-        $dirname = $parts['dirname'] === '.' ? '' : $parts['dirname'];
-
-        // add number to duplicate file names (file(1).png, file(2).png etc)
-        if (isset($this->filesInZip[$basename])) {
-            $newCount = $this->filesInZip[$basename] + 1;
-            $this->filesInZip[$basename] = $newCount;
-            $path = "$dirname/$filename($newCount).$extension";
-
-        } else {
-            Log::info("else part worked");
-
-            $this->filesInZip[$basename] = 0;
-        }
-        Log::info("path". $entry->getStoragePath());
-
-        //$path = 'uploads/48c06bea-a008-44f0-ba0c-3684a13957b5/';
-       // $stream = Storage::disk('s3')->readStream($path);
-       // $stream = Storage::disk('s3')->readStream($entry->getStoragePath());
-      //$stream = $entry->getDisk()->readStream($entry->getStoragePath());
-        //Log::info("value of stream is".$stream);
-        $stream = fopen('https://jebin.s3.ap-south-1.amazonaws.com/uploads%5Cd595de4a-e17b-481e-a16c-e0a05ecc08b4/d595de4a-e17b-481e-a16c-e0a05ecc08b4', 'r');
-
-        if ($stream) {
-            $zip->addFileFromStream($path, $stream);
-            fclose($stream);
-        }
-        Log::info("no stream found");
-    }
-
      * Replace entry IDs with names inside "path" property.
      */
     private function transformPath(

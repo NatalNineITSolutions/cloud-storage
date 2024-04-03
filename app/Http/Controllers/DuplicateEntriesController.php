@@ -139,7 +139,8 @@ class DuplicateEntriesController extends BaseController
         $copy = $original->replicate();
         $copy->name = $newName;
         $copy->path = null;
-        $copy->file_name = Str::random(36);
+       // $copy->file_name = Str::random(36);
+        $copy->file_name = $original->file_name;
         $copy->parent_id = $parentId;
         $copy->owner_id = $newOwnerId;
         $copy->save();
@@ -157,14 +158,14 @@ class DuplicateEntriesController extends BaseController
     private function copyFile(FileEntry $original, FileEntry $copy)
     {
         $paths = $original->getDisk()->files($original->file_name);
-        foreach ($paths as $path) {
+       /* foreach ($paths as $path) {
             $newPath = str_replace(
-                $original->file_name,
-                $copy->file_name,
+               // $original->file_name,
+               // $copy->file_name,
                 $path,
             );
             $original->getDisk()->copy($path, $newPath);
-        }
+        }*/
     }
 
     /**
