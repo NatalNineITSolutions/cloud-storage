@@ -171,6 +171,44 @@ class DownloadFilesResponse
 
     
 
+    private function addFileToZip(FileEntry $entry, ZipStream $zip, string|null $path = null): void
+    {
+        if (!$path) {
+            $path = $entry->getNameWithExtension();
+        }
+        Log::info("Adding file to zip: $path");
+    
+        $parts = pathinfo($path);
+        $basename = $parts['basename'];
+        $filename = $parts['filename'];
+        $extension = $parts['extension'];
+        $dirname = $parts['dirname'] === '.' ? '' : $parts['dirname'];
+    
+        // Add number to duplicate file names (file(1).png, file(2).png, etc.)
+        if (isset($this->filesInZip[$basename])) {
+            $newCount = $this->filesInZip[$basename] + 1;
+            $this->filesInZip[$basename] = $newCount;
+            $path = "$dirname/$filename($newCount).$extension";
+        } else {
+            Log::info("Else part worked");
+            $this->filesInZip[$basename] = 0;
+        }
+        Log::info("Path: " . $entry->getStoragePath());
+        $region = env('STORAGE_S3_REGION');
+        $bucket = env('STORAGE_S3_BUCKET');
+
+        $filepath=$entry->getStoragePath();
+        $stream = fopen('https://'.$bucket.'.s3.'.$region.'.amazonaws.com/uploads%5C'.$filepath, 'r');
+
+        if ($stream) {
+            $zip->addFileFromStream($path, $stream);
+            fclose($stream);
+        }
+
+    }
+    
+    /*
+
    private function addFileToZip(
         FileEntry $entry,
         ZipStream $zip,
@@ -214,7 +252,6 @@ class DownloadFilesResponse
         Log::info("no stream found");
     }
 
-    /*
      * Replace entry IDs with names inside "path" property.
      */
     private function transformPath(
