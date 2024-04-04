@@ -143,6 +143,10 @@ class DuplicateEntriesController extends BaseController
         $copy->file_name = $original->file_name;
         $copy->parent_id = $parentId;
         $copy->owner_id = $newOwnerId;
+
+        if ($original->type === 'folder') {
+            $copy->file_size = 0;
+        }
         $copy->save();
 
         $copy->generatePath();
