@@ -116,7 +116,7 @@ class DuplicateEntriesController extends BaseController
      * @param int|null $parentId
      * @return FileEntry
      */
-    private function copyModel(FileEntry $original, $parentId = null)
+  /*  private function copyModel(FileEntry $original, $parentId = null)
     {
         $newName = $original->name;
         $newOwnerId = $this->getCopyOwnerId();
@@ -130,7 +130,72 @@ class DuplicateEntriesController extends BaseController
 
         // if we are copying into same folder, add " - Copy" to the end of copies names
         if ($parentId === $original->parent_id && $copyingIntoSameDrive) {
-            $newName = "$original->name - " . __('Copy');
+        $parts = pathinfo($original->name);
+        $filename = $parts['filename'];
+        $extension = isset($parts['extension']) ? '.' . $parts['extension'] : '';
+
+        // Append the suffix " - Copy" to the filename
+        $newName = "$filename - Copy$extension";
+        }
+
+        /**
+         * @var $copy FileEntry
+         
+        $copy = $original->replicate();
+        $copy->name = $newName;
+        $copy->path = null;
+       // $copy->file_name = Str::random(36);
+        $copy->file_name = $original->file_name;
+        $copy->parent_id = $parentId;
+        $copy->owner_id = $newOwnerId;
+
+        if ($original->type === 'folder') {
+            $copy->file_size = 0;
+        }
+        $copy->save();
+
+        $copy->generatePath();
+
+        // set owner
+        $copy->users()->attach($newOwnerId, ['owner' => true]);
+
+        $copy->load('users');
+
+        return $copy;
+    }*/
+
+
+ private function copyModel(FileEntry $original, $parentId = null)
+    {
+        $newName = $original->name;
+        $newOwnerId = $this->getCopyOwnerId();
+        $copyingIntoSameDrive = $newOwnerId === $original->owner_id;
+
+        // if no parent ID is specified, and we are copying into the
+        // same users drive, we can copy into the same folder as original
+        if (!$parentId && $copyingIntoSameDrive) {
+            $parentId = $original->parent_id;
+        }
+
+        // if we are copying into same folder, add " - Copy" to the end of copies names
+        if ($parentId === $original->parent_id && $copyingIntoSameDrive) {
+        $parts = pathinfo($original->name);
+        $filename = $parts['filename'];
+        $extension = isset($parts['extension']) ? '.' . $parts['extension'] : '';
+
+        // Append the suffix " - Copy" to the filename
+        $newName = "$filename - Copy$extension";
+            $existingNames = $this->entry
+        ->where('parent_id', $parentId)
+        ->where('owner_id', $newOwnerId)
+        ->pluck('name');
+
+    $counter = 1;
+    $originalNewName = "$filename - Copy";
+    while ($existingNames->contains($newName)) {
+        $newName = $originalNewName . "($counter)$extension";
+        $counter++;
+    }
         }
 
         /**
@@ -158,6 +223,8 @@ class DuplicateEntriesController extends BaseController
 
         return $copy;
     }
+
+
 
     private function copyFile(FileEntry $original, FileEntry $copy)
     {
