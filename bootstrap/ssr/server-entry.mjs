@@ -6368,7 +6368,7 @@ const LightbulbIcon = createSvgIcon(
 function Footer({ className, padding }) {
   const year = (/* @__PURE__ */ new Date()).getFullYear();
   const { branding } = useSettings();
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ jsx(
     "footer",
     {
       className: clsx(
@@ -6376,43 +6376,21 @@ function Footer({ className, padding }) {
         padding ? padding : "pb-28 pt-54 md:pb-54",
         className
       ),
-      children: [
-        /* @__PURE__ */ jsx(Menus, {}),
-        /* @__PURE__ */ jsxs("div", { className: "items-center justify-between gap-30 text-center text-muted md:flex md:text-left", children: [
-          /* @__PURE__ */ jsx(
-            Trans,
-            {
-              message: "Copyright © :year :name, All Rights Reserved",
-              values: { year, name: branding.site_name }
-            }
-          ),
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx(ThemeSwitcher, {}),
-            /* @__PURE__ */ jsx(LocaleSwitcher, {})
-          ] })
+      children: /* @__PURE__ */ jsxs("div", { className: "items-center justify-between gap-30 text-center text-muted md:flex md:text-left", children: [
+        /* @__PURE__ */ jsx(
+          Trans,
+          {
+            message: "Copyright © :year :name, All Rights Reserved",
+            values: { year, name: branding.site_name }
+          }
+        ),
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx(ThemeSwitcher, {}),
+          /* @__PURE__ */ jsx(LocaleSwitcher, {})
         ] })
-      ]
+      ] })
     }
   );
-}
-function Menus() {
-  const settings = useSettings();
-  const primaryMenu = settings.menus.find((m2) => {
-    var _a;
-    return (_a = m2.positions) == null ? void 0 : _a.includes("footer");
-  });
-  const secondaryMenu = settings.menus.find(
-    (m2) => {
-      var _a;
-      return (_a = m2.positions) == null ? void 0 : _a.includes("footer-secondary");
-    }
-  );
-  if (!primaryMenu && !secondaryMenu)
-    return null;
-  return /* @__PURE__ */ jsxs("div", { className: "mb-14 items-center justify-between gap-30 overflow-x-auto border-b pb-14 md:flex", children: [
-    primaryMenu && /* @__PURE__ */ jsx(CustomMenu, { menu: primaryMenu, className: "text-primary" }),
-    secondaryMenu && /* @__PURE__ */ jsx(CustomMenu, { menu: secondaryMenu, className: "mb:mt-0 mt-14 text-muted" })
-  ] });
 }
 function ThemeSwitcher() {
   const { themes } = useSettings();
@@ -10095,8 +10073,8 @@ function PlanList({ plans, selectedPeriod }) {
       {
         ...opacityAnimation,
         className: clsx(
-          "w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350",
-          plan.recommended ? "py-56" : "py-28",
+          "w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350 h-[800px]",
+          plan.recommended ? "py-28" : "py-28",
           isFirst && "ml-auto",
           isLast && "mr-auto"
         ),
@@ -10626,7 +10604,7 @@ function ContactUsPage() {
   ] });
 }
 const AdminRoutes = React.lazy(() => import("./assets/admin-routes-30a7e2c0.mjs").then((n) => n.z));
-const DriveRoutes = React.lazy(() => import("./assets/drive-routes-ca4f0b35.mjs"));
+const DriveRoutes = React.lazy(() => import("./assets/drive-routes-0d249aaf.mjs"));
 const SwaggerApiDocs = React.lazy(
   () => import("./assets/swagger-api-docs-page-ec6f7590.mjs")
 );
