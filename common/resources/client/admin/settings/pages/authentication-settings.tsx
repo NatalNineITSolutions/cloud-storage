@@ -20,47 +20,6 @@ export function AuthenticationSettings() {
       }
     >
       <EmailConfirmationSection />
-      <FormSwitch
-        className="mb-24"
-        name="client.registration.disable"
-        description={
-          <Trans message="All registration related functionality (including social login) will be disabled." />
-        }
-      >
-        <Trans message="Disable registration" />
-      </FormSwitch>
-      <FormSwitch
-        className="mb-24"
-        name="client.single_device_login"
-        description={
-          <Trans message="Only allow one device to be logged into user account at the same time." />
-        }
-      >
-        <Trans message="Single device login" />
-      </FormSwitch>
-      <FormSwitch
-        name="client.social.compact_buttons"
-        description={
-          <Trans message="Use compact design for social login buttons." />
-        }
-      >
-        <Trans message="Compact buttons" />
-      </FormSwitch>
-      <EnvatoSection />
-      <GoogleSection />
-      <FacebookSection />
-      <TwitterSection />
-      <SettingsSeparator />
-      <FormTextField
-        inputElementType="textarea"
-        rows={3}
-        className="mt-24"
-        name="client.auth.domain_blacklist"
-        label={<Trans message="Domain blacklist" />}
-        description={
-          <Trans message="Comma separated list of domains. Users will not be able to register or login using any email adress from specified domains." />
-        }
-      />
     </SettingsPanel>
   );
 }

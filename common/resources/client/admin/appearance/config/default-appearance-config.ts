@@ -145,15 +145,5 @@ export const DefaultAppearanceConfig: IAppearanceConfig = {
         },
       ],
     },
-    'seo-settings': {
-      label: message('SEO Settings'),
-      position: 5,
-      buildBreadcrumb: () => [
-        {
-          label: message('SEO'),
-          location: `seo`,
-        },
-      ],
-    },
   },
 };

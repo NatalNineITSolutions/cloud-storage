@@ -49,20 +49,6 @@ export function AccountSettingsSidenav() {
         <Item icon={<PersonIcon />} panel={p.AccountDetails}>
           <Trans message="Account details" />
         </Item>
-        {socialEnabled && (
-          <Item icon={<LoginIcon />} panel={p.SocialLogin}>
-            <Trans message="Social login" />
-          </Item>
-        )}
-        <Item icon={<LockIcon />} panel={p.Password}>
-          <Trans message="Password" />
-        </Item>
-        <Item icon={<PhonelinkLockIcon />} panel={p.TwoFactor}>
-          <Trans message="Two factor authentication" />
-        </Item>
-        <Item icon={<DevicesIcon />} panel={p.Sessions}>
-          <Trans message="Active sessions" />
-        </Item>
         <Item icon={<LanguageIcon />} panel={p.LocationAndLanguage}>
           <Trans message="Location and language" />
         </Item>

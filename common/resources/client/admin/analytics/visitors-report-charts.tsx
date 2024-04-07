@@ -21,44 +21,6 @@ export function VisitorsReportCharts({
   const totalViews = report?.pageViews.total;
   return (
     <Fragment>
-      <div className={rowClassName}>
-        <LineChart
-          isLoading={isLoading}
-          className="flex-auto"
-          data={report?.pageViews}
-          title={<Trans message="Pageviews" />}
-          description={
-            totalViews ? (
-              <Trans
-                message=":count total views"
-                values={{count: <FormattedNumber value={totalViews} />}}
-              />
-            ) : null
-          }
-        />
-        <PolarAreaChart
-          isLoading={isLoading}
-          data={report?.devices}
-          title={<Trans message="Top devices" />}
-        />
-      </div>
-      <div className={rowClassName}>
-        <BarChart
-          isLoading={isLoading}
-          data={report?.browsers}
-          className="flex-auto md:w-1/3"
-          direction="horizontal"
-          individualBarColors
-          hideLegend
-          title={<Trans message="Top browsers" />}
-        />
-        <GeoChart
-          isLoading={isLoading}
-          className="flex-auto"
-          data={report?.locations}
-          title={<Trans message="Top locations" />}
-        />
-      </div>
     </Fragment>
   );
 }

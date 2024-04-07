@@ -79,9 +79,6 @@ function CacheSelect() {
               <Option value="array">
                 <Trans message="None" />
               </Option>
-              <Option value="apc">APC</Option>
-              <Option value="memcached">Memcached</Option>
-              <Option value="redis">Redis</Option>
             </FormSelect>
             {CredentialSection && (
               <div className="mt-30">

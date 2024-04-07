@@ -30,7 +30,6 @@ export const BaseSiteConfig: SiteConfigContextValue = {
   homepage: {
     options: [
       {label: message('Login page'), value: 'loginPage'},
-      {label: message('Registration page'), value: 'registerPage'},
     ],
   },
 };

@@ -145,11 +145,11 @@ function PrivateUploadSection() {
       <Option value="local">
         <Trans message="Local Disk (Default)" />
       </Option>
-      <Option value="ftp">FTP</Option>
+      {/* <Option value="ftp">FTP</Option>
       <Option value="digitalocean_s3">DigitalOcean Spaces</Option>
       <Option value="backblaze_s3">Backblaze</Option>
       <Option value="s3">Amazon S3 (Or compatible service)</Option>
-      <Option value="dropbox">Dropbox</Option>
+      <Option value="dropbox">Dropbox</Option> */}
       <Option value="rackspace">Rackspace</Option>
     </FormSelect>
   );
