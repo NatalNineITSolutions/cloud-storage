@@ -30,10 +30,12 @@ export function PricingTable({
 }: PricingTableProps) {
   const query = useProducts(productLoader);
   return (
-    <div
+    <div  style={{    display: 'flex',
+    alignItems: 'stretch',}}
       className={clsx(
-        'flex flex-col items-center gap-24 overflow-x-auto overflow-y-visible pb-20 md:flex-row md:justify-center',
-        className
+       // 'flex flex-wrap items-start gap-24 pb-20 align-items-stretch',
+       'flex flex-wrap gap-24 pb-20 items-start ',
+               className
       )}
     >
       <AnimatePresence initial={false} mode="wait">
@@ -77,14 +79,17 @@ function PlanList({plans, selectedPeriod}: PlanListProps) {
         }
 
         return (
-          <m.div
+          <m.div   style={{
+            flexGrow: 1, 
+          }}
             key={plan.id}
             {...opacityAnimation}
             className={clsx(
-              'w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350 h-[800px]',
+              'w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350 ',
+
               plan.recommended ? 'py-28' : 'py-28',
-              isFirst && 'ml-auto',
-              isLast && 'mr-auto'
+              //isFirst && 'ml-auto',
+             // isLast && 'mr-auto'
             )}
           >
             <div className="mb-32">
