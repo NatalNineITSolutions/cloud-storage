@@ -150,7 +150,7 @@ class DownloadFilesResponse
         $bucket = env('STORAGE_S3_BUCKET');
 
         $filepath=$entry->getStoragePath();
-        $stream = fopen('https://'.$bucket.'.s3.'.$region.'.amazonaws.com/uploads%5C'.$filepath, 'r');
+        $stream = fopen('https://'.$bucket.'.s3.'.$region.'.amazonaws.com/uploads/'.$filepath, 'r');
 
         if ($stream) {
             $zip->addFileFromStream($path, $stream);

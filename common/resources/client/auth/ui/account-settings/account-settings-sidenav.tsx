@@ -52,11 +52,11 @@ export function AccountSettingsSidenav() {
         {/* <Item icon={<LanguageIcon />} panel={p.LocationAndLanguage}>
           <Trans message="Location and language" />
         </Item> */}
-        {/* {api?.integrated && hasPermission('api.access') ? (
+        {api?.integrated && hasPermission('api.access') ? (
           <Item icon={<ApiIcon />} panel={p.Developers}>
             <Trans message="Developers" />
           </Item>
-        ) : null} */}
+        ) : null}
         <Item icon={<DangerousIcon />} panel={p.DeleteAccount}>
           <Trans message="Delete account" />
         </Item>
