@@ -17,7 +17,7 @@ import {useActiveWorkspaceId} from '@common/workspace/active-workspace-id-contex
 export function SidebarMenu() {
   const {workspaceId} = useActiveWorkspaceId();
   return (
-    <div className="container" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+    <div className="container" >
     <div className="text-muted mt-26 px-12">
       <FolderTree />
       <CustomMenu
