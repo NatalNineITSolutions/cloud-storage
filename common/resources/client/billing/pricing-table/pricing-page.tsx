@@ -1,15 +1,15 @@
-import {useProducts} from './use-products';
-import {Button} from '../../ui/buttons/button';
-import {Trans} from '../../i18n/trans';
-import {ForumIcon} from '../../icons/material/Forum';
-import {Navbar} from '../../ui/navigation/navbar/navbar';
-import {Link} from 'react-router-dom';
-import {Footer} from '../../ui/footer/footer';
-import {Fragment, useState} from 'react';
-import {UpsellBillingCycle} from './find-best-price';
-import {BillingCycleRadio} from './billing-cycle-radio';
-import {StaticPageTitle} from '../../seo/static-page-title';
-import {PricingTable} from '@common/billing/pricing-table/pricing-table';
+import { PricingTable } from '@common/billing/pricing-table/pricing-table';
+import { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Trans } from '../../i18n/trans';
+import { ForumIcon } from '../../icons/material/Forum';
+import { StaticPageTitle } from '../../seo/static-page-title';
+import { Button } from '../../ui/buttons/button';
+import { Footer } from '../../ui/footer/footer';
+import { Navbar } from '../../ui/navigation/navbar/navbar';
+import { BillingCycleRadio } from './billing-cycle-radio';
+import { UpsellBillingCycle } from './find-best-price';
+import { useProducts } from './use-products';
 
 export function PricingPage() {
   const query = useProducts('pricingPage');
@@ -31,13 +31,20 @@ export function PricingPage() {
         <h1 className="mb-30 mt-30 text-center text-3xl font-normal md:mt-60 md:text-4xl md:font-medium">
           <Trans message="Choose the right plan for you" />
         </h1>
-
         <BillingCycleRadio
           products={query.data?.products}
           selectedCycle={selectedCycle}
           onChange={setSelectedCycle}
-          className="mb-40 flex justify-center md:mb-70"
+          className="mb-40 md:mb-70"
           size="lg"
+          style={{
+            display: 'flex',
+            flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+            justifyContent: 'center',  // Center items horizontally
+            alignItems: 'center',      // Center items vertically
+            gap: '20px',               // Add gap between items
+            width: '100%',
+          }}
         />
 
         <PricingTable
