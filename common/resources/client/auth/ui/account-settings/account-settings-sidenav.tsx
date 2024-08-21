@@ -49,9 +49,9 @@ export function AccountSettingsSidenav() {
         <Item icon={<PersonIcon />} panel={p.AccountDetails}>
           <Trans message="Account details" />
         </Item>
-        <Item icon={<LanguageIcon />} panel={p.LocationAndLanguage}>
+        {/* <Item icon={<LanguageIcon />} panel={p.LocationAndLanguage}>
           <Trans message="Location and language" />
-        </Item>
+        </Item> */}
         {api?.integrated && hasPermission('api.access') ? (
           <Item icon={<ApiIcon />} panel={p.Developers}>
             <Trans message="Developers" />

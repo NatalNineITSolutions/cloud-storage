@@ -64,7 +64,7 @@ const AdminRouteConfig: RouteObject[] = [
     children: [
       {index: true, element: <SectionList />},
       {path: 'general', element: <GeneralSection />},
-      {path: 'seo-settings', element: <SeoSection />},
+      // {path: 'seo-settings', element: <SeoSection />},
       {path: 'custom-code', element: <CustomCodeSection />},
       {path: 'themes', element: <ThemeList />},
       {path: 'themes/:themeIndex', element: <ThemeEditor />},

@@ -15,10 +15,10 @@ export function LearnMoreLink({link, className}: LearnMoreLinkProps) {
   }
   return (
     <div className={clsx('flex items-center gap-8', className)}>
-      <LinkIcon size="sm" />
-      <ExternalLink href={link}>
+      {/* <LinkIcon size="sm" /> */}
+      {/* <ExternalLink href={link}>
         <Trans message="Learn more" />
-      </ExternalLink>
+      </ExternalLink> */}
     </div>
   );
 }

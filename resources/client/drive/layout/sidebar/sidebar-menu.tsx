@@ -17,6 +17,7 @@ import {useActiveWorkspaceId} from '@common/workspace/active-workspace-id-contex
 export function SidebarMenu() {
   const {workspaceId} = useActiveWorkspaceId();
   return (
+    <div className="container" >
     <div className="text-muted mt-26 px-12">
       <FolderTree />
       <CustomMenu
@@ -31,6 +32,7 @@ export function SidebarMenu() {
           return <MenuItem key={item.id} item={item} />;
         }}
       </CustomMenu>
+    </div>
     </div>
   );
 }

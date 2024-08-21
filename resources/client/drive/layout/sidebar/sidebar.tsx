@@ -43,6 +43,7 @@ export function Sidebar({className}: SidebarProps) {
           </div>
         ) : null}
       </div>
+       <WorkspaceSwitcher /> 
     </div>
   );
 }

@@ -29,37 +29,8 @@ export function CreateTagDialog() {
       <DialogHeader>
         <Trans message="Add new tag" />
       </DialogHeader>
-      <DialogBody>
-        <CrupdateTagForm
-          formId={formId}
-          form={form}
-          onSubmit={values => {
-            createNewTag.mutate(values, {
-              onSuccess: () => {
-                close();
-              },
-            });
-          }}
-        />
-      </DialogBody>
-      <DialogFooter>
-        <Button
-          onClick={() => {
-            close();
-          }}
-        >
-          <Trans message="Cancel" />
-        </Button>
-        <Button
-          form={formId}
-          disabled={createNewTag.isPending}
-          variant="flat"
-          color="primary"
-          type="submit"
-        >
-          <Trans message="Save" />
-        </Button>
-      </DialogFooter>
+      
+      
     </Dialog>
   );
 }

@@ -123,4 +123,3 @@ Route::group(['prefix' => 'v1'], function() {
     'check',
   ]);
 });
-//end

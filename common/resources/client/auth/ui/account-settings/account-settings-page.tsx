@@ -52,18 +52,18 @@ export function AccountSettingsPage() {
                   <panel.component key={panel.id} user={data.user} />
                 ))}
                 <BasicInfoPanel user={data.user} />
-                <SocialLoginPanel user={data.user} />
+                {/* <SocialLoginPanel user={data.user} /> */}
                 <ChangePasswordPanel />
-                <AccountSettingsPanel
+                {/* <AccountSettingsPanel
                   id={AccountSettingsId.TwoFactor}
                   title={<Trans message="Two factor authentication" />}
                 >
                   <div className="max-w-580">
                     <TwoFactorStepper user={data.user} />
                   </div>
-                </AccountSettingsPanel>
-                <SessionsPanel user={data.user} />
-                <LocalizationPanel user={data.user} />
+                </AccountSettingsPanel> */}
+                {/* <SessionsPanel user={data.user} /> */}
+                {/* <LocalizationPanel user={data.user} /> */}
                 <AccessTokenPanel user={data.user} />
                 <DangerZonePanel />
               </main>

@@ -1434,8 +1434,7 @@ const BaseSiteConfig = {
   },
   homepage: {
     options: [
-      { label: message("Login page"), value: "loginPage" },
-      { label: message("Registration page"), value: "registerPage" }
+      { label: message("Login page"), value: "loginPage" }
     ]
   }
 };
@@ -4601,13 +4600,13 @@ const CustomMenuItem = forwardRef(
 );
 function CookieNotice() {
   const {
-    cookie_notice: { position, enable: enable2 }
+    cookie_notice: { position, enable }
   } = useSettings();
   const [, setCookie] = useCookie("cookie_notice");
   const [alreadyAccepted, setAlreadyAccepted] = useState(() => {
     return !getBootstrapData().show_cookie_notice;
   });
-  if (!enable2 || alreadyAccepted) {
+  if (!enable || alreadyAccepted) {
     return null;
   }
   return /* @__PURE__ */ jsxs(
@@ -5483,8 +5482,8 @@ function FormCheckbox(props) {
   return /* @__PURE__ */ jsx(Checkbox, { ref, ...mergeProps(formProps, props) });
 }
 function useRecaptcha(action) {
-  const { recaptcha: { site_key, enable: enable2 } = {} } = useSettings();
-  const enabled = site_key && (enable2 == null ? void 0 : enable2[action]);
+  const { recaptcha: { site_key, enable } = {} } = useSettings();
+  const enabled = site_key && (enable == null ? void 0 : enable[action]);
   const [isVerifying, setIsVerifying] = useState(false);
   useEffect(() => {
     if (enabled) {
@@ -5542,7 +5541,7 @@ function StaticPageTitle({ children }) {
 function RegisterPage() {
   const {
     branding,
-    registration: { disable: disable2 },
+    registration: { disable },
     social
   } = useSettings();
   const { auth } = useContext(SiteConfigContext);
@@ -5556,7 +5555,7 @@ function RegisterPage() {
     defaultValues: { email: searchParamsEmail }
   });
   const register2 = useRegister(form);
-  if (disable2) {
+  if (disable) {
     return /* @__PURE__ */ jsx(Navigate, { to: "/login", replace: true });
   }
   let heading = /* @__PURE__ */ jsx(Trans, { message: "Create a new account" });
@@ -6370,7 +6369,7 @@ const LightbulbIcon = createSvgIcon(
 function Footer({ className, padding }) {
   const year = (/* @__PURE__ */ new Date()).getFullYear();
   const { branding } = useSettings();
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ jsx(
     "footer",
     {
       className: clsx(
@@ -6378,43 +6377,21 @@ function Footer({ className, padding }) {
         padding ? padding : "pb-28 pt-54 md:pb-54",
         className
       ),
-      children: [
-        /* @__PURE__ */ jsx(Menus, {}),
-        /* @__PURE__ */ jsxs("div", { className: "items-center justify-between gap-30 text-center text-muted md:flex md:text-left", children: [
-          /* @__PURE__ */ jsx(
-            Trans,
-            {
-              message: "Copyright © :year :name, All Rights Reserved",
-              values: { year, name: branding.site_name }
-            }
-          ),
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx(ThemeSwitcher, {}),
-            /* @__PURE__ */ jsx(LocaleSwitcher, {})
-          ] })
+      children: /* @__PURE__ */ jsxs("div", { className: "items-center justify-between gap-30 text-center text-muted md:flex md:text-left", children: [
+        /* @__PURE__ */ jsx(
+          Trans,
+          {
+            message: "Copyright © :year :name, All Rights Reserved",
+            values: { year, name: branding.site_name }
+          }
+        ),
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx(ThemeSwitcher, {}),
+          /* @__PURE__ */ jsx(LocaleSwitcher, {})
         ] })
-      ]
+      ] })
     }
   );
-}
-function Menus() {
-  const settings = useSettings();
-  const primaryMenu = settings.menus.find((m2) => {
-    var _a;
-    return (_a = m2.positions) == null ? void 0 : _a.includes("footer");
-  });
-  const secondaryMenu = settings.menus.find(
-    (m2) => {
-      var _a;
-      return (_a = m2.positions) == null ? void 0 : _a.includes("footer-secondary");
-    }
-  );
-  if (!primaryMenu && !secondaryMenu)
-    return null;
-  return /* @__PURE__ */ jsxs("div", { className: "mb-14 items-center justify-between gap-30 overflow-x-auto border-b pb-14 md:flex", children: [
-    primaryMenu && /* @__PURE__ */ jsx(CustomMenu, { menu: primaryMenu, className: "text-primary" }),
-    secondaryMenu && /* @__PURE__ */ jsx(CustomMenu, { menu: secondaryMenu, className: "mb:mt-0 mt-14 text-muted" })
-  ] });
 }
 function ThemeSwitcher() {
   const { themes } = useSettings();
@@ -6819,12 +6796,6 @@ function LoginPage({ onTwoFactorChallenge }) {
             }
           )
         ]
-      }
-    ),
-    /* @__PURE__ */ jsx(
-      SocialAuthSection,
-      {
-        dividerMessage: social.compact_buttons ? /* @__PURE__ */ jsx(Trans, { message: "Or sign in with" }) : /* @__PURE__ */ jsx(Trans, { message: "OR" })
       }
     )
   ] });
@@ -7254,276 +7225,6 @@ function AccountSettingsPanel({
         ] }),
         /* @__PURE__ */ jsx("div", { className: "pt-24", children }),
         actions && /* @__PURE__ */ jsx("div", { className: "mt-36 flex justify-end border-t pt-10", children: actions })
-      ]
-    }
-  );
-}
-function List({ children, className, padding, dataTestId }) {
-  return /* @__PURE__ */ jsx(FocusScope, { children: /* @__PURE__ */ jsx(
-    "ul",
-    {
-      "data-testid": dataTestId,
-      className: clsx(
-        "text-base outline-none sm:text-sm",
-        className,
-        padding ?? "py-4"
-      ),
-      children
-    }
-  ) });
-}
-const ListItem = forwardRef(
-  ({
-    children,
-    onSelected,
-    borderRadius = "rounded",
-    className,
-    ...listItemProps
-  }, ref) => {
-    const focusManager = useFocusManager();
-    const isSelectable = !!onSelected;
-    const [isActive, setIsActive] = useState(false);
-    const onKeyDown = (e) => {
-      switch (e.key) {
-        case "ArrowDown":
-          e.preventDefault();
-          focusManager == null ? void 0 : focusManager.focusNext();
-          break;
-        case "ArrowUp":
-          e.preventDefault();
-          focusManager == null ? void 0 : focusManager.focusPrevious();
-          break;
-        case "Home":
-          e.preventDefault();
-          focusManager == null ? void 0 : focusManager.focusFirst();
-          break;
-        case "End":
-          e.preventDefault();
-          focusManager == null ? void 0 : focusManager.focusLast();
-          break;
-        case "Enter":
-        case "Space":
-          e.preventDefault();
-          onSelected == null ? void 0 : onSelected();
-          break;
-      }
-    };
-    return /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(
-      ListItemBase,
-      {
-        className: clsx(className, borderRadius),
-        isActive,
-        isDisabled: listItemProps.isDisabled,
-        ...listItemProps,
-        onFocus: (e) => {
-          setIsActive(e.target.matches(":focus-visible"));
-        },
-        onBlur: () => {
-          setIsActive(false);
-        },
-        onClick: () => {
-          onSelected == null ? void 0 : onSelected();
-        },
-        ref,
-        role: isSelectable ? "button" : void 0,
-        onKeyDown: isSelectable ? onKeyDown : void 0,
-        tabIndex: isSelectable && !listItemProps.isDisabled ? 0 : void 0,
-        children
-      }
-    ) });
-  }
-);
-const LoginIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M11 7 9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z" }),
-  "LoginOutlined"
-);
-const LockIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }),
-  "LockOutlined"
-);
-const PhonelinkLockIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M19 1H9c-1.1 0-2 .9-2 2v3h2V4h10v16H9v-2H7v3c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm-8.2 10V9.5C10.8 8.1 9.4 7 8 7S5.2 8.1 5.2 9.5V11c-.6 0-1.2.6-1.2 1.2v3.5c0 .7.6 1.3 1.2 1.3h5.5c.7 0 1.3-.6 1.3-1.2v-3.5c0-.7-.6-1.3-1.2-1.3zm-1.3 0h-3V9.5c0-.8.7-1.3 1.5-1.3s1.5.5 1.5 1.3V11z" }),
-  "PhonelinkLockOutlined"
-);
-const ApiIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "m14 12-2 2-2-2 2-2 2 2zm-2-6 2.12 2.12 2.5-2.5L12 1 7.38 5.62l2.5 2.5L12 6zm-6 6 2.12-2.12-2.5-2.5L1 12l4.62 4.62 2.5-2.5L6 12zm12 0-2.12 2.12 2.5 2.5L23 12l-4.62-4.62-2.5 2.5L18 12zm-6 6-2.12-2.12-2.5 2.5L12 23l4.62-4.62-2.5-2.5L12 18z" }),
-  "ApiOutlined"
-);
-const DangerousIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3zM19 14.9 14.9 19H9.1L5 14.9V9.1L9.1 5h5.8L19 9.1v5.8zm-4.17-7.14L12 10.59 9.17 7.76 7.76 9.17 10.59 12l-2.83 2.83 1.41 1.41L12 13.41l2.83 2.83 1.41-1.41L13.41 12l2.83-2.83-1.41-1.41z" }),
-  "DangerousOutlined"
-);
-const DevicesIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6zm19 2h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z" }),
-  "DevicesOutlined"
-);
-var AccountSettingsId = /* @__PURE__ */ ((AccountSettingsId2) => {
-  AccountSettingsId2["AccountDetails"] = "account-details";
-  AccountSettingsId2["SocialLogin"] = "social-login";
-  AccountSettingsId2["Password"] = "password";
-  AccountSettingsId2["TwoFactor"] = "two-factor";
-  AccountSettingsId2["LocationAndLanguage"] = "location-and-language";
-  AccountSettingsId2["Developers"] = "developers";
-  AccountSettingsId2["DeleteAccount"] = "delete-account";
-  AccountSettingsId2["Sessions"] = "sessions";
-  return AccountSettingsId2;
-})(AccountSettingsId || {});
-function AccountSettingsSidenav() {
-  var _a;
-  const p = AccountSettingsId;
-  const { hasPermission } = useAuth();
-  const { api, social } = useSettings();
-  const { auth } = useContext(SiteConfigContext);
-  const socialEnabled = (social == null ? void 0 : social.envato) || (social == null ? void 0 : social.google) || (social == null ? void 0 : social.facebook) || (social == null ? void 0 : social.twitter);
-  return /* @__PURE__ */ jsx("aside", { className: "sticky top-10 hidden flex-shrink-0 lg:block", children: /* @__PURE__ */ jsxs(List, { padding: "p-0", children: [
-    (_a = auth.accountSettingsPanels) == null ? void 0 : _a.map((panel) => /* @__PURE__ */ jsx(
-      Item,
-      {
-        icon: /* @__PURE__ */ jsx(panel.icon, { viewBox: "0 0 50 50" }),
-        panel: panel.id,
-        children: /* @__PURE__ */ jsx(Trans, { ...panel.label })
-      },
-      panel.id
-    )),
-    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(PersonIcon, {}), panel: p.AccountDetails, children: /* @__PURE__ */ jsx(Trans, { message: "Account details" }) }),
-    socialEnabled && /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(LoginIcon, {}), panel: p.SocialLogin, children: /* @__PURE__ */ jsx(Trans, { message: "Social login" }) }),
-    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(LockIcon, {}), panel: p.Password, children: /* @__PURE__ */ jsx(Trans, { message: "Password" }) }),
-    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(PhonelinkLockIcon, {}), panel: p.TwoFactor, children: /* @__PURE__ */ jsx(Trans, { message: "Two factor authentication" }) }),
-    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(DevicesIcon, {}), panel: p.Sessions, children: /* @__PURE__ */ jsx(Trans, { message: "Active sessions" }) }),
-    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(LanguageIcon, {}), panel: p.LocationAndLanguage, children: /* @__PURE__ */ jsx(Trans, { message: "Location and language" }) }),
-    (api == null ? void 0 : api.integrated) && hasPermission("api.access") ? /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(ApiIcon, {}), panel: p.Developers, children: /* @__PURE__ */ jsx(Trans, { message: "Developers" }) }) : null,
-    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(DangerousIcon, {}), panel: p.DeleteAccount, children: /* @__PURE__ */ jsx(Trans, { message: "Delete account" }) })
-  ] }) });
-}
-function Item({ children, icon, isLast, panel }) {
-  return /* @__PURE__ */ jsx(
-    ListItem,
-    {
-      startIcon: icon,
-      className: isLast ? void 0 : "mb-10",
-      onSelected: () => {
-        const panelEl = document.querySelector(`#${panel}`);
-        if (panelEl) {
-          panelEl.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        }
-      },
-      children
-    }
-  );
-}
-function SocialLoginPanel({ user }) {
-  return /* @__PURE__ */ jsxs(
-    AccountSettingsPanel,
-    {
-      id: AccountSettingsId.SocialLogin,
-      title: /* @__PURE__ */ jsx(Trans, { message: "Manage social login" }),
-      children: [
-        /* @__PURE__ */ jsx(
-          SocialLoginPanelRow,
-          {
-            icon: /* @__PURE__ */ jsx(
-              EnvatoIcon,
-              {
-                viewBox: "0 0 50 50",
-                className: "border-envato bg-envato text-white"
-              }
-            ),
-            service: "envato",
-            user
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          SocialLoginPanelRow,
-          {
-            icon: /* @__PURE__ */ jsx(GoogleIcon, { viewBox: "0 0 48 48" }),
-            service: "google",
-            user
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          SocialLoginPanelRow,
-          {
-            icon: /* @__PURE__ */ jsx(FacebookIcon, { className: "text-facebook" }),
-            service: "facebook",
-            user
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          SocialLoginPanelRow,
-          {
-            icon: /* @__PURE__ */ jsx(TwitterIcon, { className: "text-twitter" }),
-            service: "twitter",
-            user
-          }
-        ),
-        /* @__PURE__ */ jsx("div", { className: "pb-6 pt-16 text-sm text-muted", children: /* @__PURE__ */ jsx(Trans, { message: "If you disable social logins, you'll still be able to log in using your email and password." }) })
-      ]
-    }
-  );
-}
-function SocialLoginPanelRow({
-  service,
-  user,
-  className,
-  icon
-}) {
-  var _a, _b, _c;
-  const { social } = useSettings();
-  const { connectSocial, disconnectSocial } = useSocialLogin();
-  const username = (_b = (_a = user == null ? void 0 : user.social_profiles) == null ? void 0 : _a.find((s) => s.service_name === service)) == null ? void 0 : _b.username;
-  if (!((_c = social == null ? void 0 : social[service]) == null ? void 0 : _c.enable)) {
-    return null;
-  }
-  return /* @__PURE__ */ jsxs(
-    "div",
-    {
-      className: clsx(
-        "flex items-center gap-14 border-b px-10 py-20",
-        className
-      ),
-      children: [
-        cloneElement(icon, {
-          size: "xl",
-          className: clsx(icon.props.className, "border p-8 rounded")
-        }),
-        /* @__PURE__ */ jsxs("div", { className: "mr-auto overflow-hidden text-ellipsis whitespace-nowrap", children: [
-          /* @__PURE__ */ jsx("div", { className: "overflow-hidden text-ellipsis text-sm font-bold first-letter:capitalize", children: /* @__PURE__ */ jsx(Trans, { message: ":service account", values: { service } }) }),
-          /* @__PURE__ */ jsx("div", { className: "mt-2 text-xs", children: username || /* @__PURE__ */ jsx(Trans, { message: "Disabled" }) })
-        ] }),
-        /* @__PURE__ */ jsx(
-          Button,
-          {
-            disabled: disconnectSocial.isPending,
-            size: "xs",
-            variant: "outline",
-            color: username ? "danger" : "primary",
-            onClick: async () => {
-              if (username) {
-                disconnectSocial.mutate(
-                  { service },
-                  {
-                    onSuccess: () => {
-                      queryClient.invalidateQueries({ queryKey: ["users"] });
-                      toast(
-                        message("Disabled :service account", { values: { service } })
-                      );
-                    }
-                  }
-                );
-              } else {
-                const e = await connectSocial(service);
-                if ((e == null ? void 0 : e.status) === "SUCCESS") {
-                  queryClient.invalidateQueries({ queryKey: ["users"] });
-                  toast(message("Enabled :service account", { values: { service } }));
-                }
-              }
-            },
-            children: username ? /* @__PURE__ */ jsx(Trans, { message: "Disable" }) : /* @__PURE__ */ jsx(Trans, { message: "Enable" })
-          }
-        )
       ]
     }
   );
@@ -9015,6 +8716,141 @@ function FormImageSelector(props) {
   };
   return /* @__PURE__ */ jsx(ImageSelector, { ...mergeProps(formProps, props) });
 }
+function List({ children, className, padding, dataTestId }) {
+  return /* @__PURE__ */ jsx(FocusScope, { children: /* @__PURE__ */ jsx(
+    "ul",
+    {
+      "data-testid": dataTestId,
+      className: clsx(
+        "text-base outline-none sm:text-sm",
+        className,
+        padding ?? "py-4"
+      ),
+      children
+    }
+  ) });
+}
+const ListItem = forwardRef(
+  ({
+    children,
+    onSelected,
+    borderRadius = "rounded",
+    className,
+    ...listItemProps
+  }, ref) => {
+    const focusManager = useFocusManager();
+    const isSelectable = !!onSelected;
+    const [isActive, setIsActive] = useState(false);
+    const onKeyDown = (e) => {
+      switch (e.key) {
+        case "ArrowDown":
+          e.preventDefault();
+          focusManager == null ? void 0 : focusManager.focusNext();
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          focusManager == null ? void 0 : focusManager.focusPrevious();
+          break;
+        case "Home":
+          e.preventDefault();
+          focusManager == null ? void 0 : focusManager.focusFirst();
+          break;
+        case "End":
+          e.preventDefault();
+          focusManager == null ? void 0 : focusManager.focusLast();
+          break;
+        case "Enter":
+        case "Space":
+          e.preventDefault();
+          onSelected == null ? void 0 : onSelected();
+          break;
+      }
+    };
+    return /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(
+      ListItemBase,
+      {
+        className: clsx(className, borderRadius),
+        isActive,
+        isDisabled: listItemProps.isDisabled,
+        ...listItemProps,
+        onFocus: (e) => {
+          setIsActive(e.target.matches(":focus-visible"));
+        },
+        onBlur: () => {
+          setIsActive(false);
+        },
+        onClick: () => {
+          onSelected == null ? void 0 : onSelected();
+        },
+        ref,
+        role: isSelectable ? "button" : void 0,
+        onKeyDown: isSelectable ? onKeyDown : void 0,
+        tabIndex: isSelectable && !listItemProps.isDisabled ? 0 : void 0,
+        children
+      }
+    ) });
+  }
+);
+const ApiIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "m14 12-2 2-2-2 2-2 2 2zm-2-6 2.12 2.12 2.5-2.5L12 1 7.38 5.62l2.5 2.5L12 6zm-6 6 2.12-2.12-2.5-2.5L1 12l4.62 4.62 2.5-2.5L6 12zm12 0-2.12 2.12 2.5 2.5L23 12l-4.62-4.62-2.5 2.5L18 12zm-6 6-2.12-2.12-2.5 2.5L12 23l4.62-4.62-2.5-2.5L12 18z" }),
+  "ApiOutlined"
+);
+const DangerousIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3zM19 14.9 14.9 19H9.1L5 14.9V9.1L9.1 5h5.8L19 9.1v5.8zm-4.17-7.14L12 10.59 9.17 7.76 7.76 9.17 10.59 12l-2.83 2.83 1.41 1.41L12 13.41l2.83 2.83 1.41-1.41L13.41 12l2.83-2.83-1.41-1.41z" }),
+  "DangerousOutlined"
+);
+var AccountSettingsId = /* @__PURE__ */ ((AccountSettingsId2) => {
+  AccountSettingsId2["AccountDetails"] = "account-details";
+  AccountSettingsId2["SocialLogin"] = "social-login";
+  AccountSettingsId2["Password"] = "password";
+  AccountSettingsId2["TwoFactor"] = "two-factor";
+  AccountSettingsId2["LocationAndLanguage"] = "location-and-language";
+  AccountSettingsId2["Developers"] = "developers";
+  AccountSettingsId2["DeleteAccount"] = "delete-account";
+  AccountSettingsId2["Sessions"] = "sessions";
+  return AccountSettingsId2;
+})(AccountSettingsId || {});
+function AccountSettingsSidenav() {
+  var _a;
+  const p = AccountSettingsId;
+  const { hasPermission } = useAuth();
+  const { api, social } = useSettings();
+  const { auth } = useContext(SiteConfigContext);
+  (social == null ? void 0 : social.envato) || (social == null ? void 0 : social.google) || (social == null ? void 0 : social.facebook) || (social == null ? void 0 : social.twitter);
+  return /* @__PURE__ */ jsx("aside", { className: "sticky top-10 hidden flex-shrink-0 lg:block", children: /* @__PURE__ */ jsxs(List, { padding: "p-0", children: [
+    (_a = auth.accountSettingsPanels) == null ? void 0 : _a.map((panel) => /* @__PURE__ */ jsx(
+      Item,
+      {
+        icon: /* @__PURE__ */ jsx(panel.icon, { viewBox: "0 0 50 50" }),
+        panel: panel.id,
+        children: /* @__PURE__ */ jsx(Trans, { ...panel.label })
+      },
+      panel.id
+    )),
+    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(PersonIcon, {}), panel: p.AccountDetails, children: /* @__PURE__ */ jsx(Trans, { message: "Account details" }) }),
+    (api == null ? void 0 : api.integrated) && hasPermission("api.access") ? /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(ApiIcon, {}), panel: p.Developers, children: /* @__PURE__ */ jsx(Trans, { message: "Developers" }) }) : null,
+    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(DangerousIcon, {}), panel: p.DeleteAccount, children: /* @__PURE__ */ jsx(Trans, { message: "Delete account" }) })
+  ] }) });
+}
+function Item({ children, icon, isLast, panel }) {
+  return /* @__PURE__ */ jsx(
+    ListItem,
+    {
+      startIcon: icon,
+      className: isLast ? void 0 : "mb-10",
+      onSelected: () => {
+        const panelEl = document.querySelector(`#${panel}`);
+        if (panelEl) {
+          panelEl.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+      },
+      children
+    }
+  );
+}
 function BasicInfoPanel({ user }) {
   const uploadAvatar = useUploadAvatar({ user });
   const removeAvatar2 = useRemoveAvatar({ user });
@@ -9178,475 +9014,6 @@ function ChangePasswordPanel() {
     }
   );
 }
-function ComboboxEndAdornment({ isLoading, icon }) {
-  const timeout = useRef(null);
-  const { trans } = useTrans();
-  const [showLoading, setShowLoading] = useState(false);
-  const {
-    state: { isOpen, inputValue }
-  } = useListboxContext();
-  const lastInputValue = useRef(inputValue);
-  useEffect(() => {
-    if (isLoading && !showLoading) {
-      if (timeout.current === null) {
-        timeout.current = setTimeout(() => {
-          setShowLoading(true);
-        }, 500);
-      }
-      if (inputValue !== lastInputValue.current) {
-        clearTimeout(timeout.current);
-        timeout.current = setTimeout(() => {
-          setShowLoading(true);
-        }, 500);
-      }
-    } else if (!isLoading) {
-      setShowLoading(false);
-      clearTimeout(timeout.current);
-      timeout.current = null;
-    }
-    lastInputValue.current = inputValue;
-  }, [isLoading, showLoading, inputValue]);
-  const showLoadingIndicator = showLoading && (isOpen || isLoading);
-  if (showLoadingIndicator) {
-    return /* @__PURE__ */ jsx(
-      ProgressCircle,
-      {
-        "aria-label": trans({ message: "Loading" }),
-        size: "sm",
-        isIndeterminate: true
-      }
-    );
-  }
-  return icon || /* @__PURE__ */ jsx(KeyboardArrowDownIcon, {});
-}
-function ComboBox(props, ref) {
-  var _a;
-  const {
-    children,
-    items,
-    isAsync,
-    isLoading,
-    openMenuOnFocus = true,
-    endAdornmentIcon,
-    onItemSelected,
-    maxItems,
-    clearInputOnItemSelection,
-    inputValue: userInputValue,
-    selectedValue,
-    onSelectionChange,
-    allowCustomValue = false,
-    onInputValueChange,
-    defaultInputValue,
-    selectionMode = "single",
-    useOptionLabelAsInputValue,
-    showEmptyMessage,
-    floatingMaxHeight,
-    hideEndAdornment = false,
-    blurReferenceOnItemSelection,
-    isOpen: propsIsOpen,
-    onOpenChange: propsOnOpenChange,
-    prependListbox,
-    listboxClassName,
-    onEndAdornmentClick,
-    autoFocusFirstItem = true,
-    ...textFieldProps
-  } = props;
-  const listbox = useListbox(
-    {
-      ...props,
-      floatingMaxHeight,
-      blurReferenceOnItemSelection,
-      selectionMode,
-      role: "listbox",
-      virtualFocus: true,
-      clearSelectionOnInputClear: true
-    },
-    ref
-  );
-  const {
-    reference,
-    listboxId,
-    onInputChange,
-    state: {
-      isOpen,
-      setIsOpen,
-      inputValue,
-      setInputValue,
-      selectValues,
-      selectedValues,
-      setActiveCollection
-    },
-    collection
-  } = listbox;
-  const textLabel = selectedValues[0] ? (_a = collection.get(selectedValues[0])) == null ? void 0 : _a.textLabel : void 0;
-  const { handleListboxSearchFieldKeydown } = useListboxKeyboardNavigation(listbox);
-  const handleFocusAndClick = createEventHandler(
-    (e) => {
-      if (openMenuOnFocus && !isOpen) {
-        setIsOpen(true);
-      }
-      e.target.select();
-    }
-  );
-  return /* @__PURE__ */ jsx(
-    Listbox,
-    {
-      prepend: prependListbox,
-      className: listboxClassName,
-      listbox,
-      mobileOverlay: Popover,
-      isLoading,
-      onPointerDown: (e) => {
-        e.preventDefault();
-      },
-      children: /* @__PURE__ */ jsx(
-        TextField,
-        {
-          inputRef: reference,
-          ...textFieldProps,
-          endAdornment: !hideEndAdornment ? /* @__PURE__ */ jsx(
-            IconButton,
-            {
-              size: "md",
-              tabIndex: -1,
-              disabled: textFieldProps.disabled,
-              className: "pointer-events-auto",
-              onPointerDown: (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (onEndAdornmentClick) {
-                  onEndAdornmentClick();
-                } else {
-                  setActiveCollection("all");
-                  setIsOpen(!isOpen);
-                }
-              },
-              children: /* @__PURE__ */ jsx(
-                ComboboxEndAdornment,
-                {
-                  isLoading,
-                  icon: endAdornmentIcon
-                }
-              )
-            }
-          ) : null,
-          "aria-expanded": isOpen ? "true" : "false",
-          "aria-haspopup": "listbox",
-          "aria-controls": isOpen ? listboxId : void 0,
-          "aria-autocomplete": "list",
-          autoComplete: "off",
-          autoCorrect: "off",
-          spellCheck: "false",
-          onChange: onInputChange,
-          value: useOptionLabelAsInputValue && textLabel ? textLabel : inputValue,
-          onBlur: (e) => {
-            if (allowCustomValue) {
-              selectValues(e.target.value);
-            } else if (!clearInputOnItemSelection) {
-              const val = selectedValues[0];
-              setInputValue(selectValues.length && val != null ? `${val}` : "");
-            }
-          },
-          onFocus: handleFocusAndClick,
-          onClick: handleFocusAndClick,
-          onKeyDown: (e) => handleListboxSearchFieldKeydown(e)
-        }
-      )
-    }
-  );
-}
-const ComboBoxForwardRef = React.forwardRef(ComboBox);
-function Select(props, ref) {
-  const isMobile = useIsMobileMediaQuery();
-  const {
-    hideCaret,
-    placeholder = /* @__PURE__ */ jsx(Trans, { message: "Select an option..." }),
-    selectedValue,
-    onItemSelected,
-    onOpenChange,
-    onInputValueChange,
-    onSelectionChange,
-    selectionMode,
-    minWidth = "min-w-128",
-    children,
-    searchPlaceholder,
-    showEmptyMessage,
-    showSearchField,
-    defaultInputValue,
-    inputValue: userInputValue,
-    isLoading,
-    isAsync,
-    valueClassName,
-    floatingWidth = isMobile ? "auto" : "matchTrigger",
-    ...inputFieldProps
-  } = props;
-  const listbox = useListbox(
-    {
-      ...props,
-      clearInputOnItemSelection: true,
-      showEmptyMessage: showEmptyMessage || showSearchField,
-      floatingWidth,
-      selectionMode: "single",
-      role: "listbox",
-      virtualFocus: showSearchField
-    },
-    ref
-  );
-  const {
-    state: {
-      selectedValues,
-      isOpen,
-      setIsOpen,
-      activeIndex,
-      setSelectedIndex,
-      inputValue,
-      setInputValue
-    },
-    collections,
-    focusItem,
-    listboxId,
-    reference,
-    refs,
-    listContent,
-    onInputChange
-  } = listbox;
-  const { fieldProps, inputProps } = useField({
-    ...inputFieldProps,
-    focusRef: refs.reference
-  });
-  const selectedOption = collections.collection.get(selectedValues[0]);
-  const content2 = selectedOption ? /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-10", children: [
-    selectedOption.element.props.startIcon,
-    /* @__PURE__ */ jsx(
-      "span",
-      {
-        className: clsx(
-          "overflow-hidden overflow-ellipsis whitespace-nowrap",
-          valueClassName
-        ),
-        children: selectedOption.element.props.children
-      }
-    )
-  ] }) : /* @__PURE__ */ jsx("span", { className: "italic", children: placeholder });
-  const fieldClassNames = getInputFieldClassNames({
-    ...props,
-    endAdornment: true
-  });
-  const {
-    handleTriggerKeyDown,
-    handleListboxKeyboardNavigation,
-    handleListboxSearchFieldKeydown
-  } = useListboxKeyboardNavigation(listbox);
-  const { findMatchingItem } = useTypeSelect();
-  const handleListboxTypeSelect = (e) => {
-    if (!isOpen)
-      return;
-    const i = findMatchingItem(e, listContent, activeIndex);
-    if (i != null) {
-      focusItem("increment", i);
-    }
-  };
-  const handleTriggerTypeSelect = (e) => {
-    if (isOpen)
-      return void 0;
-    const i = findMatchingItem(e, listContent, activeIndex);
-    if (i != null) {
-      setSelectedIndex(i);
-    }
-  };
-  return /* @__PURE__ */ jsx(
-    Listbox,
-    {
-      listbox,
-      onKeyDownCapture: !showSearchField ? handleListboxTypeSelect : void 0,
-      onKeyDown: handleListboxKeyboardNavigation,
-      onClose: showSearchField ? () => setInputValue("") : void 0,
-      isLoading,
-      searchField: showSearchField && /* @__PURE__ */ jsx(
-        TextField,
-        {
-          size: props.size === "xs" || props.size === "sm" ? "xs" : "sm",
-          placeholder: searchPlaceholder,
-          startAdornment: /* @__PURE__ */ jsx(SearchIcon, {}),
-          className: "flex-shrink-0 px-8 pb-8 pt-4",
-          autoFocus: true,
-          "aria-expanded": isOpen ? "true" : "false",
-          "aria-haspopup": "listbox",
-          "aria-controls": isOpen ? listboxId : void 0,
-          "aria-autocomplete": "list",
-          autoComplete: "off",
-          autoCorrect: "off",
-          spellCheck: "false",
-          value: inputValue,
-          onChange: onInputChange,
-          onKeyDown: (e) => {
-            handleListboxSearchFieldKeydown(e);
-          }
-        }
-      ),
-      children: /* @__PURE__ */ jsx(
-        Field,
-        {
-          fieldClassNames,
-          ...fieldProps,
-          endAdornment: !hideCaret && /* @__PURE__ */ jsx(ComboboxEndAdornment, { isLoading }),
-          children: /* @__PURE__ */ jsx(
-            "button",
-            {
-              ...inputProps,
-              type: "button",
-              "data-selected-value": selectedOption == null ? void 0 : selectedOption.value,
-              "aria-expanded": isOpen ? "true" : "false",
-              "aria-haspopup": "listbox",
-              "aria-controls": isOpen ? listboxId : void 0,
-              ref: reference,
-              onKeyDown: handleTriggerKeyDown,
-              onKeyDownCapture: !showSearchField ? handleTriggerTypeSelect : void 0,
-              disabled: inputFieldProps.disabled,
-              onClick: () => {
-                setIsOpen(!isOpen);
-              },
-              className: clsx(
-                fieldClassNames.input,
-                !fieldProps.unstyled && minWidth
-              ),
-              children: content2
-            }
-          )
-        }
-      )
-    }
-  );
-}
-const SelectForwardRef = React.forwardRef(Select);
-function FormSelect({
-  children,
-  ...props
-}) {
-  const {
-    field: { onChange, onBlur, value = null, ref },
-    fieldState: { invalid, error }
-  } = useController({
-    name: props.name
-  });
-  const formProps = {
-    onSelectionChange: onChange,
-    onBlur,
-    selectedValue: value,
-    invalid,
-    errorMessage: error == null ? void 0 : error.message,
-    name: props.name
-  };
-  const errorMessage = props.errorMessage || (error == null ? void 0 : error.message);
-  return /* @__PURE__ */ jsx(
-    SelectForwardRef,
-    {
-      ref,
-      ...mergeProps(formProps, props, { errorMessage }),
-      children
-    }
-  );
-}
-function TimezoneSelect({
-  name,
-  size: size2,
-  timezones,
-  label,
-  ...selectProps
-}) {
-  const { trans } = useTrans();
-  return /* @__PURE__ */ jsx(
-    FormSelect,
-    {
-      selectionMode: "single",
-      name,
-      size: size2,
-      label,
-      showSearchField: true,
-      searchPlaceholder: trans(message("Search timezones")),
-      ...selectProps,
-      children: Object.entries(timezones).map(([sectionName, sectionItems]) => /* @__PURE__ */ jsx(Section, { label: sectionName, children: sectionItems.map((timezone) => /* @__PURE__ */ jsx(Item$1, { value: timezone.value, children: timezone.text }, timezone.value)) }, sectionName))
-    }
-  );
-}
-function LocalizationPanel({ user }) {
-  const formId = useId();
-  const { trans } = useTrans();
-  const form = useForm({
-    defaultValues: {
-      language: user.language || "",
-      country: user.country || "",
-      timezone: user.timezone || getLocalTimeZone()
-    }
-  });
-  const updateDetails = useUpdateAccountDetails(form);
-  const changeLocale2 = useChangeLocale();
-  const { data } = useValueLists(["timezones", "countries", "localizations"]);
-  const countries = (data == null ? void 0 : data.countries) || [];
-  const localizations = (data == null ? void 0 : data.localizations) || [];
-  const timezones = (data == null ? void 0 : data.timezones) || {};
-  return /* @__PURE__ */ jsx(
-    AccountSettingsPanel,
-    {
-      id: AccountSettingsId.LocationAndLanguage,
-      title: /* @__PURE__ */ jsx(Trans, { message: "Date, time and language" }),
-      actions: /* @__PURE__ */ jsx(
-        Button,
-        {
-          type: "submit",
-          variant: "flat",
-          color: "primary",
-          form: formId,
-          disabled: updateDetails.isPending || !form.formState.isValid,
-          children: /* @__PURE__ */ jsx(Trans, { message: "Save" })
-        }
-      ),
-      children: /* @__PURE__ */ jsxs(
-        Form,
-        {
-          form,
-          onSubmit: (newDetails) => {
-            updateDetails.mutate(newDetails);
-            changeLocale2.mutate({ locale: newDetails.language });
-          },
-          id: formId,
-          children: [
-            /* @__PURE__ */ jsx(
-              FormSelect,
-              {
-                className: "mb-24",
-                selectionMode: "single",
-                name: "language",
-                label: /* @__PURE__ */ jsx(Trans, { message: "Language" }),
-                children: localizations.map((localization) => /* @__PURE__ */ jsx(Item$1, { value: localization.language, children: localization.name }, localization.language))
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              FormSelect,
-              {
-                className: "mb-24",
-                selectionMode: "single",
-                name: "country",
-                label: /* @__PURE__ */ jsx(Trans, { message: "Country" }),
-                showSearchField: true,
-                searchPlaceholder: trans(message("Search countries")),
-                children: countries.map((country) => /* @__PURE__ */ jsx(Item$1, { value: country.code, children: country.name }, country.code))
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              TimezoneSelect,
-              {
-                label: /* @__PURE__ */ jsx(Trans, { message: "Timezone" }),
-                name: "timezone",
-                timezones
-              }
-            )
-          ]
-        }
-      )
-    }
-  );
-}
 function useDateFormatter(options) {
   const lastOptions = useRef(
     null
@@ -9693,7 +9060,7 @@ function ConfirmationDialog({
   className,
   title,
   body,
-  confirm: confirm2,
+  confirm,
   isDanger,
   isLoading,
   onConfirm
@@ -9732,7 +9099,7 @@ function ConfirmationDialog({
               close(true);
             }
           },
-          children: confirm2
+          children: confirm
         }
       )
     ] })
@@ -9980,546 +9347,6 @@ function DangerZonePanel() {
     }
   );
 }
-function useEnableTwoFactor() {
-  return useMutation({
-    mutationFn: enable,
-    onError: (r2) => showHttpErrorToast(r2)
-  });
-}
-function enable() {
-  return apiClient.post("auth/user/two-factor-authentication").then((response) => response.data);
-}
-function TwoFactorStepperLayout({
-  title,
-  subtitle,
-  description,
-  actions,
-  children
-}) {
-  if (!subtitle) {
-    subtitle = /* @__PURE__ */ jsx(Trans, { message: "When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application." });
-  }
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx("div", { className: "text-base font-medium mb-16", children: title }),
-    /* @__PURE__ */ jsx("div", { className: "text-sm mb-24", children: subtitle }),
-    /* @__PURE__ */ jsx("p", { className: "text-sm font-medium my-16", children: description }),
-    children,
-    /* @__PURE__ */ jsx("div", { className: "flex items-center gap-12", children: actions })
-  ] });
-}
-function usePasswordConfirmationStatus() {
-  return useQuery({
-    queryKey: ["password-confirmation-status"],
-    queryFn: () => fetchStatus()
-  });
-}
-function fetchStatus() {
-  return apiClient.get("auth/user/confirmed-password-status", { params: { seconds: 9e3 } }).then((response) => response.data);
-}
-function setPasswordConfirmationStatus(confirmed) {
-  queryClient.setQueryData(["password-confirmation-status"], { confirmed });
-}
-function useConfirmPassword(form) {
-  return useMutation({
-    mutationFn: (payload) => confirm$1(payload),
-    onError: (r2) => onFormQueryError(r2, form)
-  });
-}
-function confirm$1(payload) {
-  return apiClient.post("auth/user/confirm-password", payload).then((response) => response.data);
-}
-function ConfirmPasswordDialog() {
-  const { close, formId } = useDialogContext();
-  const form = useForm();
-  const confirmPassword = useConfirmPassword(form);
-  return /* @__PURE__ */ jsxs(Dialog, { children: [
-    /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(Trans, { message: "Confirm password" }) }),
-    /* @__PURE__ */ jsxs(DialogBody, { children: [
-      /* @__PURE__ */ jsx("p", { className: "text-sm mb-16", children: /* @__PURE__ */ jsx(Trans, { message: "For your security, please confirm your password to continue." }) }),
-      /* @__PURE__ */ jsx(
-        Form,
-        {
-          id: formId,
-          form,
-          onSubmit: (values) => confirmPassword.mutate(values, {
-            onSuccess: () => close(values.password)
-          }),
-          children: /* @__PURE__ */ jsx(
-            FormTextField,
-            {
-              name: "password",
-              label: /* @__PURE__ */ jsx(Trans, { message: "Password" }),
-              type: "password",
-              required: true,
-              autoFocus: true
-            }
-          )
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsxs(DialogFooter, { children: [
-      /* @__PURE__ */ jsx(Button, { onClick: () => close(), children: /* @__PURE__ */ jsx(Trans, { message: "Cancel" }) }),
-      /* @__PURE__ */ jsx(
-        Button,
-        {
-          type: "submit",
-          variant: "flat",
-          color: "primary",
-          form: formId,
-          disabled: confirmPassword.isPending,
-          children: /* @__PURE__ */ jsx(Trans, { message: "Confirm" })
-        }
-      )
-    ] })
-  ] });
-}
-function usePasswordConfirmedAction({ needsPassword } = {}) {
-  const { data, isLoading } = usePasswordConfirmationStatus();
-  const passwordRef = useRef();
-  const withConfirmedPassword = useCallback(
-    async (action) => {
-      if ((data == null ? void 0 : data.confirmed) && (passwordRef.current || !needsPassword)) {
-        action(passwordRef.current);
-      } else {
-        const password = await openDialog(ConfirmPasswordDialog);
-        if (password) {
-          passwordRef.current = password;
-          setPasswordConfirmationStatus(true);
-          action(passwordRef.current);
-        }
-      }
-    },
-    [data == null ? void 0 : data.confirmed, needsPassword]
-  );
-  return {
-    isLoading,
-    withConfirmedPassword
-  };
-}
-function TwoFactorDisabledStep({ onEnabled }) {
-  const enableTwoFactor = useEnableTwoFactor();
-  const { withConfirmedPassword, isLoading: confirmPasswordIsLoading } = usePasswordConfirmedAction();
-  const isLoading = enableTwoFactor.isPending || confirmPasswordIsLoading;
-  return /* @__PURE__ */ jsx(
-    TwoFactorStepperLayout,
-    {
-      title: /* @__PURE__ */ jsx(Trans, { message: "You have not enabled two factor authentication." }),
-      actions: /* @__PURE__ */ jsx(
-        Button,
-        {
-          variant: "flat",
-          color: "primary",
-          disabled: isLoading,
-          onClick: () => {
-            withConfirmedPassword(() => {
-              enableTwoFactor.mutate(void 0, {
-                onSuccess: onEnabled
-              });
-            });
-          },
-          children: /* @__PURE__ */ jsx(Trans, { message: "Enable" })
-        }
-      )
-    }
-  );
-}
-function useTwoFactorQrCode() {
-  return useQuery({
-    queryKey: ["two-factor-qr-code"],
-    queryFn: () => fetchCode()
-  });
-}
-function fetchCode() {
-  return apiClient.get("auth/user/two-factor/qr-code").then((response) => response.data);
-}
-function useConfirmTwoFactor(form) {
-  return useMutation({
-    mutationFn: (payload) => confirm(payload),
-    onError: (r2) => onFormQueryError(r2, form)
-  });
-}
-function confirm(payload) {
-  return apiClient.post("auth/user/confirmed-two-factor-authentication", payload).then((response) => response.data);
-}
-function Skeleton({
-  variant = "text",
-  animation = "wave",
-  size: size2,
-  className,
-  display = "block",
-  radius = "rounded"
-}) {
-  return /* @__PURE__ */ jsx(
-    "span",
-    {
-      className: clsx(
-        "overflow-hidden relative bg-fg-base/4 bg-no-repeat will-change-transform skeleton",
-        radius,
-        skeletonSize({ variant, size: size2 }),
-        display,
-        variant === "text" && "scale-y-[0.6] origin-[0_55%]",
-        variant === "avatar" && "flex-shrink-0",
-        variant === "icon" && "mx-8 flex-shrink-0",
-        animation === "wave" && "skeleton-wave",
-        animation === "pulsate" && "skeleton-pulsate",
-        className
-      ),
-      "aria-busy": true,
-      "aria-live": "polite"
-    }
-  );
-}
-function skeletonSize({ variant, size: size2 }) {
-  if (size2) {
-    return size2;
-  }
-  switch (variant) {
-    case "avatar":
-      return "h-40 w-40";
-    case "icon":
-      return "h-24 h-24";
-    case "rect":
-      return "h-full w-full";
-    default:
-      return "w-full";
-  }
-}
-function useDisableTwoFactor() {
-  return useMutation({
-    mutationFn: disable,
-    onError: (r2) => showHttpErrorToast(r2)
-  });
-}
-function disable() {
-  return apiClient.delete("auth/user/two-factor-authentication").then((response) => response.data);
-}
-function TwoFactorConfirmationStep(props) {
-  const { data } = useTwoFactorQrCode();
-  return /* @__PURE__ */ jsxs(
-    TwoFactorStepperLayout,
-    {
-      title: /* @__PURE__ */ jsx(Trans, { message: "Finish enabling two factor authentication." }),
-      description: /* @__PURE__ */ jsx(Trans, { message: "To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code." }),
-      children: [
-        /* @__PURE__ */ jsx(AnimatePresence, { initial: false, children: !data ? /* @__PURE__ */ jsx(
-          QrCodeLayout,
-          {
-            animationKey: "svg-skeleton",
-            svg: /* @__PURE__ */ jsx(Skeleton, { variant: "rect", size: "w-full h-full" }),
-            secret: /* @__PURE__ */ jsx(Skeleton, { variant: "text", className: "max-w-224" })
-          }
-        ) : /* @__PURE__ */ jsx(
-          QrCodeLayout,
-          {
-            animationKey: "real-svg",
-            svg: /* @__PURE__ */ jsx("div", { dangerouslySetInnerHTML: { __html: data.svg } }),
-            secret: /* @__PURE__ */ jsx(Trans, { message: "Setup key: :key", values: { key: data.secret } })
-          }
-        ) }),
-        /* @__PURE__ */ jsx(CodeForm, { ...props })
-      ]
-    }
-  );
-}
-function CodeForm({ onCancel, onConfirmed }) {
-  const form = useForm();
-  const confirmTwoFactor = useConfirmTwoFactor(form);
-  const disableTwoFactor = useDisableTwoFactor();
-  const { withConfirmedPassword, isLoading: confirmPasswordIsLoading } = usePasswordConfirmedAction();
-  const isLoading = confirmTwoFactor.isPending || disableTwoFactor.isPending || confirmPasswordIsLoading;
-  return /* @__PURE__ */ jsxs(
-    Form,
-    {
-      form,
-      onSubmit: (values) => withConfirmedPassword(() => {
-        confirmTwoFactor.mutate(values, {
-          onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["users"] });
-            onConfirmed();
-          }
-        });
-      }),
-      children: [
-        /* @__PURE__ */ jsx(
-          FormTextField,
-          {
-            required: true,
-            name: "code",
-            label: /* @__PURE__ */ jsx(Trans, { message: "Code" }),
-            autoFocus: true
-          }
-        ),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-12 mt-24", children: [
-          /* @__PURE__ */ jsx(
-            Button,
-            {
-              type: "button",
-              variant: "outline",
-              disabled: isLoading,
-              onClick: () => {
-                withConfirmedPassword(() => {
-                  disableTwoFactor.mutate(void 0, { onSuccess: onCancel });
-                });
-              },
-              children: /* @__PURE__ */ jsx(Trans, { message: "Cancel" })
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            Button,
-            {
-              type: "submit",
-              variant: "flat",
-              color: "primary",
-              disabled: isLoading,
-              children: /* @__PURE__ */ jsx(Trans, { message: "Confirm" })
-            }
-          )
-        ] })
-      ]
-    }
-  );
-}
-function QrCodeLayout({ animationKey, svg, secret }) {
-  return /* @__PURE__ */ jsxs(m.div, { ...opacityAnimation, children: [
-    /* @__PURE__ */ jsx("div", { className: "w-192 h-192 mb-16", children: svg }),
-    /* @__PURE__ */ jsx("div", { className: "text-sm font-medium mb-16", children: secret })
-  ] }, animationKey);
-}
-function useRegenerateTwoFactorCodes() {
-  return useMutation({
-    mutationFn: () => regenerate(),
-    onError: (r2) => showHttpErrorToast(r2)
-  });
-}
-function regenerate() {
-  return apiClient.post("auth/user/two-factor-recovery-codes").then((response) => response.data);
-}
-function TwoFactorEnabledStep({ user, onDisabled }) {
-  var _a;
-  const disableTwoFactor = useDisableTwoFactor();
-  const regenerateCodes = useRegenerateTwoFactorCodes();
-  const { withConfirmedPassword, isLoading: confirmPasswordIsLoading } = usePasswordConfirmedAction();
-  const isLoading = disableTwoFactor.isPending || regenerateCodes.isPending || confirmPasswordIsLoading;
-  const actions = /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx(
-      Button,
-      {
-        type: "button",
-        onClick: () => withConfirmedPassword(() => {
-          regenerateCodes.mutate(void 0, {
-            onSuccess: () => {
-              queryClient.invalidateQueries({ queryKey: ["users"] });
-            }
-          });
-        }),
-        variant: "outline",
-        disabled: isLoading,
-        className: "mr-12",
-        children: /* @__PURE__ */ jsx(Trans, { message: "Regenerate recovery codes" })
-      }
-    ),
-    /* @__PURE__ */ jsx(
-      Button,
-      {
-        type: "submit",
-        variant: "flat",
-        color: "danger",
-        disabled: isLoading,
-        onClick: () => {
-          withConfirmedPassword(() => {
-            disableTwoFactor.mutate(void 0, {
-              onSuccess: () => {
-                toast(message("Two factor authentication has been disabled."));
-                onDisabled();
-              }
-            });
-          });
-        },
-        children: /* @__PURE__ */ jsx(Trans, { message: "Disable" })
-      }
-    )
-  ] });
-  return /* @__PURE__ */ jsx(
-    TwoFactorStepperLayout,
-    {
-      title: /* @__PURE__ */ jsx(Trans, { message: "You have enabled two factor authentication." }),
-      description: /* @__PURE__ */ jsx(Trans, { message: "Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost." }),
-      actions,
-      children: /* @__PURE__ */ jsx("div", { className: "bg-alt p-14 font-mono text-sm mb-16 rounded", children: (_a = user.two_factor_recovery_codes) == null ? void 0 : _a.map((code) => /* @__PURE__ */ jsx("div", { className: "mb-4", children: code }, code)) })
-    }
-  );
-}
-function TwoFactorStepper({ user }) {
-  const [status, setStatus] = useState(getStatus(user));
-  switch (status) {
-    case 0:
-      return /* @__PURE__ */ jsx(
-        TwoFactorDisabledStep,
-        {
-          onEnabled: () => setStatus(
-            1
-            /* WaitingForConfirmation */
-          )
-        }
-      );
-    case 1:
-      return /* @__PURE__ */ jsx(
-        TwoFactorConfirmationStep,
-        {
-          onCancel: () => {
-            setStatus(
-              0
-              /* Disabled */
-            );
-          },
-          onConfirmed: () => {
-            setStatus(
-              2
-              /* Enabled */
-            );
-          }
-        }
-      );
-    case 2:
-      return /* @__PURE__ */ jsx(
-        TwoFactorEnabledStep,
-        {
-          user,
-          onDisabled: () => setStatus(
-            0
-            /* Disabled */
-          )
-        }
-      );
-  }
-}
-function getStatus(user) {
-  if (user.two_factor_confirmed_at) {
-    return 2;
-  } else if (user.two_factor_recovery_codes) {
-    return 1;
-  }
-  return 0;
-}
-function useUserSessions() {
-  return useQuery({
-    queryKey: ["user-sessions"],
-    queryFn: () => fetchUserSessions()
-  });
-}
-function fetchUserSessions() {
-  return apiClient.get(`user-sessions`).then((response) => response.data);
-}
-const ComputerIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z" }),
-  "ComputerOutlined"
-);
-const SmartphoneIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M17 1.01 7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" }),
-  "SmartphoneOutlined"
-);
-const TabletIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 1.99-.9 1.99-2L23 6c0-1.1-.9-2-2-2zm-2 14H5V6h14v12z" }),
-  "TabletOutlined"
-);
-function useLogoutOtherSessions() {
-  return useMutation({
-    mutationFn: (payload) => logoutOther(payload),
-    onError: (r2) => showHttpErrorToast(r2)
-  });
-}
-function logoutOther(payload) {
-  return apiClient.post("user-sessions/logout-other", payload).then((response) => response.data);
-}
-function SessionsPanel({ user }) {
-  var _a;
-  const { data, isLoading } = useUserSessions();
-  const logoutOther2 = useLogoutOtherSessions();
-  const { withConfirmedPassword, isLoading: checkingPasswordStatus } = usePasswordConfirmedAction({ needsPassword: true });
-  const sessionList = /* @__PURE__ */ jsx("div", { className: "max-h-400 overflow-y-auto", children: (_a = data == null ? void 0 : data.sessions) == null ? void 0 : _a.map((session) => /* @__PURE__ */ jsx(SessionItem, { session }, session.id)) });
-  return /* @__PURE__ */ jsxs(
-    AccountSettingsPanel,
-    {
-      id: AccountSettingsId.Sessions,
-      title: /* @__PURE__ */ jsx(Trans, { message: "Active sessions" }),
-      children: [
-        /* @__PURE__ */ jsx("p", { className: "text-sm", children: /* @__PURE__ */ jsx(Trans, { message: "If necessary, you may log out of all of your other browser sessions across all of your devices. Your recent sessions are listed below. If you feel your account has been compromised, you should also update your password." }) }),
-        /* @__PURE__ */ jsx("div", { className: "my-30", children: isLoading ? /* @__PURE__ */ jsx("div", { className: "min-h-60", children: /* @__PURE__ */ jsx(ProgressCircle, { isIndeterminate: true }) }) : sessionList }),
-        /* @__PURE__ */ jsx(
-          Button,
-          {
-            variant: "outline",
-            color: "primary",
-            disabled: checkingPasswordStatus || logoutOther2.isPending,
-            onClick: () => {
-              withConfirmedPassword((password) => {
-                logoutOther2.mutate(
-                  { password },
-                  {
-                    onSuccess: () => {
-                      toast(message("Logged out other sessions."));
-                    }
-                  }
-                );
-              });
-            },
-            children: /* @__PURE__ */ jsx(Trans, { message: "Logout other sessions" })
-          }
-        )
-      ]
-    }
-  );
-}
-function SessionItem({ session }) {
-  return /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-14 text-sm mb-14", children: [
-    /* @__PURE__ */ jsx("div", { className: "flex-shrink-0 text-muted", children: /* @__PURE__ */ jsx(DeviceIcon, { device: session.device_type, size: "lg" }) }),
-    /* @__PURE__ */ jsxs("div", { className: "flex-auto", children: [
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx(ValueOrUnknown, { children: session.platform }),
-        " -",
-        " ",
-        /* @__PURE__ */ jsx(ValueOrUnknown, { children: session.browser })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "text-xs my-4", children: [
-        session.city,
-        ", ",
-        session.country
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "text-xs", children: [
-        /* @__PURE__ */ jsx(IpAddress, { session }),
-        " - ",
-        /* @__PURE__ */ jsx(LastActive, { session })
-      ] })
-    ] })
-  ] });
-}
-function DeviceIcon({ device, size: size2 }) {
-  switch (device) {
-    case "mobile":
-      return /* @__PURE__ */ jsx(SmartphoneIcon, { size: size2 });
-    case "tablet":
-      return /* @__PURE__ */ jsx(TabletIcon, { size: size2 });
-    default:
-      return /* @__PURE__ */ jsx(ComputerIcon, { size: size2 });
-  }
-}
-function LastActive({ session }) {
-  if (session.is_current_device) {
-    return /* @__PURE__ */ jsx("span", { className: "text-positive", children: /* @__PURE__ */ jsx(Trans, { message: "This device" }) });
-  }
-  return /* @__PURE__ */ jsx(FormattedRelativeTime, { date: session.last_active });
-}
-function IpAddress({ session }) {
-  if (session.ip_address) {
-    return /* @__PURE__ */ jsx("span", { children: session.ip_address });
-  } else if (session.token) {
-    return /* @__PURE__ */ jsx(Trans, { message: "API Token" });
-  }
-  return /* @__PURE__ */ jsx(Trans, { message: "Unknown IP" });
-}
-function ValueOrUnknown({ children }) {
-  return children ? /* @__PURE__ */ jsx(Fragment, { children }) : /* @__PURE__ */ jsx(Trans, { message: "Unknown" });
-}
 function AccountSettingsPage() {
   var _a;
   const { auth } = useContext(SiteConfigContext);
@@ -10544,18 +9371,7 @@ function AccountSettingsPage() {
         /* @__PURE__ */ jsxs("main", { className: "flex-auto", children: [
           (_a = auth.accountSettingsPanels) == null ? void 0 : _a.map((panel) => /* @__PURE__ */ jsx(panel.component, { user: data.user }, panel.id)),
           /* @__PURE__ */ jsx(BasicInfoPanel, { user: data.user }),
-          /* @__PURE__ */ jsx(SocialLoginPanel, { user: data.user }),
           /* @__PURE__ */ jsx(ChangePasswordPanel, {}),
-          /* @__PURE__ */ jsx(
-            AccountSettingsPanel,
-            {
-              id: AccountSettingsId.TwoFactor,
-              title: /* @__PURE__ */ jsx(Trans, { message: "Two factor authentication" }),
-              children: /* @__PURE__ */ jsx("div", { className: "max-w-580", children: /* @__PURE__ */ jsx(TwoFactorStepper, { user: data.user }) })
-            }
-          ),
-          /* @__PURE__ */ jsx(SessionsPanel, { user: data.user }),
-          /* @__PURE__ */ jsx(LocalizationPanel, { user: data.user }),
           /* @__PURE__ */ jsx(AccessTokenPanel, { user: data.user }),
           /* @__PURE__ */ jsx(DangerZonePanel, {})
         ] })
@@ -11019,6 +9835,49 @@ function BillingCycleRadio({
     )
   ] });
 }
+function Skeleton({
+  variant = "text",
+  animation = "wave",
+  size: size2,
+  className,
+  display = "block",
+  radius = "rounded"
+}) {
+  return /* @__PURE__ */ jsx(
+    "span",
+    {
+      className: clsx(
+        "overflow-hidden relative bg-fg-base/4 bg-no-repeat will-change-transform skeleton",
+        radius,
+        skeletonSize({ variant, size: size2 }),
+        display,
+        variant === "text" && "scale-y-[0.6] origin-[0_55%]",
+        variant === "avatar" && "flex-shrink-0",
+        variant === "icon" && "mx-8 flex-shrink-0",
+        animation === "wave" && "skeleton-wave",
+        animation === "pulsate" && "skeleton-pulsate",
+        className
+      ),
+      "aria-busy": true,
+      "aria-live": "polite"
+    }
+  );
+}
+function skeletonSize({ variant, size: size2 }) {
+  if (size2) {
+    return size2;
+  }
+  switch (variant) {
+    case "avatar":
+      return "h-40 w-40";
+    case "icon":
+      return "h-24 h-24";
+    case "rect":
+      return "h-full w-full";
+    default:
+      return "w-full";
+  }
+}
 const CancelFilledIcon = createSvgIcon(
   /* @__PURE__ */ jsx("path", { d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" })
 );
@@ -11420,8 +10279,13 @@ function PricingTable({
   return /* @__PURE__ */ jsx(
     "div",
     {
+      style: {
+        display: "flex",
+        alignItems: "stretch"
+      },
       className: clsx(
-        "flex flex-col items-center gap-24 overflow-x-auto overflow-y-visible pb-20 md:flex-row md:justify-center",
+        // 'flex flex-wrap items-start gap-24 pb-20 align-items-stretch',
+        "flex flex-wrap gap-24 pb-20 items-start ",
         className
       ),
       children: /* @__PURE__ */ jsx(AnimatePresence, { initial: false, mode: "wait", children: query.data ? /* @__PURE__ */ jsx(
@@ -11439,8 +10303,7 @@ function PlanList({ plans, selectedPeriod }) {
   const { isLoggedIn, isSubscribed } = useAuth();
   const filteredPlans = plans.filter((plan) => !plan.hidden);
   return /* @__PURE__ */ jsx(Fragment, { children: filteredPlans.map((plan, index) => {
-    const isFirst = index === 0;
-    const isLast = index === filteredPlans.length - 1;
+    index === filteredPlans.length - 1;
     const price = findBestPrice(selectedPeriod, plan.prices);
     let upgradeRoute;
     if (!isLoggedIn) {
@@ -11455,12 +10318,15 @@ function PlanList({ plans, selectedPeriod }) {
     return /* @__PURE__ */ jsxs(
       m.div,
       {
+        style: {
+          flexGrow: 1
+        },
         ...opacityAnimation,
         className: clsx(
-          "w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350",
-          plan.recommended ? "py-56" : "py-28",
-          isFirst && "ml-auto",
-          isLast && "mr-auto"
+          "w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350 ",
+          plan.recommended ? "py-28" : "py-28"
+          //isFirst && 'ml-auto',
+          // isLast && 'mr-auto'
         ),
         children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-32", children: [
@@ -11601,9 +10467,9 @@ function ContactSection() {
   ] });
 }
 const BillingPageRoutes = React.lazy(
-  () => import("./assets/billing-page-routes-59c9f5f3.mjs")
+  () => import("./assets/billing-page-routes-92434965.mjs")
 );
-const CheckoutRoutes = React.lazy(() => import("./assets/checkout-routes-cdb5afdd.mjs"));
+const CheckoutRoutes = React.lazy(() => import("./assets/checkout-routes-6d5ef179.mjs"));
 const BillingRoutes = /* @__PURE__ */ jsxs(Fragment, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/pricing", element: /* @__PURE__ */ jsx(PricingPage, {}) }),
   /* @__PURE__ */ jsx(
@@ -11987,10 +10853,10 @@ function ContactUsPage() {
     /* @__PURE__ */ jsx(Footer, { className: "container mx-auto px-24 flex-shrink-0" })
   ] });
 }
-const AdminRoutes = React.lazy(() => import("./assets/admin-routes-d5d3eebf.mjs").then((n) => n.A));
-const DriveRoutes = React.lazy(() => import("./assets/drive-routes-c19ac261.mjs"));
+const AdminRoutes = React.lazy(() => import("./assets/admin-routes-b78ba4b9.mjs").then((n) => n.z));
+const DriveRoutes = React.lazy(() => import("./assets/drive-routes-bf3bf54b.mjs"));
 const SwaggerApiDocs = React.lazy(
-  () => import("./assets/swagger-api-docs-page-4b8e838b.mjs")
+  () => import("./assets/swagger-api-docs-page-69df625c.mjs")
 );
 function AppRoutes() {
   const { billing, notifications, require_email_confirmation, api } = useSettings();
@@ -12151,152 +11017,142 @@ async function takeScreenshot(request, response) {
 }
 console.log(`Starting SSR server on port ${port}...`);
 export {
-  Section as $,
+  FormImageSelector as $,
   ArrowDropDownIcon as A,
   Button as B,
   CustomMenu as C,
   Dialog as D,
-  FormTextField as E,
+  CheckIcon as E,
   Form as F,
-  CheckIcon as G,
-  CloseIcon as H,
+  CloseIcon as G,
+  Chip as H,
   Item$1 as I,
-  Chip as J,
-  FormattedDate as K,
-  Tooltip as L,
-  LoginIcon as M,
-  getInputFieldClassNames as N,
-  clamp as O,
+  FormattedDate as J,
+  Tooltip as K,
+  FileUploadProvider as L,
+  MixedText as M,
+  useAppearanceEditorMode as N,
+  ProgressCircle as O,
   ProgressBar as P,
-  createEventHandler as Q,
-  ButtonBase as R,
-  SelectForwardRef as S,
+  ButtonBase as Q,
+  useValueLists as R,
+  SearchIcon as S,
   Trans as T,
-  FormImageSelector as U,
-  useValueLists as V,
-  DoneAllIcon as W,
-  List as X,
-  ListItem as Y,
-  createSvgIconFromTree as Z,
-  FormSelect as _,
+  List as U,
+  ListItem as V,
+  clamp as W,
+  createSvgIconFromTree as X,
+  DoneAllIcon as Y,
+  Section as Z,
+  useNavigate as _,
   apiClient as a,
-  CheckCircleIcon as a$,
-  MixedText as a0,
-  FileUploadProvider as a1,
-  useAppearanceEditorMode as a2,
-  ProgressCircle as a3,
-  useNavigate as a4,
-  useBootstrapData as a5,
-  FullPageLoader as a6,
-  LinkStyle as a7,
-  SiteConfigContext as a8,
-  getBootstrapData as a9,
-  loadFonts as aA,
-  AuthRoute as aB,
-  NotFoundPage as aC,
-  getFromLocalStorage as aD,
-  setInLocalStorage as aE,
-  useAuth as aF,
-  Navbar as aG,
-  secureFilesSvg as aH,
-  getAxiosErrorMessage as aI,
-  useFileUploadStore as aJ,
-  getActiveWorkspaceId as aK,
-  UploadedFile as aL,
-  openUploadWindow as aM,
-  AdHost as aN,
-  ProgressBarBase as aO,
-  WorkspaceQueryKeys as aP,
-  useActiveWorkspaceId as aQ,
-  PersonalWorkspace as aR,
-  ExitToAppIcon as aS,
-  useUserWorkspaces as aT,
-  openDialog as aU,
-  CustomMenuItem as aV,
-  shallowEqual as aW,
-  ContextMenu as aX,
-  useMediaQuery as aY,
-  useActiveWorkspace as aZ,
-  ErrorIcon as a_,
-  ExternalLink as aa,
-  MenuTrigger as ab,
-  Menu as ac,
-  FormRadioGroup as ad,
-  FormRadio as ae,
-  DateFormatPresets as af,
-  prettyBytes as ag,
-  useSocialLogin as ah,
-  useField as ai,
-  Field as aj,
-  useResendVerificationEmail as ak,
-  useUser as al,
-  useUploadAvatar as am,
-  useRemoveAvatar as an,
-  FileTypeIcon as ao,
-  useProducts as ap,
-  FormattedPrice as aq,
-  useActiveUpload as ar,
-  UploadInputType as as,
-  Disk as at,
-  WarningIcon as au,
-  KeyboardArrowDownIcon as av,
-  useCustomPage as aw,
-  PageMetaTags as ax,
-  PageStatus as ay,
-  useCollator as az,
+  useListboxKeyboardNavigation as a$,
+  useBootstrapData as a0,
+  LinkStyle as a1,
+  SiteConfigContext as a2,
+  getBootstrapData as a3,
+  MenuTrigger as a4,
+  Menu as a5,
+  getInputFieldClassNames as a6,
+  FormRadioGroup as a7,
+  FormRadio as a8,
+  prettyBytes as a9,
+  useAuth as aA,
+  Navbar as aB,
+  secureFilesSvg as aC,
+  getAxiosErrorMessage as aD,
+  useFileUploadStore as aE,
+  getActiveWorkspaceId as aF,
+  UploadedFile as aG,
+  openUploadWindow as aH,
+  AdHost as aI,
+  ProgressBarBase as aJ,
+  WorkspaceQueryKeys as aK,
+  useActiveWorkspaceId as aL,
+  PersonalWorkspace as aM,
+  ExitToAppIcon as aN,
+  useUserWorkspaces as aO,
+  openDialog as aP,
+  createEventHandler as aQ,
+  CustomMenuItem as aR,
+  shallowEqual as aS,
+  ContextMenu as aT,
+  useMediaQuery as aU,
+  useActiveWorkspace as aV,
+  ErrorIcon as aW,
+  CheckCircleIcon as aX,
+  useListbox as aY,
+  Listbox as aZ,
+  Popover as a_,
+  useSocialLogin as aa,
+  ExternalLink as ab,
+  useField as ac,
+  Field as ad,
+  useResendVerificationEmail as ae,
+  useUser as af,
+  FullPageLoader as ag,
+  useUploadAvatar as ah,
+  useRemoveAvatar as ai,
+  FileTypeIcon as aj,
+  useProducts as ak,
+  FormattedPrice as al,
+  useActiveUpload as am,
+  UploadInputType as an,
+  Disk as ao,
+  WarningIcon as ap,
+  KeyboardArrowDownIcon as aq,
+  useCustomPage as ar,
+  PageMetaTags as as,
+  PageStatus as at,
+  useCollator as au,
+  loadFonts as av,
+  AuthRoute as aw,
+  NotFoundPage as ax,
+  getFromLocalStorage as ay,
+  setInLocalStorage as az,
   useIsMobileMediaQuery as b,
-  ComboBoxForwardRef as b0,
-  Underlay as b1,
-  useUserTimezone as b2,
-  useSelectedLocale as b3,
-  useDateFormatter as b4,
+  Underlay as b0,
+  useUserTimezone as b1,
+  useSelectedLocale as b2,
+  useDateFormatter as b3,
+  DateFormatPresets as b4,
   useAutoFocus as b5,
   useIsDarkMode as b6,
-  AvatarPlaceholderIcon as b7,
-  useListbox as b8,
-  Listbox as b9,
-  LightModeIcon as bA,
-  LightbulbIcon as bB,
-  LockIcon as bC,
-  MenuIcon as bD,
-  NotificationsIcon as bE,
-  PaymentsIcon as bF,
-  PeopleIcon as bG,
-  PersonIcon as bH,
-  PhonelinkLockIcon as bI,
-  SettingsIcon as bJ,
-  SmartphoneIcon as bK,
-  TabletIcon as bL,
-  elementToTree as bM,
-  EnvatoIcon as bN,
-  FacebookIcon as bO,
-  TwitterIcon as bP,
-  Popover as ba,
-  useListboxKeyboardNavigation as bb,
-  isAbsoluteUrl as bc,
-  Footer as bd,
-  BillingCycleRadio as be,
-  findBestPrice as bf,
-  FormattedCurrency as bg,
-  removeFromLocalStorage as bh,
-  LocaleSwitcher as bi,
-  ProductFeatureList as bj,
-  useThemeSelector as bk,
-  lazyLoader as bl,
-  useCallbackRef as bm,
-  AccountCircleIcon as bn,
-  AddAPhotoIcon as bo,
-  ApiIcon as bp,
-  CheckBoxOutlineBlankIcon as bq,
-  ComputerIcon as br,
-  DangerousIcon as bs,
-  DarkModeIcon as bt,
-  DevicesIcon as bu,
-  ErrorOutlineIcon as bv,
-  FileDownloadDoneIcon as bw,
-  ForumIcon as bx,
-  GroupAddIcon as by,
-  LanguageIcon as bz,
+  useListboxContext as b7,
+  useTypeSelect as b8,
+  AvatarPlaceholderIcon as b9,
+  PersonIcon as bA,
+  SettingsIcon as bB,
+  elementToTree as bC,
+  EnvatoIcon as bD,
+  FacebookIcon as bE,
+  TwitterIcon as bF,
+  isAbsoluteUrl as ba,
+  Footer as bb,
+  BillingCycleRadio as bc,
+  findBestPrice as bd,
+  FormattedCurrency as be,
+  removeFromLocalStorage as bf,
+  LocaleSwitcher as bg,
+  ProductFeatureList as bh,
+  useCallbackRef as bi,
+  AccountCircleIcon as bj,
+  AddAPhotoIcon as bk,
+  ApiIcon as bl,
+  CheckBoxOutlineBlankIcon as bm,
+  DangerousIcon as bn,
+  DarkModeIcon as bo,
+  ErrorOutlineIcon as bp,
+  FileDownloadDoneIcon as bq,
+  ForumIcon as br,
+  GroupAddIcon as bs,
+  LanguageIcon as bt,
+  LightModeIcon as bu,
+  LightbulbIcon as bv,
+  MenuIcon as bw,
+  NotificationsIcon as bx,
+  PaymentsIcon as by,
+  PeopleIcon as bz,
   useNumberFormatter as c,
   IconButton as d,
   createSvgIcon as e,
@@ -12308,18 +11164,18 @@ export {
   useTrans as k,
   TextField as l,
   message as m,
-  SearchIcon as n,
+  Skeleton as n,
   opacityAnimation as o,
-  Skeleton as p,
-  StaticPageTitle as q,
-  queryClient as r,
+  StaticPageTitle as p,
+  queryClient as q,
+  ConfirmationDialog as r,
   showHttpErrorToast as s,
   toast as t,
   useSettings as u,
-  ConfirmationDialog as v,
-  IllustratedMessage as w,
-  SvgImage as x,
-  DialogFooter as y,
-  onFormQueryError as z
+  IllustratedMessage as v,
+  SvgImage as w,
+  DialogFooter as x,
+  onFormQueryError as y,
+  FormTextField as z
 };
 //# sourceMappingURL=server-entry.mjs.map

@@ -26,6 +26,7 @@ class ValueLists
 
     public function get(string $names, array $params = []): Collection|array
     {
+
         return collect(explode(',', $names))
             ->mapWithKeys(function ($name) use ($params) {
                 $methodName = Str::studly($name);
