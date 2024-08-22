@@ -1,22 +1,22 @@
-import {AnimatePresence, m} from 'framer-motion';
-import {Fragment} from 'react';
-import {opacityAnimation} from '@common/ui/animation/opacity-animation';
-import {Skeleton} from '@common/ui/skeleton/skeleton';
-import {useProducts} from '@common/billing/pricing-table/use-products';
-import {Product} from '@common/billing/product';
+import {useAuth} from '@common/auth/use-auth';
 import {
   findBestPrice,
   UpsellBillingCycle,
 } from '@common/billing/pricing-table/find-best-price';
-import {useAuth} from '@common/auth/use-auth';
-import clsx from 'clsx';
-import {Chip} from '@common/ui/forms/input-field/chip-field/chip';
-import {Trans} from '@common/i18n/trans';
-import {FormattedPrice} from '@common/i18n/formatted-price';
-import {Button} from '@common/ui/buttons/button';
-import {Link} from 'react-router-dom';
-import {setInLocalStorage} from '@common/utils/hooks/local-storage';
 import {ProductFeatureList} from '@common/billing/pricing-table/product-feature-list';
+import {useProducts} from '@common/billing/pricing-table/use-products';
+import {Product} from '@common/billing/product';
+import {FormattedPrice} from '@common/i18n/formatted-price';
+import {Trans} from '@common/i18n/trans';
+import {opacityAnimation} from '@common/ui/animation/opacity-animation';
+import {Button} from '@common/ui/buttons/button';
+import {Chip} from '@common/ui/forms/input-field/chip-field/chip';
+import {Skeleton} from '@common/ui/skeleton/skeleton';
+import {setInLocalStorage} from '@common/utils/hooks/local-storage';
+import clsx from 'clsx';
+import {AnimatePresence, m} from 'framer-motion';
+import {Fragment} from 'react';
+import {Link} from 'react-router-dom';
 
 interface PricingTableProps {
   selectedCycle: UpsellBillingCycle;
@@ -30,12 +30,10 @@ export function PricingTable({
 }: PricingTableProps) {
   const query = useProducts(productLoader);
   return (
-    <div  style={{    display: 'flex',
-    alignItems: 'stretch',}}
+    <div
       className={clsx(
-       // 'flex flex-wrap items-start gap-24 pb-20 align-items-stretch',
-       'flex flex-wrap gap-24 pb-20 items-start ',
-               className
+        'flex flex-wrap flex-wrap items-start items-stretch justify-center gap-6 pb-20',
+        className,
       )}
     >
       <AnimatePresence initial={false} mode="wait">
@@ -79,17 +77,13 @@ function PlanList({plans, selectedPeriod}: PlanListProps) {
         }
 
         return (
-          <m.div   style={{
-            flexGrow: 1, 
-          }}
+          <m.div
             key={plan.id}
             {...opacityAnimation}
+            style={{flexGrow: 1, flexBasis: 'calc(25% - 24px)'}} // Adjust to 4 cards per row
             className={clsx(
-              'w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350 ',
-
+              'w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350',
               plan.recommended ? 'py-28' : 'py-28',
-              //isFirst && 'ml-auto',
-             // isLast && 'mr-auto'
             )}
           >
             <div className="mb-32">
@@ -98,7 +92,7 @@ function PlanList({plans, selectedPeriod}: PlanListProps) {
                 size="sm"
                 className={clsx(
                   'mb-20 w-min',
-                  !plan.recommended && 'invisible'
+                  !plan.recommended && 'invisible',
                 )}
               >
                 <Trans message="Most popular" />
