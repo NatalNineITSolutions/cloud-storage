@@ -1,15 +1,15 @@
-import { PricingTable } from '@common/billing/pricing-table/pricing-table';
-import { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Trans } from '../../i18n/trans';
-import { ForumIcon } from '../../icons/material/Forum';
-import { StaticPageTitle } from '../../seo/static-page-title';
-import { Button } from '../../ui/buttons/button';
-import { Footer } from '../../ui/footer/footer';
-import { Navbar } from '../../ui/navigation/navbar/navbar';
-import { BillingCycleRadio } from './billing-cycle-radio';
-import { UpsellBillingCycle } from './find-best-price';
-import { useProducts } from './use-products';
+import {PricingTable} from '@common/billing/pricing-table/pricing-table';
+import {Fragment, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {Trans} from '../../i18n/trans';
+import {ForumIcon} from '../../icons/material/Forum';
+import {StaticPageTitle} from '../../seo/static-page-title';
+import {Button} from '../../ui/buttons/button';
+import {Footer} from '../../ui/footer/footer';
+import {Navbar} from '../../ui/navigation/navbar/navbar';
+import {BillingCycleRadio} from './billing-cycle-radio';
+import {UpsellBillingCycle} from './find-best-price';
+import {useProducts} from './use-products';
 
 export function PricingPage() {
   const query = useProducts('pricingPage');
@@ -35,16 +35,8 @@ export function PricingPage() {
           products={query.data?.products}
           selectedCycle={selectedCycle}
           onChange={setSelectedCycle}
-          className="mb-40 md:mb-70"
+          className="mb-40 flex w-full flex-col items-center justify-center gap-5 md:mb-70 md:flex-row"
           size="lg"
-          style={{
-            display: 'flex',
-            flexDirection: window.innerWidth < 768 ? 'column' : 'row',
-            justifyContent: 'center',  // Center items horizontally
-            alignItems: 'center',      // Center items vertically
-            gap: '20px',               // Add gap between items
-            width: '100%',
-          }}
         />
 
         <PricingTable

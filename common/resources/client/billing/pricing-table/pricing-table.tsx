@@ -1,22 +1,22 @@
-import { useAuth } from '@common/auth/use-auth';
+import {useAuth} from '@common/auth/use-auth';
 import {
   findBestPrice,
   UpsellBillingCycle,
 } from '@common/billing/pricing-table/find-best-price';
-import { ProductFeatureList } from '@common/billing/pricing-table/product-feature-list';
-import { useProducts } from '@common/billing/pricing-table/use-products';
-import { Product } from '@common/billing/product';
-import { FormattedPrice } from '@common/i18n/formatted-price';
-import { Trans } from '@common/i18n/trans';
-import { opacityAnimation } from '@common/ui/animation/opacity-animation';
-import { Button } from '@common/ui/buttons/button';
-import { Chip } from '@common/ui/forms/input-field/chip-field/chip';
-import { Skeleton } from '@common/ui/skeleton/skeleton';
-import { setInLocalStorage } from '@common/utils/hooks/local-storage';
+import {ProductFeatureList} from '@common/billing/pricing-table/product-feature-list';
+import {useProducts} from '@common/billing/pricing-table/use-products';
+import {Product} from '@common/billing/product';
+import {FormattedPrice} from '@common/i18n/formatted-price';
+import {Trans} from '@common/i18n/trans';
+import {opacityAnimation} from '@common/ui/animation/opacity-animation';
+import {Button} from '@common/ui/buttons/button';
+import {Chip} from '@common/ui/forms/input-field/chip-field/chip';
+import {Skeleton} from '@common/ui/skeleton/skeleton';
+import {setInLocalStorage} from '@common/utils/hooks/local-storage';
 import clsx from 'clsx';
-import { AnimatePresence, m } from 'framer-motion';
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import {AnimatePresence, m} from 'framer-motion';
+import {Fragment} from 'react';
+import {Link} from 'react-router-dom';
 
 interface PricingTableProps {
   selectedCycle: UpsellBillingCycle;
@@ -31,24 +31,23 @@ export function PricingTable({
   const query = useProducts(productLoader);
   return (
     <div
-  style={{ display: 'flex', alignItems: 'stretch', flexWrap: 'wrap', gap: '24px', justifyContent: 'center' }}
-  className={clsx(
-    'flex-wrap pb-20 items-start', 
-    className
-  )}
->
-  <AnimatePresence initial={false} mode="wait">
-    {query.data ? (
-      <PlanList
-        key="plan-list"
-        plans={query.data.products}
-        selectedPeriod={selectedCycle}
-      />
-    ) : (
-      <SkeletonLoader key="skeleton-loader" />
-    )}
-  </AnimatePresence>
-</div>
+      className={clsx(
+        'flex flex-wrap flex-wrap items-start items-stretch justify-center gap-6 pb-20',
+        className,
+      )}
+    >
+      <AnimatePresence initial={false} mode="wait">
+        {query.data ? (
+          <PlanList
+            key="plan-list"
+            plans={query.data.products}
+            selectedPeriod={selectedCycle}
+          />
+        ) : (
+          <SkeletonLoader key="skeleton-loader" />
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -79,65 +78,68 @@ function PlanList({plans, selectedPeriod}: PlanListProps) {
 
         return (
           <m.div
-          key={plan.id}
-          {...opacityAnimation}
-          style={{ flexGrow: 1, flexBasis: 'calc(25% - 24px)' }} // Adjust to 4 cards per row
-          className={clsx(
-            'rounded-lg border bg-paper px-28 shadow-lg w-full md:min-w-240 md:max-w-350',
-            plan.recommended ? 'py-28' : 'py-28'
-          )}
-        >
-          <div className="mb-32">
-            <Chip
-              radius="rounded"
-              size="sm"
-              className={clsx('mb-20 w-min', !plan.recommended && 'invisible')}
-            >
-              <Trans message="Most popular" />
-            </Chip>
-            <div className="mb-12 text-xl font-semibold">
-              <Trans message={plan.name} />
-            </div>
-            <div className="text-sm text-muted">
-              <Trans message={plan.description} />
-            </div>
-          </div>
-          <div>
-            {price ? (
-              <FormattedPrice
-                priceClassName="font-bold text-4xl"
-                periodClassName="text-muted text-xs"
-                variant="separateLine"
-                price={price}
-              />
-            ) : (
-              <div className="text-4xl font-bold">
-                <Trans message="Free" />
-              </div>
+            key={plan.id}
+            {...opacityAnimation}
+            style={{flexGrow: 1, flexBasis: 'calc(25% - 24px)'}} // Adjust to 4 cards per row
+            className={clsx(
+              'w-full rounded-lg border bg-paper px-28 shadow-lg md:min-w-240 md:max-w-350',
+              plan.recommended ? 'py-28' : 'py-28',
             )}
-            <div className="mt-60">
-              <Button
-                variant="flat"
-                color="primary"
-                className="w-full"
-                size="md"
-                elementType={upgradeRoute ? Link : undefined}
-                disabled={!upgradeRoute}
-                onClick={() => {
-                  if (isLoggedIn || !price || !plan) return;
-                  setInLocalStorage('be.onboarding.selected', {
-                    productId: plan.id,
-                    priceId: price.id,
-                  });
-                }}
-                to={upgradeRoute}
+          >
+            <div className="mb-32">
+              <Chip
+                radius="rounded"
+                size="sm"
+                className={clsx(
+                  'mb-20 w-min',
+                  !plan.recommended && 'invisible',
+                )}
               >
-                <ActionButtonText product={plan} />
-              </Button>
+                <Trans message="Most popular" />
+              </Chip>
+              <div className="mb-12 text-xl font-semibold">
+                <Trans message={plan.name} />
+              </div>
+              <div className="text-sm text-muted">
+                <Trans message={plan.description} />
+              </div>
             </div>
-            <ProductFeatureList product={plan} />
-          </div>
-        </m.div>
+            <div>
+              {price ? (
+                <FormattedPrice
+                  priceClassName="font-bold text-4xl"
+                  periodClassName="text-muted text-xs"
+                  variant="separateLine"
+                  price={price}
+                />
+              ) : (
+                <div className="text-4xl font-bold">
+                  <Trans message="Free" />
+                </div>
+              )}
+              <div className="mt-60">
+                <Button
+                  variant="flat"
+                  color="primary"
+                  className="w-full"
+                  size="md"
+                  elementType={upgradeRoute ? Link : undefined}
+                  disabled={!upgradeRoute}
+                  onClick={() => {
+                    if (isLoggedIn || !price || !plan) return;
+                    setInLocalStorage('be.onboarding.selected', {
+                      productId: plan.id,
+                      priceId: price.id,
+                    });
+                  }}
+                  to={upgradeRoute}
+                >
+                  <ActionButtonText product={plan} />
+                </Button>
+              </div>
+              <ProductFeatureList product={plan} />
+            </div>
+          </m.div>
         );
       })}
     </Fragment>
