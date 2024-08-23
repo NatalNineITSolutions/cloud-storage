@@ -29,6 +29,7 @@ export function useAuth(): UseAuthReturn {
   const getPermission = useCallback(
     (name: string): Permission | undefined => {
       const permissions = user?.permissions || guest_role?.permissions;
+      console.log("user",user)
       if (!permissions) return;
       return permissions.find(p => p.name === name);
     },
