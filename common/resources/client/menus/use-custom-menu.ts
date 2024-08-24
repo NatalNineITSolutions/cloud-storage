@@ -15,9 +15,9 @@ export function useCustomMenu(menuOrPosition?: string | MenuConfig) {
   const settingsAccess =['settings.access']
   const subscriptionAccess =['subscription.access']
   const planAccess =['plan.access']
-  const roleAccess =['/admin/plans']
+  const roleAccess =['role.access']
+  const appearanceAccess =['appearance.access']
   
-
   const menu =
     typeof menuOrPosition === 'string'
       ? settings.menus?.find(s => s.positions?.includes(menuOrPosition))
@@ -42,6 +42,7 @@ export function useCustomMenu(menuOrPosition?: string | MenuConfig) {
       const subscriptionMenu = user?.permissions?.some((item)=>subscriptionAccess.includes(item.name))
       const planMenu = user?.permissions?.some((item)=>planAccess.includes(item.name))
       const roleMenu = user?.permissions?.some((item)=>roleAccess.includes(item.name))
+      const appearanceMenu = user?.permissions?.some((item)=>appearanceAccess.includes(item.name))
       
 
       console.log("usersMenu",usersMenu)
@@ -62,6 +63,9 @@ export function useCustomMenu(menuOrPosition?: string | MenuConfig) {
           return false
       } 
       if(item.action ==='/admin/plans' && !planMenu) {
+          return false
+      } 
+      if(item.action ==='/admin/appearance' && !appearanceMenu) {
           return false
       } 
 

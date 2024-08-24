@@ -6,10 +6,13 @@ import {CrupdateUserForm} from './crupdate-user-form';
 import {FileUploadProvider} from '../../uploads/uploader/file-upload-provider';
 import {Trans} from '../../i18n/trans';
 import {FormImageSelector} from '@common/ui/images/image-selector';
+import { useAuth } from '@common/auth/use-auth';
 
 export function CreateUserPage() {
   const form = useForm<CreateUserPayload>();
   const createUser = useCreateUser(form);
+  const {user} = useAuth()
+  const userId = user?.id
 
   const avatarManager = (
     <FileUploadProvider>
@@ -28,6 +31,8 @@ export function CreateUserPage() {
   return (
     <CrupdateUserForm
       onSubmit={newValues => {
+        newValues.admin_user_id = userId
+        // console.log('userId',userId)
         createUser.mutate(newValues);
       }}
       form={form}

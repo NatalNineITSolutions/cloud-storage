@@ -61,9 +61,11 @@ async function paginate<T>(
   if (params.query) {
     await new Promise(resolve => setTimeout(resolve, 300));
   }
+  
   const response = await apiClient
     .get(endpoint, {params, signal: params.query ? signal : undefined})
     .then(response => response.data);
   onLoad?.(response);
+  console.log("params",params)
   return response;
 }

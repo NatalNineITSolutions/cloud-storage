@@ -10,9 +10,16 @@ import {DataTableAddItemButton} from '../../datatable/data-table-add-item-button
 import {DataTableExportCsvButton} from '../../datatable/csv-export/data-table-export-csv-button';
 import {useSettings} from '../../core/settings/use-settings';
 import {userDatatableColumns} from '@common/admin/users/user-datatable-columns';
+import { useAuth } from '@common/auth/use-auth';
 
 export function UserDatatable() {
   const {billing} = useSettings();
+  const {user} = useAuth();
+  const userId = user?.id
+  const isSuperAdmin = user?.user_type==='super_admin' || false
+  const queryParams = isSuperAdmin
+    ? { with: 'subscriptions,bans' }
+    : { admin_user_id: userId };
 
   const filteredColumns = !billing.enable
     ? userDatatableColumns.filter(c => c.key !== 'subscribed')
@@ -26,7 +33,7 @@ export function UserDatatable() {
         filters={UserDatatableFilters}
         columns={filteredColumns}
         actions={<Actions />}
-        queryParams={{with: 'subscriptions,bans'}}
+        queryParams={queryParams}
         selectedActions={<DeleteSelectedItemsAction />}
         emptyStateMessage={
           <DataTableEmptyStateMessage

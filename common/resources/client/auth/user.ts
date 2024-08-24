@@ -47,4 +47,6 @@ export interface User {
   }[];
   two_factor_confirmed_at?: string;
   two_factor_recovery_codes?: string[];
+  user_type :String | null;
+  admin_user_id :number | null;
 }
