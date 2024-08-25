@@ -12,7 +12,28 @@ class PaginateUsers
 {
     public function execute(array $params): AbstractPaginator
     {
+        \Log::info("data: " . json_encode($params['admin_user_id']));
         $query = User::with(['roles', 'permissions']);
+
+        if (Arr::has($params, 'admin_user_id')) {
+            // Retrieve the 'admin_user_id' from params
+            $adminUserId = $params['admin_user_id'];
+
+            $adminUser = User::find($adminUserId);
+            if ($adminUser) {
+                $userType = $adminUser->user_type;
+
+                if ($userType === 'super_admin') {
+                    // Super admin can see all users, no additional filters
+                } else {
+                    $query->where("admin_user_id", $adminUserId);
+                }
+            } else {
+                \Log::warning("Admin user with ID $adminUserId not found.");
+            }
+        } else {
+            \Log::warning("No 'admin_user_id' provided in parameters.");
+        }
 
         if ($roleId = Arr::get($params, 'roleId')) {
             $relation = $query->getModel()->roles();

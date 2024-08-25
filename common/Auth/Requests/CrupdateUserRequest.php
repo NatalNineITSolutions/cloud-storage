@@ -21,6 +21,7 @@ class CrupdateUserRequest extends BaseFormRequest
             'permissions' => 'array',
             'roles' => 'array',
             'roles.*' => 'int',
+            'admin_user_id' => 'nullable',
             'available_space' => 'nullable|min:0',
             'country' => 'nullable|string|max:255',
             'language' => 'nullable|string|max:255',
