@@ -1,10 +1,11 @@
 import clsx from 'clsx';
 import {NavLink, Outlet, useLocation, useNavigate} from 'react-router-dom';
-import {SettingsNavConfig} from './settings-nav-config';
+import {SettingsNavConfig,userAdminNavConfig} from './settings-nav-config';
 import {useIsMobileMediaQuery} from '../../utils/hooks/is-mobile-media-query';
 import {Option, Select} from '../../ui/forms/select/select';
 import {Trans} from '../../i18n/trans';
 import {StaticPageTitle} from '../../seo/static-page-title';
+import { useAuth } from '@common/auth/use-auth';
 
 interface Props {
   className?: string;
@@ -29,10 +30,14 @@ export function SettingsLayout({className}: Props) {
   );
 }
 
+
 function MobileNav() {
   const {pathname} = useLocation();
   const navigate = useNavigate();
   const value = pathname.split('/').pop();
+  const {user} = useAuth();
+  const isSuperAdmin = user?.user_type==='super_admin'
+  const sideNavbar =isSuperAdmin ?SettingsNavConfig:userAdminNavConfig ||[]
 
   return (
     <Select
@@ -44,7 +49,7 @@ function MobileNav() {
         navigate(newPage as string);
       }}
     >
-      {SettingsNavConfig.map(item => (
+      {sideNavbar.map(item => (
         <Option key={item.to as string} value={item.to}>
           <Trans {...item.label} />
         </Option>
@@ -54,9 +59,12 @@ function MobileNav() {
 }
 
 function DesktopNav() {
+  const {user} = useAuth();
+  const isSuperAdmin = user?.user_type==='super_admin'
+  const sideNavbar =isSuperAdmin ?SettingsNavConfig:userAdminNavConfig ||[]
   return (
     <div className="sticky top-24 w-240 flex-shrink-0">
-      {SettingsNavConfig.map(item => (
+      {sideNavbar.map(item => (
         <NavLink
           key={item.to as string}
           to={item.to}

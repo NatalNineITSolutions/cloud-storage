@@ -25,4 +25,10 @@ const filteredSettingsNavConfig: (SettingsNavItem | false)[] = [
   {label: message('Cache'), to: 'cache'},
 ].filter(Boolean);
 
+const UserAdminSettingsNavConfig: (SettingsNavItem | false)[] = [
+  {label: message('Uploading'), to: 'uploading'},
+].filter(Boolean);
+
 export const SettingsNavConfig = filteredSettingsNavConfig as SettingsNavItem[];
+export const userAdminNavConfig = UserAdminSettingsNavConfig as SettingsNavItem[];
+

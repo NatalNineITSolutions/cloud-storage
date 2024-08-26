@@ -51,7 +51,10 @@ import {CreateCustomPage} from '@common/admin/custom-pages/create-custom-page';
 import {ThemeFontPanel} from '@common/admin/appearance/sections/themes/theme-font-panel';
 import {ThemeRadiusPanel} from '@common/admin/appearance/sections/themes/theme-radius-panel';
 
+
 const ReportsPage = React.lazy(() => import('./analytics/admin-report-page'));
+
+
 
 const AdminRouteConfig: RouteObject[] = [
   {
@@ -253,7 +256,7 @@ const AdminRouteConfig: RouteObject[] = [
           </AuthRoute>
         ),
         children: [
-          {index: true, element: <Navigate to="general" replace />},
+          {index: true, element: <Navigate to={"uploading"} replace />},
           {path: 'general', element: <GeneralSettings />},
           {path: 'subscriptions', element: <SubscriptionSettings />},
           // {path: 'localization', element: <LocalizationSettings />},
