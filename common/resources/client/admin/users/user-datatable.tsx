@@ -18,7 +18,7 @@ export function UserDatatable() {
   const userId = user?.id
   const isSuperAdmin = user?.user_type==='super_admin' || false
   const queryParams = isSuperAdmin
-    ? { with: 'subscriptions,bans' }
+    ? { with: 'subscriptions,bans', admin_user_id: userId }
     : { admin_user_id: userId };
 
   const filteredColumns = !billing.enable

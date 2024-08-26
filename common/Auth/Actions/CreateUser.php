@@ -14,6 +14,8 @@ class CreateUser
 
     public function execute(array $params): User
     {
+        \Log::info("getting: " . json_encode($params));
+
         if (
             !settings('require_email_confirmation') &&
             !array_key_exists('email_verified_at', $params)
