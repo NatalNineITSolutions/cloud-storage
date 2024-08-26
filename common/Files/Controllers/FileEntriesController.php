@@ -24,22 +24,46 @@ class FileEntriesController extends BaseController
         $this->middleware('auth')->only(['index']);
     }
 
+    // public function index()
+    // {
+    //     $params = $this->request->all();
+    //     $params['userId'] = $this->request->get('userId');
+
+    //     // scope files to current user by default if it's an API request
+    //     if (!requestIsFromFrontend() && !$params['userId']) {
+    //         $params['userId'] = Auth::id();
+    //     }
+
+    //     $this->authorize('index', FileEntry::class);
+
+    //     $dataSource = new Datasource($this->entry->with(['users']), $params);
+
+    //     $pagination = $dataSource->paginate();
+
+    //     return $this->success(['pagination' => $pagination]);
+    // }
+
     public function index()
     {
         $params = $this->request->all();
-        $params['userId'] = $this->request->get('userId');
-
-        // scope files to current user by default if it's an API request
-        if (!requestIsFromFrontend() && !$params['userId']) {
-            $params['userId'] = Auth::id();
+        
+        $currentUser = Auth::user();
+        
+        //join the Two table users and file_entries
+        $query = $this->entry
+        ->join('users', 'file_entries.owner_id', '=', 'users.admin_user_id')
+        ->select('users.admin_user_id', 'file_entries.owner_id', 'file_entries.*');
+        
+        if ($currentUser->user_type === 'super_admin') {
+            $this->authorize('index', FileEntry::class);
+            $dataSource = new Datasource($this->entry->with(['users']), $params);
+        }  else {
+            $query->where('file_entries.owner_id', $currentUser->id);
+            $this->authorize('index', FileEntry::class);
+            $dataSource = new Datasource($query->with(['users']), $this->request->all());
         }
-
-        $this->authorize('index', FileEntry::class);
-
-        $dataSource = new Datasource($this->entry->with(['users']), $params);
-
+        // Paginate the results
         $pagination = $dataSource->paginate();
-
         return $this->success(['pagination' => $pagination]);
     }
 
