@@ -51,14 +51,17 @@ class FileEntriesController extends BaseController
         
         //join the Two table users and file_entries
         $query = $this->entry
-        ->join('users', 'file_entries.owner_id', '=', 'users.admin_user_id')
-        ->select('users.admin_user_id', 'file_entries.owner_id', 'file_entries.*');
+        ->join('users', 'file_entries.owner_id', '=', 'users.id') // Join on owner_id
+        ->select('file_entries.*', 'users.admin_user_id');
         
         if ($currentUser->user_type === 'super_admin') {
             $this->authorize('index', FileEntry::class);
             $dataSource = new Datasource($this->entry->with(['users']), $params);
         }  else {
-            $query->where('file_entries.owner_id', $currentUser->id);
+            $query->where(function ($subQuery) use ($currentUser) {
+                $subQuery->where('file_entries.owner_id', $currentUser->id) // Filter by ownership
+                         ->orWhere('users.admin_user_id', $currentUser->id); // Filter by admin oversight
+            });
             $this->authorize('index', FileEntry::class);
             $dataSource = new Datasource($query->with(['users']), $this->request->all());
         }

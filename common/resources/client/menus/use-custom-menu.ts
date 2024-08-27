@@ -71,8 +71,8 @@ export function useCustomMenu(menuOrPosition?: string | MenuConfig) {
 
       console.log("item.action",item.action,"hasPermissions",hasPermissions,"hasrole",hasRoles,'usermenu',usersMenu,"file",fileMenu,'settings',settingMenu)
       // make sure item has action, otherwise router link will error out
-      // return item.action && hasRoles && hasPermissions ;
-      return  hasRoles;
+      return item.action && hasRoles && hasPermissions ;
+      // return  hasRoles;
     });
   }
   console.log('menu',menu)
