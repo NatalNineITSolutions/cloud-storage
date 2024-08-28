@@ -27,7 +27,7 @@ export function useCustomMenu(menuOrPosition?: string | MenuConfig) {
 
   if (menu) {
     menu.items = menu.items.filter(item => {
-      if (user?.id === 1) {
+      if (user?.user_type === 'super_admin') {
         return item.action; 
       }
       const hasRoles = (item.roles || []).every(a =>

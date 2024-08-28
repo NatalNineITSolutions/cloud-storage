@@ -43,6 +43,39 @@ class SettingsController extends BaseController
         ];
     }
 
+    // public function persist()
+    // {
+    //     $this->authorize('update', Setting::class);
+
+    //     $clientSettings = $this->cleanValues($this->request->get('client'));
+    //     $serverSettings = $this->cleanValues($this->request->get('server'));
+
+    //     // need to handle files before validating
+    //     $this->handleFiles();
+
+    //     if (
+    //         $errResponse = $this->validateSettings(
+    //             $serverSettings,
+    //             $clientSettings,
+    //         )
+    //     ) {
+    //         return $errResponse;
+    //     }
+
+    //     if ($serverSettings) {
+    //         $this->dotEnv->write($serverSettings);
+    //     }
+
+    //     if ($clientSettings) {
+    //         $this->settings->save($clientSettings);
+    //     }
+
+    //     Cache::flush();
+
+    //     event(new SettingsSaved($clientSettings, $serverSettings));
+
+    //     return $this->success();
+    // }
     public function persist()
     {
         $this->authorize('update', Setting::class);
@@ -62,20 +95,43 @@ class SettingsController extends BaseController
             return $errResponse;
         }
 
-        if ($serverSettings) {
-            $this->dotEnv->write($serverSettings);
-        }
+        $isSuperAdmin = auth()->user()->user_type === 'super_admin';
 
-        if ($clientSettings) {
-            $this->settings->save($clientSettings);
+        //Super_admin Env Change
+        if ($isSuperAdmin) {
+            if ($serverSettings) {
+                // $this->dotEnv->write($serverSettings);
+            }
+            if ($clientSettings) {
+                $this->settings->save($clientSettings);
+            }
         }
-
+        //Database store
+        else {
+            $userSettings = [];
+            foreach ($serverSettings as $key => $value) {
+                $userSettings["server.{$userId}.{$key}"] = $value;
+            }
+            \Log::info('Non-super admin settings transformation.', [
+                'originalServerSettings' => $serverSettings,
+                'userSettings' => $userSettings,
+            ]);
+            if ($serverSettings) {
+                \Log::info('Updating database with server settings for non-super admin.', $userSettings);
+                // $this->settings->update($serverSettings);
+            }
+            if ($clientSettings) {
+                \Log::info('Updating database with client settings for non-super admin.', $clientSettings);
+                // $this->settings->update($clientSettings);
+            }
+        }
         Cache::flush();
 
         event(new SettingsSaved($clientSettings, $serverSettings));
 
         return $this->success();
     }
+ 
 
     private function cleanValues(string|null $config): array
     {

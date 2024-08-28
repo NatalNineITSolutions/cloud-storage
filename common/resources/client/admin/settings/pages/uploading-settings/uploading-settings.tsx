@@ -20,6 +20,7 @@ import {DropboxForm} from './dropbox-form/dropbox-form';
 import {useAdminSettings} from '../../requests/use-admin-settings';
 import {useTrans} from '@common/i18n/use-trans';
 import {message} from '@common/i18n/message';
+import { useAuth } from '@common/auth/use-auth';
 
 export function UploadingSettings() {
   const {trans} = useTrans();
@@ -222,26 +223,44 @@ export interface CredentialFormProps {
   isInvalid: boolean;
 }
 function S3Form({isInvalid}: CredentialFormProps) {
+  const { data } = useAdminSettings();
+  const { user } = useAuth();
+  const userId = user?.id || '';
+  const isSuperAdmin = user?.user_type === 'super_admin';
+  const getFieldName = (field) => {
+    return isSuperAdmin ? `server.${field}` : `server.${userId}.${field}`;
+  };
+  // const getFieldValue = (field) => {
+  //   if (isSuperAdmin) {
+  //     return data?.server?.[field] || '';
+  //   } else {
+  //     return data?.[userId]?.server?.[field] || '';
+  //   }
+  // };
   return (
     <Fragment>
       <FormTextField
         invalid={isInvalid}
         className="mb-30"
-        name="server.storage_s3_key"
+        // name="server.storage_s3_key"
+        name={getFieldName('storage_s3_key')}
+        // value={getFieldValue('storage_s3_key')}
         label={<Trans message="Amazon S3 key" />}
-        required
+        // required
       />
       <FormTextField
         invalid={isInvalid}
         className="mb-30"
-        name="server.storage_s3_secret"
+        // name="server.storage_s3_secret"
+        name={getFieldName('storage_s3_secret')}
         label={<Trans message="Amazon S3 secret" />}
-        required
+        // required
       />
       <FormTextField
         invalid={isInvalid}
         className="mb-30"
-        name="server.storage_s3_region"
+        // name="server.storage_s3_region"
+        name={getFieldName('storage_s3_region')}
         label={<Trans message="Amazon S3 region" />}
         pattern="[a-z1-9\-]+"
         placeholder="us-east-1"
@@ -249,13 +268,15 @@ function S3Form({isInvalid}: CredentialFormProps) {
       <FormTextField
         invalid={isInvalid}
         className="mb-30"
-        name="server.storage_s3_bucket"
+        // name="server.storage_s3_bucket"
+        name={getFieldName('storage_s3_bucket')}
         label={<Trans message="Amazon S3 bucket" />}
-        required
+        // required
       />
       <FormTextField
         invalid={isInvalid}
-        name="server.storage_s3_endpoint"
+        // name="server.storage_s3_endpoint"
+        name={getFieldName('storage_s3_endpoint')}
         label={<Trans message="Amazon S3 endpoint" />}
         description={
           <Trans message="Only change endpoint if you are using another S3 compatible storage service." />
@@ -348,6 +369,7 @@ interface S3DirectUploadFieldProps {
 function S3DirectUploadField({invalid}: S3DirectUploadFieldProps) {
   const uploadCors = useUploadS3Cors();
   const {data: defaultSettings} = useAdminSettings();
+  console.log("defaultSettings",defaultSettings)
 
   const s3DriverEnabled =
     defaultSettings?.server.uploads_disk_driver?.endsWith('s3') ||

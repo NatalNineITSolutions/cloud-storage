@@ -1,10 +1,11 @@
 import {Settings} from '../../core/settings/settings';
 
 export interface AdminServerSettings {
-  app_url: string;
-  app_timezone: string;
-  app_locale: string;
+  app_url?: string;
+  app_timezone?: string;
+  app_locale?: string;
   newAppUrl?: string;
+  
 
   // subscriptions
   paypal_client_id?: string;
