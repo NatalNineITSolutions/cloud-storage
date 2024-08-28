@@ -96,8 +96,8 @@ function FormWrapper({
         }}
         onSubmit={value => {
           console.log("value",value)
-          // value = transformValues ? transformValues(value) : value;
-          // updateSettings.mutate(value);
+          value = transformValues ? transformValues(value) : value;
+          updateSettings.mutate(value);
         }}
       >
         {children}

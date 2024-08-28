@@ -7,7 +7,6 @@ import {VisitorsReportCharts} from '@common/admin/analytics/visitors-report-char
 import {DateRangeValue} from '@common/ui/forms/input-field/date/date-range-picker/date-range-value';
 import {DateRangePresets} from '@common/ui/forms/input-field/date/date-range-picker/dialog/date-range-presets';
 import {ReportDateSelector} from '@common/admin/analytics/report-date-selector';
-import { useAuth } from '@common/auth/use-auth';
 
 export default function AdminReportPage() {
   const [dateRange, setDateRange] = useState<DateRangeValue>(() => {
@@ -15,33 +14,16 @@ export default function AdminReportPage() {
     return DateRangePresets[2].getRangeValue();
   });
   const {isLoading, data} = useAdminReport({dateRange});
-  console.log("analadata",data)
   const title = <Trans message="Visitors report" />;
-
-  //super_admin show the data
-  const {user} = useAuth()
-  const isSuperAdmin = user?.user_type === 'super_admin'
-  console.log("isSuperAdmin",isSuperAdmin)
-  const userName = user?.first_name || 'User';
 
   return (
     <div className="min-h-full gap-12 overflow-x-hidden p-12 md:gap-24 md:p-24">
       <div className="mb-24 items-center justify-between gap-24 md:flex">
         <StaticPageTitle>{title}</StaticPageTitle>
-        {isSuperAdmin && (
-          <h1 className="mb-24 text-3xl font-light md:mb-0">{title}</h1>
-        )}
-        {!isSuperAdmin && (
-          <>
-            <h1 className="mb-24 text-3xl font-light md:mb-0">Welcome back <b>{userName}</b></h1>
-          </>
-        )}
+        <h1 className="mb-24 text-3xl font-light md:mb-0">{title}</h1>
         <ReportDateSelector value={dateRange} onChange={setDateRange} />
       </div>
-      {/* <AdminHeaderReport report={data?.headerReport} /> */}
-      {isSuperAdmin && (
-        <AdminHeaderReport report={data?.headerReport} />
-      )}
+      <AdminHeaderReport report={data?.headerReport} />
       <VisitorsReportCharts
         report={data?.visitorsReport}
         isLoading={isLoading}

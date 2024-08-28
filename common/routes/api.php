@@ -158,6 +158,7 @@ Route::group(['prefix' => 'v1'], function () {
         // SETTINGS
         Route::get('settings', [SettingsController::class, 'index']);
         Route::post('settings', [SettingsController::class, 'persist']);
+        Route::post('settings/user-s3-config-token', [SettingsController::class, 'UserS3Config']);
         Route::post('settings/uploading/dropbox-refresh-token', [DropboxRefreshTokenController::class, 'generate']);
 
         // SITEMAP

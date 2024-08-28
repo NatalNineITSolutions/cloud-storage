@@ -228,54 +228,43 @@ function S3Form({isInvalid}: CredentialFormProps) {
   const userId = user?.id || '';
   const isSuperAdmin = user?.user_type === 'super_admin';
   const getFieldName = (field) => {
-    return isSuperAdmin ? `server.${field}` : `server.${userId}.${field}`;
+    return isSuperAdmin ? `server.${field}` : `client.${userId}.${field}`;
   };
-  // const getFieldValue = (field) => {
-  //   if (isSuperAdmin) {
-  //     return data?.server?.[field] || '';
-  //   } else {
-  //     return data?.[userId]?.server?.[field] || '';
-  //   }
-  // };
+
+  console.log("data",data)
   return (
     <Fragment>
       <FormTextField
         invalid={isInvalid}
         className="mb-30"
-        // name="server.storage_s3_key"
         name={getFieldName('storage_s3_key')}
-        // value={getFieldValue('storage_s3_key')}
         label={<Trans message="Amazon S3 key" />}
-        // required
+        required
       />
       <FormTextField
         invalid={isInvalid}
         className="mb-30"
-        // name="server.storage_s3_secret"
         name={getFieldName('storage_s3_secret')}
         label={<Trans message="Amazon S3 secret" />}
-        // required
+        required
       />
       <FormTextField
         invalid={isInvalid}
         className="mb-30"
-        // name="server.storage_s3_region"
         name={getFieldName('storage_s3_region')}
         label={<Trans message="Amazon S3 region" />}
-        pattern="[a-z1-9\-]+"
-        placeholder="us-east-1"
+        // pattern="[a-z1-9\-]+"
+        placeholder="example : us-east-1"
       />
       <FormTextField
         invalid={isInvalid}
         className="mb-30"
-        // name="server.storage_s3_bucket"
         name={getFieldName('storage_s3_bucket')}
         label={<Trans message="Amazon S3 bucket" />}
-        // required
+        required
       />
       <FormTextField
         invalid={isInvalid}
-        // name="server.storage_s3_endpoint"
         name={getFieldName('storage_s3_endpoint')}
         label={<Trans message="Amazon S3 endpoint" />}
         description={
