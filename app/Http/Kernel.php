@@ -60,12 +60,14 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            \App\Http\Middleware\SetS3Config::class,
         ],
 
         'api' => [
             EnsureFrontendRequestsAreStateful::class,
             'throttle:1000,1',
             SubstituteBindings::class,
+            \App\Http\Middleware\SetS3Config::class,
         ],
     ];
 

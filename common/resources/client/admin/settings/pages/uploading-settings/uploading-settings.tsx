@@ -24,6 +24,8 @@ import { useAuth } from '@common/auth/use-auth';
 
 export function UploadingSettings() {
   const {trans} = useTrans();
+  const {user} = useAuth();
+  const isSuperAdmin = user?.user_type==='super_admin'
   return (
     <SettingsPanel
       title={<Trans message="Uploading" />}
@@ -34,77 +36,94 @@ export function UploadingSettings() {
       <PrivateUploadSection />
       <PublicUploadSection />
       <CredentialsSection />
-      <SettingsErrorGroup name="static_delivery_group">
-        {isInvalid => (
-          <FormRadioGroup
-            invalid={isInvalid}
-            size="sm"
-            name="server.static_file_delivery"
-            orientation="vertical"
-            label={<Trans message="File delivery optimization" />}
-            description={
-              <Trans message="Both X-Sendfile and X-Accel need to be enabled on the server first. When enabled, it will reduce server memory and CPU usage when previewing or downloading files, especially for large files." />
-            }
-          >
-            <FormRadio value="">
-              <Trans message="None" />
-            </FormRadio>
-            <FormRadio value="xsendfile">
-              <Trans message="X-Sendfile (Apache)" />
-            </FormRadio>
-            <FormRadio value="xaccel">
-              <Trans message="X-Accel (Nginx)" />
-            </FormRadio>
-          </FormRadioGroup>
-        )}
-      </SettingsErrorGroup>
-      <FormFileSizeField
-        className="mb-30"
-        name="client.uploads.chunk_size"
-        min={1}
-        label={<Trans message="Chunk size" />}
-        placeholder="Infinity"
-        description={
-          <Trans message="Size (in bytes) for each file chunk. It should only be changed if there is a maximum upload size on your server or proxy (for example cloudflare). If chunk size is larger then limit on the server, uploads will fail." />
-        }
-      />
-      <MaxUploadSizeSection />
-      <SettingsSeparator />
-      <FormFileSizeField
-        min={1}
-        name="client.uploads.max_size"
-        className="mb-30"
-        label={<Trans message="Maximum file size" />}
-        description={
-          <Trans message="Maximum size (in bytes) for a single file user can upload." />
-        }
-      />
-      <FormFileSizeField
-        min={1}
-        name="client.uploads.available_space"
-        className="mb-30"
-        label={<Trans message="Available space" />}
-        description={
-          <Trans message="Disk space (in bytes) each user uploads are allowed to take up. This can be overridden per user." />
-        }
-      />
-      <JsonChipField
-        name="client.uploads.allowed_extensions"
-        className="mb-30"
-        label={<Trans message="Allowed extensions" />}
-        placeholder={trans(message('Add extension...'))}
-        description={
-          <Trans message="List of allowed file types (jpg, mp3, pdf etc.). Leave empty to allow all file types." />
-        }
-      />
-      <JsonChipField
-        name="client.uploads.blocked_extensions"
-        label={<Trans message="Blocked extensions" />}
-        placeholder={trans(message('Add extension...'))}
-        description={
-          <Trans message="Prevent uploading of these file types, even if they are allowed above." />
-        }
-      />
+      {isSuperAdmin && (
+        <SettingsErrorGroup name="static_delivery_group">
+          {isInvalid => (
+            <FormRadioGroup
+              invalid={isInvalid}
+              size="sm"
+              name="server.static_file_delivery"
+              orientation="vertical"
+              label={<Trans message="File delivery optimization" />}
+              description={
+                <Trans message="Both X-Sendfile and X-Accel need to be enabled on the server first. When enabled, it will reduce server memory and CPU usage when previewing or downloading files, especially for large files." />
+              }
+            >
+              <FormRadio value="">
+                <Trans message="None" />
+              </FormRadio>
+              <FormRadio value="xsendfile">
+                <Trans message="X-Sendfile (Apache)" />
+              </FormRadio>
+              <FormRadio value="xaccel">
+                <Trans message="X-Accel (Nginx)" />
+              </FormRadio>
+            </FormRadioGroup>
+          )}
+        </SettingsErrorGroup>
+      )}
+      {isSuperAdmin && (
+        <FormFileSizeField
+          className="mb-30"
+          name="client.uploads.chunk_size"
+          min={1}
+          label={<Trans message="Chunk size" />}
+          placeholder="Infinity"
+          description={
+            <Trans message="Size (in bytes) for each file chunk. It should only be changed if there is a maximum upload size on your server or proxy (for example cloudflare). If chunk size is larger then limit on the server, uploads will fail." />
+          }
+        />
+      )}
+      {isSuperAdmin && (
+        <MaxUploadSizeSection />
+      )}
+      {isSuperAdmin && (
+        <SettingsSeparator />
+      )}
+       {isSuperAdmin && (
+        <FormFileSizeField
+          min={1}
+          name="client.uploads.max_size"
+          className="mb-30"
+          label={<Trans message="Maximum file size" />}
+          description={
+            <Trans message="Maximum size (in bytes) for a single file user can upload." />
+          }
+        />
+      )}
+      {isSuperAdmin && (
+        <FormFileSizeField
+          min={1}
+          name="client.uploads.available_space"
+          className="mb-30"
+          label={<Trans message="Available space" />}
+          description={
+            <Trans message="Disk space (in bytes) each user uploads are allowed to take up. This can be overridden per user." />
+          }
+        />
+      )}
+      {isSuperAdmin && (
+        <JsonChipField
+          name="client.uploads.allowed_extensions"
+          className="mb-30"
+          label={<Trans message="Allowed extensions" />}
+          placeholder={trans(message('Add extension...'))}
+          description={
+            <Trans message="List of allowed file types (jpg, mp3, pdf etc.). Leave empty to allow all file types." />
+          }
+        />
+      )}
+      {isSuperAdmin && (
+        <JsonChipField
+          name="client.uploads.blocked_extensions"
+          label={<Trans message="Blocked extensions" />}
+          placeholder={trans(message('Add extension...'))}
+          description={
+            <Trans message="Prevent uploading of these file types, even if they are allowed above." />
+          }
+        />
+      )}
+      
     </SettingsPanel>
   );
 }

@@ -18,6 +18,9 @@ use Common\Files\FileEntry as CommonFileEntry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use App\Models\UserS3Conf;
+use Illuminate\Support\Facades\Config;
+
 
 const WORKSPACED_RESOURCES = [FileEntry::class];
 const WORKSPACE_HOME_ROUTE = '/drive';
@@ -49,5 +52,22 @@ class AppServiceProvider extends ServiceProvider
             FileEntry::MODEL_TYPE => FileEntry::class,
             User::MODEL_TYPE => User::class,
         ]);
+
+         // New functionality to dynamically load S3 configuration
+        //  $this->app->singleton('s3.config', function ($app) {
+        //     $userId = auth()->user()->id;
+
+        //     // Retrieve S3 configuration for the authenticated user
+        //     $userS3Conf = UserS3Conf::where('user_id', $userId)->first();
+
+        //     if ($userS3Conf) {
+        //         // Set the S3 configuration values dynamically
+        //         Config::set('filesystems.disks.s3.key', $userS3Conf->storage_s3_key);
+        //         Config::set('filesystems.disks.s3.secret', $userS3Conf->storage_s3_secret);
+        //         Config::set('filesystems.disks.s3.region', $userS3Conf->storage_s3_region);
+        //         Config::set('filesystems.disks.s3.bucket', $userS3Conf->storage_s3_bucket);
+        //         Config::set('filesystems.disks.s3.endpoint', $userS3Conf->storage_s3_endpoint);
+        //     }
+        // });
     }
 }

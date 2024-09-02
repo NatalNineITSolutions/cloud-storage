@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ReflectionClass;
+use App\Models\UserS3Conf;
 
 class SettingsController extends BaseController
 {
@@ -77,165 +78,7 @@ class SettingsController extends BaseController
     //     return $this->success();
     // }
 
-    public function persist()
-    {
-        $this->authorize('update', Setting::class);
-
-        $clientSettings = $this->cleanValues($this->request->get('client'));
-        $serverSettings = $this->cleanValues($this->request->get('server'));
-
-        // need to handle files before validating
-        $this->handleFiles();
-
-        if (
-            $errResponse = $this->validateSettings(
-                $serverSettings,
-                $clientSettings,
-            )
-        ) {
-            return $errResponse;
-        }
-
-        $isSuperAdmin = auth()->user()->user_type === 'super_admin';
-        $userId = auth()->user()->id;
-
-        //Super_admin Env Change
-        if ($isSuperAdmin) {
-            if ($serverSettings) {
-                // $this->dotEnv->write($serverSettings);
-            }
-            if ($clientSettings) {
-                $this->settings->save($clientSettings);
-            }
-        }
-        //Database store
-        else {
-            $userSettings = [];
-            foreach ($serverSettings as $key => $value) {
-                $userSettings["server.{$userId}.{$key}"] = $value;
-            }
-            \Log::info('Non-super admin settings transformation.', [
-                'originalServerSettings' => $serverSettings,
-                'userSettings' => $userSettings,
-            ]);
-            if ($serverSettings) {
-                \Log::info('Updating database with server settings for non-super admin.', $userSettings);
-                $this->settings->save($serverSettings);
-            }
-            if ($clientSettings) {
-                \Log::info('Updating database with client settings for non-super admin.', $clientSettings);
-                $this->settings->save($clientSettings);
-            }
-        }
-        Cache::flush();
-
-        event(new SettingsSaved($clientSettings, $serverSettings));
-
-        return $this->success();
-    }
-
-    // user based s3 conf
-    // public function persist()
-    // {
-    //     $this->authorize('update', Setting::class);
-
-    //     $clientSettings = $this->cleanValues($this->request->get('client'));
-    //     $serverSettings = $this->cleanValues($this->request->get('server'));
-
-    //     // Handle files before validating
-    //     $this->handleFiles();
-
-    //     // Validate settings
-    //     if ($errResponse = $this->validateSettings($serverSettings, $clientSettings)) {
-    //         return $errResponse;
-    //     }
-
-    //     $isSuperAdmin = auth()->user()->user_type === 'super_admin';
-    //     $userId = auth()->user()->id;
-
-    //     if ($isSuperAdmin) {
-    //         if ($serverSettings) {
-    //             // Optionally handle .env changes or other super admin-specific logic
-    //             // $this->dotEnv->write($serverSettings);
-    //         }
-    //         if ($clientSettings) {
-    //             $this->settings->save($clientSettings);
-    //         }
-    //     } else {
-    //         $userSettings = [];
-    //         foreach ($serverSettings as $key => $value) {
-    //             $userSettings["server.{$userId}.{$key}"] = $value;
-    //         }
-    //         \Log::info('Non-super admin settings transformation.', [
-    //             'originalServerSettings' => $serverSettings,
-    //             'userSettings' => $userSettings,
-    //         ]);
-    //         if ($serverSettings) {
-    //             \Log::info('Updating database with server settings for non-super admin.', $userSettings);
-    //             $this->settings->save($userSettings); // Save user-specific settings
-    //         }
-    //         if ($clientSettings) {
-    //             \Log::info('Updating database with client settings for non-super admin.', $clientSettings);
-    //             $this->settings->save($clientSettings);
-    //         }
-
-    //         // Retrieve and validate S3 configuration for non-super admin
-    //         $s3Config = $this->getUserS3Config();
-    //         \Log::info('Retrieving S3 configuration.', ['s3Config' => $s3Config]);
-            
-
-    //         if (empty($s3Config)) {
-    //             \Log::warning('S3 configuration not found for user.');
-    //         } else {
-    //             try {
-    //                 $s3Client = new \Aws\S3\S3Client([
-    //                     'version' => 'latest',
-    //                     'region'  => $s3Config['s3_region'] ?? 'default-region',
-    //                     'credentials' => [
-    //                         'key'    => $s3Config['s3_key'] ?? 'default-key',
-    //                         'secret' => $s3Config['s3_secret'] ?? 'default-secret',
-    //                     ],
-    //                 ]);
-    //                 $result = $s3Client->listBuckets();
-    //                 \Log::info('S3 Buckets:', $result->get('Buckets'));
-    //             } catch (\Aws\Exception\AwsException $e) {
-    //                 \Log::error('Failed to connect to S3: ' . $e->getMessage());
-    //             }
-    //         }
-    //     }
-
-    //     // Clear cache
-    //     Cache::flush();
-
-    //     // Trigger event for settings saved
-    //     event(new SettingsSaved($clientSettings, $serverSettings));
-
-    //     return $this->success();
-    // }
-
-        
-    private function getUserS3Config()
-    {
-        $userId = auth()->user()->id;
-        
-
-        $s3Config = Setting::where('user_id', $userId)
-            ->where('name', 'like', "client.{$userId}.%")
-            ->pluck('value', 'name')
-            ->toArray();
-
-        // Remove the user ID prefix from the keys
-        $formattedConfig = [];
-        foreach ($s3Config as $key => $value) {
-            $formattedKey = str_replace("client.{$userId}.", '', $key);
-            $formattedConfig[$formattedKey] = $value;
-        }
-
-        return $formattedConfig;
-    }
-
-
- 
+    
     
     private function cleanValues(string|null $config): array
     {
@@ -300,51 +143,235 @@ class SettingsController extends BaseController
         }
     }
 
-    //s3conf
-    // public function getUserS3Config()
-    // {
-    //     $userId = auth()->user()->id;
-        
-    //     $s3Config = Setting::where('user_id', $userId)
-    //         ->where('key', 'like', "{$userId}.%")
-    //         ->pluck('value', 'key')
-    //         ->toArray();
+   
 
-    //     $formattedConfig = [];
-    //     foreach ($s3Config as $key => $value) {
-    //         $formattedKey = str_replace("{$userId}.", '', $key);
-    //         $formattedConfig[$formattedKey] = $value;
+    public function persist()
+    {
+        $this->authorize('update', Setting::class);
+    
+        $clientSettings = $this->cleanValues($this->request->get('client'));
+        $serverSettings = $this->cleanValues($this->request->get('server'));
+    
+        // Handle files before validating
+        $this->handleFiles();
+    
+        // Validate settings
+        if ($errResponse = $this->validateSettings($serverSettings, $clientSettings)) {
+            return $errResponse;
+        }
+    
+        $isSuperAdmin = auth()->user()->user_type === 'super_admin';
+        $userId = auth()->user()->id;
+    
+        // Initialize a flag for tracking S3 connection status
+        $s3ConnectionSuccess = true;
+    
+        if ($isSuperAdmin) {
+            if ($serverSettings) {
+                // Optionally handle .env changes or other super admin-specific logic
+                $this->dotEnv->write($serverSettings);
+            }
+            if ($clientSettings) {
+                $this->settings->save($clientSettings);
+            }
+        } else {
+            $userSettings = [];
+            foreach ($serverSettings as $key => $value) {
+                // Format server settings for non-super admins
+                $userSettings[$key] = $value;
+            }
+            \Log::info('Non-super admin settings transformation.', [
+                'originalServerSettings' => $serverSettings,
+                'userSettings' => $userSettings,
+            ]);
+    
+            if ($serverSettings) {
+                \Log::info('Updating database with server settings for non-super admin.', $userSettings);
+                $this->settings->save($userSettings);
+            }
+            if ($clientSettings) {
+                \Log::info('Updating database with client settings for non-super admin.', $clientSettings);
+                $this->settings->save($clientSettings);
+            }
+    
+            \Log::info('Starting to retrieve S3 configuration settings.');
+    
+            // Retrieve and format S3 configuration settings
+            $formattedConfig = $this->getS3Config();
+    
+            \Log::info('Formatted S3 configuration:', $formattedConfig);
+    
+            // Retrieve S3 credentials from the formatted configuration
+            $s3Region = $formattedConfig['storage_s3_region'] ?? null;
+            $s3Key = $formattedConfig['storage_s3_key'] ?? null;
+            $s3Secret = $formattedConfig['storage_s3_secret'] ?? null;
+            $s3Bucket = $formattedConfig['storage_s3_bucket'] ?? null;
+            $s3Endpoint = $formattedConfig['storage_s3_endpoint'] ?? null;
+    
+            \Log::info('S3 Configuration Details:', [
+                'region' => $s3Region,
+                'key' => $s3Key,
+                'secret' => $s3Secret,
+                'bucket' => $s3Bucket,
+                'endpoint' => $s3Endpoint
+            ]);
+    
+            try {
+                $s3Client = new \Aws\S3\S3Client([
+                    'version'     => 'latest',
+                    'region'      => $s3Region,
+                    'credentials' => [
+                        'key'    => $s3Key,
+                        'secret' => $s3Secret,
+                    ],
+                    'endpoint'    => $s3Endpoint,
+                ]);
+    
+                $result = $s3Client->listObjects([
+                    'Bucket' => $s3Bucket,
+                ]);
+    
+                \Log::info('S3 Objects:', $result->get('Contents'));
+    
+                $this->UserS3ConfigUpdate($formattedConfig);
+    
+            } catch (\Aws\Exception\AwsException $e) {
+                \Log::error('Failed to connect to S3: ' . $e->getMessage());
+                $s3ConnectionSuccess = false; // Update flag if S3 connection fails
+            }
+        }
+    
+        Cache::flush();
+    
+        event(new SettingsSaved($clientSettings, $serverSettings));
+    
+        if ($s3ConnectionSuccess) {
+            return $this->success();
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Failed to connect to S3'], 500);
+        }
+    }
+    
+
+    private function getS3Config()
+    {
+        // Get the user ID from the authenticated user
+        $userId = auth()->user()->id;
+        \Log::info('User ID for filtering S3 configuration:', ['userId' => $userId]);
+    
+        // Retrieve S3 configuration settings from the database where the name includes the user ID prefix
+        $s3Config = Setting::where('name', 'like', "$userId.storage_s3_%")
+            ->pluck('value', 'name')
+            ->toArray();
+    
+        \Log::info('Retrieved raw S3 configuration settings:', $s3Config);
+    
+        $formattedConfig = [];
+        foreach ($s3Config as $key => $value) {
+            \Log::info('Original key before formatting:', ['key' => $key]);
+    
+            // Remove the user ID prefix 
+            $formattedKey = preg_replace('/^\d+\./', '', $key);
+    
+            \Log::info('Formatted key after removing prefix:', ['formattedKey' => $formattedKey]);
+
+            $formattedConfig[$formattedKey] = $value;
+        }
+    
+        \Log::info('Formatted S3 configuration:', $formattedConfig);
+    
+        return $formattedConfig;
+    }
+
+    // public function UserS3Config()
+    // {
+        
+    //     $s3Config = $this->getUserS3Config();
+    //     \Log::info('hello');
+
+    //     // Check if S3 configuration exists
+    //     if (empty($s3Config)) {
+    //         return $this->error('S3 configuration not found for user.');
     //     }
 
-    //     return $formattedConfig;
+    //     $s3Client = new \Aws\S3\S3Client([
+    //         'version' => 'latest',
+    //         'region'  => $s3Config['s3_region'] ?? 'default-region',
+    //         'credentials' => [
+    //             'key'    => $s3Config['s3_key'] ?? 'default-key',
+    //             'secret' => $s3Config['s3_secret'] ?? 'default-secret',
+    //         ],
+    //     ]);
+
+    //     try {
+    //         $result = $s3Client->listBuckets();
+    //         return response()->json($result->get('Buckets'));
+    //     } catch (\Aws\Exception\AwsException $e) {
+    //         return $this->error('Failed to connect to S3: ' . $e->getMessage());
+    //     }
+
     // }
-    public function UserS3Config()
+
+    public function UserS3ConfigUpdate(array $config)
     {
-        
-        $s3Config = $this->getUserS3Config();
-        \Log::info('hello');
-
-        // Check if S3 configuration exists
-        if (empty($s3Config)) {
-            return $this->error('S3 configuration not found for user.');
-        }
-
-        $s3Client = new \Aws\S3\S3Client([
-            'version' => 'latest',
-            'region'  => $s3Config['s3_region'] ?? 'default-region',
-            'credentials' => [
-                'key'    => $s3Config['s3_key'] ?? 'default-key',
-                'secret' => $s3Config['s3_secret'] ?? 'default-secret',
-            ],
-        ]);
-
+        $userId = auth()->user()->id;
+    
         try {
-            $result = $s3Client->listBuckets();
-            return response()->json($result->get('Buckets'));
-        } catch (\Aws\Exception\AwsException $e) {
-            return $this->error('Failed to connect to S3: ' . $e->getMessage());
+            // Retrieve existing configuration or create a new one
+            $userS3Conf = UserS3Conf::firstOrNew(['user_id' => $userId]);
+    
+            // Update the configuration fields
+            $userS3Conf->storage_s3_region = $config['storage_s3_region'] ?? $userS3Conf->storage_s3_region;
+            $userS3Conf->storage_s3_key = $config['storage_s3_key'] ?? $userS3Conf->storage_s3_key;
+            $userS3Conf->storage_s3_secret = $config['storage_s3_secret'] ?? $userS3Conf->storage_s3_secret;
+            $userS3Conf->storage_s3_bucket = $config['storage_s3_bucket'] ?? $userS3Conf->storage_s3_bucket;
+            $userS3Conf->storage_s3_endpoint = $config['storage_s3_endpoint'] ?? $userS3Conf->storage_s3_endpoint;
+    
+            // Save changes to the database
+            $userS3Conf->save();
+    
+            \Log::info('Successfully updated S3 configuration for user ID: ' . $userId);
+    
+            // Update the .env file with the user's S3 configuration
+            $this->updateDotEnv([
+                'S3_REGION' => $userS3Conf->storage_s3_region,
+                'S3_KEY' => $userS3Conf->storage_s3_key,
+                'S3_SECRET' => $userS3Conf->storage_s3_secret,
+                'S3_BUCKET' => $userS3Conf->storage_s3_bucket,
+                'S3_ENDPOINT' => $userS3Conf->storage_s3_endpoint,
+            ]);
+    
+        } catch (\Exception $e) {
+            \Log::error('Failed to update S3 configuration for user ID: ' . $userId . '. Error: ' . $e->getMessage());
+        }
+    }
+
+    private function updateDotEnv(array $config)
+    {
+        $envFile = base_path('.env');
+
+        foreach ($config as $key => $value) {
+            // Use `file_put_contents` to write key-value pairs to the .env file
+            $this->updateEnvFile($envFile, $key, $value);
+        }
+    }
+
+    private function updateEnvFile($envFile, $key, $value)
+    {
+        $content = file_get_contents($envFile);
+
+        // If the key exists in the .env file, update its value
+        if (preg_match("/^$key=.*$/m", $content)) {
+            $content = preg_replace("/^$key=.*$/m", "$key=$value", $content);
+        } else {
+            // If the key does not exist, add it
+            $content .= "\n$key=$value";
         }
 
+        file_put_contents($envFile, $content);
     }
+
+
+    
 
 }
