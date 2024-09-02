@@ -333,13 +333,13 @@ class SettingsController extends BaseController
             \Log::info('Successfully updated S3 configuration for user ID: ' . $userId);
     
             // Update the .env file with the user's S3 configuration
-            $this->updateDotEnv([
-                'S3_REGION' => $userS3Conf->storage_s3_region,
-                'S3_KEY' => $userS3Conf->storage_s3_key,
-                'S3_SECRET' => $userS3Conf->storage_s3_secret,
-                'S3_BUCKET' => $userS3Conf->storage_s3_bucket,
-                'S3_ENDPOINT' => $userS3Conf->storage_s3_endpoint,
-            ]);
+            // $this->updateDotEnv([
+            //     'S3_REGION' => $userS3Conf->storage_s3_region,
+            //     'S3_KEY' => $userS3Conf->storage_s3_key,
+            //     'S3_SECRET' => $userS3Conf->storage_s3_secret,
+            //     'S3_BUCKET' => $userS3Conf->storage_s3_bucket,
+            //     'S3_ENDPOINT' => $userS3Conf->storage_s3_endpoint,
+            // ]);
     
         } catch (\Exception $e) {
             \Log::error('Failed to update S3 configuration for user ID: ' . $userId . '. Error: ' . $e->getMessage());
