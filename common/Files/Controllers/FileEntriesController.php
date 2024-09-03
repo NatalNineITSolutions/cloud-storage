@@ -1,4 +1,6 @@
-<?php namespace Common\Files\Controllers;
+<?php
+
+namespace Common\Files\Controllers;
 
 use Auth;
 use Common\Core\BaseController;
@@ -14,6 +16,9 @@ use Common\Files\Response\FileResponseFactory;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use App\Models\UserS3Conf;
+use Illuminate\Support\Facades\Log;
 
 class FileEntriesController extends BaseController
 {
@@ -24,48 +29,27 @@ class FileEntriesController extends BaseController
         $this->middleware('auth')->only(['index']);
     }
 
-    // public function index()
-    // {
-    //     $params = $this->request->all();
-    //     $params['userId'] = $this->request->get('userId');
-
-    //     // scope files to current user by default if it's an API request
-    //     if (!requestIsFromFrontend() && !$params['userId']) {
-    //         $params['userId'] = Auth::id();
-    //     }
-
-    //     $this->authorize('index', FileEntry::class);
-
-    //     $dataSource = new Datasource($this->entry->with(['users']), $params);
-
-    //     $pagination = $dataSource->paginate();
-
-    //     return $this->success(['pagination' => $pagination]);
-    // }
-
     public function index()
     {
         $params = $this->request->all();
-        
         $currentUser = Auth::user();
-        
-        //join the Two table users and file_entries
+
         $query = $this->entry
-        ->join('users', 'file_entries.owner_id', '=', 'users.id') // Join on owner_id
-        ->select('file_entries.*', 'users.admin_user_id');
-        
+            ->join('users', 'file_entries.owner_id', '=', 'users.id') 
+            ->select('file_entries.*', 'users.admin_user_id');
+
         if ($currentUser->user_type === 'super_admin') {
             $this->authorize('index', FileEntry::class);
             $dataSource = new Datasource($this->entry->with(['users']), $params);
-        }  else {
+        } else {
             $query->where(function ($subQuery) use ($currentUser) {
-                $subQuery->where('file_entries.owner_id', $currentUser->id) // Filter by ownership
-                         ->orWhere('users.admin_user_id', $currentUser->id); // Filter by admin oversight
+                $subQuery->where('file_entries.owner_id', $currentUser->id)
+                         ->orWhere('users.admin_user_id', $currentUser->id);
             });
             $this->authorize('index', FileEntry::class);
             $dataSource = new Datasource($query->with(['users']), $this->request->all());
         }
-        // Paginate the results
+
         $pagination = $dataSource->paginate();
         return $this->success(['pagination' => $pagination]);
     }
@@ -116,6 +100,10 @@ class FileEntriesController extends BaseController
         $file = $this->request->file('file');
         $payload = new FileEntryPayload($this->request->all());
 
+        // // Store the file on S3
+        $fileUrl = $this->storeFileOnS3($file, Auth::user());
+        $payload->file_url = $fileUrl;
+
         app(StoreFile::class)->execute($payload, ['file' => $file]);
 
         $fileEntry = app(CreateFileEntry::class)->execute($payload);
@@ -123,6 +111,46 @@ class FileEntriesController extends BaseController
         event(new FileUploaded($fileEntry));
 
         return $this->success(['fileEntry' => $fileEntry->load('users')], 201);
+    }
+
+
+    protected function storeFileOnS3(UploadedFile $file, $user)
+    {
+        $user = Auth::user();
+        $folderPath = $user->user_type !== 'super_admin' ? rtrim($user->name, '/') . '/' : '';
+
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $file->getClientOriginalExtension();
+
+        $fileName = $originalName . '.' . $extension;
+        $fullPath = $folderPath . $fileName;
+
+        $fileExists = Storage::disk('s3')->exists($fullPath);
+
+        if ($fileExists) {
+            $counter = 1;
+            do {
+                $fileName = $originalName . "({$counter})." . $extension;
+                $fullPath = $folderPath . $fileName;
+                $fileExists = Storage::disk('s3')->exists($fullPath);
+                $counter++;
+            } while ($fileExists);
+        }
+
+        Storage::disk('s3')->put($fullPath, file_get_contents($file));
+
+        return Storage::disk('s3')->url($fullPath);
+    }
+
+    public function getFilesForCurrentUser($currentUser)
+    {
+        return FileEntry::join('users', 'file_entries.owner_id', '=', 'users.id')
+                        ->where(function ($subQuery) use ($currentUser) {
+                            $subQuery->where('file_entries.owner_id', $currentUser->id)
+                                     ->orWhere('users.admin_user_id', $currentUser->id);
+                        })
+                        ->select('file_entries.*', 'users.admin_user_id')
+                        ->get();
     }
 
     public function update(int $entryId)
@@ -159,7 +187,6 @@ class FileEntriesController extends BaseController
             'emptyTrash' => 'boolean',
         ]);
 
-        // get all soft deleted entries for user, if we are emptying trash
         if ($this->request->get('emptyTrash')) {
             $entryIds = $this->entry
                 ->where('owner_id', $userId)
@@ -171,9 +198,7 @@ class FileEntriesController extends BaseController
         app(DeleteEntries::class)->execute([
             'paths' => $this->request->get('paths'),
             'entryIds' => $entryIds,
-            'soft' =>
-                !$this->request->get('deleteForever', true) &&
-                !$this->request->get('emptyTrash'),
+            'soft' => !$this->request->get('deleteForever', true) && !$this->request->get('emptyTrash'),
         ]);
 
         return $this->success();
