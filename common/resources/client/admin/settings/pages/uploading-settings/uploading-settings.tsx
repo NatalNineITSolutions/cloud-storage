@@ -246,7 +246,7 @@ function S3Form({isInvalid}: CredentialFormProps) {
   const { user } = useAuth();
   const userId = user?.id || '';
   const isSuperAdmin = user?.user_type === 'super_admin';
-  const getFieldName = (field) => {
+  const getFieldName = (field:any) => {
     return isSuperAdmin ? `server.${field}` : `client.${userId}.${field}`;
   };
 
