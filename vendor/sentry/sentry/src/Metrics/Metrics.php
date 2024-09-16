@@ -10,7 +10,7 @@ use Sentry\Metrics\Types\DistributionType;
 use Sentry\Metrics\Types\GaugeType;
 use Sentry\Metrics\Types\SetType;
 
-final class Metrics
+class Metrics
 {
     /**
      * @var self|null
@@ -37,8 +37,8 @@ final class Metrics
     }
 
     /**
-     * @param int|float $value
-     * @param string[]  $tags
+     * @param int|float             $value
+     * @param array<string, string> $tags
      */
     public function increment(
         string $key,
@@ -60,8 +60,8 @@ final class Metrics
     }
 
     /**
-     * @param int|float $value
-     * @param string[]  $tags
+     * @param int|float             $value
+     * @param array<string, string> $tags
      */
     public function distribution(
         string $key,
@@ -83,8 +83,8 @@ final class Metrics
     }
 
     /**
-     * @param int|float $value
-     * @param string[]  $tags
+     * @param int|float             $value
+     * @param array<string, string> $tags
      */
     public function gauge(
         string $key,
@@ -106,8 +106,8 @@ final class Metrics
     }
 
     /**
-     * @param int|string $value
-     * @param string[]   $tags
+     * @param int|string            $value
+     * @param array<string, string> $tags
      */
     public function set(
         string $key,
@@ -126,6 +126,37 @@ final class Metrics
             $timestamp,
             $stackLevel
         );
+    }
+
+    /**
+     * @template T
+     *
+     * @param callable(): T         $callback
+     * @param array<string, string> $tags
+     *
+     * @return T
+     */
+    public function timing(
+        string $key,
+        callable $callback,
+        array $tags = [],
+        int $stackLevel = 0
+    ) {
+        $startTimestamp = microtime(true);
+
+        $result = $callback();
+
+        $this->aggregator->add(
+            DistributionType::TYPE,
+            $key,
+            microtime(true) - $startTimestamp,
+            MetricsUnit::second(),
+            $tags,
+            (int) $startTimestamp,
+            $stackLevel
+        );
+
+        return $result;
     }
 
     public function flush(): ?EventId

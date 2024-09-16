@@ -2,11 +2,11 @@ import axios from 'axios';
 import {useMutation} from '@tanstack/react-query';
 import {DriveEntryPermissions} from '../../files/drive-entry';
 import {apiClient} from '@common/http/query-client';
-import {toast} from '@common/ui/toast/toast';
+import {toast} from '@ui/toast/toast';
 import {invalidateEntryQueries} from '../../drive-query-keys';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {BackendErrorResponse} from '@common/errors/backend-error-response';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
 
 export interface ShareEntryPayload {
   emails: string[];

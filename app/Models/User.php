@@ -17,12 +17,12 @@ class User extends BaseUser
         return $this->hasMany(Workspace::class, 'owner_id');
     }
 
-    /**
-     * Specifies the user's FCM token
-     */
     public function routeNotificationForFcm(): string|array|null
     {
-        return $this->fcmTokens()->first()->token ?? null;
+        return $this->fcmTokens()
+            ->get()
+            ->pluck('token')
+            ->toArray();
     }
 
     public function fcmTokens(): HasMany

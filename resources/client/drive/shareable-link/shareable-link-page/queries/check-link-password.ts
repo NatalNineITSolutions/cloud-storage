@@ -2,8 +2,8 @@ import {useMutation} from '@tanstack/react-query';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {linkPageState} from '../link-page-store';
 import {apiClient} from '@common/http/query-client';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
-import {message} from '@common/i18n/message';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
+import {message} from '@ui/i18n/message';
 
 interface Response extends BackendResponse {
   matches: boolean;

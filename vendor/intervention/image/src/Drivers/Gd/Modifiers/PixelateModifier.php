@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Image\Drivers\Gd\Modifiers;
 
-use Intervention\Image\Drivers\DriverSpecializedModifier;
 use Intervention\Image\Interfaces\ImageInterface;
+use Intervention\Image\Interfaces\SpecializedInterface;
+use Intervention\Image\Modifiers\PixelateModifier as GenericPixelateModifier;
 
-/**
- * @property int $size
- */
-class PixelateModifier extends DriverSpecializedModifier
+class PixelateModifier extends GenericPixelateModifier implements SpecializedInterface
 {
     public function apply(ImageInterface $image): ImageInterface
     {

@@ -1,8 +1,8 @@
 import React from 'react';
-import {FilePreviewContainer} from '@common/uploads/preview/file-preview-container';
 import {useShareableLinkPage} from '../queries/use-shareable-link-page';
 import {ShareableLinkNavbar} from './shareable-link-navbar';
 import {AdHost} from '@common/admin/ads/ad-host';
+import {FilePreviewContainer} from '@common/uploads/components/file-preview/file-preview-container';
 
 export function ShareableLinkPageFilePreview() {
   const {link} = useShareableLinkPage();

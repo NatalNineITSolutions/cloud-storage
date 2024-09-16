@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Common\Auth\Actions\CreateUser;
 use Common\Auth\Events\UserCreated;
 use Common\Auth\Permissions\Permission;
-use Common\Database\Seeds\DefaultPagesSeeder;
+use Common\Core\Install\CreateDefaultCustomPages;
 use Common\Files\FileEntry;
 use Common\Localizations\Localization;
 use Common\Tags\Tag;
@@ -21,8 +21,9 @@ use Illuminate\Support\Facades\Storage;
 class CleanDemoSite extends Command
 {
     protected $signature = 'demoSite:clean';
+    protected $description = 'Reset demo site to its initial state';
 
-    public function handle(): void
+    public function handle(): int
     {
         FileEntry::whereDate(
             'created_at',
@@ -45,11 +46,13 @@ class CleanDemoSite extends Command
             }
         });
 
-        app(DefaultPagesSeeder::class)->run();
+        (new CreateDefaultCustomPages())->execute();
 
         Artisan::call('cache:clear');
 
-        $this->info('Demo site cleaned successfully');
+        $this->info('Demo site reset');
+
+        return Command::SUCCESS;
     }
 
     private function rehydrateDemoAccounts(): void
@@ -130,7 +133,7 @@ class CleanDemoSite extends Command
 
         $adminPermission = Permission::where('name', 'admin')->first();
 
-        $admin->avatar = null;
+        $admin->image = null;
         $admin->username = 'admin';
         $admin->first_name = 'Demo';
         $admin->last_name = 'Admin';

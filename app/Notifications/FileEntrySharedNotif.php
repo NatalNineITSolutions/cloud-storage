@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use NotificationChannels\Fcm\FcmMessage;
+use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 
 class FileEntrySharedNotif extends Notification implements ShouldQueue
 {
@@ -56,7 +57,7 @@ class FileEntrySharedNotif extends Notification implements ShouldQueue
                 'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
             ])
             ->setNotification(
-                \NotificationChannels\Fcm\Resources\Notification::create()
+                FcmNotification::create()
                     ->setTitle(rtrim($this->getFirstLine(), ':'))
                     ->setBody(
                         $this->fileEntries
@@ -102,7 +103,7 @@ class FileEntrySharedNotif extends Notification implements ShouldQueue
     private function getFirstLine(): string
     {
         $fileCount = $this->fileEntries->count();
-        $username = $this->sharer->display_name;
+        $username = $this->sharer->name;
 
         if ($this->fileEntries->count() === 1) {
             return __(':username shared a file with you', [

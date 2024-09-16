@@ -5,10 +5,12 @@ use Illuminate\Database\Migrations\Migration;
 
 class MigrateLandingPageConfigTo20 extends Migration
 {
-
     public function up()
     {
         $config = app(Settings::class)->get('homepage.appearance');
+        if (is_array($config)) {
+            $config = json_encode($config);
+        }
         if ($config) {
             $config = str_replace(
                 'client\/assets\/images\/homepage\/inline-feature-1.png',

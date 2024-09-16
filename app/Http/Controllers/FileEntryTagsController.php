@@ -36,12 +36,22 @@ class FileEntryTagsController extends BaseController
 
         $tagNames = request('tags', []);
 
-        $tagIds = app(Tag::class)
-            ->insertOrRetrieve($tagNames, 'custom', Auth::id())
-            ->pluck('id');
+        $newTagIds = empty($tagNames)
+            ? collect()
+            : app(Tag::class)
+                ->insertOrRetrieve($tagNames, 'custom', Auth::id())
+                ->pluck('id');
 
-        $fileEntry->tags()->sync(
-            $tagIds->mapWithKeys(function ($id) {
+        $currentTagIds = $fileEntry
+            ->tags()
+            ->where('type', 'custom')
+            ->pluck('tags.id');
+        $idsToRemove = $currentTagIds->diff($newTagIds);
+        $idsToAdd = $newTagIds->diff($currentTagIds);
+
+        $fileEntry->tags()->detach($idsToRemove);
+        $fileEntry->tags()->attach(
+            $idsToAdd->mapWithKeys(function ($id) {
                 return [$id => ['user_id' => Auth::id()]];
             }),
         );

@@ -56,10 +56,6 @@ class GoogleCloudAiplatformV1NotebookRuntime extends \Google\Collection
    * @var string[]
    */
   public $networkTags;
-  /**
-   * @var GoogleCloudAiplatformV1NotebookRuntimeTemplateRef
-   */
-  public $notebookRuntimeTemplateRef;
   protected $notebookRuntimeTemplateRefType = GoogleCloudAiplatformV1NotebookRuntimeTemplateRef::class;
   protected $notebookRuntimeTemplateRefDataType = '';
   /**
@@ -70,10 +66,6 @@ class GoogleCloudAiplatformV1NotebookRuntime extends \Google\Collection
    * @var string
    */
   public $proxyUri;
-  /**
-   * @var GoogleCloudAiplatformV1NotebookReservationAffinity
-   */
-  public $reservationAffinity;
   protected $reservationAffinityType = GoogleCloudAiplatformV1NotebookReservationAffinity::class;
   protected $reservationAffinityDataType = '';
   /**
@@ -84,6 +76,14 @@ class GoogleCloudAiplatformV1NotebookRuntime extends \Google\Collection
    * @var string
    */
   public $runtimeUser;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * @var string
    */
@@ -306,6 +306,34 @@ class GoogleCloudAiplatformV1NotebookRuntime extends \Google\Collection
   public function getRuntimeUser()
   {
     return $this->runtimeUser;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param string

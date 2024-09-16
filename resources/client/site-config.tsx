@@ -1,5 +1,5 @@
 import {SiteConfigContextValue} from '@common/core/settings/site-config-context';
-import {message} from '@common/i18n/message';
+import {message} from '@ui/i18n/message';
 import filePreviewSrc from './admin/verts/file-preview.png';
 import driveSrc from './admin/verts/drive.png';
 import landingTopSrc from './admin/verts/landing-top.png';
@@ -28,7 +28,7 @@ export const SiteConfig: Partial<SiteConfigContextValue> = {
       {
         slot: 'ads.file-preview',
         description: message(
-          'This ad will appear on shared file preview page.'
+          'This ad will appear on shared file preview page.',
         ),
         image: filePreviewSrc,
       },
@@ -40,7 +40,7 @@ export const SiteConfig: Partial<SiteConfigContextValue> = {
       {
         slot: 'ads.landing-top',
         description: message(
-          'This ad will appear at the top of the landing page.'
+          'This ad will appear at the top of the landing page.',
         ),
         image: landingTopSrc,
       },

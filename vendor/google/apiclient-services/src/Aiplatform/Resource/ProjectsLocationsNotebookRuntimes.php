@@ -44,6 +44,7 @@ class ProjectsLocationsNotebookRuntimes extends \Google\Service\Resource
    * @param GoogleCloudAiplatformV1AssignNotebookRuntimeRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
    */
   public function assign($parent, GoogleCloudAiplatformV1AssignNotebookRuntimeRequest $postBody, $optParams = [])
   {
@@ -60,6 +61,7 @@ class ProjectsLocationsNotebookRuntimes extends \Google\Service\Resource
    * NotebookRuntime in spanner.
    * @param array $optParams Optional parameters.
    * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
    */
   public function delete($name, $optParams = [])
   {
@@ -76,6 +78,7 @@ class ProjectsLocationsNotebookRuntimes extends \Google\Service\Resource
    * NotebookRuntime in spanner.
    * @param array $optParams Optional parameters.
    * @return GoogleCloudAiplatformV1NotebookRuntime
+   * @throws \Google\Service\Exception
    */
   public function get($name, $optParams = [])
   {
@@ -103,12 +106,12 @@ class ProjectsLocationsNotebookRuntimes extends \Google\Service\Resource
    * healthState enum: [HEALTHY, UNHEALTHY, HEALTH_STATE_UNSPECIFIED]. *
    * `runtimeState` supports = and !=. runtimeState enum:
    * [RUNTIME_STATE_UNSPECIFIED, RUNNING, BEING_STARTED, BEING_STOPPED, STOPPED,
-   * BEING_UPGRADED]. * `runtimeUser` supports = and !=. * API version is UI only:
-   * `uiState` supports = and !=. uiState enum: [UI_RESOURCE_STATE_UNSPECIFIED,
-   * UI_RESOURCE_STATE_BEING_CREATED, UI_RESOURCE_STATE_ACTIVE,
-   * UI_RESOURCE_STATE_BEING_DELETED, UI_RESOURCE_STATE_CREATION_FAILED]. *
-   * `notebookRuntimeType` supports = and !=. notebookRuntimeType enum:
-   * [USER_DEFINED, ONE_CLICK]. Some examples: *
+   * BEING_UPGRADED, ERROR, INVALID]. * `runtimeUser` supports = and !=. * API
+   * version is UI only: `uiState` supports = and !=. uiState enum:
+   * [UI_RESOURCE_STATE_UNSPECIFIED, UI_RESOURCE_STATE_BEING_CREATED,
+   * UI_RESOURCE_STATE_ACTIVE, UI_RESOURCE_STATE_BEING_DELETED,
+   * UI_RESOURCE_STATE_CREATION_FAILED]. * `notebookRuntimeType` supports = and
+   * !=. notebookRuntimeType enum: [USER_DEFINED, ONE_CLICK]. Some examples: *
    * `notebookRuntime="notebookRuntime123"` * `displayName="myDisplayName"` and
    * `displayName=~"myDisplayNameRegex"` *
    * `notebookRuntimeTemplate="notebookRuntimeTemplate321"` *
@@ -125,6 +128,7 @@ class ProjectsLocationsNotebookRuntimes extends \Google\Service\Resource
    * NotebookService.ListNotebookRuntimes call.
    * @opt_param string readMask Optional. Mask specifying which fields to read.
    * @return GoogleCloudAiplatformV1ListNotebookRuntimesResponse
+   * @throws \Google\Service\Exception
    */
   public function listProjectsLocationsNotebookRuntimes($parent, $optParams = [])
   {
@@ -142,6 +146,7 @@ class ProjectsLocationsNotebookRuntimes extends \Google\Service\Resource
    * @param GoogleCloudAiplatformV1StartNotebookRuntimeRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
    */
   public function start($name, GoogleCloudAiplatformV1StartNotebookRuntimeRequest $postBody, $optParams = [])
   {
@@ -159,6 +164,7 @@ class ProjectsLocationsNotebookRuntimes extends \Google\Service\Resource
    * @param GoogleCloudAiplatformV1UpgradeNotebookRuntimeRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
    */
   public function upgrade($name, GoogleCloudAiplatformV1UpgradeNotebookRuntimeRequest $postBody, $optParams = [])
   {

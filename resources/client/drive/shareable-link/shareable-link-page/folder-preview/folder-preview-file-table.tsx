@@ -1,13 +1,16 @@
-import {useIsMobileMediaQuery} from '@common/utils/hooks/is-mobile-media-query';
-import {DriveSortDescriptor} from '../../../drive-store';
+import {DriveSortDescriptor} from '@app/drive/drive-store';
 import React from 'react';
 import {Table} from '@common/ui/tables/table';
-import {linkPageState, useLinkPageStore} from '../link-page-store';
-import type {FolderPreviewGridProps} from './folder-preview-file-grid';
-import {fileTableColumns} from '../../../file-view/file-table/file-table-columns';
+import {
+  linkPageState,
+  useLinkPageStore,
+} from '@app/drive/shareable-link/shareable-link-page/link-page-store';
+import type {FolderPreviewGridProps} from '@app/drive/shareable-link/shareable-link-page/folder-preview/folder-preview-file-grid';
+import {fileTableColumns} from '@app/drive/file-view/file-table/file-table-columns';
+import {useIsMobileMediaQuery} from '@ui/utils/hooks/is-mobile-media-query';
 
 const mobileColumns = fileTableColumns.filter(
-  config => config.key !== 'updated_at'
+  config => config.key !== 'updated_at',
 );
 
 export function FolderPreviewFileTable({

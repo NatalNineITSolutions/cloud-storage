@@ -1,6 +1,6 @@
 import {RouteObject} from 'react-router-dom';
-import {DriveSettings} from './drive-settings';
+import {lazyAdminRoute} from '@common/admin/routes/lazy-admin-route';
 
-export const AppSettingsRoutes: RouteObject[] = [
-  {path: 'drive', element: <DriveSettings />},
+export const appSettingsRoutes: RouteObject[] = [
+  {path: 'drive', lazy: () => lazyAdminRoute('DriveSettings')},
 ];

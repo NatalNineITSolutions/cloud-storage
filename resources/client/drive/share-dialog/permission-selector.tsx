@@ -1,18 +1,14 @@
-import {Button} from '@common/ui/buttons/button';
-import {ArrowDropDownIcon} from '@common/icons/material/ArrowDropDown';
+import {Button} from '@ui/buttons/button';
+import {ArrowDropDownIcon} from '@ui/icons/material/ArrowDropDown';
 import {
   DRIVE_ENTRY_FULL_PERMISSIONS,
   DriveEntryPermissions,
   DriveEntryUser,
 } from '../files/drive-entry';
-import {
-  Menu,
-  MenuItem,
-  MenuTrigger,
-} from '@common/ui/navigation/menu/menu-trigger';
-import {message} from '@common/i18n/message';
-import {Trans} from '@common/i18n/trans';
-import {MessageDescriptor} from '@common/i18n/message-descriptor';
+import {message} from '@ui/i18n/message';
+import {Trans} from '@ui/i18n/trans';
+import {MessageDescriptor} from '@ui/i18n/message-descriptor';
+import {Menu, MenuItem, MenuTrigger} from '@ui/menu/menu-trigger';
 
 export interface PermissionSelectorItem {
   key: keyof DriveEntryPermissions;
@@ -41,8 +37,9 @@ export const PermissionSelectorItems: PermissionSelectorItem[] = [
 interface Props {
   onChange: (value: PermissionSelectorItem) => void;
   value: PermissionSelectorItem;
+  isDisabled?: boolean;
 }
-export function PermissionSelector({value, onChange}: Props) {
+export function PermissionSelector({value, onChange, isDisabled}: Props) {
   return (
     <MenuTrigger
       selectedValue={value.key}
@@ -58,6 +55,7 @@ export function PermissionSelector({value, onChange}: Props) {
         color="chip"
         size="xs"
         endIcon={<ArrowDropDownIcon />}
+        disabled={isDisabled}
       >
         <Trans {...value.label} />
       </Button>
@@ -75,7 +73,7 @@ export function PermissionSelector({value, onChange}: Props) {
 }
 
 export function getPermissionItemForUser(
-  user: DriveEntryUser
+  user: DriveEntryUser,
 ): PermissionSelectorItem {
   const {download, edit} = user.entry_permissions;
   if (edit) {

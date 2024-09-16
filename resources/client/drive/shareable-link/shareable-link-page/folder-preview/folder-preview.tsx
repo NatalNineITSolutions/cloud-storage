@@ -1,18 +1,18 @@
 import React from 'react';
 import {useShareableLinkPage} from '../../queries/use-shareable-link-page';
-import {IllustratedMessage} from '@common/ui/images/illustrated-message';
-import {SvgImage} from '@common/ui/images/svg-image/svg-image';
 import {FolderPreviewFileView} from './folder-preview-file-view';
-import {Trans} from '@common/i18n/trans';
-import {DashboardLayout} from '@common/ui/layout/dashboard-layout';
+import {Trans} from '@ui/i18n/trans';
 import {FileUploadProvider} from '@common/uploads/uploader/file-upload-provider';
-import {DashboardContent} from '@common/ui/layout/dashboard-content';
-import {DashboardNavbar} from '@common/ui/layout/dashboard-navbar';
-import {DashboardContentHeader} from '@common/ui/layout/dashboard-content-header';
 import {ShareableLinkPageActionButtons} from '../shareable-link-page-action-buttons';
 import {FolderPreviewHeader} from './folder-preview-header';
 import shareSvg from './share.svg';
 import clsx from 'clsx';
+import {DashboardLayout} from '@common/ui/dashboard-layout/dashboard-layout';
+import {DashboardNavbar} from '@common/ui/dashboard-layout/dashboard-navbar';
+import {DashboardContentHeader} from '@common/ui/dashboard-layout/dashboard-content-header';
+import {DashboardContent} from '@common/ui/dashboard-layout/dashboard-content';
+import {IllustratedMessage} from '@ui/images/illustrated-message';
+import {SvgImage} from '@ui/images/svg-image';
 
 export function FolderPreview() {
   const {entries, isFetched} = useShareableLinkPage();

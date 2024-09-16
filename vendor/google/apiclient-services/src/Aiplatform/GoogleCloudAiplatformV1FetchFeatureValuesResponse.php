@@ -19,10 +19,8 @@ namespace Google\Service\Aiplatform;
 
 class GoogleCloudAiplatformV1FetchFeatureValuesResponse extends \Google\Model
 {
-  /**
-   * @var GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairList
-   */
-  public $keyValues;
+  protected $dataKeyType = GoogleCloudAiplatformV1FeatureViewDataKey::class;
+  protected $dataKeyDataType = '';
   protected $keyValuesType = GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairList::class;
   protected $keyValuesDataType = '';
   /**
@@ -30,6 +28,20 @@ class GoogleCloudAiplatformV1FetchFeatureValuesResponse extends \Google\Model
    */
   public $protoStruct;
 
+  /**
+   * @param GoogleCloudAiplatformV1FeatureViewDataKey
+   */
+  public function setDataKey(GoogleCloudAiplatformV1FeatureViewDataKey $dataKey)
+  {
+    $this->dataKey = $dataKey;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1FeatureViewDataKey
+   */
+  public function getDataKey()
+  {
+    return $this->dataKey;
+  }
   /**
    * @param GoogleCloudAiplatformV1FetchFeatureValuesResponseFeatureNameValuePairList
    */

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Gif\Blocks;
 
 use Intervention\Gif\AbstractEntity;
@@ -140,7 +142,7 @@ class ColorTable extends AbstractEntity
      */
     public function getByteSize(): int
     {
-        if (! $this->hasColors()) {
+        if (!$this->hasColors()) {
             return 0;
         }
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {useRenameEntry} from '../queries/use-rename-entry';
-import {FormTextField} from '@common/ui/forms/input-field/text-field/text-field';
-import {Button} from '@common/ui/buttons/button';
-import {Form} from '@common/ui/forms/form';
-import {DialogFooter} from '@common/ui/overlays/dialog/dialog-footer';
-import {useDialogContext} from '@common/ui/overlays/dialog/dialog-context';
-import {Dialog} from '@common/ui/overlays/dialog/dialog';
-import {DialogHeader} from '@common/ui/overlays/dialog/dialog-header';
-import {DialogBody} from '@common/ui/overlays/dialog/dialog-body';
-import {Trans} from '@common/i18n/trans';
+import {FormTextField} from '@ui/forms/input-field/text-field/text-field';
+import {Button} from '@ui/buttons/button';
+import {Form} from '@ui/forms/form';
+import {DialogFooter} from '@ui/overlays/dialog/dialog-footer';
+import {useDialogContext} from '@ui/overlays/dialog/dialog-context';
+import {Dialog} from '@ui/overlays/dialog/dialog';
+import {DialogHeader} from '@ui/overlays/dialog/dialog-header';
+import {DialogBody} from '@ui/overlays/dialog/dialog-body';
+import {Trans} from '@ui/i18n/trans';
 import {DriveEntry} from '../drive-entry';
 
 interface FormValue {

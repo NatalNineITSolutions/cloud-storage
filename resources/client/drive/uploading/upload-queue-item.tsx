@@ -7,20 +7,20 @@ import {
   useState,
 } from 'react';
 import {AnimatePresence, m} from 'framer-motion';
-import {FileTypeIcon} from '@common/uploads/file-type-icon/file-type-icon';
-import {prettyBytes} from '@common/uploads/utils/pretty-bytes';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {CloseIcon} from '@common/icons/material/Close';
-import {ProgressCircle} from '@common/ui/progress/progress-circle';
-import {CheckCircleIcon} from '@common/icons/material/CheckCircle';
-import {UploadedFile} from '@common/uploads/uploaded-file';
+import {IconButton} from '@ui/buttons/icon-button';
+import {CloseIcon} from '@ui/icons/material/Close';
+import {ProgressCircle} from '@ui/progress/progress-circle';
+import {CheckCircleIcon} from '@ui/icons/material/CheckCircle';
+import {UploadedFile} from '@ui/utils/files/uploaded-file';
 import {useFileUploadStore} from '@common/uploads/uploader/file-upload-provider';
-import {Trans} from '@common/i18n/trans';
-import {MixedText} from '@common/i18n/mixed-text';
-import {Tooltip} from '@common/ui/tooltip/tooltip';
-import {ErrorIcon} from '@common/icons/material/Error';
-import {WarningIcon} from '@common/icons/material/Warning';
-import {message} from '@common/i18n/message';
+import {Trans} from '@ui/i18n/trans';
+import {MixedText} from '@ui/i18n/mixed-text';
+import {Tooltip} from '@ui/tooltip/tooltip';
+import {ErrorIcon} from '@ui/icons/material/Error';
+import {WarningIcon} from '@ui/icons/material/Warning';
+import {message} from '@ui/i18n/message';
+import {FileTypeIcon} from '@common/uploads/components/file-type-icon/file-type-icon';
+import {prettyBytes} from '@ui/utils/files/pretty-bytes';
 
 interface UploadQueueProps {
   file: UploadedFile;
@@ -29,15 +29,15 @@ interface UploadQueueProps {
 export const UploadQueueItem = memo(({file, style}: UploadQueueProps) => {
   return (
     <div
-      className="p-10 flex items-center gap-14 w-full absolute top-0 left-0"
+      className="absolute left-0 top-0 flex w-full items-center gap-14 p-10"
       style={style}
     >
-      <div className="shrink-0 border rounded p-8">
-        <FileTypeIcon className="w-22 h-22" mime={file.mime} />
+      <div className="shrink-0 rounded border p-8">
+        <FileTypeIcon className="h-22 w-22" mime={file.mime} />
       </div>
-      <div className="flex-auto min-w-0 pr-10">
-        <div className="mb-2 flex items-center min-w-0 gap-10">
-          <div className="flex-auto font-medium whitespace-nowrap min-w-0 overflow-hidden overflow-ellipsis">
+      <div className="min-w-0 flex-auto pr-10">
+        <div className="mb-2 flex min-w-0 items-center gap-10">
+          <div className="min-w-0 flex-auto overflow-hidden overflow-ellipsis whitespace-nowrap font-medium">
             {file.name}
           </div>
         </div>
@@ -60,7 +60,7 @@ function SizeInfo({file}: SizeInfoProps) {
   const totalBytes = useMemo(() => prettyBytes(file.size), [file]);
   const uploadedBytes = useMemo(
     () => prettyBytes(bytesUploaded),
-    [bytesUploaded]
+    [bytesUploaded],
   );
 
   let statusMessage: ReactElement;
@@ -82,7 +82,7 @@ function SizeInfo({file}: SizeInfoProps) {
     );
   }
 
-  return <div className="text-muted text-xs">{statusMessage}</div>;
+  return <div className="text-xs text-muted">{statusMessage}</div>;
 }
 
 interface FileStatusProps {

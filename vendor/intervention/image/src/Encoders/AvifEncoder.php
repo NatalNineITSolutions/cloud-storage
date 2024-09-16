@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Image\Encoders;
 
-class AvifEncoder extends AbstractEncoder
+use Intervention\Image\Drivers\SpecializableEncoder;
+
+class AvifEncoder extends SpecializableEncoder
 {
-    public function __construct(public int $quality = 75)
+    public function __construct(public int $quality = self::DEFAULT_QUALITY)
     {
     }
 }

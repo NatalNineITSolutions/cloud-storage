@@ -1,9 +1,9 @@
 import {DriveEntry} from '../drive-entry';
-import {ConfirmationDialog} from '@common/ui/overlays/dialog/confirmation-dialog';
-import {Trans} from '@common/i18n/trans';
+import {ConfirmationDialog} from '@ui/overlays/dialog/confirmation-dialog';
+import {Trans} from '@ui/i18n/trans';
 import {useDeleteEntries} from '../queries/use-delete-entries';
 import {driveState} from '../../drive-store';
-import {useDialogContext} from '@common/ui/overlays/dialog/dialog-context';
+import {useDialogContext} from '@ui/overlays/dialog/dialog-context';
 
 interface DeleteEntriesForeverDialogProps {
   entries: DriveEntry[];

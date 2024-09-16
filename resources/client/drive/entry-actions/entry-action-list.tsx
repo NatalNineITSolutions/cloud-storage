@@ -1,9 +1,9 @@
 import React, {createElement} from 'react';
-import {IconButton} from '@common/ui/buttons/icon-button';
+import {IconButton} from '@ui/buttons/icon-button';
 import {EntryActionMenuTrigger} from './entry-action-menu-trigger';
-import {MoreVertIcon} from '@common/icons/material/MoreVert';
-import {Tooltip} from '@common/ui/tooltip/tooltip';
-import {Trans} from '@common/i18n/trans';
+import {MoreVertIcon} from '@ui/icons/material/MoreVert';
+import {Tooltip} from '@ui/tooltip/tooltip';
+import {Trans} from '@ui/i18n/trans';
 import {useSelectedEntries} from '../files/use-selected-entries';
 import {
   useDeleteEntriesAction,
@@ -41,7 +41,7 @@ function ActionList({entries}: ActionListProps) {
   const removeShared = useRemoveSharedEntriesAction(entries);
 
   const actions = [preview, share, deleteAction, removeShared].filter(
-    action => !!action
+    action => !!action,
   ) as EntryAction[];
 
   return (

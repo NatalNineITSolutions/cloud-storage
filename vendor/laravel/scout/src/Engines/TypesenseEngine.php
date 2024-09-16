@@ -11,8 +11,6 @@ use Laravel\Scout\Builder;
 use stdClass;
 use Typesense\Client as Typesense;
 use Typesense\Collection as TypesenseCollection;
-use Typesense\Document;
-use Typesense\Exceptions\ObjectNotFound;
 use Typesense\Exceptions\TypesenseClientError;
 
 class TypesenseEngine extends Engine
@@ -34,7 +32,7 @@ class TypesenseEngine extends Engine
     /**
      * Create new Typesense engine instance.
      *
-     * @param  \Typesense  $typesense
+     * @param  Typesense  $typesense
      */
     public function __construct(Typesense $typesense)
     {
@@ -66,7 +64,7 @@ class TypesenseEngine extends Engine
 
         $objects = $models->map(function ($model) {
             if (empty($searchableData = $model->toSearchableArray())) {
-                return;
+                return null;
             }
 
             return array_merge(
@@ -86,7 +84,7 @@ class TypesenseEngine extends Engine
     /**
      * Import the given documents into the index.
      *
-     * @param  \TypesenseCollection  $collectionIndex
+     * @param  TypesenseCollection  $collectionIndex
      * @param  array  $documents
      * @param  string  $action
      * @return \Illuminate\Support\Collection
@@ -156,7 +154,7 @@ class TypesenseEngine extends Engine
     /**
      * Delete a document from the index.
      *
-     * @param  \TypesenseCollection  $collectionIndex
+     * @param  TypesenseCollection  $collectionIndex
      * @param  mixed  $modelId
      * @return array
      *
@@ -190,7 +188,7 @@ class TypesenseEngine extends Engine
     {
         return $this->performSearch(
             $builder,
-            array_filter($this->buildSearchParameters($builder, 1, $builder->limit))
+            $this->buildSearchParameters($builder, 1, $builder->limit)
         );
     }
 
@@ -207,9 +205,11 @@ class TypesenseEngine extends Engine
      */
     public function paginate(Builder $builder, $perPage, $page)
     {
+        $builder->take($builder->limit ?? $perPage);
+
         return $this->performSearch(
             $builder,
-            array_filter($this->buildSearchParameters($builder, $page, $perPage))
+            $this->buildSearchParameters($builder, $page, $perPage)
         );
     }
 
@@ -261,8 +261,12 @@ class TypesenseEngine extends Engine
             'highlight_affix_num_tokens' => 4,
         ];
 
-        if (! empty($this->searchParameters)) {
-            $parameters = array_merge($parameters, $this->searchParameters);
+        if (method_exists($builder->model, 'typesenseSearchParameters')) {
+            $parameters = array_merge($parameters, $builder->model->typesenseSearchParameters());
+        }
+
+        if (! empty($builder->options)) {
+            $parameters = array_merge($parameters, $builder->options);
         }
 
         if (! empty($builder->orders)) {
@@ -485,30 +489,34 @@ class TypesenseEngine extends Engine
      * Get collection from model or create new one.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return \TypesenseCollection
+     * @return TypesenseCollection
      *
      * @throws \Typesense\Exceptions\TypesenseClientError
      * @throws \Http\Client\Exception
      */
     protected function getOrCreateCollectionFromModel($model): TypesenseCollection
     {
-        $index = $this->typesense->getCollections()->{$model->searchableAs()};
+        $collection = $this->typesense->getCollections()->{$model->searchableAs()};
 
-        try {
-            $index->retrieve();
-
-            return $index;
-        } catch (ObjectNotFound $exception) {
-            $schema = config('scout.typesense.model-settings.'.get_class($model).'.collection-schema') ?? [];
-
-            if (! isset($schema['name'])) {
-                $schema['name'] = $model->searchableAs();
-            }
-
-            $this->typesense->getCollections()->create($schema);
-
-            return $this->typesense->getCollections()->{$model->searchableAs()};
+        if ($collection->exists() === true) {
+            return $collection;
         }
+
+        $schema = config('scout.typesense.model-settings.'.get_class($model).'.collection-schema') ?? [];
+
+        if (method_exists($model, 'typesenseCollectionSchema')) {
+            $schema = $model->typesenseCollectionSchema();
+        }
+
+        if (! isset($schema['name'])) {
+            $schema['name'] = $model->searchableAs();
+        }
+
+        $this->typesense->getCollections()->create($schema);
+
+        $collection->setExists(true);
+
+        return $collection;
     }
 
     /**
@@ -520,19 +528,6 @@ class TypesenseEngine extends Engine
     protected function usesSoftDelete($model): bool
     {
         return in_array(SoftDeletes::class, class_uses_recursive($model), true);
-    }
-
-    /**
-     * Set the search options provided by user.
-     *
-     * @param  array  $options
-     * @return $this
-     */
-    public function setSearchParameters(array $options): static
-    {
-        $this->searchParameters = $options;
-
-        return $this;
     }
 
     /**

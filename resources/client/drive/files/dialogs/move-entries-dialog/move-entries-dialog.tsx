@@ -1,36 +1,35 @@
 import React, {useState} from 'react';
-import {Button} from '@common/ui/buttons/button';
-import {useFolders} from '../../queries/use-folders';
+import {Button} from '@ui/buttons/button';
 import {useMoveEntries} from '../../queries/use-move-entries';
 import {NewFolderDialog} from '../new-folder-dialog';
-import {CreateNewFolderIcon} from '@common/icons/material/CreateNewFolder';
+import {CreateNewFolderIcon} from '@ui/icons/material/CreateNewFolder';
 import {MoveEntriesDialogSearch} from './move-entries-dialog-search';
 import {MoveEntriesDialogBreadcrumbs} from './move-entries-dialog-breadcrumbs';
 import {MoveEntriesDialogFolderList} from './move-entries-dialog-folder-list';
-import {DialogTrigger} from '@common/ui/overlays/dialog/dialog-trigger';
-import {DialogFooter} from '@common/ui/overlays/dialog/dialog-footer';
-import {useDialogContext} from '@common/ui/overlays/dialog/dialog-context';
-import {Dialog} from '@common/ui/overlays/dialog/dialog';
-import {DialogHeader} from '@common/ui/overlays/dialog/dialog-header';
-import {DialogBody} from '@common/ui/overlays/dialog/dialog-body';
-import {Trans} from '@common/i18n/trans';
+import {DialogTrigger} from '@ui/overlays/dialog/dialog-trigger';
+import {DialogFooter} from '@ui/overlays/dialog/dialog-footer';
+import {useDialogContext} from '@ui/overlays/dialog/dialog-context';
+import {Dialog} from '@ui/overlays/dialog/dialog';
+import {DialogHeader} from '@ui/overlays/dialog/dialog-header';
+import {DialogBody} from '@ui/overlays/dialog/dialog-body';
+import {Trans} from '@ui/i18n/trans';
 import {RootFolderPage} from '../../../drive-page/drive-page';
-import {DriveEntry} from '../../drive-entry';
+import {DriveEntry, DriveFolder} from '../../drive-entry';
 import {useDriveStore} from '../../../drive-store';
-import {
-  canMoveEntriesInto,
-  PartialFolder,
-} from '../../utils/can-move-entries-into';
+import {canMoveEntriesInto} from '../../utils/can-move-entries-into';
+import {useAuth} from '@common/auth/use-auth';
 
 interface MoveEntriesDialogProps {
   entries: DriveEntry[];
 }
 export function MoveEntriesDialog({entries}: MoveEntriesDialogProps) {
-  const {data} = useFolders();
-  const allFolders = data?.folders || [];
+  const {user} = useAuth();
   const activePage = useDriveStore(s => s.activePage);
-  const [selectedFolder, setSelectedFolder] = useState<PartialFolder>(
+  const [selectedFolder, setSelectedFolder] = useState<DriveFolder>(
     activePage?.folder || RootFolderPage.folder,
+  );
+  const movingSharedFiles = entries.some(
+    e => !e.users.find(u => u.id === user!.id)?.owns_entry,
   );
 
   return (
@@ -48,20 +47,15 @@ export function MoveEntriesDialog({entries}: MoveEntriesDialogProps) {
         <div className="text-sm">
           <Trans message="Select a destination folder." />
         </div>
-        <MoveEntriesDialogSearch
-          allFolders={allFolders}
-          onFolderSelected={setSelectedFolder}
-        />
+        <MoveEntriesDialogSearch onFolderSelected={setSelectedFolder} />
         <div className="mb-20 mt-40">
           <MoveEntriesDialogBreadcrumbs
             selectedFolder={selectedFolder}
-            allFolders={allFolders}
-            rootFolder={RootFolderPage.folder}
             onFolderSelected={setSelectedFolder}
           />
           <MoveEntriesDialogFolderList
+            movingSharedFiles={movingSharedFiles}
             selectedFolder={selectedFolder}
-            allFolders={allFolders}
             onFolderSelected={setSelectedFolder}
           />
         </div>
@@ -76,8 +70,8 @@ export function MoveEntriesDialog({entries}: MoveEntriesDialogProps) {
 }
 
 interface FooterProps {
-  selectedFolder: PartialFolder;
-  setSelectedFolder: (folder: PartialFolder) => void;
+  selectedFolder: DriveFolder;
+  setSelectedFolder: (folder: DriveFolder) => void;
   entries: DriveEntry[];
 }
 function Footer({selectedFolder, setSelectedFolder, entries}: FooterProps) {

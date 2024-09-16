@@ -1,9 +1,9 @@
 import React from 'react';
-import {FileTypeIcon} from '@common/uploads/file-type-icon/file-type-icon';
 import {Navbar} from '@common/ui/navigation/navbar/navbar';
 import {useShareableLinkPage} from '../queries/use-shareable-link-page';
 import {ShareableLinkPageActionButtons} from './shareable-link-page-action-buttons';
-import {useIsMobileMediaQuery} from '@common/utils/hooks/is-mobile-media-query';
+import {useIsMobileMediaQuery} from '@ui/utils/hooks/is-mobile-media-query';
+import {FileTypeIcon} from '@common/uploads/components/file-type-icon/file-type-icon';
 
 export function ShareableLinkNavbar() {
   const {link} = useShareableLinkPage();

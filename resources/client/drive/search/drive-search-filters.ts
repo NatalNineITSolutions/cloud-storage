@@ -4,7 +4,7 @@ import {
   FilterOperator,
 } from '@common/datatable/filters/backend-filter';
 import {FILE_ENTRY_TYPE_FILTER} from '@common/admin/file-entry/file-entry-index-filters';
-import {message} from '@common/i18n/message';
+import {message} from '@ui/i18n/message';
 import {
   createdAtFilter,
   updatedAtFilter,

@@ -3,8 +3,8 @@ import {apiClient, queryClient} from '@common/http/query-client';
 import {FetchShareableLinkResponse} from './use-entry-shareable-link';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {DriveQueryKeys} from '../../drive-query-keys';
-import {message} from '@common/i18n/message';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
+import {message} from '@ui/i18n/message';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
 
 interface DeleteLinkParams {
   entryId: number;

@@ -1,32 +1,43 @@
-import React, {useMemo} from 'react';
-import {IllustratedMessage} from '@common/ui/images/illustrated-message';
-import {SvgImage} from '@common/ui/images/svg-image/svg-image';
-import {FileTypeIcon} from '@common/uploads/file-type-icon/file-type-icon';
-import {ChevronRightIcon} from '@common/icons/material/ChevronRight';
-import {Trans} from '@common/i18n/trans';
-import {List, ListItem} from '@common/ui/list/list';
+import React, {Fragment, ReactElement} from 'react';
+import {FileTypeIcon} from '@common/uploads/components/file-type-icon/file-type-icon';
+import {ChevronRightIcon} from '@ui/icons/material/ChevronRight';
+import {Trans} from '@ui/i18n/trans';
 import myFilesSvg from './my-files.svg';
-import {PartialFolder} from '../../utils/can-move-entries-into';
+import {useMoveEntriesDialogFolders} from '@app/drive/files/dialogs/move-entries-dialog/use-move-entries-dialog-folders';
+import {ProgressCircle} from '@ui/progress/progress-circle';
+import {InfiniteScrollSentinel} from '@common/ui/infinite-scroll/infinite-scroll-sentinel';
+import {DriveFolder} from '@app/drive/files/drive-entry';
+import {SvgImage} from '@ui/images/svg-image';
+import {IllustratedMessage} from '@ui/images/illustrated-message';
+import {List, ListItem} from '@ui/list/list';
 
-interface FolderListProps {
-  selectedFolder: PartialFolder;
-  allFolders: PartialFolder[];
-  onFolderSelected: (folder: PartialFolder) => void;
+interface Props {
+  selectedFolder: DriveFolder;
+  onFolderSelected: (folder: DriveFolder) => void;
+  movingSharedFiles: boolean;
 }
+export function MoveEntriesDialogFolderList({
+  onFolderSelected,
+  selectedFolder,
+  movingSharedFiles,
+}: Props) {
+  const query = useMoveEntriesDialogFolders({
+    selectedFolder,
+    movingSharedFiles,
+  });
+  let content: ReactElement;
 
-export function MoveEntriesDialogFolderList(props: FolderListProps) {
-  const {onFolderSelected, selectedFolder, allFolders} = props;
-
-  const subFolders = useMemo(() => {
-    const parentId = selectedFolder.id || null;
-    return allFolders.filter(f => f.parent_id === parentId);
-  }, [selectedFolder.id, allFolders]);
-
-  if (!subFolders.length) {
-    return (
+  if (query.isLoading) {
+    content = (
+      <div className="flex h-full w-full items-center justify-center">
+        <ProgressCircle isIndeterminate size="md" />
+      </div>
+    );
+  } else if (query.data?.pages[0]?.data.length === 0) {
+    content = (
       <IllustratedMessage
         size="xs"
-        className="pt-64 pb-20 min-h-288"
+        className="pb-20 pt-64"
         image={<SvgImage src={myFilesSvg} />}
         title={
           <Trans
@@ -36,25 +47,30 @@ export function MoveEntriesDialogFolderList(props: FolderListProps) {
         }
       />
     );
+  } else {
+    content = (
+      <Fragment>
+        <List>
+          {query.data?.pages
+            .flatMap(r => r.data)
+            .map(folder => (
+              <ListItem
+                className="min-h-48 border-b"
+                key={folder.id}
+                onSelected={() => {
+                  onFolderSelected(folder);
+                }}
+                startIcon={<FileTypeIcon type="folder" />}
+                endIcon={<ChevronRightIcon size="md" />}
+              >
+                {folder.name}
+              </ListItem>
+            ))}
+        </List>
+        <InfiniteScrollSentinel query={query} />
+      </Fragment>
+    );
   }
 
-  return (
-    <List className="h-288 overflow-y-auto">
-      {subFolders.map(folder => {
-        return (
-          <ListItem
-            className="border-b min-h-48"
-            key={folder.id}
-            onSelected={() => {
-              onFolderSelected(folder);
-            }}
-            startIcon={<FileTypeIcon type="folder" />}
-            endIcon={<ChevronRightIcon size="md" />}
-          >
-            {folder.name}
-          </ListItem>
-        );
-      })}
-    </List>
-  );
+  return <div className="h-288 overflow-y-auto">{content}</div>;
 }

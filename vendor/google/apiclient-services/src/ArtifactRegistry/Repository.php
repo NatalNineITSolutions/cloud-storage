@@ -19,10 +19,6 @@ namespace Google\Service\ArtifactRegistry;
 
 class Repository extends \Google\Model
 {
-  /**
-   * @var CleanupPolicy[]
-   */
-  public $cleanupPolicies;
   protected $cleanupPoliciesType = CleanupPolicy::class;
   protected $cleanupPoliciesDataType = 'map';
   /**
@@ -38,9 +34,9 @@ class Repository extends \Google\Model
    */
   public $description;
   /**
-   * @var DockerRepositoryConfig
+   * @var bool
    */
-  public $dockerConfig;
+  public $disallowUnspecifiedMode;
   protected $dockerConfigType = DockerRepositoryConfig::class;
   protected $dockerConfigDataType = '';
   /**
@@ -55,10 +51,6 @@ class Repository extends \Google\Model
    * @var string[]
    */
   public $labels;
-  /**
-   * @var MavenRepositoryConfig
-   */
-  public $mavenConfig;
   protected $mavenConfigType = MavenRepositoryConfig::class;
   protected $mavenConfigDataType = '';
   /**
@@ -69,12 +61,12 @@ class Repository extends \Google\Model
    * @var string
    */
   public $name;
-  /**
-   * @var RemoteRepositoryConfig
-   */
-  public $remoteRepositoryConfig;
   protected $remoteRepositoryConfigType = RemoteRepositoryConfig::class;
   protected $remoteRepositoryConfigDataType = '';
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
   /**
    * @var bool
    */
@@ -87,10 +79,6 @@ class Repository extends \Google\Model
    * @var string
    */
   public $updateTime;
-  /**
-   * @var VirtualRepositoryConfig
-   */
-  public $virtualRepositoryConfig;
   protected $virtualRepositoryConfigType = VirtualRepositoryConfig::class;
   protected $virtualRepositoryConfigDataType = '';
 
@@ -149,6 +137,20 @@ class Repository extends \Google\Model
   public function getDescription()
   {
     return $this->description;
+  }
+  /**
+   * @param bool
+   */
+  public function setDisallowUnspecifiedMode($disallowUnspecifiedMode)
+  {
+    $this->disallowUnspecifiedMode = $disallowUnspecifiedMode;
+  }
+  /**
+   * @return bool
+   */
+  public function getDisallowUnspecifiedMode()
+  {
+    return $this->disallowUnspecifiedMode;
   }
   /**
    * @param DockerRepositoryConfig
@@ -261,6 +263,20 @@ class Repository extends \Google\Model
   public function getRemoteRepositoryConfig()
   {
     return $this->remoteRepositoryConfig;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
   }
   /**
    * @param bool

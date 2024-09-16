@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc --skipLibCheck && vite build && vite build --ssr resources/client/server-entry.tsx",
-    "ssr": "vite build --ssr resources/client/server-entry.tsx && NODE_ENV=production node ./bootstrap/ssr/server-entry.mjs",
+    "build": "tsc --skipLibCheck && vite build",
     "preview": "vite preview",
     "iconIndex": "node ./scripts/create-icon-index.js",
     "extract": "node ./resources/scripts/extract-translations.js"
@@ -15,7 +14,7 @@
     "@internationalized/date": "^3.5.0",
     "@internationalized/number": "^3.3.0",
     "@paypal/paypal-js": "^7.0.3",
-    "@react-aria/focus": "^3.14.3",
+    "@react-aria/focus": "^3.17.1",
     "@react-aria/interactions": "^3.19.1",
     "@react-aria/overlays": "^3.18.1",
     "@react-aria/ssr": "^3.8.0",
@@ -73,7 +72,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
     "react-merge-refs": "^2.1.1",
-    "react-router-dom": "^6.17.0",
+    "react-router-dom": "^6.26.1",
     "react-textarea-autosize": "^8.5.3",
     "react-use-clipboard": "^1.0.7",
     "react-use-cookie": "^1.4.0",

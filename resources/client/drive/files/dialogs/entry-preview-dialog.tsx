@@ -1,11 +1,11 @@
-import {FilePreviewDialog} from '@common/uploads/preview/file-preview-dialog';
-import {DriveEntry} from '../drive-entry';
+import {DriveEntry} from '@app/drive/files/drive-entry';
 import {createElement, Fragment, useState} from 'react';
-import {useShareAction} from '../../entry-actions/use-entry-actions';
-import {Button} from '@common/ui/buttons/button';
-import {Trans} from '@common/i18n/trans';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {useEntries} from '../queries/use-entries';
+import {useShareAction} from '@app/drive/entry-actions/use-entry-actions';
+import {Button} from '@ui/buttons/button';
+import {Trans} from '@ui/i18n/trans';
+import {IconButton} from '@ui/buttons/icon-button';
+import {useEntries} from '@app/drive/files/queries/use-entries';
+import {FilePreviewDialog} from '@common/uploads/components/file-preview/file-preview-dialog';
 
 interface EntryPreviewDialogProps {
   selectedEntry: DriveEntry;
@@ -13,7 +13,7 @@ interface EntryPreviewDialogProps {
 export function EntryPreviewDialog({selectedEntry}: EntryPreviewDialogProps) {
   const files = useEntries().filter(entry => entry.type !== 'folder');
   const defaultActiveIndex = files.findIndex(
-    file => file.id === selectedEntry?.id
+    file => file.id === selectedEntry?.id,
   );
   const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
   return (

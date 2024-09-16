@@ -9,14 +9,13 @@ class ShareableLink extends Model
 {
     protected $guarded = ['id'];
 
-    protected $dates = ['expires_at'];
-
     protected $casts = [
         'user_id' => 'integer',
         'entry_id' => 'integer',
         'id' => 'integer',
         'allow_download' => 'boolean',
         'allow_edit' => 'boolean',
+        'expires_at' => 'datetime',
     ];
 
     public function entry(): BelongsTo

@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\FileEntry;
 use App\Services\Entries\SetPermissionsOnEntry;
-use Auth;
 use Common\Core\BaseController;
 use Common\Files\Actions\GetUserSpaceUsage;
 use Common\Files\Actions\ValidateFileUpload;
 use Common\Files\Events\FileEntryCreated;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DuplicateEntriesController extends BaseController
 {
@@ -24,13 +24,18 @@ class DuplicateEntriesController extends BaseController
     public function duplicate()
     {
         $setPermissions = app(SetPermissionsOnEntry::class);
-        $destinationId = $this->request->get('destinationId');
-        $entryIds = $this->request->get('entryIds');
+        $destinationId = (int) request('destinationId');
+        $entryIds = request('entryIds');
+
+        if ($destinationId === 0) {
+            $destinationId = null;
+        }
 
         $this->validate($this->request, [
             'entryIds' => 'required|array',
             'entryIds.*' => 'required|integer',
-            'destinationId' => 'nullable|integer|exists:file_entries,id',
+            'destinationId' =>
+                'exclude_if:destinationId,0|nullable|integer|exists:file_entries,id',
         ]);
 
         $this->authorize('index', [FileEntry::class, $entryIds]);
@@ -50,13 +55,9 @@ class DuplicateEntriesController extends BaseController
         return $this->success(['entries' => $copies]);
     }
 
-    /**
-     * @param int|null $parentId
-     * @return Collection
-     */
     private function copyEntries(
-        array|\Illuminate\Support\Collection $entryIds,
-        $parentId = null,
+        array|Collection $entryIds,
+        int $parentId = null,
     ) {
         $copies = collect();
 
@@ -89,11 +90,7 @@ class DuplicateEntriesController extends BaseController
         return $copy;
     }
 
-    /**
-     * @param int|null $parentId
-     * @return FileEntry
-     */
-    private function copyFolderEntry(FileEntry $original, $parentId = null)
+    private function copyFolderEntry(FileEntry $original, int $parentId = null)
     {
         $copy = $this->copyModel($original, $parentId);
         $this->copyChildEntries($copy, $original);
@@ -112,106 +109,23 @@ class DuplicateEntriesController extends BaseController
         }
     }
 
-    /**
-     * @param int|null $parentId
-     * @return FileEntry
-     */
-  /*  private function copyModel(FileEntry $original, $parentId = null)
+    private function copyModel(FileEntry $original, int $parentId = null)
     {
         $newName = $original->name;
         $newOwnerId = $this->getCopyOwnerId();
         $copyingIntoSameDrive = $newOwnerId === $original->owner_id;
 
-        // if no parent ID is specified, and we are copying into the
-        // same users drive, we can copy into the same folder as original
-        if (!$parentId && $copyingIntoSameDrive) {
-            $parentId = $original->parent_id;
-        }
-
         // if we are copying into same folder, add " - Copy" to the end of copies names
         if ($parentId === $original->parent_id && $copyingIntoSameDrive) {
-        $parts = pathinfo($original->name);
-        $filename = $parts['filename'];
-        $extension = isset($parts['extension']) ? '.' . $parts['extension'] : '';
-
-        // Append the suffix " - Copy" to the filename
-        $newName = "$filename - Copy$extension";
+            $newName = "$original->name - " . __('Copy');
         }
 
-        /**
-         * @var $copy FileEntry
-         
         $copy = $original->replicate();
         $copy->name = $newName;
         $copy->path = null;
-       // $copy->file_name = Str::random(36);
-        $copy->file_name = $original->file_name;
+        $copy->file_name = Str::random(36);
         $copy->parent_id = $parentId;
         $copy->owner_id = $newOwnerId;
-
-        if ($original->type === 'folder') {
-            $copy->file_size = 0;
-        }
-        $copy->save();
-
-        $copy->generatePath();
-
-        // set owner
-        $copy->users()->attach($newOwnerId, ['owner' => true]);
-
-        $copy->load('users');
-
-        return $copy;
-    }*/
-
-
- private function copyModel(FileEntry $original, $parentId = null)
-    {
-        $newName = $original->name;
-        $newOwnerId = $this->getCopyOwnerId();
-        $copyingIntoSameDrive = $newOwnerId === $original->owner_id;
-
-        // if no parent ID is specified, and we are copying into the
-        // same users drive, we can copy into the same folder as original
-        if (!$parentId && $copyingIntoSameDrive) {
-            $parentId = $original->parent_id;
-        }
-
-        // if we are copying into same folder, add " - Copy" to the end of copies names
-        if ($parentId === $original->parent_id && $copyingIntoSameDrive) {
-        $parts = pathinfo($original->name);
-        $filename = $parts['filename'];
-        $extension = isset($parts['extension']) ? '.' . $parts['extension'] : '';
-
-        // Append the suffix " - Copy" to the filename
-        $newName = "$filename - Copy$extension";
-            $existingNames = $this->entry
-        ->where('parent_id', $parentId)
-        ->where('owner_id', $newOwnerId)
-        ->pluck('name');
-
-    $counter = 1;
-    $originalNewName = "$filename - Copy";
-    while ($existingNames->contains($newName)) {
-        $newName = $originalNewName . "($counter)$extension";
-        $counter++;
-    }
-        }
-
-        /**
-         * @var $copy FileEntry
-         */
-        $copy = $original->replicate();
-        $copy->name = $newName;
-        $copy->path = null;
-       // $copy->file_name = Str::random(36);
-        $copy->file_name = $original->file_name;
-        $copy->parent_id = $parentId;
-        $copy->owner_id = $newOwnerId;
-
-        if ($original->type === 'folder') {
-            $copy->file_size = 0;
-        }
         $copy->save();
 
         $copy->generatePath();
@@ -223,20 +137,18 @@ class DuplicateEntriesController extends BaseController
 
         return $copy;
     }
-
-
 
     private function copyFile(FileEntry $original, FileEntry $copy)
     {
         $paths = $original->getDisk()->files($original->file_name);
-       /* foreach ($paths as $path) {
+        foreach ($paths as $path) {
             $newPath = str_replace(
-               // $original->file_name,
-               // $copy->file_name,
+                $original->file_name,
+                $copy->file_name,
                 $path,
             );
             $original->getDisk()->copy($path, $newPath);
-        }*/
+        }
     }
 
     /**

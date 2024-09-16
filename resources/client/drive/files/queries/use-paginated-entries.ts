@@ -1,6 +1,9 @@
 import {InfiniteData, useInfiniteQuery} from '@tanstack/react-query';
 import {useSearchParams} from 'react-router-dom';
-import {LengthAwarePaginationResponse} from '@common/http/backend-response/pagination-response';
+import {
+  hasNextPage,
+  LengthAwarePaginationResponse,
+} from '@common/http/backend-response/pagination-response';
 import {DriveEntry, DriveFolder} from '../drive-entry';
 import {driveState, useDriveStore} from '../../drive-store';
 import {apiClient, queryClient} from '@common/http/query-client';
@@ -9,7 +12,7 @@ import {SortColumn, SortDirection} from '../../layout/sorting/available-sorts';
 import {useActiveWorkspaceId} from '@common/workspace/active-workspace-id-context';
 import {makeFolderPage, SearchPage} from '../../drive-page/drive-page';
 import {useEffect} from 'react';
-import {shallowEqual} from '@common/utils/shallow-equal';
+import {shallowEqual} from '@ui/utils/shallow-equal';
 
 export interface DriveApiIndexParams {
   orderBy?: SortColumn;
@@ -24,10 +27,10 @@ export interface DriveApiIndexParams {
   page?: number;
   recentOnly?: boolean;
   workspaceId?: number | null;
-  pageId?: number | string;
+  section?: string;
 }
 
-interface EntriesPaginationResponse
+export interface EntriesPaginationResponse
   extends LengthAwarePaginationResponse<DriveEntry> {
   folder?: DriveFolder;
 }
@@ -50,7 +53,7 @@ const setActiveFolder = (response: InfiniteData<EntriesPaginationResponse>) => {
   if (
     newFolder &&
     currentPage &&
-    currentPage.id === newFolder.hash &&
+    currentPage.uniqueId === newFolder.hash &&
     // only update page if once to set the folder or if permissions change, to keep page reference as stable as possible
     (!currentPage.folder ||
       !shallowEqual(newFolder.permissions, currentPage.folder?.permissions))
@@ -66,10 +69,10 @@ export function usePaginatedEntries() {
   const [searchParams] = useSearchParams();
   const {workspaceId} = useActiveWorkspaceId();
   const params: DriveApiIndexParams = {
-    pageId: page?.id,
+    section: page?.name,
     ...page?.queryParams,
     ...Object.fromEntries(searchParams),
-    folderId: page?.isFolderPage ? page.id : null,
+    folderId: page?.isFolderPage ? page.uniqueId : null,
     workspaceId,
     ...sortDescriptor,
   };
@@ -86,8 +89,7 @@ export function usePaginatedEntries() {
     initialPageParam: 1,
     getNextPageParam: lastResponse => {
       const currentPage = lastResponse.current_page;
-      const lastPage = lastResponse.last_page;
-      if (currentPage >= lastPage) {
+      if (!hasNextPage(lastResponse)) {
         return undefined;
       }
       return currentPage + 1;

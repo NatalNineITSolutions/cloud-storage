@@ -8,8 +8,8 @@ import {SortColumn, SortDirection} from './layout/sorting/available-sorts';
 import {
   getFromLocalStorage,
   setInLocalStorage,
-} from '@common/utils/hooks/local-storage';
-import {getBootstrapData} from '@common/core/bootstrap-data/use-backend-bootstrap-data';
+} from '@ui/utils/hooks/local-storage';
+import {getBootstrapData} from '@ui/bootstrap-data/bootstrap-data-store';
 
 const stableArray: DriveEntry[] = [];
 enableMapSet();
@@ -58,17 +58,17 @@ interface Actions {
   setActivePage: (page: DrivePage) => void;
   setActiveActionDialog: (
     name: DriveDialog | null,
-    entries?: DriveEntry[]
+    entries?: DriveEntry[],
   ) => void;
   setViewMode: (mode: 'grid' | 'list') => void;
   setSortDescriptor: (value: DriveSortDescriptor) => void;
   setContextMenuData: (
-    position: {x: number; y: number; entry?: DriveEntry} | null
+    position: {x: number; y: number; entry?: DriveEntry} | null,
   ) => void;
   setEntriesBeingDragged: (value: number[]) => void;
   selectEntries: (
     entries: (number | undefined | null)[],
-    merge?: boolean
+    merge?: boolean,
   ) => void;
   deselectEntries: (entries: number[] | 'all') => void;
   reset: () => void;
@@ -83,7 +83,7 @@ const initialState: State = {
   sidebarExpandedKeys: [],
   viewMode: getFromLocalStorage<'list' | 'grid'>(
     'drive.viewMode',
-    getBootstrapData().settings?.drive?.default_view || 'grid'
+    getBootstrapData().settings?.drive?.default_view || 'grid',
   ),
   sortDescriptor: {
     orderBy: 'updated_at',
@@ -106,7 +106,7 @@ export const useDriveStore = create<State & Actions>()(
     },
     setSortDescriptor: value => {
       set(state => {
-        const activePageId = get().activePage?.id;
+        const activePageId = get().activePage?.uniqueId;
         if (activePageId) {
           setInLocalStorage('selectedSorting', {
             ...getFromLocalStorage('selectedSorting'),
@@ -119,12 +119,19 @@ export const useDriveStore = create<State & Actions>()(
     setActivePage: value => {
       set(state => {
         state.activePage = value;
-
         const storedDescriptor =
-          getFromLocalStorage('selectedSorting')?.[value.id];
+          getFromLocalStorage('selectedSorting')?.[value.uniqueId];
         state.sortDescriptor = storedDescriptor
           ? storedDescriptor
           : value.sortDescriptor;
+
+        // deselect entries when page changes
+        if (
+          value.uniqueId !== get().activePage?.uniqueId &&
+          state.selectedEntries.size
+        ) {
+          state.selectedEntries.clear();
+        }
       });
     },
     setEntriesBeingDragged: value => {
@@ -193,7 +200,7 @@ export const useDriveStore = create<State & Actions>()(
     reset: () => {
       set(initialState);
     },
-  }))
+  })),
 );
 
 export function driveState() {

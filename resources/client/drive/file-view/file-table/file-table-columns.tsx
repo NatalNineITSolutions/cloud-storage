@@ -1,17 +1,17 @@
 import {ColumnConfig} from '@common/datatable/column-config';
 import {DriveEntry} from '../../files/drive-entry';
-import {Trans} from '@common/i18n/trans';
-import {FileThumbnail} from '@common/uploads/file-type-icon/file-thumbnail';
-import {FormattedDate} from '@common/i18n/formatted-date';
-import {prettyBytes} from '@common/uploads/utils/pretty-bytes';
+import {Trans} from '@ui/i18n/trans';
+import {FormattedDate} from '@ui/i18n/formatted-date';
 import React, {useContext} from 'react';
 import memoize from 'nano-memoize';
 import {TableContext} from '@common/ui/tables/table-context';
-import {Checkbox} from '@common/ui/forms/toggle/checkbox';
+import {Checkbox} from '@ui/forms/toggle/checkbox';
 import {EntryActionMenuTrigger} from '@app/drive/entry-actions/entry-action-menu-trigger';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {MoreVertIcon} from '@common/icons/material/MoreVert';
+import {IconButton} from '@ui/buttons/icon-button';
+import {MoreVertIcon} from '@ui/icons/material/MoreVert';
 import clsx from 'clsx';
+import {prettyBytes} from '@ui/utils/files/pretty-bytes';
+import {FileThumbnail} from '@common/uploads/components/file-type-icon/file-thumbnail';
 
 const formatFileSize = memoize(bytes => {
   return prettyBytes(bytes);
@@ -64,7 +64,7 @@ function FileNameColumn({entry}: {entry: DriveEntry}) {
       <div className="min-w-0">
         <div className="overflow-hidden overflow-ellipsis">{entry.name}</div>
         {isCollapsedMode && (
-          <div className="text-muted text-xs flex items-center mt-4">
+          <div className="mt-4 flex items-center text-xs text-muted">
             <FormattedDate date={entry.updated_at} />
             <div>·</div>
             <div>{formatFileSize(entry.file_size)}</div>
@@ -82,7 +82,7 @@ function ActionsColumn({entry}: ActionsBodyProps) {
   const {selectedRows} = useContext(TableContext);
   return selectedRows.length ? (
     <Checkbox
-      className="block mr-8"
+      className="mr-8 block"
       checked={selectedRows.includes(entry.id)}
     />
   ) : (

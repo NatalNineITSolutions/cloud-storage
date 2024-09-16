@@ -28,10 +28,6 @@ class GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata extends \Google\Col
    * @var string
    */
   public $gcsUri;
-  /**
-   * @var GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig
-   */
-  public $groundingConfig;
   protected $groundingConfigType = GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig::class;
   protected $groundingConfigDataType = '';
   /**
@@ -50,6 +46,10 @@ class GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata extends \Google\Col
    * @var string[]
    */
   public $stopSequences;
+  /**
+   * @var string
+   */
+  public $systemInstructionGcsUri;
   /**
    * @var float
    */
@@ -164,6 +164,20 @@ class GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata extends \Google\Col
   public function getStopSequences()
   {
     return $this->stopSequences;
+  }
+  /**
+   * @param string
+   */
+  public function setSystemInstructionGcsUri($systemInstructionGcsUri)
+  {
+    $this->systemInstructionGcsUri = $systemInstructionGcsUri;
+  }
+  /**
+   * @return string
+   */
+  public function getSystemInstructionGcsUri()
+  {
+    return $this->systemInstructionGcsUri;
   }
   /**
    * @param float

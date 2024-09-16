@@ -1,13 +1,13 @@
 import React, {ReactElement} from 'react';
-import {useShareableLinkPage} from '../queries/use-shareable-link-page';
-import {useLinkPageStore} from './link-page-store';
-import {useTrans} from '@common/i18n/use-trans';
-import {ProgressCircle} from '@common/ui/progress/progress-circle';
-import {PasswordPage} from './password-page';
-import {FolderPreview} from './folder-preview/folder-preview';
+import {useShareableLinkPage} from '@app/drive/shareable-link/queries/use-shareable-link-page';
+import {useLinkPageStore} from '@app/drive/shareable-link/shareable-link-page/link-page-store';
+import {useTrans} from '@ui/i18n/use-trans';
+import {ProgressCircle} from '@ui/progress/progress-circle';
+import {PasswordPage} from '@app/drive/shareable-link/shareable-link-page/password-page';
+import {FolderPreview} from '@app/drive/shareable-link/shareable-link-page/folder-preview/folder-preview';
 import {ShareableLinkPageFilePreview} from './shareable-link-page-file-preview';
-import {FileEntryUrlsContext} from '@common/uploads/hooks/file-entry-urls';
 import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
+import {FileEntryUrlsContext} from '@common/uploads/file-entry-urls';
 
 export function ShareableLinkPage() {
   const {status, link} = useShareableLinkPage();

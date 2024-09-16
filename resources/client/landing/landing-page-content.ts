@@ -1,4 +1,4 @@
-import {MenuItemConfig} from '@common/core/settings/settings';
+import {MenuItemConfig} from '@common/menus/menu-config';
 
 export interface LandingPageContent {
   headerTitle: string;

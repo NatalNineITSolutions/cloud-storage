@@ -8,27 +8,19 @@ use App\Models\User;
 use App\Notifications\FileEntrySharedNotif;
 use App\Services\Shares\AttachUsersToEntry;
 use App\Services\Shares\DetachUsersFromEntries;
-use App\Services\Shares\GetUsersWithAccessToEntry;
 use Common\Core\BaseController;
-use Common\Files\Traits\LoadsAllChildEntries;
-use Common\Settings\Settings;
+use Common\Files\Traits\ChunksChildEntries;
 use Common\Validation\Validators\EmailsAreValid;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
 class SharesController extends BaseController
 {
-    use LoadsAllChildEntries;
-
-    public function __construct(
-        private Request $request,
-        private Settings $settings,
-    ) {
-    }
+    use ChunksChildEntries;
 
     /**
      * Import entry into current user's drive using specified shareable link.
@@ -49,36 +41,27 @@ class SharesController extends BaseController
             'download' => $link->allow_download,
         ];
 
-        $action->execute(
-            [$this->request->user()->email],
-            [$link->entry_id],
-            $permissions,
-        );
+        $action->execute([Auth::user()->email], [$link->entry], $permissions);
 
-        $users = app(GetUsersWithAccessToEntry::class)->execute(
-            $link->entry_id,
-        );
-
-        return $this->success(['users' => $users]);
+        return $this->success(['users' => $link->entry->users]);
     }
 
     public function addUsers(
-        int $entryId,
+        FileEntry $fileEntry,
         AttachUsersToEntry $action,
     ): JsonResponse {
-        $shareeEmails = $this->request->get('emails');
+        $shareeEmails = request('emails');
 
-        $this->authorize('update', [FileEntry::class, [$entryId]]);
+        $this->authorize('update', $fileEntry);
 
-        $emails = $this->request->get('emails', []);
+        $emails = request('emails', []);
 
         $messages = [];
         foreach ($emails as $key => $email) {
             $messages["emails.$key"] = $email;
         }
 
-        $this->validate(
-            $this->request,
+        request()->validate(
             [
                 'emails' => ['required', 'min:1', new EmailsAreValid()],
                 'permissions' => 'required|array',
@@ -89,75 +72,69 @@ class SharesController extends BaseController
 
         $sharees = $action->execute(
             $shareeEmails,
-            [$entryId],
-            $this->request->get('permissions'),
+            [$fileEntry],
+            request('permissions'),
         );
 
-        if ($this->settings->get('drive.send_share_notification')) {
+        if (settings('drive.send_share_notification')) {
             try {
                 Notification::send(
                     $sharees,
-                    new FileEntrySharedNotif([$entryId], Auth::user()),
+                    new FileEntrySharedNotif([$fileEntry->id], Auth::user()),
                 );
-            } catch (Exception) {
-                //
+            } catch (Exception $e) {
+                report($e);
             }
         }
 
-        $users = app(GetUsersWithAccessToEntry::class)->execute($entryId);
-
-        return $this->success(['users' => $users]);
+        return $this->success(['users' => $fileEntry->users]);
     }
 
-    public function changePermissions(int $entryId)
+    public function changePermissions(FileEntry $fileEntry)
     {
-        $this->request->validate([
+        request()->validate([
             'permissions' => 'required|array',
             'userId' => 'required|int',
         ]);
 
-        $this->authorize('update', [FileEntry::class, [$entryId]]);
+        $this->authorize('update', $fileEntry);
 
-        DB::table('file_entry_models')
-            ->where('model_id', $this->request->get('userId'))
-            ->where('model_type', User::MODEL_TYPE)
-            ->whereIn(
-                'file_entry_id',
-                $this->loadChildEntries([$entryId])->pluck('id'),
-            )
-            ->update([
-                'permissions' => json_encode(
-                    $this->request->get('permissions'),
-                ),
-            ]);
+        $this->chunkChildEntries([$fileEntry], function (Collection $chunk) {
+            DB::table('file_entry_models')
+                ->where('model_id', request('userId'))
+                ->where('model_type', User::MODEL_TYPE)
+                ->whereIn('file_entry_id', $chunk->pluck('id'))
+                ->update([
+                    'permissions' => json_encode(request('permissions')),
+                ]);
+        });
 
-        $users = app(GetUsersWithAccessToEntry::class)->execute($entryId);
-
-        return $this->success(['users' => $users]);
+        return $this->success(['users' => $fileEntry->users]);
     }
 
-    public function removeUser(
-        string $entryIds,
-        DetachUsersFromEntries $action,
-    ): JsonResponse {
+    public function removeUser(string $entryIds): JsonResponse
+    {
         $userId =
-            $this->request->get('userId') === 'me'
-                ? Auth::id()
-                : (int) $this->request->get('userId');
-        $entryIds = explode(',', $entryIds);
+            request('userId') === 'me' ? Auth::id() : (int) request('userId');
+        $fileEntries = FileEntry::with('users')
+            ->whereIn('id', explode(',', $entryIds))
+            ->get();
 
         // there's no need to authorize if user is
         // trying to remove himself from the entry
         if ($userId !== Auth::id()) {
-            $this->authorize('update', [FileEntry::class, $entryIds]);
+            $this->authorize('update', [FileEntry::class, $fileEntries]);
         }
 
-        $action->execute(collect($entryIds), collect([$userId]));
+        $this->chunkChildEntries($fileEntries, function ($chunk) use ($userId) {
+            (new DetachUsersFromEntries())->execute($chunk, [$userId]);
+        });
 
-        $users = app(GetUsersWithAccessToEntry::class)->execute(
-            head($entryIds),
-        );
-
-        return $this->success(['users' => $users]);
+        return $this->success([
+            'users' => $fileEntries
+                ->pluck('users')
+                ->flatten(1)
+                ->unique(),
+        ]);
     }
 }

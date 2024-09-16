@@ -14,9 +14,9 @@ class FolderPathController extends BaseController
 
     public function show(string $hash)
     {
-        $folder = Folder::with(['users', 'tags'])->findOrFail(
-            $this->decodeHash($hash),
-        );
+        $folder = Folder::with(['users', 'tags'])
+            ->byIdOrHash($hash)
+            ->firstOrFail();
 
         $link = request('shareable_link')
             ? ShareableLink::findOrFail(request('shareable_link'))
@@ -26,7 +26,7 @@ class FolderPathController extends BaseController
 
         $path = $folder
             ->allParents()
-            ->select(['id', 'name', 'path'])
+            ->select(['id', 'name', 'path', 'type'])
             ->with(['users', 'tags'])
             ->get();
 

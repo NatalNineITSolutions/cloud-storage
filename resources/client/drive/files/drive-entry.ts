@@ -19,8 +19,8 @@ export interface DriveFolder extends DriveEntry {
 export interface DriveEntryUser {
   id: number;
   email: string;
-  display_name: string;
-  avatar?: string;
+  name: string;
+  image?: string;
   owns_entry: boolean;
   entry_permissions: DriveEntryPermissions;
 }

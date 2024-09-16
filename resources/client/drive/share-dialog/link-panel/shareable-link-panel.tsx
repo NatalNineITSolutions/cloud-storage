@@ -2,17 +2,17 @@ import useClipboard from 'react-use-clipboard';
 import {useEntryShareableLink} from '../../shareable-link/queries/use-entry-shareable-link';
 import {useCreateShareableLink} from '../../shareable-link/queries/create-shareable-link';
 import {useDeleteShareableLink} from '../../shareable-link/queries/use-delete-shareable-link';
-import {Button} from '@common/ui/buttons/button';
+import {Button} from '@ui/buttons/button';
 import {ShareableLink} from '../../shareable-link/shareable-link';
-import {TextField} from '@common/ui/forms/input-field/text-field/text-field';
+import {TextField} from '@ui/forms/input-field/text-field/text-field';
 import type {ShareDialogActivePanel} from '../share-dialog';
-import {Switch} from '@common/ui/forms/toggle/switch';
-import {randomString} from '@common/utils/string/random-string';
-import {Trans} from '@common/i18n/trans';
-import {useTrans} from '@common/i18n/use-trans';
+import {Switch} from '@ui/forms/toggle/switch';
+import {Trans} from '@ui/i18n/trans';
+import {useTrans} from '@ui/i18n/use-trans';
 import {useActiveDialogEntry} from '../../drive-store';
 import {DriveEntry} from '../../files/drive-entry';
-import {useSettings} from '@common/core/settings/use-settings';
+import {useSettings} from '@ui/settings/use-settings';
+import {randomString} from '@ui/utils/string/random-string';
 
 interface ShareableLinkPanelProps {
   setActivePanel: (name: ShareDialogActivePanel) => void;
@@ -53,6 +53,17 @@ export function ShareableLinkPanel({
             <Trans message="Create shareable link" />
           )}
         </Switch>
+        {linkExists && (
+          <Button
+            variant="link"
+            color="primary"
+            onClick={() => {
+              setActivePanel('linkSettings');
+            }}
+          >
+            <Trans message="Link settings" />
+          </Button>
+        )}
       </div>
       <ShareableLinkInput autoFocus={focusInput} link={query.data?.link} />
     </div>

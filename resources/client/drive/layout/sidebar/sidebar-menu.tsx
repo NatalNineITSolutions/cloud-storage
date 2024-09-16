@@ -6,19 +6,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {MenuItemConfig} from '@common/core/settings/settings';
 import clsx from 'clsx';
-import {useDroppable} from '@common/ui/interactions/dnd/use-droppable';
 import {FileEntry} from '@common/uploads/file-entry';
-import {FolderTree} from './folder-tree';
-import {useDeleteEntries} from '../../files/queries/use-delete-entries';
-import {useActiveWorkspaceId} from '@common/workspace/active-workspace-id-context';
+import {FolderTree} from '@app/drive/layout/sidebar/folder-tree';
+import {useDeleteEntries} from '@app/drive/files/queries/use-delete-entries';
+import {useDroppable} from '@common/ui/library/interactions/dnd/use-droppable';
+import {MenuItemConfig} from '@common/menus/menu-config';
 
 export function SidebarMenu() {
-  const {workspaceId} = useActiveWorkspaceId();
   return (
-    <div className="container" >
-    <div className="text-muted mt-26 px-12">
+    <div className="mt-26 px-12 text-muted">
       <FolderTree />
       <CustomMenu
         menu={MenuPositions.DriveSidebar}
@@ -32,7 +29,6 @@ export function SidebarMenu() {
           return <MenuItem key={item.id} item={item} />;
         }}
       </CustomMenu>
-    </div>
     </div>
   );
 }
@@ -48,10 +44,10 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
         className={({isActive}) =>
           clsx(
             className,
-            'h-40 w-full my-4 px-24 rounded',
+            'my-4 h-40 w-full rounded px-24',
             isActive
-              ? 'text-primary font-bold bg-primary/selected cursor-default'
-              : 'hover:bg-hover'
+              ? 'cursor-default bg-primary/selected font-bold text-primary'
+              : 'hover:bg-hover',
           )
         }
         item={item}
@@ -59,7 +55,7 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
         {...domProps}
       />
     );
-  }
+  },
 );
 
 interface TrashMenuItemProps {

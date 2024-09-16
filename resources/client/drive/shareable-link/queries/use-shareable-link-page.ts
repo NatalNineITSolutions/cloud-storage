@@ -9,7 +9,7 @@ import {
 } from '../shareable-link-page/link-page-store';
 import {LengthAwarePaginationResponse} from '@common/http/backend-response/pagination-response';
 import {apiClient} from '@common/http/query-client';
-import {getBootstrapData} from '@common/core/bootstrap-data/use-backend-bootstrap-data';
+import {getBootstrapData} from '@ui/bootstrap-data/bootstrap-data-store';
 
 export interface FetchShareableLinkPageResponse
   extends FetchShareableLinkResponse {

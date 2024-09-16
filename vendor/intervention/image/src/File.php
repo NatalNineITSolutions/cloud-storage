@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Image;
 
 use Intervention\Image\Exceptions\NotWritableException;
@@ -13,18 +15,16 @@ class File implements FileInterface
     /**
      * Create new instance
      *
-     * @param  string $data
+     * @param string $data
      */
     public function __construct(protected string $data)
     {
-        //
     }
 
     /**
-     * Save encoded image data in file system
+     * {@inheritdoc}
      *
-     * @param  string $filepath
-     * @return void
+     * @see FileInterface::save()
      */
     public function save(string $filepath): void
     {
@@ -42,7 +42,7 @@ class File implements FileInterface
             );
         }
 
-        // write date
+        // write data
         $saved = @file_put_contents($filepath, (string) $this);
         if ($saved === false) {
             throw new NotWritableException(
@@ -52,9 +52,9 @@ class File implements FileInterface
     }
 
     /**
-     * Cast encoded image object to string
+     * {@inheritdoc}
      *
-     * @return string
+     * @see FilterInterface::toString()
      */
     public function toString(): string
     {
@@ -62,9 +62,9 @@ class File implements FileInterface
     }
 
     /**
-     * Create file pointer from encoded image
+     * {@inheritdoc}
      *
-     * @return resource
+     * @see FilterInterface::toFilePointer()
      */
     public function toFilePointer()
     {
@@ -72,9 +72,9 @@ class File implements FileInterface
     }
 
     /**
-     * Return byte size of encoded image
+     * {@inheritdoc}
      *
-     * @return int
+     * @see FileInterface::size()
      */
     public function size(): int
     {
@@ -82,9 +82,9 @@ class File implements FileInterface
     }
 
     /**
-     * Cast encoded image object to string
+     * {@inheritdoc}
      *
-     * @return string
+     * @see FileInterface::__toString()
      */
     public function __toString(): string
     {

@@ -19,9 +19,6 @@ Usage Example
 #### Producer
 
 ```php
-<?php
-require __DIR__ . '/vendor/autoload.php';
-
 use Pheanstalk\Pheanstalk;
 use Pheanstalk\Values\TubeName;
 
@@ -30,23 +27,20 @@ $tube       = new TubeName('testtube');
 
 // Queue a Job
 $pheanstalk->useTube($tube);
-$pheanstalk>put("job payload goes here\n");
+$pheanstalk->put("job payload goes here\n");
 
 $pheanstalk->useTube($tube);
 $pheanstalk->put(
-    data: json_encode(['test' => 'data']),
+    data: json_encode(['test' => 'data'], JSON_THROW_ON_ERROR),
     priority: Pheanstalk::DEFAULT_PRIORITY,
     delay: 30,
     timeToRelease: 60
 );
-
 ```
 
 
 #### Consumer / Worker
 ```php
-<?php
-require __DIR__ . '/vendor/autoload.php';
 use Pheanstalk\Pheanstalk;
 use Pheanstalk\Values\TubeName;
 
@@ -62,6 +56,8 @@ $job = $pheanstalk->reserve();
 try {
     $jobPayload = $job->getData();
     // do work.
+    
+    echo "Starting job with payload: {$jobPayload}\n";
 
     sleep(2);
     // If it's going to take a long time, periodically
@@ -125,25 +121,37 @@ or use `reserveWithTimeout()` with a timeout that is less than the read / write 
 
 Example code for a job runner could look like this (this is real production code):
 ```php
-while(true) {
-    $job = $beanstalk->reserveWithTimeout(50);
-    $this->stdout('.', Console::FG_CYAN);
-    if (isset($job)) {
-        $this->ensureDatabase($db);
-        try {
-            /** @var HookTask $task */
-            $task = $taskFactory->createFromJson($job->getData());
+use Pheanstalk\Pheanstalk;
+use Pheanstalk\Values\TubeName;
 
-            $commandBus->handle($task);
-            $this->stdout("Deleting job: {$job->getId()}\n", Console::FG_GREEN);
-            $beanstalk->delete($job);
-        } catch (\Throwable $t) {
-            \Yii::error($t);
-            $this->stderr("\n{$t->getMessage()}\n", Console::FG_RED);
-            $this->stderr("{$t->getTraceAsString()}\n", Console::FG_RED);
+interface Task {
 
-            $this->stdout("Burying job: {$job->getId()}\n", Console::FG_YELLOW);
-            $beanstalk->bury($job);
+}
+interface TaskFactory {
+    public function fromData(string $data): Task;
+}
+interface CommandBus {
+    public function handle(Task $task): void;
+}
+
+function run(\Pheanstalk\PheanstalkSubscriber $pheanstalk, CommandBus $commandBus, TaskFactory $taskFactory): void
+{
+    /**
+     * @phpstan-ignore-next-line
+     */
+    while (true) {
+        $job = $pheanstalk->reserveWithTimeout(50);
+        if (isset($job)) {
+            try {
+
+                $task = $taskFactory->fromData($job->getData());
+                $commandBus->handle($task);
+                echo "Deleting job: {$job->getId()}\n";
+                $pheanstalk->delete($job);
+            } catch (\Throwable $t) {
+                echo "Burying job: {$job->getId()}\n";
+                $pheanstalk->bury($job);
+            }
         }
     }
 }

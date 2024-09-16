@@ -20,22 +20,10 @@ namespace Google\Service\CertificateAuthorityService;
 class CertificateAuthority extends \Google\Collection
 {
   protected $collection_key = 'pemCaCertificates';
-  /**
-   * @var AccessUrls
-   */
-  public $accessUrls;
   protected $accessUrlsType = AccessUrls::class;
   protected $accessUrlsDataType = '';
-  /**
-   * @var CertificateDescription[]
-   */
-  public $caCertificateDescriptions;
   protected $caCertificateDescriptionsType = CertificateDescription::class;
   protected $caCertificateDescriptionsDataType = 'array';
-  /**
-   * @var CertificateConfig
-   */
-  public $config;
   protected $configType = CertificateConfig::class;
   protected $configDataType = '';
   /**
@@ -54,10 +42,6 @@ class CertificateAuthority extends \Google\Collection
    * @var string
    */
   public $gcsBucket;
-  /**
-   * @var KeyVersionSpec
-   */
-  public $keySpec;
   protected $keySpecType = KeyVersionSpec::class;
   protected $keySpecDataType = '';
   /**
@@ -77,13 +61,17 @@ class CertificateAuthority extends \Google\Collection
    */
   public $pemCaCertificates;
   /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
+  /**
    * @var string
    */
   public $state;
-  /**
-   * @var SubordinateConfig
-   */
-  public $subordinateConfig;
   protected $subordinateConfigType = SubordinateConfig::class;
   protected $subordinateConfigDataType = '';
   /**
@@ -266,6 +254,34 @@ class CertificateAuthority extends \Google\Collection
   public function getPemCaCertificates()
   {
     return $this->pemCaCertificates;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param string

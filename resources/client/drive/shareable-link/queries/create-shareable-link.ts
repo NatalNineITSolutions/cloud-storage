@@ -2,8 +2,8 @@ import {useMutation} from '@tanstack/react-query';
 import {apiClient, queryClient} from '@common/http/query-client';
 import {FetchShareableLinkResponse} from './use-entry-shareable-link';
 import {DriveQueryKeys} from '../../drive-query-keys';
-import {message} from '@common/i18n/message';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
+import {message} from '@ui/i18n/message';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
 
 function createShareableLink(
   entryId?: number | null,

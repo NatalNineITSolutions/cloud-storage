@@ -4,15 +4,15 @@ import {driveState, useDriveStore} from '../../drive-store';
 import {mergeProps} from '@react-aria/utils';
 import {useFileViewDnd} from '../use-file-view-dnd';
 import {useViewItemActionHandler} from '../use-view-item-action-handler';
-import {usePointerEvents} from '@common/ui/interactions/use-pointer-events';
-import {createEventHandler} from '@common/utils/dom/create-event-handler';
-import {DashboardLayoutContext} from '@common/ui/layout/dashboard-layout-context';
 import {BaseFileGridItem} from './base-file-grid-item';
 import {EntryActionMenuTrigger} from '../../entry-actions/entry-action-menu-trigger';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {MoreVertIcon} from '@common/icons/material/MoreVert';
-import {Checkbox} from '@common/ui/forms/toggle/checkbox';
-import {isCtrlOrShiftPressed} from '@common/utils/keybinds/is-ctrl-or-shift-pressed';
+import {IconButton} from '@ui/buttons/icon-button';
+import {MoreVertIcon} from '@ui/icons/material/MoreVert';
+import {Checkbox} from '@ui/forms/toggle/checkbox';
+import {DashboardLayoutContext} from '@common/ui/dashboard-layout/dashboard-layout-context';
+import {isCtrlOrShiftPressed} from '@ui/utils/keybinds/is-ctrl-or-shift-pressed';
+import {usePointerEvents} from '@ui/interactions/use-pointer-events';
+import {createEventHandler} from '@ui/utils/dom/create-event-handler';
 
 interface FileGridItemProps {
   entry: DriveEntry;
@@ -109,7 +109,7 @@ function FooterAdornment({entry, isSelected}: FooterProps) {
   const anySelected = useDriveStore(s => s.selectedEntries.size);
 
   if (anySelected) {
-    return <Checkbox className="block mr-8" checked={isSelected} />;
+    return <Checkbox className="mr-8 block" checked={isSelected} />;
   }
 
   return (

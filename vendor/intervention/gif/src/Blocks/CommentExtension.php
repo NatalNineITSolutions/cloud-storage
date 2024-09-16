@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Gif\Blocks;
 
 use Intervention\Gif\AbstractExtension;
@@ -28,7 +30,7 @@ class CommentExtension extends AbstractExtension
     /**
      * Get one comment by key
      *
-     * @param  int $key
+     * @param int $key
      * @return mixed
      */
     public function getComment(int $key): mixed

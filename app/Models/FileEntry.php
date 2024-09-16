@@ -29,11 +29,17 @@ class FileEntry extends CommonFileEntry
         return $builder->where('parent_id', null);
     }
 
-    public function scopeSharedByUser(Builder $builder, int $userId): Builder
-    {
+    public function scopeSharedByUser(
+        Builder $builder,
+        int $userId,
+        bool $checkOwner = true,
+    ): Builder {
         return $builder
             ->whereHas('users', null, '>', 1)
-            ->where('owner_id', $userId);
+            ->when(
+                $checkOwner,
+                fn($query) => $query->where('owner_id', $userId),
+            );
     }
 
     /**

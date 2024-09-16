@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Image;
 
 use Intervention\Image\Interfaces\EncodedImageInterface;
@@ -9,8 +11,8 @@ class EncodedImage extends File implements EncodedImageInterface
     /**
      * Create new instance
      *
-     * @param  string $data
-     * @param  string $mediaType
+     * @param string $data
+     * @param string $mediaType
      */
     public function __construct(
         protected string $data,
@@ -19,9 +21,9 @@ class EncodedImage extends File implements EncodedImageInterface
     }
 
     /**
-     * Return media (mime) type of encoed image data
+     * {@inheritdoc}
      *
-     * @return string
+     * @see EncodedImageInterface::mediaType()
      */
     public function mediaType(): string
     {
@@ -29,9 +31,9 @@ class EncodedImage extends File implements EncodedImageInterface
     }
 
     /**
-     * Alias of self::mediaType(
+     * {@inheritdoc}
      *
-     * @return string
+     * @see EncodedImageInterface::mimetype()
      */
     public function mimetype(): string
     {
@@ -39,9 +41,9 @@ class EncodedImage extends File implements EncodedImageInterface
     }
 
     /**
-     * Transform encoded image data into an data uri string
+     * {@inheritdoc}
      *
-     * @return string
+     * @see EncodedImageInterface::toDataUri()
      */
     public function toDataUri(): string
     {

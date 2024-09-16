@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Image\Colors\Hsl;
 
 use Intervention\Image\Colors\AbstractColor;
@@ -16,6 +18,7 @@ class Color extends AbstractColor
 {
     public function __construct(int $h, int $s, int $l)
     {
+        /** @throws void */
         $this->channels = [
             new Hue($h),
             new Saturation($s),
@@ -23,6 +26,11 @@ class Color extends AbstractColor
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see ColorInterface::colorspace()
+     */
     public function colorspace(): ColorspaceInterface
     {
         return new Colorspace();
@@ -49,6 +57,7 @@ class Color extends AbstractColor
      */
     public function hue(): ColorChannelInterface
     {
+        /** @throws void */
         return $this->channel(Hue::class);
     }
 
@@ -59,6 +68,7 @@ class Color extends AbstractColor
      */
     public function saturation(): ColorChannelInterface
     {
+        /** @throws void */
         return $this->channel(Saturation::class);
     }
 
@@ -69,6 +79,7 @@ class Color extends AbstractColor
      */
     public function luminance(): ColorChannelInterface
     {
+        /** @throws void */
         return $this->channel(Luminance::class);
     }
 
@@ -100,5 +111,15 @@ class Color extends AbstractColor
     public function isGreyscale(): bool
     {
         return $this->saturation()->value() == 0;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see ColorInterface::isTransparent()
+     */
+    public function isTransparent(): bool
+    {
+        return false;
     }
 }

@@ -3,25 +3,25 @@ import {Fragment, ReactElement, useState} from 'react';
 import clsx from 'clsx';
 import {m} from 'framer-motion';
 import {getLocalTimeZone, now} from '@internationalized/date';
-import {Button} from '@common/ui/buttons/button';
-import {FormTextField} from '@common/ui/forms/input-field/text-field/text-field';
-import {DialogFooter} from '@common/ui/overlays/dialog/dialog-footer';
-import type {ShareDialogActivePanel} from '../share-dialog';
-import {useEntryShareableLink} from '../../shareable-link/queries/use-entry-shareable-link';
-import {Form} from '@common/ui/forms/form';
+import {Button} from '@ui/buttons/button';
+import {FormTextField} from '@ui/forms/input-field/text-field/text-field';
+import {DialogFooter} from '@ui/overlays/dialog/dialog-footer';
+import type {ShareDialogActivePanel} from '@app/drive/share-dialog/share-dialog';
+import {useEntryShareableLink} from '@app/drive/shareable-link/queries/use-entry-shareable-link';
+import {Form} from '@ui/forms/form';
 import {
   UpdateShareableLinkPayload,
   useUpdateShareableLink,
-} from '../../shareable-link/queries/use-update-shareable-link';
-import {FormSwitch, Switch} from '@common/ui/forms/toggle/switch';
-import {toast} from '@common/ui/toast/toast';
-import {useDialogContext} from '@common/ui/overlays/dialog/dialog-context';
-import {DialogHeader} from '@common/ui/overlays/dialog/dialog-header';
-import {DialogBody} from '@common/ui/overlays/dialog/dialog-body';
-import {FormDatePicker} from '@common/ui/forms/input-field/date/date-picker/date-picker';
-import {useTrans} from '@common/i18n/use-trans';
-import {Trans} from '@common/i18n/trans';
-import {message} from '@common/i18n/message';
+} from '@app/drive/shareable-link/queries/use-update-shareable-link';
+import {FormSwitch, Switch} from '@ui/forms/toggle/switch';
+import {toast} from '@ui/toast/toast';
+import {useDialogContext} from '@ui/overlays/dialog/dialog-context';
+import {DialogHeader} from '@ui/overlays/dialog/dialog-header';
+import {DialogBody} from '@ui/overlays/dialog/dialog-body';
+import {FormDatePicker} from '@ui/forms/input-field/date/date-picker/date-picker';
+import {useTrans} from '@ui/i18n/use-trans';
+import {Trans} from '@ui/i18n/trans';
+import {message} from '@ui/i18n/message';
 import {FileEntry} from '@common/uploads/file-entry';
 
 interface LinkSettingsDialogProps {

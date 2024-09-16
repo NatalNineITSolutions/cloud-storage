@@ -1,11 +1,11 @@
 import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {useMutation} from '@tanstack/react-query';
 import {apiClient} from '@common/http/query-client';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
-import {message} from '@common/i18n/message';
-import {ChipValue} from '@common/ui/forms/input-field/chip-field/chip-field';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
+import {message} from '@ui/i18n/message';
 import {DriveEntry} from '@app/drive/files/drive-entry';
 import {invalidateEntryQueries} from '@app/drive/drive-query-keys';
+import {ChipValue} from '@ui/forms/input-field/chip-field/chip-field';
 
 interface Response extends BackendResponse {
   //

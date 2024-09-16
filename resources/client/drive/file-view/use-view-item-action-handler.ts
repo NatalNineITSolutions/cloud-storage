@@ -3,7 +3,7 @@ import {getPathForFolder, TrashPage} from '../drive-page/drive-page';
 import {driveState} from '../drive-store';
 import {DriveEntry} from '../files/drive-entry';
 import {getSelectedEntries} from '../files/use-selected-entries';
-import {useNavigate} from '@common/utils/hooks/use-navigate';
+import {useNavigate} from '@common/ui/navigation/use-navigate';
 
 export function useViewItemActionHandler() {
   const navigate = useNavigate();
@@ -20,11 +20,11 @@ export function useViewItemActionHandler() {
         const selectedEntries = getSelectedEntries();
         driveState().setActiveActionDialog(
           'preview',
-          selectedEntries.length ? selectedEntries : [entry]
+          selectedEntries.length ? selectedEntries : [entry],
         );
       }
     },
-    [navigate]
+    [navigate],
   );
 
   return {performViewItemAction};

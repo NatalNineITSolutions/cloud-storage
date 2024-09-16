@@ -1,20 +1,17 @@
-import {useDragMonitor} from '@common/ui/interactions/dnd/use-drag-monitor';
+import {useDragMonitor} from '@ui/interactions/dnd/use-drag-monitor';
 import React, {memo, useRef, useState} from 'react';
-import {FileTypeIcon} from '@common/uploads/file-type-icon/file-type-icon';
+import {FileTypeIcon} from '@common/uploads/components/file-type-icon/file-type-icon';
 import {FileEntry} from '@common/uploads/file-entry';
-import {
-  DragSessionStatus,
-  droppables,
-} from '@common/ui/interactions/dnd/drag-state';
+import {DragSessionStatus, droppables} from '@ui/interactions/dnd/drag-state';
 import {AnimatePresence, m} from 'framer-motion';
 import clsx from 'clsx';
 import {
   isFolderTreeDragId,
   makeFolderTreeDragId,
-} from '../layout/sidebar/folder-tree-drag-id';
-import {InteractableEvent} from '@common/ui/interactions/interactable-event';
+} from '@app/drive/layout/sidebar/folder-tree-drag-id';
+import {InteractableEvent} from '@ui/interactions/interactable-event';
 import {useDriveStore} from '../drive-store';
-import {ConnectedDraggable} from '@common/ui/interactions/dnd/use-draggable';
+import {ConnectedDraggable} from '@ui/interactions/dnd/use-draggable';
 
 interface Point {
   x: number;
@@ -73,7 +70,7 @@ export function EntryDragPreview() {
               }
             : undefined
         }
-        className="fixed isolate left-0 top-0 pointer-events-none"
+        className="pointer-events-none fixed left-0 top-0 isolate"
       >
         {state.entries.map((item, index) => (
           <EntryPreview
@@ -147,22 +144,22 @@ const EntryPreview = memo(
           height: `${state.e?.rect.height}px`,
         }}
         className={clsx(
-          'absolute bg-paper whitespace-nowrap rounded border border-primary-light max-h-48',
+          'absolute max-h-48 whitespace-nowrap rounded border border-primary-light bg-paper',
           index < 2 && 'shadow',
-          index === 0 && 'z-10 top-0 left-0',
-          index > 0 && 'top-6 left-6'
+          index === 0 && 'left-0 top-0 z-10',
+          index > 0 && 'left-6 top-6',
         )}
       >
         {itemCount > 1 && index === 0 && <EntryCount count={itemCount} />}
-        <div className="text-sm h-full flex justify-center items-center px-16 gap-10 bg-primary-light/20 overflow-hidden">
+        <div className="flex h-full items-center justify-center gap-10 overflow-hidden bg-primary-light/20 px-16 text-sm">
           <FileTypeIcon type={entry.type} />
-          <div className="flex-auto text-ellipsis overflow-hidden">
+          <div className="flex-auto overflow-hidden text-ellipsis">
             {entry.name}
           </div>
         </div>
       </m.div>
     );
-  }
+  },
 );
 
 interface EntryCountProps {
@@ -176,7 +173,7 @@ const EntryCount = memo(({count}: EntryCountProps) => {
       animate={{opacity: 1, transition: {delay: 0.1}}}
       exit={{opacity: 0}}
       transition={{duration: 0.1}}
-      className="absolute -top-6 shadow-lg -right-6 z-30 rounded-full bg-danger text-white w-20 h-20 flex items-center justify-center text-sm font-bold z-10"
+      className="absolute -right-6 -top-6 z-10 z-30 flex h-20 w-20 items-center justify-center rounded-full bg-danger text-sm font-bold text-white shadow-lg"
     >
       {count}
     </m.div>

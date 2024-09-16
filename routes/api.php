@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'v1'], function() {
   Route::group(['middleware' => ['optionalAuth:sanctum', 'verified', 'verifyApiAccess']], function () {
     // SHARING
-    Route::post('file-entries/{id}/share', [
+    Route::post('file-entries/{fileEntry}/share', [
       SharesController::class,
       'addUsers',
     ]);
@@ -28,7 +28,7 @@ Route::group(['prefix' => 'v1'], function() {
       SharesController::class,
       'removeUser',
     ]);
-    Route::put('file-entries/{id}/change-permissions', [
+    Route::put('file-entries/{fileEntry}/change-permissions', [
       SharesController::class,
       'changePermissions',
     ]);

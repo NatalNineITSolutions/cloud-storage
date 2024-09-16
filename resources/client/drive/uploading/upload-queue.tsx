@@ -1,10 +1,10 @@
 import {ReactElement, useRef} from 'react';
 import {AnimatePresence, m} from 'framer-motion';
 import {driveState, useDriveStore} from '../drive-store';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {CloseIcon} from '@common/icons/material/Close';
+import {IconButton} from '@ui/buttons/icon-button';
+import {CloseIcon} from '@ui/icons/material/Close';
 import {useFileUploadStore} from '@common/uploads/uploader/file-upload-provider';
-import {Trans} from '@common/i18n/trans';
+import {Trans} from '@ui/i18n/trans';
 import {UploadQueueItem} from './upload-queue-item';
 import {useVirtualizer} from '@tanstack/react-virtual';
 
@@ -16,7 +16,7 @@ export function UploadQueue() {
       {isOpen && (
         <m.div
           key="upload-queue"
-          className="shadow-xl rounded fixed bottom-16 right-16 bg z-modal border w-375 text-sm"
+          className="fixed bottom-16 right-16 z-modal w-375 rounded border bg text-sm shadow-xl"
           initial={{y: '100%', opacity: 0}}
           animate={{y: 0, opacity: 1}}
           exit={{y: '100%', opacity: 0}}
@@ -32,7 +32,7 @@ export function UploadQueue() {
 export function Header() {
   const inProgressUploadsCount = useFileUploadStore(s => s.activeUploadsCount);
   const completedUploadsCount = useFileUploadStore(
-    s => s.completedUploadsCount
+    s => s.completedUploadsCount,
   );
   const clearInactive = useFileUploadStore(s => s.clearInactive);
 
@@ -57,7 +57,7 @@ export function Header() {
 
   // only allow closing upload queue if there are no active uploads
   return (
-    <div className="px-10 py-4 bg-alt flex items-center gap-10 justify-between border-b min-h-[45px]">
+    <div className="flex min-h-[45px] items-center justify-between gap-10 border-b bg-alt px-10 py-4">
       {message}
       {inProgressUploadsCount === 0 ? (
         <IconButton

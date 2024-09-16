@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'language' => $this->faker->languageCode,
             'country' => $this->faker->country,
             'timezone' => $this->faker->timezone,
+            'image' => $this->faker->imageUrl(300, 300, 'people'),
             'email' =>
                 $this->faker->numberBetween(1, 10000) .
                 $this->faker->unique()->safeEmail(),

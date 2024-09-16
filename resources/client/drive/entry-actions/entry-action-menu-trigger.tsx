@@ -1,15 +1,11 @@
 import React, {createElement, ReactElement} from 'react';
-import {
-  Menu,
-  MenuItem,
-  MenuTrigger,
-} from '@common/ui/navigation/menu/menu-trigger';
-import {Trans} from '@common/i18n/trans';
+import {Trans} from '@ui/i18n/trans';
 import {DriveEntry} from '../files/drive-entry';
 import {useEntryActions} from './use-entry-actions';
 import {EntryAction} from './entry-action';
 import {DrivePage, RootFolderPage, TrashPage} from '../drive-page/drive-page';
 import {useDrivePageActions} from './use-drive-page-actions';
+import {Menu, MenuItem, MenuTrigger} from '@ui/menu/menu-trigger';
 
 interface Props {
   children: ReactElement;
@@ -17,7 +13,7 @@ interface Props {
   page?: DrivePage;
 }
 export function EntryActionMenuTrigger({children, entries, page}: Props) {
-  if (page?.id === RootFolderPage.id) {
+  if (page?.name === RootFolderPage.name) {
     return <PageMenu page={RootFolderPage}>{children}</PageMenu>;
   }
 
@@ -57,6 +53,9 @@ interface BaseMenuProps {
   children: ReactElement;
 }
 function BaseMenu({actions, children}: BaseMenuProps) {
+  if (!actions.length) {
+    return null;
+  }
   return (
     <MenuTrigger>
       {children}

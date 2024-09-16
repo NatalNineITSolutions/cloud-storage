@@ -17,54 +17,29 @@
 
 namespace Google\Service\AuthorizedBuyersMarketplace;
 
-class MarketplaceTargeting extends \Google\Model
+class MarketplaceTargeting extends \Google\Collection
 {
-  /**
-   * @var DayPartTargeting
-   */
-  public $daypartTargeting;
+  protected $collection_key = 'excludedSensitiveCategoryIds';
   protected $daypartTargetingType = DayPartTargeting::class;
   protected $daypartTargetingDataType = '';
   /**
-   * @var CriteriaTargeting
+   * @var string[]
    */
-  public $geoTargeting;
+  public $excludedSensitiveCategoryIds;
   protected $geoTargetingType = CriteriaTargeting::class;
   protected $geoTargetingDataType = '';
-  /**
-   * @var InventorySizeTargeting
-   */
-  public $inventorySizeTargeting;
   protected $inventorySizeTargetingType = InventorySizeTargeting::class;
   protected $inventorySizeTargetingDataType = '';
-  /**
-   * @var InventoryTypeTargeting
-   */
-  public $inventoryTypeTargeting;
   protected $inventoryTypeTargetingType = InventoryTypeTargeting::class;
   protected $inventoryTypeTargetingDataType = '';
-  /**
-   * @var PlacementTargeting
-   */
-  public $placementTargeting;
   protected $placementTargetingType = PlacementTargeting::class;
   protected $placementTargetingDataType = '';
-  /**
-   * @var TechnologyTargeting
-   */
-  public $technologyTargeting;
   protected $technologyTargetingType = TechnologyTargeting::class;
   protected $technologyTargetingDataType = '';
-  /**
-   * @var CriteriaTargeting
-   */
-  public $userListTargeting;
   protected $userListTargetingType = CriteriaTargeting::class;
   protected $userListTargetingDataType = '';
-  /**
-   * @var VideoTargeting
-   */
-  public $videoTargeting;
+  protected $verticalTargetingType = CriteriaTargeting::class;
+  protected $verticalTargetingDataType = '';
   protected $videoTargetingType = VideoTargeting::class;
   protected $videoTargetingDataType = '';
 
@@ -81,6 +56,20 @@ class MarketplaceTargeting extends \Google\Model
   public function getDaypartTargeting()
   {
     return $this->daypartTargeting;
+  }
+  /**
+   * @param string[]
+   */
+  public function setExcludedSensitiveCategoryIds($excludedSensitiveCategoryIds)
+  {
+    $this->excludedSensitiveCategoryIds = $excludedSensitiveCategoryIds;
+  }
+  /**
+   * @return string[]
+   */
+  public function getExcludedSensitiveCategoryIds()
+  {
+    return $this->excludedSensitiveCategoryIds;
   }
   /**
    * @param CriteriaTargeting
@@ -165,6 +154,20 @@ class MarketplaceTargeting extends \Google\Model
   public function getUserListTargeting()
   {
     return $this->userListTargeting;
+  }
+  /**
+   * @param CriteriaTargeting
+   */
+  public function setVerticalTargeting(CriteriaTargeting $verticalTargeting)
+  {
+    $this->verticalTargeting = $verticalTargeting;
+  }
+  /**
+   * @return CriteriaTargeting
+   */
+  public function getVerticalTargeting()
+  {
+    return $this->verticalTargeting;
   }
   /**
    * @param VideoTargeting

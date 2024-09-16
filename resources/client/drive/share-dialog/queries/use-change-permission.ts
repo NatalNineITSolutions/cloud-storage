@@ -1,11 +1,11 @@
 import {useMutation} from '@tanstack/react-query';
 import {DriveEntryPermissions} from '../../files/drive-entry';
 import {apiClient} from '@common/http/query-client';
-import {toast} from '@common/ui/toast/toast';
+import {toast} from '@ui/toast/toast';
 import {invalidateEntryQueries} from '../../drive-query-keys';
-import {message} from '@common/i18n/message';
+import {message} from '@ui/i18n/message';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
 
 export interface ChangePermissionsPayload {
   userId: number;

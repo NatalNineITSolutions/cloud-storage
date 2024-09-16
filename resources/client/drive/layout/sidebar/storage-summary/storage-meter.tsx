@@ -1,8 +1,8 @@
 import React from 'react';
 import {useStorageSummary} from './storage-summary';
-import {StorageIcon} from '@common/icons/material/Storage';
-import {Meter} from '@common/ui/progress/meter';
-import {Trans} from '@common/i18n/trans';
+import {StorageIcon} from '@ui/icons/material/Storage';
+import {Meter} from '@ui/progress/meter';
+import {Trans} from '@ui/i18n/trans';
 import clsx from 'clsx';
 
 export function StorageMeter() {
@@ -21,10 +21,10 @@ export function StorageMeter() {
     </span>
   );
   return (
-    <div className="pl-24 pt-24 mt-24 border-t flex items-start gap-16">
-      <StorageIcon className="icon-md -mt-4" />
+    <div className="mt-24 flex items-start gap-16 border-t pl-24 pt-24">
+      <StorageIcon className="-mt-4 icon-md" />
       <Meter
-        className="flex-auto max-w-144"
+        className="max-w-144 flex-auto"
         size="xs"
         value={data?.percentage}
         label={label}

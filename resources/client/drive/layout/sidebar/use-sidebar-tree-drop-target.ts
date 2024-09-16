@@ -1,4 +1,4 @@
-import {useDroppable} from '@common/ui/interactions/dnd/use-droppable';
+import {useDroppable} from '@ui/interactions/dnd/use-droppable';
 import {driveState} from '../../drive-store';
 import {RefObject, useState} from 'react';
 import {

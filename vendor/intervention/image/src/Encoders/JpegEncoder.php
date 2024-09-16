@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Image\Encoders;
 
-class JpegEncoder extends AbstractEncoder
+use Intervention\Image\Drivers\SpecializableEncoder;
+
+class JpegEncoder extends SpecializableEncoder
 {
-    public function __construct(public int $quality = 75)
-    {
+    public function __construct(
+        public int $quality = self::DEFAULT_QUALITY,
+        public bool $progressive = false
+    ) {
     }
 }

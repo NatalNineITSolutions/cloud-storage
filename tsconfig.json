@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": "",
     "paths": {
-      "@common/*": ["common/resources/client/*"],
+      "@ui/*": ["common/foundation/resources/client/ui/library/*"],
+      "@common/*": ["common/foundation/resources/client/*"],
       "@app/*": ["resources/client/*"]
     },
     "target": "ESNext",
@@ -21,6 +22,9 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["resources/client", "common/resources/client"],
+  "include": [
+    "resources/client",
+    "common/foundation/resources/client",
+  ],
   "references": [{"path": "./tsconfig.node.json"}]
 }

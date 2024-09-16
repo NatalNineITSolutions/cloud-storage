@@ -1,18 +1,18 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
-import {FormTextField} from '@common/ui/forms/input-field/text-field/text-field';
-import {Button} from '@common/ui/buttons/button';
-import {toast} from '@common/ui/toast/toast';
-import {Form} from '@common/ui/forms/form';
+import {FormTextField} from '@ui/forms/input-field/text-field/text-field';
+import {Button} from '@ui/buttons/button';
+import {toast} from '@ui/toast/toast';
+import {Form} from '@ui/forms/form';
 import {useCreateFolder} from '../queries/create-folder';
-import {DialogFooter} from '@common/ui/overlays/dialog/dialog-footer';
-import {useDialogContext} from '@common/ui/overlays/dialog/dialog-context';
-import {Dialog} from '@common/ui/overlays/dialog/dialog';
-import {DialogHeader} from '@common/ui/overlays/dialog/dialog-header';
-import {DialogBody} from '@common/ui/overlays/dialog/dialog-body';
-import {Trans} from '@common/i18n/trans';
-import {message} from '@common/i18n/message';
-import {useTrans} from '@common/i18n/use-trans';
+import {DialogFooter} from '@ui/overlays/dialog/dialog-footer';
+import {useDialogContext} from '@ui/overlays/dialog/dialog-context';
+import {Dialog} from '@ui/overlays/dialog/dialog';
+import {DialogHeader} from '@ui/overlays/dialog/dialog-header';
+import {DialogBody} from '@ui/overlays/dialog/dialog-body';
+import {Trans} from '@ui/i18n/trans';
+import {message} from '@ui/i18n/message';
+import {useTrans} from '@ui/i18n/use-trans';
 
 interface FormValue {
   name?: string;

@@ -213,6 +213,7 @@ class SearchApplication extends AbstractEndpoint
 	/**
 	 * Creates a behavioral analytics event for existing collection.
 	 *
+	 * @see http://todo.com/tbd
 	 * @internal This API is EXPERIMENTAL and may be changed or removed completely in a future release
 	 *
 	 * @param array{

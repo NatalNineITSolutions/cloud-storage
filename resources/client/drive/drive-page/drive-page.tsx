@@ -1,6 +1,6 @@
 import type {DriveFolder} from '../files/drive-entry';
-import {message} from '@common/i18n/message';
-import {MessageDescriptor} from '@common/i18n/message-descriptor';
+import {message} from '@ui/i18n/message';
+import {MessageDescriptor} from '@ui/i18n/message-descriptor';
 import addFilesSvg from './add-files.svg';
 import timeManagement from './time-management.svg';
 import fileSearching from './file-searching.svg';
@@ -8,8 +8,8 @@ import throwAwaySvg from './throw-away.svg';
 import lovingItSvg from './loving-it.svg';
 import shareSvg from './../shareable-link/shareable-link-page/folder-preview/share.svg';
 import {DriveSortDescriptor} from '../drive-store';
-import {BootstrapData} from '@common/core/bootstrap-data/bootstrap-data';
-import {getBootstrapData} from '@common/core/bootstrap-data/use-backend-bootstrap-data';
+import {getBootstrapData} from '@ui/bootstrap-data/bootstrap-data-store';
+import {BootstrapData} from '@ui/bootstrap-data/bootstrap-data';
 
 interface NoContentMessage {
   title: MessageDescriptor;
@@ -18,7 +18,8 @@ interface NoContentMessage {
 }
 
 export interface DrivePage {
-  id: string;
+  uniqueId: string;
+  name: string;
   label: MessageDescriptor | string;
   path: string;
   hasActions?: boolean;
@@ -48,7 +49,8 @@ export function makeFolderPage(folder: DriveFolder): DrivePage {
 
 export function makePartialFolderPage(hash: string): DrivePage {
   return {
-    id: hash,
+    name: 'folder',
+    uniqueId: hash,
     label: '',
     path: getPathForFolder(hash),
     hasActions: true,
@@ -76,10 +78,14 @@ interface BootstrapDataWithRootFolder extends BootstrapData {
 }
 const rootFolder = (getBootstrapData() as BootstrapDataWithRootFolder)
   .rootFolder;
-export const RootFolderPage = makeFolderPage(rootFolder) as Required<DrivePage>;
+export const RootFolderPage = {
+  ...makeFolderPage(rootFolder),
+  name: 'home',
+} as Required<DrivePage>;
 
 export const RecentPage: DrivePage = {
-  id: 'recent',
+  name: 'recent',
+  uniqueId: 'recent',
   label: message('Recent'),
   path: '/drive/recent',
   disableSort: true,
@@ -98,7 +104,8 @@ export const RecentPage: DrivePage = {
 };
 
 export const SearchPage: DrivePage = {
-  id: 'search',
+  name: 'search',
+  uniqueId: 'search',
   label: message('Search results'),
   path: '/drive/search',
   sortDescriptor: defaultSortDescriptor,
@@ -119,7 +126,8 @@ export const SearchPage: DrivePage = {
 };
 
 export const SharesPage: DrivePage = {
-  id: 'shares',
+  name: 'sharedWithMe',
+  uniqueId: 'sharedWithMe',
   label: message('Shared'),
   path: '/drive/shares',
   sortDescriptor: defaultSortDescriptor,
@@ -134,7 +142,8 @@ export const SharesPage: DrivePage = {
 };
 
 export const TrashPage: DrivePage = {
-  id: 'trash',
+  name: 'trash',
+  uniqueId: 'trash',
   label: message('Trash'),
   path: '/drive/trash',
   sortDescriptor: defaultSortDescriptor,
@@ -145,14 +154,15 @@ export const TrashPage: DrivePage = {
   noContentMessage: () => ({
     title: message('Trash is empty'),
     description: message(
-      'There are no files or folders in your trash currently'
+      'There are no files or folders in your trash currently',
     ),
     image: throwAwaySvg,
   }),
 };
 
 export const StarredPage: DrivePage = {
-  id: 'starred',
+  name: 'starred',
+  uniqueId: 'starred',
   label: message('Starred'),
   path: '/drive/starred',
   sortDescriptor: defaultSortDescriptor,
@@ -162,7 +172,7 @@ export const StarredPage: DrivePage = {
   noContentMessage: () => ({
     title: message('Nothing is starred'),
     description: message(
-      'Add stars to files and folders that you want to easily find later'
+      'Add stars to files and folders that you want to easily find later',
     ),
     image: lovingItSvg,
   }),

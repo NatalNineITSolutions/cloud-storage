@@ -4,7 +4,7 @@ import {DriveSortDescriptor} from '../../drive-store';
 import {
   getFromLocalStorage,
   setInLocalStorage,
-} from '@common/utils/hooks/local-storage';
+} from '@ui/utils/hooks/local-storage';
 
 interface LinkPageState {
   password: string | null;
@@ -36,7 +36,6 @@ export const useLinkPageStore = create<LinkPageState>()(
         state.isPasswordProtected = value;
       });
     },
-
     setViewMode: mode => {
       set(state => {
         state.viewMode = mode;
@@ -48,7 +47,7 @@ export const useLinkPageStore = create<LinkPageState>()(
         state.activeSort = value;
       });
     },
-  }))
+  })),
 );
 
 export function linkPageState() {

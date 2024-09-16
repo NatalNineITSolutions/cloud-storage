@@ -38,8 +38,8 @@ final class MetricsAggregator
     ];
 
     /**
-     * @param string[]         $tags
-     * @param int|float|string $value
+     * @param array<string, string> $tags
+     * @param int|float|string      $value
      */
     public function add(
         string $type,
@@ -64,7 +64,7 @@ final class MetricsAggregator
             $type .
             $key .
             $unit .
-            implode('', $tags) .
+            serialize($tags) .
             $bucketTimestamp
         );
 
@@ -101,6 +101,10 @@ final class MetricsAggregator
 
     public function flush(): ?EventId
     {
+        if ($this->buckets === []) {
+            return null;
+        }
+
         $hub = SentrySdk::getCurrentHub();
         $event = Event::createMetrics()->setMetrics($this->buckets);
 
@@ -110,9 +114,9 @@ final class MetricsAggregator
     }
 
     /**
-     * @param string[] $tags
+     * @param array<string, string> $tags
      *
-     * @return string[]
+     * @return array<string, string>
      */
     private function serializeTags(array $tags): array
     {

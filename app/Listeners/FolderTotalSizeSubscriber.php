@@ -23,8 +23,7 @@ class FolderTotalSizeSubscriber
     public function onEntriesDeletedOrRestored(
         FileEntriesDeleted|FileEntriesRestored $event,
     ): void {
-        $entries = app(FileEntry::class)
-            ->withTrashed()
+        $entries = FileEntry::withTrashed()
             ->whereIn('id', $event->entryIds)
             ->whereNotNull('parent_id')
             ->get();
@@ -34,39 +33,41 @@ class FolderTotalSizeSubscriber
             ->unique();
 
         $fileSize = $entries->sum('file_size');
-        $prefix = DB::getTablePrefix();
         if (is_a($event, FileEntriesDeleted::class)) {
-            app(FileEntry::class)
-                ->whereIn('id', $parentIds)
+            FileEntry::whereIn('id', $parentIds)
                 ->where('file_size', '>', 0)
                 ->update([
                     'file_size' => DB::raw(
-                        "CASE WHEN {$prefix}file_size > 0 THEN {$prefix}file_size - $fileSize ELSE 0 END",
+                        "CASE WHEN file_size > $fileSize THEN file_size - $fileSize ELSE 0 END",
                     ),
                 ]);
         } else {
-            app(FileEntry::class)
-                ->whereIn('id', $parentIds)
-                ->increment('file_size', $fileSize);
+            FileEntry::whereIn('id', $parentIds)->increment(
+                'file_size',
+                $fileSize,
+            );
         }
     }
 
     public function onEntriesMoved(FileEntriesMoved $event): void
     {
-        $movedEntriesSize = app(FileEntry::class)
-            ->whereIn('id', $event->entryIds)
-            ->sum('file_size');
+        $movedEntriesSize = FileEntry::whereIn('id', $event->entryIds)->sum(
+            'file_size',
+        );
 
         // files could be moved from or to root
         if ($event->destination) {
-            app(FileEntry::class)
-                ->where('id', $event->destination)
-                ->increment('file_size', $movedEntriesSize);
+            FileEntry::where('id', $event->destination)->increment(
+                'file_size',
+                $movedEntriesSize,
+            );
         }
         if ($event->source) {
-            app(FileEntry::class)
-                ->where('id', $event->source)
-                ->decrement('file_size', $movedEntriesSize);
+            FileEntry::where('id', $event->source)->update([
+                'file_size' => DB::raw(
+                    "CASE WHEN file_size > $movedEntriesSize THEN file_size - $movedEntriesSize ELSE 0 END",
+                ),
+            ]);
         }
     }
 

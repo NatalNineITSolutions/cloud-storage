@@ -1,14 +1,14 @@
 import {useFileUploadStore} from '@common/uploads/uploader/file-upload-provider';
 import {useCallback} from 'react';
 import {driveState} from '../drive-store';
-import {UploadedFile} from '@common/uploads/uploaded-file';
+import {UploadedFile} from '@ui/utils/files/uploaded-file';
 import {UploadStrategyConfig} from '@common/uploads/uploader/strategy/upload-strategy';
 import {queryClient} from '@common/http/query-client';
 import {DriveQueryKeys, invalidateEntryQueries} from '../drive-query-keys';
 import {useStorageSummary} from '../layout/sidebar/storage-summary/storage-summary';
-import {toast} from '@common/ui/toast/toast';
-import {message} from '@common/i18n/message';
-import {useSettings} from '@common/core/settings/use-settings';
+import {toast} from '@ui/toast/toast';
+import {message} from '@ui/i18n/message';
+import {useSettings} from '@ui/settings/use-settings';
 import {getActiveWorkspaceId} from '@common/workspace/active-workspace-id';
 
 export type UploadFilesFn = (

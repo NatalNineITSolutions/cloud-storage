@@ -2,15 +2,15 @@ import React, {useContext, useState} from 'react';
 import {driveSearchFilters} from './drive-search-filters';
 import {useDriveStore} from '../drive-store';
 import {SearchPage} from '../drive-page/drive-page';
-import {TextField} from '@common/ui/forms/input-field/text-field/text-field';
-import {SearchIcon} from '@common/icons/material/Search';
-import {DashboardLayoutContext} from '@common/ui/layout/dashboard-layout-context';
+import {TextField} from '@ui/forms/input-field/text-field/text-field';
+import {SearchIcon} from '@ui/icons/material/Search';
 import {FilterList} from '@common/datatable/filters/filter-list/filter-list';
-import {useTrans} from '@common/i18n/use-trans';
-import {useNavigate} from '@common/utils/hooks/use-navigate';
+import {useTrans} from '@ui/i18n/use-trans';
 import {useSearchParams} from 'react-router-dom';
-import {message} from '@common/i18n/message';
-import {IconButton} from '@common/ui/buttons/icon-button';
+import {message} from '@ui/i18n/message';
+import {IconButton} from '@ui/buttons/icon-button';
+import {DashboardLayoutContext} from '@common/ui/dashboard-layout/dashboard-layout-context';
+import {useNavigate} from '@common/ui/navigation/use-navigate';
 
 const alwaysShownFilters = driveSearchFilters.map(f => f.key);
 

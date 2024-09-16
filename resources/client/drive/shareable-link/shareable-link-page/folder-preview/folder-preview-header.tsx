@@ -2,8 +2,8 @@ import React from 'react';
 import {FolderPreviewBreadcrumb} from './folder-preview-breadcrumb';
 import {EntriesSortButton} from '../../../layout/sorting/entries-sort-button';
 import {linkPageState, useLinkPageStore} from '../link-page-store';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {GridViewIcon} from '@common/icons/material/GridView';
+import {IconButton} from '@ui/buttons/icon-button';
+import {GridViewIcon} from '@ui/icons/material/GridView';
 import {useShareableLinkPage} from '../../queries/use-shareable-link-page';
 import {DriveFolder} from '../../../files/drive-entry';
 
@@ -13,7 +13,7 @@ export function FolderPreviewHeader() {
   const hasEntry = link && link.entry;
 
   return (
-    <div className="md:flex-row flex flex-col md:items-center gap-14 justify-between p-14 md:p-24 md:h-90">
+    <div className="flex flex-col justify-between gap-14 p-14 md:h-90 md:flex-row md:items-center md:p-24">
       {hasEntry && (
         <FolderPreviewBreadcrumb
           link={link}
@@ -22,7 +22,7 @@ export function FolderPreviewHeader() {
         />
       )}
       {hasEntry && (
-        <div className="flex items-center justify-between md:justify-start text-muted">
+        <div className="flex items-center justify-between text-muted md:justify-start">
           <EntriesSortButton
             isDisabled={isFetching}
             descriptor={activeSort}
@@ -30,11 +30,11 @@ export function FolderPreviewHeader() {
               linkPageState().setActiveSort(value);
             }}
           />
-          <div className="md:border-l md:pl-10 ml-10">
+          <div className="ml-10 md:border-l md:pl-10">
             <IconButton
               onClick={() => {
                 linkPageState().setViewMode(
-                  linkPageState().viewMode === 'grid' ? 'list' : 'grid'
+                  linkPageState().viewMode === 'grid' ? 'list' : 'grid',
                 );
               }}
             >

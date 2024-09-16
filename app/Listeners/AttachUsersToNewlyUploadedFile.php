@@ -2,29 +2,26 @@
 
 namespace App\Listeners;
 
-use App\Services\Shares\UpdateEntryUsers;
+use App\Services\Shares\DetachUsersFromEntries;
+use App\Services\Shares\Traits\AttachesFileEntriesToUsers;
+use App\Services\Shares\Traits\GeneratesSharePermissions;
 use Common\Files\Events\FileEntryCreated;
+use Common\Files\FileEntry;
 use Common\Files\FileEntryUser;
+use Common\Files\Traits\ChunksChildEntries;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class AttachUsersToNewlyUploadedFile
 {
-    /**
-     * @var UpdateEntryUsers
-     */
-    private $action;
-
-    public function __construct(UpdateEntryUsers $action)
-    {
-        $this->action = $action;
-    }
+    use AttachesFileEntriesToUsers,
+        GeneratesSharePermissions,
+        ChunksChildEntries;
 
     /**
      * Attach all users that have access to entries parent folder to entry.
-     *
-     * @param FileEntryCreated $event
-     * @return void
      */
-    public function handle(FileEntryCreated $event)
+    public function handle(FileEntryCreated $event): void
     {
         $entry = $event->fileEntry;
 
@@ -42,14 +39,41 @@ class AttachUsersToNewlyUploadedFile
                             ? $this->getFullPermissions()
                             : $user->entry_permissions,
                     ];
-                })
-                ->toArray();
+                });
 
-            $this->action->execute($users, [$entry]);
+            $this->updateEntryUsers($users, $entry);
         }
     }
 
-    private function getFullPermissions()
+    /**
+     * Update users and their permissions for specified entries.
+     */
+    protected function updateEntryUsers(
+        Collection $users,
+        FileEntry $entry,
+    ): void {
+        $users = $users->map(function ($user) {
+            $user['permissions'] = $this->generateSharePermissions(
+                $user['permissions'],
+            );
+            return $user;
+        });
+
+        $this->chunkChildEntries([$entry], function ($chunk) use ($users) {
+            // detach users (except owner) from entries
+            (new DetachUsersFromEntries())->execute(
+                $chunk,
+                $users->pluck('id'),
+            );
+
+            // filter out removed users, so they are not re-attached
+            $users = $users->filter(fn($user) => !Arr::get($user, 'removed'));
+
+            $this->attachFileEntriesToUsers($users, $chunk);
+        });
+    }
+
+    protected function getFullPermissions(): array
     {
         return ['edit' => true, 'view' => true, 'download' => true];
     }

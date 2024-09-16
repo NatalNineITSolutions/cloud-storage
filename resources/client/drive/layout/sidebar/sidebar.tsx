@@ -3,14 +3,14 @@ import {StorageMeter} from './storage-summary/storage-meter';
 import {WorkspaceSelector} from '@common/workspace/workspace-selector';
 import {RootFolderPage} from '../../drive-page/drive-page';
 import {SidebarMenu} from './sidebar-menu';
-import {useNavigate} from '@common/utils/hooks/use-navigate';
+import {useNavigate} from '@common/ui/navigation/use-navigate';
 import {CreateNewButton} from '../create-new-button';
-import {Button} from '@common/ui/buttons/button';
+import {Button} from '@ui/buttons/button';
 import {Link} from 'react-router-dom';
-import {Trans} from '@common/i18n/trans';
+import {Trans} from '@ui/i18n/trans';
 import {useAuth} from '@common/auth/use-auth';
 import clsx from 'clsx';
-import {useSettings} from '@common/core/settings/use-settings';
+import {useSettings} from '@ui/settings/use-settings';
 
 interface SidebarProps {
   className?: string;
@@ -22,10 +22,10 @@ export function Sidebar({className}: SidebarProps) {
     <div
       className={clsx(
         className,
-        'flex flex-col gap-20 border-r bg-alt text-sm font-medium text-muted'
+        'flex flex-col gap-20 border-r bg-alt text-sm font-medium text-muted',
       )}
     >
-      <div className="flex-auto">
+      <div className="compact-scrollbar flex-auto overflow-y-auto">
         <CreateNewButton className="px-12 pt-28 text-center" />
         <SidebarMenu />
         <StorageMeter />
@@ -43,7 +43,7 @@ export function Sidebar({className}: SidebarProps) {
           </div>
         ) : null}
       </div>
-       <WorkspaceSwitcher /> 
+      <WorkspaceSwitcher />
     </div>
   );
 }

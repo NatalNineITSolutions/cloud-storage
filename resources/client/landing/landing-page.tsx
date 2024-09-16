@@ -1,20 +1,20 @@
 import clsx from 'clsx';
 import {LandingPageContent} from './landing-page-content';
 import {Navbar} from '@common/ui/navigation/navbar/navbar';
-import {Button, ButtonProps} from '@common/ui/buttons/button';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {KeyboardArrowDownIcon} from '@common/icons/material/KeyboardArrowDown';
-import {MixedImage} from '@common/ui/images/mixed-image';
+import {Button, ButtonProps} from '@ui/buttons/button';
+import {IconButton} from '@ui/buttons/icon-button';
+import {KeyboardArrowDownIcon} from '@ui/icons/material/KeyboardArrowDown';
 import {Footer} from '@common/ui/footer/footer';
-import {Trans} from '@common/i18n/trans';
+import {Trans} from '@ui/i18n/trans';
 import {AdHost} from '@common/admin/ads/ad-host';
 import {Link} from 'react-router-dom';
-import {createSvgIconFromTree} from '@common/icons/create-svg-icon';
-import {MenuItemConfig} from '@common/core/settings/settings';
+import {createSvgIconFromTree} from '@ui/icons/create-svg-icon';
+import {MenuItemConfig} from '@common/menus/menu-config';
 import {Fragment} from 'react';
 import {DefaultMetaTags} from '@common/seo/default-meta-tags';
-import {useTrans} from '@common/i18n/use-trans';
-import {useSettings} from '@common/core/settings/use-settings';
+import {useTrans} from '@ui/i18n/use-trans';
+import {useSettings} from '@ui/settings/use-settings';
+import {MixedImage} from '@ui/images/mixed-image';
 
 interface ContentProps {
   content: LandingPageContent;
@@ -28,7 +28,7 @@ export function LandingPage() {
       <DefaultMetaTags />
       <div>
         <HeroHeader content={homepage.appearance} />
-        <AdHost slot="landing-top" className="mx-14 mb-14 md:mb-60" />
+        <AdHost slot="landing-top" className="mb-14 px-14 md:mb-60" />
         <PrimaryFeatures content={homepage.appearance} />
         <div className="my-40 h-1 bg-divider" />
         <SecondaryFeatures content={homepage.appearance} />
@@ -197,7 +197,7 @@ function SecondaryFeatures({content}: ContentProps) {
             data-testid={`secondary-root-${index}`}
             className={clsx(
               'mb-14 py-16 md:mb-80 md:flex',
-              isEven && 'flex-row-reverse'
+              isEven && 'flex-row-reverse',
             )}
           >
             <img

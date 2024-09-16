@@ -1,14 +1,9 @@
 import {AVAILABLE_SORTS, SortColumn} from './available-sorts';
-import {Button} from '@common/ui/buttons/button';
-import {SortIcon} from '@common/icons/material/Sort';
-import {
-  Menu,
-  MenuItem,
-  MenuSection,
-  MenuTrigger,
-} from '@common/ui/navigation/menu/menu-trigger';
-import {Trans} from '@common/i18n/trans';
+import {Button} from '@ui/buttons/button';
+import {SortIcon} from '@ui/icons/material/Sort';
+import {Trans} from '@ui/i18n/trans';
 import type {DriveSortDescriptor} from '../../drive-store';
+import {Menu, MenuItem, MenuSection, MenuTrigger} from '@ui/menu/menu-trigger';
 
 interface Props {
   descriptor: DriveSortDescriptor;

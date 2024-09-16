@@ -19,16 +19,10 @@ namespace Google\Service\Datastore;
 
 class RunAggregationQueryResponse extends \Google\Model
 {
-  /**
-   * @var AggregationResultBatch
-   */
-  public $batch;
   protected $batchType = AggregationResultBatch::class;
   protected $batchDataType = '';
-  /**
-   * @var AggregationQuery
-   */
-  public $query;
+  protected $explainMetricsType = ExplainMetrics::class;
+  protected $explainMetricsDataType = '';
   protected $queryType = AggregationQuery::class;
   protected $queryDataType = '';
   /**
@@ -49,6 +43,20 @@ class RunAggregationQueryResponse extends \Google\Model
   public function getBatch()
   {
     return $this->batch;
+  }
+  /**
+   * @param ExplainMetrics
+   */
+  public function setExplainMetrics(ExplainMetrics $explainMetrics)
+  {
+    $this->explainMetrics = $explainMetrics;
+  }
+  /**
+   * @return ExplainMetrics
+   */
+  public function getExplainMetrics()
+  {
+    return $this->explainMetrics;
   }
   /**
    * @param AggregationQuery

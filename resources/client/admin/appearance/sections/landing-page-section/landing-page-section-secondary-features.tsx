@@ -1,13 +1,13 @@
-import {Accordion, AccordionItem} from '@common/ui/accordion/accordion';
-import {Trans} from '@common/i18n/trans';
+import {Trans} from '@ui/i18n/trans';
 import {appearanceState} from '@common/admin/appearance/appearance-store';
 import {useFieldArray} from 'react-hook-form';
-import {FormTextField} from '@common/ui/forms/input-field/text-field/text-field';
 import {LandingPageContent} from '@app/landing/landing-page-content';
-import {Button} from '@common/ui/buttons/button';
-import {AddIcon} from '@common/icons/material/Add';
+import {Button} from '@ui/buttons/button';
+import {AddIcon} from '@ui/icons/material/Add';
 import {useState} from 'react';
-import {FormImageSelector} from '@common/ui/images/image-selector';
+import {FormTextField} from '@ui/forms/input-field/text-field/text-field';
+import {Accordion, AccordionItem} from '@ui/accordion/accordion';
+import {FormImageSelector} from '@common/uploads/components/image-selector';
 
 export function LandingPageSecondaryFeatures() {
   const {fields, remove, append} = useFieldArray({
@@ -23,7 +23,7 @@ export function LandingPageSecondaryFeatures() {
           setExpandedValues(values as number[]);
           if (values.length) {
             appearanceState().preview.setHighlight(
-              `[data-testid="secondary-root-${values[0]}"]`
+              `[data-testid="secondary-root-${values[0]}"]`,
             );
           }
         }}
@@ -89,7 +89,7 @@ function FeatureForm({index}: FeatureFormProps) {
         className="mb-20"
         onFocus={() => {
           appearanceState().preview.setHighlight(
-            `[data-testid="secondary-title-${index}"]`
+            `[data-testid="secondary-title-${index}"]`,
           );
         }}
       />
@@ -101,7 +101,7 @@ function FeatureForm({index}: FeatureFormProps) {
         rows={4}
         onFocus={() => {
           appearanceState().preview.setHighlight(
-            `[data-testid="secondary-subtitle-${index}"]`
+            `[data-testid="secondary-subtitle-${index}"]`,
           );
         }}
       />
@@ -113,7 +113,7 @@ function FeatureForm({index}: FeatureFormProps) {
         rows={4}
         onFocus={() => {
           appearanceState().preview.setHighlight(
-            `[data-testid="secondary-description-${index}"]`
+            `[data-testid="secondary-description-${index}"]`,
           );
         }}
       />

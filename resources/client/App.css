@@ -1,4 +1,4 @@
-@import '../../common/resources/client/common.css';
+@import '../../common/foundation/resources/client/core/common.css';
 @import 'drive/file-view/file-grid/file-grid.css';
 
 @tailwind base;

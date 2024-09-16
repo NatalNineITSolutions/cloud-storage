@@ -13,22 +13,32 @@ import {DetailsSidebar} from '../details-sidebar/details-sidebar';
 import {DriveDialogsContainer} from '../files/dialogs/drive-dialogs-container';
 import {NavbarSearch} from '../search/navbar-search';
 import {useActiveWorkspaceId} from '@common/workspace/active-workspace-id-context';
-import {FileEntryUrlsContext} from '@common/uploads/hooks/file-entry-urls';
 import {FileUploadProvider} from '@common/uploads/uploader/file-upload-provider';
 import {EntryDragPreview} from '../file-view/entry-drag-preview';
-import {DashboardLayout} from '@common/ui/layout/dashboard-layout';
-import {DashboardContent} from '@common/ui/layout/dashboard-content';
-import {DashboardNavbar} from '@common/ui/layout/dashboard-navbar';
 import {DriveContentHeader} from './drive-content-header';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {SearchIcon} from '@common/icons/material/Search';
-import {DashboardLayoutContext} from '@common/ui/layout/dashboard-layout-context';
-import {CloseIcon} from '@common/icons/material/Close';
-import {Trans} from '@common/i18n/trans';
+import {IconButton} from '@ui/buttons/icon-button';
+import {SearchIcon} from '@ui/icons/material/Search';
+import {CloseIcon} from '@ui/icons/material/Close';
+import {Trans} from '@ui/i18n/trans';
 import {EntryActionList} from '../entry-actions/entry-action-list';
 import {CreateNewButton} from './create-new-button';
 import {StaticPageTitle} from '@common/seo/static-page-title';
-import {DashboardSidenav} from '@common/ui/layout/dashboard-sidenav';
+import {DashboardSidenav} from '@common/ui/dashboard-layout/dashboard-sidenav';
+import {DashboardContent} from '@common/ui/dashboard-layout/dashboard-content';
+import {DashboardNavbar} from '@common/ui/dashboard-layout/dashboard-navbar';
+import {DashboardLayoutContext} from '@common/ui/dashboard-layout/dashboard-layout-context';
+import {DashboardLayout} from '@common/ui/dashboard-layout/dashboard-layout';
+import {FileEntryUrlsContext} from '@common/uploads/file-entry-urls';
+import {FileUploadStoreOptions} from '@common/uploads/uploader/file-upload-store';
+import {getActiveWorkspaceId} from '@common/workspace/active-workspace-id';
+
+const uploadStoreOptions: FileUploadStoreOptions = {
+  modifyUploadedFile: uploadedFile => {
+    const workspaceId = getActiveWorkspaceId();
+    uploadedFile.fingerprint = `${uploadedFile.fingerprint}-w-${workspaceId}`;
+    return uploadedFile;
+  },
+};
 
 export function DriveLayout() {
   const {pathname} = useLocation();
@@ -66,7 +76,7 @@ export function DriveLayout() {
           />
         </StaticPageTitle>
       )}
-      <FileUploadProvider>
+      <FileUploadProvider options={uploadStoreOptions}>
         <FileEntryUrlsContext.Provider value={urlsContextValue}>
           <DashboardLayout
             name="drive"

@@ -23,32 +23,16 @@ class Cluster extends \Google\Model
    * @var string[]
    */
   public $annotations;
-  /**
-   * @var AutomatedBackupPolicy
-   */
-  public $automatedBackupPolicy;
   protected $automatedBackupPolicyType = AutomatedBackupPolicy::class;
   protected $automatedBackupPolicyDataType = '';
-  /**
-   * @var BackupSource
-   */
-  public $backupSource;
   protected $backupSourceType = BackupSource::class;
   protected $backupSourceDataType = '';
   /**
    * @var string
    */
   public $clusterType;
-  /**
-   * @var ContinuousBackupConfig
-   */
-  public $continuousBackupConfig;
   protected $continuousBackupConfigType = ContinuousBackupConfig::class;
   protected $continuousBackupConfigDataType = '';
-  /**
-   * @var ContinuousBackupInfo
-   */
-  public $continuousBackupInfo;
   protected $continuousBackupInfoType = ContinuousBackupInfo::class;
   protected $continuousBackupInfoDataType = '';
   /**
@@ -67,36 +51,24 @@ class Cluster extends \Google\Model
    * @var string
    */
   public $displayName;
-  /**
-   * @var EncryptionConfig
-   */
-  public $encryptionConfig;
   protected $encryptionConfigType = EncryptionConfig::class;
   protected $encryptionConfigDataType = '';
-  /**
-   * @var EncryptionInfo
-   */
-  public $encryptionInfo;
   protected $encryptionInfoType = EncryptionInfo::class;
   protected $encryptionInfoDataType = '';
   /**
    * @var string
    */
   public $etag;
-  /**
-   * @var UserPassword
-   */
-  public $initialUser;
   protected $initialUserType = UserPassword::class;
   protected $initialUserDataType = '';
   /**
    * @var string[]
    */
   public $labels;
-  /**
-   * @var MigrationSource
-   */
-  public $migrationSource;
+  protected $maintenanceScheduleType = MaintenanceSchedule::class;
+  protected $maintenanceScheduleDataType = '';
+  protected $maintenanceUpdatePolicyType = MaintenanceUpdatePolicy::class;
+  protected $maintenanceUpdatePolicyDataType = '';
   protected $migrationSourceType = MigrationSource::class;
   protected $migrationSourceDataType = '';
   /**
@@ -107,18 +79,12 @@ class Cluster extends \Google\Model
    * @var string
    */
   public $network;
-  /**
-   * @var NetworkConfig
-   */
-  public $networkConfig;
   protected $networkConfigType = NetworkConfig::class;
   protected $networkConfigDataType = '';
-  /**
-   * @var PrimaryConfig
-   */
-  public $primaryConfig;
   protected $primaryConfigType = PrimaryConfig::class;
   protected $primaryConfigDataType = '';
+  protected $pscConfigType = PscConfig::class;
+  protected $pscConfigDataType = '';
   /**
    * @var bool
    */
@@ -127,16 +93,8 @@ class Cluster extends \Google\Model
    * @var bool
    */
   public $satisfiesPzs;
-  /**
-   * @var SecondaryConfig
-   */
-  public $secondaryConfig;
   protected $secondaryConfigType = SecondaryConfig::class;
   protected $secondaryConfigDataType = '';
-  /**
-   * @var SslConfig
-   */
-  public $sslConfig;
   protected $sslConfigType = SslConfig::class;
   protected $sslConfigDataType = '';
   /**
@@ -363,6 +321,34 @@ class Cluster extends \Google\Model
     return $this->labels;
   }
   /**
+   * @param MaintenanceSchedule
+   */
+  public function setMaintenanceSchedule(MaintenanceSchedule $maintenanceSchedule)
+  {
+    $this->maintenanceSchedule = $maintenanceSchedule;
+  }
+  /**
+   * @return MaintenanceSchedule
+   */
+  public function getMaintenanceSchedule()
+  {
+    return $this->maintenanceSchedule;
+  }
+  /**
+   * @param MaintenanceUpdatePolicy
+   */
+  public function setMaintenanceUpdatePolicy(MaintenanceUpdatePolicy $maintenanceUpdatePolicy)
+  {
+    $this->maintenanceUpdatePolicy = $maintenanceUpdatePolicy;
+  }
+  /**
+   * @return MaintenanceUpdatePolicy
+   */
+  public function getMaintenanceUpdatePolicy()
+  {
+    return $this->maintenanceUpdatePolicy;
+  }
+  /**
    * @param MigrationSource
    */
   public function setMigrationSource(MigrationSource $migrationSource)
@@ -431,6 +417,20 @@ class Cluster extends \Google\Model
   public function getPrimaryConfig()
   {
     return $this->primaryConfig;
+  }
+  /**
+   * @param PscConfig
+   */
+  public function setPscConfig(PscConfig $pscConfig)
+  {
+    $this->pscConfig = $pscConfig;
+  }
+  /**
+   * @return PscConfig
+   */
+  public function getPscConfig()
+  {
+    return $this->pscConfig;
   }
   /**
    * @param bool

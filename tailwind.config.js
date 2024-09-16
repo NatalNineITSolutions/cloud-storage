@@ -3,12 +3,14 @@ const {
   sharedOverride,
   sharedExtend,
   sharedPlugins,
-} = require('./common/resources/client/shared.tailwind');
+} = require('./common/foundation/resources/client/shared.tailwind');
 
 module.exports = {
   content: [
     './resources/client/**/*.ts*',
-    './common/resources/client/**/*.ts*',
+    './common/foundation/resources/client/**/*.ts*',
+    './common/foundation/resources/views/install/**/*.blade.php',
+    './common/foundation/resources/views/framework.blade.php',
   ],
   darkMode: 'class',
   theme: {

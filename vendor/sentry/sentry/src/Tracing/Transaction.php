@@ -70,10 +70,14 @@ final class Transaction extends Span
      * Sets the name of this transaction.
      *
      * @param string $name The name
+     *
+     * @return $this
      */
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -115,7 +119,7 @@ final class Transaction extends Span
         return $this;
     }
 
-    public function initProfiler(): self
+    public function initProfiler(): Profiler
     {
         if ($this->profiler === null) {
             $client = $this->hub->getClient();
@@ -124,7 +128,7 @@ final class Transaction extends Span
             $this->profiler = new Profiler($options);
         }
 
-        return $this;
+        return $this->profiler;
     }
 
     public function getProfiler(): ?Profiler
@@ -184,6 +188,10 @@ final class Transaction extends Span
             if ($profile !== null) {
                 $event->setSdkMetadata('profile', $profile);
             }
+        }
+
+        if (!empty($this->getMetricsSummary())) {
+            $event->setMetricsSummary($this->getMetricsSummary());
         }
 
         return $this->hub->captureEvent($event);

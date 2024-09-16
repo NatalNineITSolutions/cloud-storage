@@ -1,14 +1,14 @@
 import {EntryAction} from './entry-action';
-import {message} from '@common/i18n/message';
+import {message} from '@ui/i18n/message';
 import {driveState, useDriveStore} from '../drive-store';
 import {DrivePage, TrashPage} from '../drive-page/drive-page';
-import {CreateNewFolderIcon} from '@common/icons/material/CreateNewFolder';
+import {CreateNewFolderIcon} from '@ui/icons/material/CreateNewFolder';
 import {useDriveUploadQueue} from '../uploading/use-drive-upload-queue';
-import {openUploadWindow} from '@common/uploads/utils/open-upload-window';
-import {FileUploadIcon} from '@common/icons/material/FileUpload';
-import {DriveFolderUploadIcon} from '@common/icons/material/DriveFolderUpload';
+import {FileUploadIcon} from '@ui/icons/material/FileUpload';
+import {DriveFolderUploadIcon} from '@ui/icons/material/DriveFolderUpload';
 import {useDeleteEntries} from '../files/queries/use-delete-entries';
-import {DeleteForeverIcon} from '@common/icons/material/DeleteForever';
+import {DeleteForeverIcon} from '@ui/icons/material/DeleteForever';
+import {openUploadWindow} from '@ui/utils/files/open-upload-window';
 
 export function useDrivePageActions(page: DrivePage): EntryAction[] {
   const newFolder = useNewFolderAction(page);
@@ -16,7 +16,7 @@ export function useDrivePageActions(page: DrivePage): EntryAction[] {
   const uploadFolder = useUploadFolderAction(page);
   const emptyTrash = useEmptyTrashAction(page);
   return [newFolder, uploadFiles, uploadFolder, emptyTrash].filter(
-    action => !!action
+    action => !!action,
   ) as EntryAction[];
 }
 

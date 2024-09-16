@@ -1,26 +1,26 @@
 import {LandingPageContent} from '@app/landing/landing-page-content';
 import {useFormContext} from 'react-hook-form';
 import {
+  AppearanceEditorValues,
   appearanceState,
-  AppearanceValues,
   useAppearanceStore,
 } from '@common/admin/appearance/appearance-store';
 import {Fragment, ReactNode} from 'react';
-import {FormTextField} from '@common/ui/forms/input-field/text-field/text-field';
-import {Trans} from '@common/i18n/trans';
-import {FormSlider} from '@common/ui/forms/slider/slider';
-import {DialogTrigger} from '@common/ui/overlays/dialog/dialog-trigger';
+import {FormTextField} from '@ui/forms/input-field/text-field/text-field';
+import {Trans} from '@ui/i18n/trans';
+import {FormSlider} from '@ui/forms/slider/slider';
+import {DialogTrigger} from '@ui/overlays/dialog/dialog-trigger';
 import {AppearanceButton} from '@common/admin/appearance/appearance-button';
 import {ColorIcon} from '@common/admin/appearance/sections/themes/color-icon';
-import {ColorPickerDialog} from '@common/ui/color-picker/color-picker-dialog';
 import {Link} from 'react-router-dom';
-import {FormImageSelector} from '@common/ui/images/image-selector';
+import {FormImageSelector} from '@common/uploads/components/image-selector';
+import {ColorPickerDialog} from '@ui/color-picker/color-picker-dialog';
 
 export function LandingPageSectionGeneral() {
   return (
     <Fragment>
       <HeaderSection />
-      <div className="my-24 py-24 border-y">
+      <div className="my-24 border-y py-24">
         <AppearanceButton
           to="action-buttons"
           elementType={Link}
@@ -44,7 +44,7 @@ function HeaderSection() {
   const defaultImage = useAppearanceStore(
     s =>
       (s.defaults?.settings.homepage.appearance as LandingPageContent)
-        ?.headerImage
+        ?.headerImage,
   );
 
   return (
@@ -65,7 +65,7 @@ function HeaderSection() {
         name="settings.homepage.appearance.headerSubtitle"
         onFocus={() => {
           appearanceState().preview.setHighlight(
-            '[data-testid="headerSubtitle"]'
+            '[data-testid="headerSubtitle"]',
           );
         }}
       />
@@ -84,7 +84,7 @@ function HeaderSection() {
         maxValue={1}
         formatOptions={{style: 'percent'}}
       />
-      <div className="text-muted text-xs mb-20">
+      <div className="mb-20 text-xs text-muted">
         <Trans message="In order for overlay colors to appear, header image opacity will need to be less then 100%" />
       </div>
       <ColorPickerTrigger
@@ -103,7 +103,7 @@ function FooterSection() {
   const defaultImage = useAppearanceStore(
     s =>
       (s.defaults?.settings.homepage.appearance as LandingPageContent)
-        ?.footerImage
+        ?.footerImage,
   );
   return (
     <Fragment>
@@ -121,7 +121,7 @@ function FooterSection() {
         name="settings.homepage.appearance.footerSubtitle"
         onFocus={() => {
           appearanceState().preview.setHighlight(
-            '[data-testid="footerSubtitle"]'
+            '[data-testid="footerSubtitle"]',
           );
         }}
       />
@@ -142,7 +142,7 @@ interface ColorPickerTriggerProps {
 }
 function ColorPickerTrigger({label, formKey}: ColorPickerTriggerProps) {
   const key = formKey as 'settings.homepage.appearance.headerOverlayColor1';
-  const {watch, setValue} = useFormContext<AppearanceValues>();
+  const {watch, setValue} = useFormContext<AppearanceEditorValues>();
 
   const formValue = watch(key);
 
@@ -155,9 +155,10 @@ function ColorPickerTrigger({label, formKey}: ColorPickerTriggerProps) {
   return (
     <DialogTrigger
       type="popover"
-      onClose={value => {
-        setColor(value);
-      }}
+      value={formValue}
+      alwaysReturnCurrentValueOnClose
+      onValueChange={newValue => setColor(newValue)}
+      onClose={value => setColor(value)}
     >
       <AppearanceButton
         className="capitalize"
@@ -171,12 +172,7 @@ function ColorPickerTrigger({label, formKey}: ColorPickerTriggerProps) {
       >
         {label}
       </AppearanceButton>
-      <ColorPickerDialog
-        defaultValue={formValue}
-        onChange={newValue => {
-          setColor(newValue);
-        }}
-      />
+      <ColorPickerDialog />
     </DialogTrigger>
   );
 }

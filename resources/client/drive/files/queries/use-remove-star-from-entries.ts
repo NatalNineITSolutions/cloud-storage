@@ -1,11 +1,11 @@
 import {apiClient} from '@common/http/query-client';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
-import {toast} from '@common/ui/toast/toast';
+import {toast} from '@ui/toast/toast';
 import {Tag} from '@common/tags/tag';
 import {invalidateEntryQueries} from '../../drive-query-keys';
-import {message} from '@common/i18n/message';
+import {message} from '@ui/i18n/message';
 import {useMutation} from '@tanstack/react-query';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
 
 interface Response extends BackendResponse {
   tag: Tag;

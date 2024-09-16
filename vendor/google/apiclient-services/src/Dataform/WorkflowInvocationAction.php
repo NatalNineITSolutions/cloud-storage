@@ -19,36 +19,22 @@ namespace Google\Service\Dataform;
 
 class WorkflowInvocationAction extends \Google\Model
 {
-  /**
-   * @var BigQueryAction
-   */
-  public $bigqueryAction;
   protected $bigqueryActionType = BigQueryAction::class;
   protected $bigqueryActionDataType = '';
-  /**
-   * @var Target
-   */
-  public $canonicalTarget;
   protected $canonicalTargetType = Target::class;
   protected $canonicalTargetDataType = '';
   /**
    * @var string
    */
   public $failureReason;
-  /**
-   * @var Interval
-   */
-  public $invocationTiming;
   protected $invocationTimingType = Interval::class;
   protected $invocationTimingDataType = '';
+  protected $notebookActionType = NotebookAction::class;
+  protected $notebookActionDataType = '';
   /**
    * @var string
    */
   public $state;
-  /**
-   * @var Target
-   */
-  public $target;
   protected $targetType = Target::class;
   protected $targetDataType = '';
 
@@ -107,6 +93,20 @@ class WorkflowInvocationAction extends \Google\Model
   public function getInvocationTiming()
   {
     return $this->invocationTiming;
+  }
+  /**
+   * @param NotebookAction
+   */
+  public function setNotebookAction(NotebookAction $notebookAction)
+  {
+    $this->notebookAction = $notebookAction;
+  }
+  /**
+   * @return NotebookAction
+   */
+  public function getNotebookAction()
+  {
+    return $this->notebookAction;
   }
   /**
    * @param string

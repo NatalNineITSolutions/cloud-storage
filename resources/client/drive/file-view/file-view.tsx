@@ -8,12 +8,10 @@ import React, {
 } from 'react';
 import {usePaginatedEntries} from '../files/queries/use-paginated-entries';
 import {driveState, useDriveStore} from '../drive-store';
-import {IllustratedMessage} from '@common/ui/images/illustrated-message';
-import {SvgImage} from '@common/ui/images/svg-image/svg-image';
 import {SearchFilterList} from '../search/search-filter-list';
-import {Trans} from '@common/i18n/trans';
-import {useMouseSelectionBox} from '@common/ui/interactions/dnd/mouse-selection/use-mouse-selection-box';
-import {useDroppable} from '@common/ui/interactions/dnd/use-droppable';
+import {Trans} from '@ui/i18n/trans';
+import {useMouseSelectionBox} from '@ui/interactions/dnd/mouse-selection/use-mouse-selection-box';
+import {useDroppable} from '@ui/interactions/dnd/use-droppable';
 import {mergeProps} from '@react-aria/utils';
 import {useDriveUploadQueue} from '../uploading/use-drive-upload-queue';
 import {EntryActionList} from '../entry-actions/entry-action-list';
@@ -21,7 +19,6 @@ import {DriveContextMenu} from '../files/drive-context-menu';
 import {FileTable} from './file-table/file-table';
 import {FileGrid} from './file-grid/file-grid';
 import {DriveSortButton} from '../layout/sorting/drive-sort-button';
-import {DashboardLayoutContext} from '@common/ui/layout/dashboard-layout-context';
 import {PageBreadcrumbs} from '../page-breadcrumbs';
 import {InfiniteScrollSentinel} from '@common/ui/infinite-scroll/infinite-scroll-sentinel';
 import {useEntries} from '../files/queries/use-entries';
@@ -29,12 +26,15 @@ import {AdHost} from '@common/admin/ads/ad-host';
 import {DropTargetMask} from '../drop-target-mask';
 import {useSearchParams} from 'react-router-dom';
 import clsx from 'clsx';
-import {MixedDraggable} from '@common/ui/interactions/dnd/use-draggable';
-import {isCtrlKeyPressed} from '@common/utils/keybinds/is-ctrl-key-pressed';
+import {MixedDraggable} from '@ui/interactions/dnd/use-draggable';
 import {useDeleteEntries} from '@app/drive/files/queries/use-delete-entries';
-import {createEventHandler} from '@common/utils/dom/create-event-handler';
 import {TrashPage} from '@app/drive/drive-page/drive-page';
 import {getSelectedEntries} from '@app/drive/files/use-selected-entries';
+import {DashboardLayoutContext} from '@common/ui/dashboard-layout/dashboard-layout-context';
+import {IllustratedMessage} from '@ui/images/illustrated-message';
+import {SvgImage} from '@ui/images/svg-image';
+import {isCtrlKeyPressed} from '@ui/utils/keybinds/is-ctrl-key-pressed';
+import {createEventHandler} from '@ui/utils/dom/create-event-handler';
 
 interface FileViewProps {
   className?: string;
@@ -61,8 +61,6 @@ export function FileView({className}: FileViewProps) {
       }
     },
   });
-
-  console.log("entries", entries)
 
   const {droppableProps} = useDroppable({
     id: 'driveRoot',

@@ -19,22 +19,18 @@ namespace Google\Service\AndroidPublisher;
 
 class RevocationContext extends \Google\Model
 {
-  /**
-   * @var UNDEFINEDPackageNameRevocationContextProratedRefund
-   */
-  public $proratedRefund;
-  protected $proratedRefundType = UNDEFINEDPackageNameRevocationContextProratedRefund::class;
+  protected $proratedRefundType = RevocationContextProratedRefund::class;
   protected $proratedRefundDataType = '';
 
   /**
-   * @param UNDEFINEDPackageNameRevocationContextProratedRefund
+   * @param RevocationContextProratedRefund
    */
-  public function setProratedRefund(UNDEFINEDPackageNameRevocationContextProratedRefund $proratedRefund)
+  public function setProratedRefund(RevocationContextProratedRefund $proratedRefund)
   {
     $this->proratedRefund = $proratedRefund;
   }
   /**
-   * @return UNDEFINEDPackageNameRevocationContextProratedRefund
+   * @return RevocationContextProratedRefund
    */
   public function getProratedRefund()
   {

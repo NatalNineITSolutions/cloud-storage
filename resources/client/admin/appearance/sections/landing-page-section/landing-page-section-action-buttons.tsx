@@ -1,8 +1,8 @@
-import { MenuItemForm } from '@common/admin/menus/menu-item-form';
-import { Accordion, AccordionItem } from '@common/ui/accordion/accordion';
-import { Trans } from '@common/i18n/trans';
-import { appearanceState } from '@common/admin/appearance/appearance-store';
-import { useState } from 'react';
+import {MenuItemForm} from '@common/admin/menus/menu-item-form';
+import {Accordion, AccordionItem} from '@ui/accordion/accordion';
+import {Trans} from '@ui/i18n/trans';
+import {appearanceState} from '@common/admin/appearance/appearance-store';
+import {useState} from 'react';
 
 export function LandingPageSectionActionButtons() {
   const [expandedValues, setExpandedValues] = useState(['cta1']);
@@ -14,7 +14,7 @@ export function LandingPageSectionActionButtons() {
         setExpandedValues(values as string[]);
         if (values.length) {
           appearanceState().preview.setHighlight(
-            `[data-testid="${values[0]}"]`
+            `[data-testid="${values[0]}"]`,
           );
         }
       }}

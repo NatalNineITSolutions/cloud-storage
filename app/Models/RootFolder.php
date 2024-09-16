@@ -48,10 +48,10 @@ class RootFolder extends FileEntry
             $user = Arr::only(Auth::user()->toArray(), [
                 'first_name',
                 'last_name',
-                'display_name',
+                'name',
                 'email',
                 'id',
-                'avatar',
+                'image',
             ]);
             $user['owns_entry'] = true;
             $users[] = $user;

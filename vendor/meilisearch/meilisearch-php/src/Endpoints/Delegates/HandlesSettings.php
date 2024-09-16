@@ -345,13 +345,16 @@ trait HandlesSettings
     // Settings - proximityPrecision
 
     /**
-     * @return non-empty-string
+     * @return 'byWord'|'byAttribute'
      */
     public function getProximityPrecision(): string
     {
         return $this->http->get(self::PATH.'/'.$this->uid.'/settings/proximity-precision');
     }
 
+    /**
+     * @param 'byWord'|'byAttribute' $type
+     */
     public function updateProximityPrecision(string $type): array
     {
         return $this->http->put(self::PATH.'/'.$this->uid.'/settings/proximity-precision', $type);
@@ -360,6 +363,23 @@ trait HandlesSettings
     public function resetProximityPrecision(): array
     {
         return $this->http->delete(self::PATH.'/'.$this->uid.'/settings/proximity-precision');
+    }
+
+    // Settings - searchCutoffMs
+
+    public function getSearchCutoffMs(): ?int
+    {
+        return $this->http->get(self::PATH.'/'.$this->uid.'/settings/search-cutoff-ms');
+    }
+
+    public function updateSearchCutoffMs(int $value): array
+    {
+        return $this->http->put(self::PATH.'/'.$this->uid.'/settings/search-cutoff-ms', $value);
+    }
+
+    public function resetSearchCutoffMs(): array
+    {
+        return $this->http->delete(self::PATH.'/'.$this->uid.'/settings/search-cutoff-ms');
     }
 
     // Settings - Experimental: Embedders (hybrid search)

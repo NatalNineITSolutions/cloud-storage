@@ -1,8 +1,8 @@
 import {useQuery} from '@tanstack/react-query';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
-import {prettyBytes} from '@common/uploads/utils/pretty-bytes';
 import {DriveQueryKeys} from '../../../drive-query-keys';
 import {apiClient} from '@common/http/query-client';
+import {prettyBytes} from '@ui/utils/files/pretty-bytes';
 
 export interface FetchStorageSummaryResponse extends BackendResponse {
   used: number;

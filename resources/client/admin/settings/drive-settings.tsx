@@ -1,17 +1,49 @@
-import {SettingsPanel} from '@common/admin/settings/settings-panel';
-import {FormRadioGroup} from '@common/ui/forms/radio-group/radio-group';
-import {FormRadio} from '@common/ui/forms/radio-group/radio';
-import {FormSwitch} from '@common/ui/forms/toggle/switch';
-import {Trans} from '@common/i18n/trans';
+import {Trans} from '@ui/i18n/trans';
+import {FormRadioGroup} from '@ui/forms/radio-group/radio-group';
+import {FormRadio} from '@ui/forms/radio-group/radio';
+import {FormSwitch} from '@ui/forms/toggle/switch';
+import {
+  AdminSettingsForm,
+  AdminSettingsLayout,
+} from '@common/admin/settings/form/admin-settings-form';
+import React from 'react';
+import {AdminSettings} from '@common/admin/settings/admin-settings';
+import {useForm} from 'react-hook-form';
 
 export function DriveSettings() {
   return (
-    <SettingsPanel
+    <AdminSettingsLayout
       title={<Trans message="Drive" />}
       description={
         <Trans message="Configure defaults for drive user dashboard." />
       }
     >
+      {data => <Form data={data} />}
+    </AdminSettingsLayout>
+  );
+}
+
+interface FormProps {
+  data: AdminSettings;
+}
+function Form({data}: FormProps) {
+  const form = useForm<AdminSettings>({
+    defaultValues: {
+      client: {
+        drive: {
+          default_view: data.client.drive?.default_view ?? 'list',
+          send_share_notification:
+            data.client.drive?.send_share_notification ?? true,
+        },
+        share: {
+          suggest_emails: data.client.share?.suggest_emails ?? true,
+        },
+      },
+    },
+  });
+
+  return (
+    <AdminSettingsForm form={form}>
       <FormRadioGroup
         required
         className="mb-30"
@@ -47,6 +79,6 @@ export function DriveSettings() {
       >
         <Trans message="Suggest emails" />
       </FormSwitch>
-    </SettingsPanel>
+    </AdminSettingsForm>
   );
 }

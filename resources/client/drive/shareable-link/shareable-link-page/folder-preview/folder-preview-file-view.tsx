@@ -1,9 +1,8 @@
 import {AnimatePresence, m} from 'framer-motion';
 import React, {useEffect, useRef, useState} from 'react';
-import {ProgressCircle} from '@common/ui/progress/progress-circle';
+import {ProgressCircle} from '@ui/progress/progress-circle';
 import {useShareableLinkPage} from '../../queries/use-shareable-link-page';
-import {FilePreviewDialog} from '@common/uploads/preview/file-preview-dialog';
-import {DialogTrigger} from '@common/ui/overlays/dialog/dialog-trigger';
+import {DialogTrigger} from '@ui/overlays/dialog/dialog-trigger';
 import clsx from 'clsx';
 import {DriveEntry} from '../../../files/drive-entry';
 import {FolderPreviewFileGrid} from './folder-preview-file-grid';
@@ -11,8 +10,9 @@ import {useLinkPageStore} from '../link-page-store';
 import {FolderPreviewFileTable} from './folder-preview-file-table';
 import {useNavigateToSubfolder} from './use-navigate-to-subfolder';
 import {useLocation} from 'react-router-dom';
-import {opacityAnimation} from '@common/ui/animation/opacity-animation';
 import {AdHost} from '@common/admin/ads/ad-host';
+import {opacityAnimation} from '@ui/animation/opacity-animation';
+import {FilePreviewDialog} from '@common/uploads/components/file-preview/file-preview-dialog';
 
 interface FolderPreviewChildrenProps {
   className?: string;

@@ -1,21 +1,17 @@
 import {useShareableLinkPage} from '../queries/use-shareable-link-page';
 import {useAuth} from '@common/auth/use-auth';
-import {useFileEntryUrls} from '@common/uploads/hooks/file-entry-urls';
+import {useFileEntryUrls} from '@common/uploads/file-entry-urls';
 import {useImportIntoOwnDrive} from './queries/import-into-own-drive';
-import {Button} from '@common/ui/buttons/button';
-import {FileDownloadIcon} from '@common/icons/material/FileDownload';
-import {downloadFileFromUrl} from '@common/uploads/utils/download-file-from-url';
-import {Trans} from '@common/i18n/trans';
-import {
-  Menu,
-  MenuItem,
-  MenuTrigger,
-} from '@common/ui/navigation/menu/menu-trigger';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {KeyboardArrowDownIcon} from '@common/icons/material/KeyboardArrowDown';
-import {ImportExportIcon} from '@common/icons/material/ImportExport';
+import {Button} from '@ui/buttons/button';
+import {FileDownloadIcon} from '@ui/icons/material/FileDownload';
+import {Trans} from '@ui/i18n/trans';
+import {IconButton} from '@ui/buttons/icon-button';
+import {KeyboardArrowDownIcon} from '@ui/icons/material/KeyboardArrowDown';
+import {ImportExportIcon} from '@ui/icons/material/ImportExport';
 import React, {Fragment} from 'react';
-import {Tooltip} from '@common/ui/tooltip/tooltip';
+import {Tooltip} from '@ui/tooltip/tooltip';
+import {Menu, MenuItem, MenuTrigger} from '@ui/menu/menu-trigger';
+import {downloadFileFromUrl} from '@ui/utils/files/download-file-from-url';
 
 export function ShareableLinkPageActionButtons() {
   const {link} = useShareableLinkPage();

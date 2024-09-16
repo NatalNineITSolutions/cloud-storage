@@ -12,6 +12,14 @@ use Sentry\Util\JSON;
 
 /**
  * @internal
+ *
+ * @phpstan-type MetricsSummary array{
+ *     min: int|float,
+ *     max: int|float,
+ *     sum: int|float,
+ *     count: int,
+ *     tags: array<string>,
+ * }
  */
 class TransactionItem implements EnvelopeItemInterface
 {
@@ -98,6 +106,7 @@ class TransactionItem implements EnvelopeItemInterface
         if ($runtimeContext !== null) {
             $payload['contexts']['runtime'] = [
                 'name' => $runtimeContext->getName(),
+                'sapi' => $runtimeContext->getSAPI(),
                 'version' => $runtimeContext->getVersion(),
             ];
         }
@@ -115,6 +124,10 @@ class TransactionItem implements EnvelopeItemInterface
         }
 
         $payload['spans'] = array_values(array_map([self::class, 'serializeSpan'], $event->getSpans()));
+
+        if (!empty($event->getMetricsSummary())) {
+            $payload['_metrics_summary'] = self::serializeMetricsSummary($event->getMetricsSummary());
+        }
 
         $transactionMetadata = $event->getSdkMetadata('transaction_metadata');
         if ($transactionMetadata instanceof TransactionMetadata) {
@@ -138,6 +151,7 @@ class TransactionItem implements EnvelopeItemInterface
      *     op?: string,
      *     data?: array<string, mixed>,
      *     tags?: array<string, string>
+     *     _metrics_summary?: array<string, mixed>
      * }
      */
     protected static function serializeSpan(Span $span): array
@@ -177,9 +191,27 @@ class TransactionItem implements EnvelopeItemInterface
         }
 
         if (!empty($span->getMetricsSummary())) {
-            $result['metrics_summary'] = $span->getMetricsSummary();
+            $result['_metrics_summary'] = self::serializeMetricsSummary($span->getMetricsSummary());
         }
 
         return $result;
+    }
+
+    /**
+     * @param array<string, array<string, MetricsSummary>> $metricsSummary
+     *
+     * @return array<string, mixed>
+     */
+    protected static function serializeMetricsSummary(array $metricsSummary): array
+    {
+        $formattedSummary = [];
+
+        foreach ($metricsSummary as $mri => $metrics) {
+            foreach ($metrics as $metric) {
+                $formattedSummary[$mri][] = $metric;
+            }
+        }
+
+        return $formattedSummary;
     }
 }

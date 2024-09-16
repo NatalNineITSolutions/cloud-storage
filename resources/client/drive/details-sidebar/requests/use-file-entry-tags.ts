@@ -1,7 +1,7 @@
 import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {apiClient} from '@common/http/query-client';
-import {NormalizedModel} from '@common/datatable/filters/normalized-model';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
+import {NormalizedModel} from '@ui/types/normalized-model';
 
 interface Response extends BackendResponse {
   results: NormalizedModel[];

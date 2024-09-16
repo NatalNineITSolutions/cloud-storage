@@ -1,20 +1,16 @@
 import {driveState, useDriveStore} from '../drive-store';
 import {useDriveUploadQueue} from '../uploading/use-drive-upload-queue';
-import {
-  Menu,
-  MenuItem,
-  MenuTrigger,
-} from '@common/ui/navigation/menu/menu-trigger';
-import {openUploadWindow} from '@common/uploads/utils/open-upload-window';
-import {Button} from '@common/ui/buttons/button';
-import {FileUploadIcon} from '@common/icons/material/FileUpload';
-import {Trans} from '@common/i18n/trans';
-import {CreateNewFolderIcon} from '@common/icons/material/CreateNewFolder';
-import {UploadFileIcon} from '@common/icons/material/UploadFile';
-import {DriveFolderUploadIcon} from '@common/icons/material/DriveFolderUpload';
+import {Button} from '@ui/buttons/button';
+import {FileUploadIcon} from '@ui/icons/material/FileUpload';
+import {Trans} from '@ui/i18n/trans';
+import {CreateNewFolderIcon} from '@ui/icons/material/CreateNewFolder';
+import {UploadFileIcon} from '@ui/icons/material/UploadFile';
+import {DriveFolderUploadIcon} from '@ui/icons/material/DriveFolderUpload';
 import React from 'react';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {AddIcon} from '@common/icons/material/Add';
+import {IconButton} from '@ui/buttons/icon-button';
+import {AddIcon} from '@ui/icons/material/Add';
+import {Menu, MenuItem, MenuTrigger} from '@ui/menu/menu-trigger';
+import {openUploadWindow} from '@ui/utils/files/open-upload-window';
 
 interface CreateNewButtonProps {
   isCompact?: boolean;
@@ -53,7 +49,7 @@ export function CreateNewButton({isCompact, className}: CreateNewButtonProps) {
             const activeFolder = driveState().activePage?.folder;
             driveState().setActiveActionDialog(
               'newFolder',
-              activeFolder ? [activeFolder] : []
+              activeFolder ? [activeFolder] : [],
             );
           }
         }}

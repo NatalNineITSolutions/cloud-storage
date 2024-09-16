@@ -2,32 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Common\Core\BaseController;
 use Common\Files\FileEntry;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EntrySyncInfoController extends BaseController
 {
-    public function __construct(protected Request $request, protected FileEntry $entry)
-    {
-    }
-
     public function index()
     {
-        $userId = $this->request->get('userId', Auth::user()->id);
+        $userId = request('userId', Auth::user()->id);
         $this->authorize('index', [FileEntry::class, null, $userId]);
 
-        $this->validate($this->request, [
-            'fileNames' => 'required|array',
-            'fileNames.*' => 'required|string',
+        $data = $this->validate(request(), [
+            'entryIds' => 'required|array',
+            'entryIds.*' => 'required|int',
         ]);
 
-        $entries = Auth::user()->entries()
-            ->whereIn('file_name', $this->request->get('fileNames'))
-            ->select(['file_name', 'file_entries.updated_at', 'file_entries.id', 'type'])
+        $entries = Auth::user()
+            ->entries()
+            ->withTrashed()
+            ->whereIn('file_entries.id', $data['entryIds'])
+            ->select(['file_name', 'extension', 'file_entries.id', 'file_size'])
             ->get()
-            ->map(fn(FileEntry $entry) => $entry->setAppends([]));
+            ->map(fn(FileEntry $entry) => $entry->setAppends(['hash']));
 
         return $this->success(['entries' => $entries]);
     }

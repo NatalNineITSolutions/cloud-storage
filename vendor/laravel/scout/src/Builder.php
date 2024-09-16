@@ -5,13 +5,15 @@ namespace Laravel\Scout;
 use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
+use Illuminate\Support\Traits\Tappable;
 use Laravel\Scout\Contracts\PaginatesEloquentModels;
 use Laravel\Scout\Contracts\PaginatesEloquentModelsUsingDatabase;
 
 class Builder
 {
-    use Macroable;
+    use Conditionable, Macroable, Tappable;
 
     /**
      * The model instance.
@@ -225,8 +227,12 @@ class Builder
      * @param  string  $column
      * @return $this
      */
-    public function latest($column = 'created_at')
+    public function latest($column = null)
     {
+        if (is_null($column)) {
+            $column = $this->model->getCreatedAtColumn() ?? 'created_at';
+        }
+
         return $this->orderBy($column, 'desc');
     }
 
@@ -236,8 +242,12 @@ class Builder
      * @param  string  $column
      * @return $this
      */
-    public function oldest($column = 'created_at')
+    public function oldest($column = null)
     {
+        if (is_null($column)) {
+            $column = $this->model->getCreatedAtColumn() ?? 'created_at';
+        }
+
         return $this->orderBy($column, 'asc');
     }
 
@@ -252,36 +262,6 @@ class Builder
         $this->options = $options;
 
         return $this;
-    }
-
-    /**
-     * Apply the callback's query changes if the given "value" is true.
-     *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  callable  $default
-     * @return mixed
-     */
-    public function when($value, $callback, $default = null)
-    {
-        if ($value) {
-            return $callback($this, $value) ?: $this;
-        } elseif ($default) {
-            return $default($this, $value) ?: $this;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Pass the query to a given callback.
-     *
-     * @param  \Closure  $callback
-     * @return $this
-     */
-    public function tap($callback)
-    {
-        return $this->when(true, $callback);
     }
 
     /**

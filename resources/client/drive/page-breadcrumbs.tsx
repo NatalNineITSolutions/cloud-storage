@@ -7,18 +7,18 @@ import {
   SharesPage,
   TrashPage,
 } from './drive-page/drive-page';
-import {Breadcrumb} from '@common/ui/breadcrumbs/breadcrumb';
+import {Breadcrumb} from '@ui/breadcrumbs/breadcrumb';
 import {useAuth} from '@common/auth/use-auth';
 import {useFolderPath} from './files/queries/use-folder-path';
 import {EntryActionMenuTrigger} from './entry-actions/entry-action-menu-trigger';
 import {useActiveWorkspace} from '@common/workspace/active-workspace-id-context';
-import {ButtonBase} from '@common/ui/buttons/button-base';
-import {BreadcrumbItem} from '@common/ui/breadcrumbs/breadcrumb-item';
-import {ArrowDropDownIcon} from '@common/icons/material/ArrowDropDown';
-import {MessageDescriptor} from '@common/i18n/message-descriptor';
-import {MixedText} from '@common/i18n/mixed-text';
-import {useNavigate} from '@common/utils/hooks/use-navigate';
-import {DashboardLayoutContext} from '@common/ui/layout/dashboard-layout-context';
+import {ButtonBase} from '@ui/buttons/button-base';
+import {BreadcrumbItem} from '@ui/breadcrumbs/breadcrumb-item';
+import {ArrowDropDownIcon} from '@ui/icons/material/ArrowDropDown';
+import {MessageDescriptor} from '@ui/i18n/message-descriptor';
+import {MixedText} from '@ui/i18n/mixed-text';
+import {useNavigate} from '@common/ui/navigation/use-navigate';
+import {DashboardLayoutContext} from '@common/ui/dashboard-layout/dashboard-layout-context';
 
 interface ItemConfig {
   page: DrivePage;
@@ -73,7 +73,7 @@ export function PageBreadcrumbs({className}: PageBreadcrumbsProps) {
           if (!isLast) {
             return (
               <BreadcrumbItem
-                key={item.page.id}
+                key={item.page.uniqueId}
                 onSelected={() => {
                   navigate(item.page.path);
                 }}
@@ -84,7 +84,7 @@ export function PageBreadcrumbs({className}: PageBreadcrumbsProps) {
           }
 
           return (
-            <BreadcrumbItem key={item.page.id}>
+            <BreadcrumbItem key={item.page.uniqueId}>
               {({isMenuItem}) => {
                 if (
                   isMenuItem ||
@@ -95,7 +95,7 @@ export function PageBreadcrumbs({className}: PageBreadcrumbsProps) {
                   <EntryActionMenuTrigger page={item.page}>
                     <ButtonBase className="flex items-center gap-2 rounded focus-visible:ring-offset-4">
                       <MixedText value={item.label} />
-                      <ArrowDropDownIcon className="icon-md text-muted" />
+                      <ArrowDropDownIcon className="text-muted icon-md" />
                     </ButtonBase>
                   </EntryActionMenuTrigger>
                 );
@@ -121,7 +121,7 @@ function useRootItem(): ItemConfig | null {
   if (workspace && !workspace.default) {
     if (
       page?.isFolderPage &&
-      (page?.id === RootFolderPage.id ||
+      (page?.name === RootFolderPage.name ||
         page.folder?.workspace_id === workspace.id)
     ) {
       return {label: workspace.name, page: RootFolderPage};

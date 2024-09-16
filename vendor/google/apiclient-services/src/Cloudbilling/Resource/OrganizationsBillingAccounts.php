@@ -45,12 +45,12 @@ class OrganizationsBillingAccounts extends \Google\Service\Resource
    * provisioned for subaccounts. (billingAccounts.create)
    *
    * @param string $parent Optional. The parent to create a billing account from.
-   * Format: - `organizations/{organization_id}`, for example,
-   * `organizations/12345678` - `billingAccounts/{billing_account_id}`, for
-   * example, `billingAccounts/012345-567890-ABCDEF`
+   * Format: - `billingAccounts/{billing_account_id}`, for example,
+   * `billingAccounts/012345-567890-ABCDEF`
    * @param BillingAccount $postBody
    * @param array $optParams Optional parameters.
    * @return BillingAccount
+   * @throws \Google\Service\Exception
    */
   public function create($parent, BillingAccount $postBody, $optParams = [])
   {
@@ -82,6 +82,7 @@ class OrganizationsBillingAccounts extends \Google\Service\Resource
    * `ListBillingAccounts` call. If unspecified, the first page of results is
    * returned.
    * @return ListBillingAccountsResponse
+   * @throws \Google\Service\Exception
    */
   public function listOrganizationsBillingAccounts($parent, $optParams = [])
   {
@@ -102,6 +103,7 @@ class OrganizationsBillingAccounts extends \Google\Service\Resource
    * belongs to the same organization as its parent account.
    * @param array $optParams Optional parameters.
    * @return BillingAccount
+   * @throws \Google\Service\Exception
    */
   public function move($destinationParent, $name, $optParams = [])
   {

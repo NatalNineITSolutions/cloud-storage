@@ -1,6 +1,16 @@
 <?php
 
 return [
+    // logos
+    [
+        'name' => 'branding.logo_dark',
+        'value' => 'images/logo-dark.png',
+    ],
+    [
+        'name' => 'branding.logo_light',
+        'value' => 'images/logo-light.png',
+    ],
+
     //cache
     ['name' => 'cache.report_minutes', 'value' => 60],
 
@@ -269,7 +279,6 @@ return [
                         'permissions' => ['admin.access'],
                         'roles' => [],
                     ],
-
                     [
                         'label' => 'Appearance',
                         'id' => 'slcqm0',
@@ -301,7 +310,6 @@ return [
                         ],
                         'permissions' => ['appearance.update'],
                     ],
-
                     [
                         'label' => 'Settings',
                         'id' => 'x5k484',
@@ -480,6 +488,21 @@ return [
                             ],
                         ],
                         'permissions' => ['settings.update'],
+                    ],
+                    [
+                        'label' => 'Logs',
+                        'action' => '/admin/logs',
+                        'type' => 'route',
+                        'id' => '8j435f',
+                        'icon' => [
+                            [
+                                'tag' => 'path',
+                                'attr' => [
+                                    'd' =>
+                                        'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 14H6v-2h12v2zm0-4H6v-2h12v2zm-3-4H6V7h9v2z',
+                                ],
+                            ],
+                        ],
                     ],
                 ],
                 'positions' => ['admin-sidebar'],

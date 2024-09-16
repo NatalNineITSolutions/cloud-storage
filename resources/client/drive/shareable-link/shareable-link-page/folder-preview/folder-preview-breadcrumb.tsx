@@ -2,10 +2,10 @@ import React, {ReactElement, ReactNode} from 'react';
 import clsx from 'clsx';
 import {DriveFolder} from '../../../files/drive-entry';
 import {useFolderPath} from '../../../files/queries/use-folder-path';
-import {Breadcrumb} from '@common/ui/breadcrumbs/breadcrumb';
+import {Breadcrumb} from '@ui/breadcrumbs/breadcrumb';
 import {ShareableLink} from '../../shareable-link';
 import {useLinkPageStore} from '../link-page-store';
-import {BreadcrumbItem} from '@common/ui/breadcrumbs/breadcrumb-item';
+import {BreadcrumbItem} from '@ui/breadcrumbs/breadcrumb-item';
 import {useNavigateToSubfolder} from './use-navigate-to-subfolder';
 
 interface Props {

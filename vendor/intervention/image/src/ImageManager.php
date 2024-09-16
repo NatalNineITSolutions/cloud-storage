@@ -1,24 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Image;
 
 use Intervention\Image\Interfaces\DriverInterface;
 use Intervention\Image\Interfaces\ImageInterface;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
+use Intervention\Image\Interfaces\DecoderInterface;
+use Intervention\Image\Interfaces\ImageManagerInterface;
 
-final class ImageManager
+final class ImageManager implements ImageManagerInterface
 {
     protected DriverInterface $driver;
 
+    /**
+     * @link https://image.intervention.io/v3/basics/image-manager#create-a-new-image-manager-instance
+     * @param string|DriverInterface $driver
+     */
     public function __construct(string|DriverInterface $driver)
     {
         $this->driver = $this->resolveDriver($driver);
     }
 
     /**
-     * Create image mangager with given driver
+     * Create image manager with given driver
      *
+     * @link https://image.intervention.io/v3/basics/image-manager
      * @param string|DriverInterface $driver
      * @return ImageManager
      */
@@ -30,6 +39,7 @@ final class ImageManager
     /**
      * Create image manager with GD driver
      *
+     * @link https://image.intervention.io/v3/basics/image-manager#static-gd-driver-constructor
      * @return ImageManager
      */
     public static function gd(): self
@@ -40,6 +50,7 @@ final class ImageManager
     /**
      * Create image manager with Imagick driver
      *
+     * @link https://image.intervention.io/v3/basics/image-manager#static-imagick-driver-constructor
      * @return ImageManager
      */
     public static function imagick(): self
@@ -48,11 +59,9 @@ final class ImageManager
     }
 
     /**
-     * Create new image instance with given width & height
+     * {@inheritdoc}
      *
-     * @param int $width
-     * @param int $height
-     * @return ImageInterface
+     * @see ImageManagerInterface::create()
      */
     public function create(int $width, int $height): ImageInterface
     {
@@ -60,33 +69,39 @@ final class ImageManager
     }
 
     /**
-     * Create new image instance from given source which can be one of the following
+     * {@inheritdoc}
      *
-     * - Path in filesystem
-     * - File Pointer resource
-     * - SplFileInfo object
-     * - Raw binary image data
-     * - Base64 encoded image data
-     * - Data Uri
-     * - Intervention\Image\Image Instance
-     *
-     * @param mixed $input
-     * @return ImageInterface
+     * @see ImageManagerInterface::read()
      */
-    public function read(mixed $input): ImageInterface
+    public function read(mixed $input, string|array|DecoderInterface $decoders = []): ImageInterface
     {
-        return $this->driver->handleInput($input);
+        return $this->driver->handleInput(
+            $input,
+            match (true) {
+                is_string($decoders), is_a($decoders, DecoderInterface::class) => [$decoders],
+                default => $decoders,
+            }
+        );
     }
 
     /**
-     * Create new animated image by given callback
+     * {@inheritdoc}
      *
-     * @param callable $init
-     * @return ImageInterface
+     * @see ImageManagerInterface::animate()
      */
     public function animate(callable $init): ImageInterface
     {
         return $this->driver->createAnimation($init);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see ImageManagerInterface::driver()
+     */
+    public function driver(): DriverInterface
+    {
+        return $this->driver;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Intervention\Gif;
 
 use Intervention\Gif\Traits\CanDecode;
@@ -20,7 +22,7 @@ abstract class AbstractEntity
      */
     public static function getShortClassname(): string
     {
-        return (new ReflectionClass(get_called_class()))->getShortName();
+        return (new ReflectionClass(static::class))->getShortName();
     }
 
     /**

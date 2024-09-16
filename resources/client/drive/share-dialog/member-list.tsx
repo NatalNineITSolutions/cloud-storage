@@ -7,15 +7,15 @@ import {
   PermissionSelector,
   PermissionSelectorItem,
 } from './permission-selector';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {CloseIcon} from '@common/icons/material/Close';
+import {IconButton} from '@ui/buttons/icon-button';
+import {CloseIcon} from '@ui/icons/material/Close';
 import {useChangePermission} from './queries/use-change-permission';
 import {useUnshareEntries} from './queries/use-unshare-entries';
-import {Trans} from '@common/i18n/trans';
-import {toast} from '@common/ui/toast/toast';
-import {message} from '@common/i18n/message';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
-import {UserAvatar} from '@common/ui/images/user-avatar';
+import {Trans} from '@ui/i18n/trans';
+import {toast} from '@ui/toast/toast';
+import {message} from '@ui/i18n/message';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
+import {UserAvatar} from '@common/auth/user-avatar';
 
 interface MemberListProps {
   className?: string;
@@ -33,9 +33,9 @@ export function MemberList({className, entry}: MemberListProps) {
         <Trans message="Who has access" />
       </div>
       <AnimatePresence initial={false}>
-        {users.map(user => {
-          return <MemberListItem key={user.id} user={user} entry={entry} />;
-        })}
+        {users.map(user => (
+          <MemberListItem key={user.id} user={user} entry={entry} />
+        ))}
       </AnimatePresence>
     </div>
   );
@@ -52,12 +52,12 @@ function MemberListItem({user, entry}: MemberListItemProps) {
       animate={{x: 0, opacity: 1}}
       exit={{x: '100%', opacity: 0}}
       transition={{type: 'tween', duration: 0.125}}
-      className="flex items-center text-sm gap-14 mb-20"
+      className="mb-20 flex items-center gap-14 text-sm"
       key={user.id}
     >
       <UserAvatar user={user as any} circle size="w-44 h-44" />
       <div>
-        <div>{user.display_name}</div>
+        <div>{user.name}</div>
         <div className="text-muted">{user.email}</div>
       </div>
       <div className="ml-auto">
@@ -88,6 +88,7 @@ function ActionButtons({user, entry}: ActionButtonsProps) {
   return (
     <div className="flex items-center gap-10">
       <PermissionSelector
+        isDisabled={changePermissions.isPending}
         onChange={item => {
           changePermissions.mutate({
             userId: user.id,
@@ -99,6 +100,7 @@ function ActionButtons({user, entry}: ActionButtonsProps) {
         value={activePermission}
       />
       <IconButton
+        disabled={unshareEntry.isPending}
         onClick={() => {
           unshareEntry.mutate(
             {userId: user.id, entryIds: [entry.id]},
@@ -108,7 +110,7 @@ function ActionButtons({user, entry}: ActionButtonsProps) {
               },
               onError: err =>
                 showHttpErrorToast(err, message('Could not remove member')),
-            }
+            },
           );
         }}
       >

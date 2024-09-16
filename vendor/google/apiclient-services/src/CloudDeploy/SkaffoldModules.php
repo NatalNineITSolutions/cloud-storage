@@ -24,16 +24,10 @@ class SkaffoldModules extends \Google\Collection
    * @var string[]
    */
   public $configs;
-  /**
-   * @var SkaffoldGitSource
-   */
-  public $git;
   protected $gitType = SkaffoldGitSource::class;
   protected $gitDataType = '';
-  /**
-   * @var SkaffoldGCSSource
-   */
-  public $googleCloudStorage;
+  protected $googleCloudBuildRepoType = SkaffoldGCBRepoSource::class;
+  protected $googleCloudBuildRepoDataType = '';
   protected $googleCloudStorageType = SkaffoldGCSSource::class;
   protected $googleCloudStorageDataType = '';
 
@@ -64,6 +58,20 @@ class SkaffoldModules extends \Google\Collection
   public function getGit()
   {
     return $this->git;
+  }
+  /**
+   * @param SkaffoldGCBRepoSource
+   */
+  public function setGoogleCloudBuildRepo(SkaffoldGCBRepoSource $googleCloudBuildRepo)
+  {
+    $this->googleCloudBuildRepo = $googleCloudBuildRepo;
+  }
+  /**
+   * @return SkaffoldGCBRepoSource
+   */
+  public function getGoogleCloudBuildRepo()
+  {
+    return $this->googleCloudBuildRepo;
   }
   /**
    * @param SkaffoldGCSSource

@@ -8,24 +8,20 @@ use Illuminate\Console\Command;
 
 class DeleteExpiredLinks extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'links:delete_expired';
+    protected $description = 'Delete expired shareable links for files and folders';
 
-    /**
-     * @var string
-     */
-    protected $description = 'Delete expired shareable links.';
-
-    public function __construct(private ShareableLink $link)
+    public function handle(): int
     {
-        parent::__construct();
-    }
+        $count = ShareableLink::where(
+            'expires_at',
+            '<',
+            Carbon::now(),
+        )->count();
+        ShareableLink::where('expires_at', '<', Carbon::now())->delete();
 
-    public function handle()
-    {
-        $this->link->where('expires_at', '<', Carbon::now())->delete();
-        $this->info('Deleted all expired shareable links');
+        $this->info("Deleted $count expired links");
+
+        return Command::SUCCESS;
     }
 }

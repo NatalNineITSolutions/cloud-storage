@@ -1,20 +1,22 @@
 import './App.css';
 import React from 'react';
 import {createRoot, hydrateRoot} from 'react-dom/client';
-import {CommonProvider} from '../../common/resources/client/core/common-provider';
+import {CommonProvider} from '@common/core/common-provider';
 import {LandingPageContent} from './landing/landing-page-content';
 import * as Sentry from '@sentry/react';
-import {rootEl} from '../../common/resources/client/core/root-el';
-import {getBootstrapData} from '../../common/resources/client/core/bootstrap-data/use-backend-bootstrap-data';
-import {ignoredSentryErrors} from '../../common/resources/client/errors/ignored-sentry-errors';
-import {BrowserRouter} from 'react-router-dom';
-import {AppRoutes} from '../../resources/client/app-routes';
-import {Product} from '../../common/resources/client/billing/product';
+import {ignoredSentryErrors} from '@common/errors/ignored-sentry-errors';
+import {appRouter} from '@app/app-router';
+import {Product} from '@common/billing/product';
 import {FetchShareableLinkPageResponse} from '@app/drive/shareable-link/queries/use-shareable-link-page';
 import {FetchCustomPageResponse} from '@common/custom-page/use-custom-page';
+import {BaseBackendSettings} from '@common/core/settings/base-backend-settings';
+import {BaseBackendBootstrapData} from '@common/core/base-backend-bootstrap-data';
+import {getBootstrapData} from '@ui/bootstrap-data/bootstrap-data-store';
+import {rootEl} from '@ui/root-el';
+import {BaseBackendUser} from '@common/auth/base-backend-user';
 
-declare module '@common/core/settings/settings' {
-  interface Settings {
+declare module '@ui/settings/settings' {
+  interface Settings extends BaseBackendSettings {
     homepage: {
       appearance: LandingPageContent;
       type: 'loginPage' | 'registerPage' | string;
@@ -37,8 +39,8 @@ declare module '@common/core/settings/settings' {
   }
 }
 
-declare module '@common/core/bootstrap-data/bootstrap-data' {
-  interface BootstrapData {
+declare module '@ui/bootstrap-data/bootstrap-data' {
+  interface BootstrapData extends BaseBackendBootstrapData {
     loaders?: {
       landingPage?: {
         products: Product[];
@@ -46,6 +48,12 @@ declare module '@common/core/bootstrap-data/bootstrap-data' {
       customPage?: FetchCustomPageResponse;
       shareableLinkPage?: FetchShareableLinkPageResponse;
     };
+  }
+}
+
+declare module '@ui/types/user' {
+  interface User extends BaseBackendUser {
+    //
   }
 }
 
@@ -61,13 +69,7 @@ if (sentryDsn && import.meta.env.PROD) {
   });
 }
 
-const app = (
-  <BrowserRouter basename={data.settings.html_base_uri}>
-    <CommonProvider>
-      <AppRoutes />
-    </CommonProvider>
-  </BrowserRouter>
-);
+const app = <CommonProvider router={appRouter} />;
 
 if (data.rendered_ssr) {
   hydrateRoot(rootEl, app);

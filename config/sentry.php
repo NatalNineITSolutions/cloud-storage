@@ -1,7 +1,4 @@
-<?php
-
-return [
-
+<?php return [
     'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')),
 
     // capture release as git sha
@@ -26,5 +23,4 @@ return [
 
     // @see: https://docs.sentry.io/error-reporting/configuration/?platform=php#send-default-pii
     'send_default_pii' => false,
-
 ];

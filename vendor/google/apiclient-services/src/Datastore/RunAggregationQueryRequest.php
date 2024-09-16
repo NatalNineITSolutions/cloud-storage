@@ -19,32 +19,18 @@ namespace Google\Service\Datastore;
 
 class RunAggregationQueryRequest extends \Google\Model
 {
-  /**
-   * @var AggregationQuery
-   */
-  public $aggregationQuery;
   protected $aggregationQueryType = AggregationQuery::class;
   protected $aggregationQueryDataType = '';
   /**
    * @var string
    */
   public $databaseId;
-  /**
-   * @var GqlQuery
-   */
-  public $gqlQuery;
+  protected $explainOptionsType = ExplainOptions::class;
+  protected $explainOptionsDataType = '';
   protected $gqlQueryType = GqlQuery::class;
   protected $gqlQueryDataType = '';
-  /**
-   * @var PartitionId
-   */
-  public $partitionId;
   protected $partitionIdType = PartitionId::class;
   protected $partitionIdDataType = '';
-  /**
-   * @var ReadOptions
-   */
-  public $readOptions;
   protected $readOptionsType = ReadOptions::class;
   protected $readOptionsDataType = '';
 
@@ -75,6 +61,20 @@ class RunAggregationQueryRequest extends \Google\Model
   public function getDatabaseId()
   {
     return $this->databaseId;
+  }
+  /**
+   * @param ExplainOptions
+   */
+  public function setExplainOptions(ExplainOptions $explainOptions)
+  {
+    $this->explainOptions = $explainOptions;
+  }
+  /**
+   * @return ExplainOptions
+   */
+  public function getExplainOptions()
+  {
+    return $this->explainOptions;
   }
   /**
    * @param GqlQuery

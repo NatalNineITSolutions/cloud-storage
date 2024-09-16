@@ -5,7 +5,7 @@ import {NewFolderDialog} from './new-folder-dialog';
 import {EntryPreviewDialog} from './entry-preview-dialog';
 import {ShareDialog} from '../../share-dialog/share-dialog';
 import {MoveEntriesDialog} from './move-entries-dialog/move-entries-dialog';
-import {DialogTrigger} from '@common/ui/overlays/dialog/dialog-trigger';
+import {DialogTrigger} from '@ui/overlays/dialog/dialog-trigger';
 import {DeleteEntriesForeverDialog} from './delete-entries-forever-dialog';
 import {BlockTrashFolderViewDialog} from './block-trash-folder-view-dialog';
 

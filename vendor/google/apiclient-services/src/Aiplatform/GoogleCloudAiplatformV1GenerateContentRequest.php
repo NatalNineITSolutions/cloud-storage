@@ -20,28 +20,14 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1GenerateContentRequest extends \Google\Collection
 {
   protected $collection_key = 'tools';
-  /**
-   * @var GoogleCloudAiplatformV1Content[]
-   */
-  public $contents;
   protected $contentsType = GoogleCloudAiplatformV1Content::class;
   protected $contentsDataType = 'array';
-  /**
-   * @var GoogleCloudAiplatformV1GenerationConfig
-   */
-  public $generationConfig;
   protected $generationConfigType = GoogleCloudAiplatformV1GenerationConfig::class;
   protected $generationConfigDataType = '';
-  /**
-   * @var GoogleCloudAiplatformV1SafetySetting[]
-   */
-  public $safetySettings;
   protected $safetySettingsType = GoogleCloudAiplatformV1SafetySetting::class;
   protected $safetySettingsDataType = 'array';
-  /**
-   * @var GoogleCloudAiplatformV1Tool[]
-   */
-  public $tools;
+  protected $systemInstructionType = GoogleCloudAiplatformV1Content::class;
+  protected $systemInstructionDataType = '';
   protected $toolsType = GoogleCloudAiplatformV1Tool::class;
   protected $toolsDataType = 'array';
 
@@ -86,6 +72,20 @@ class GoogleCloudAiplatformV1GenerateContentRequest extends \Google\Collection
   public function getSafetySettings()
   {
     return $this->safetySettings;
+  }
+  /**
+   * @param GoogleCloudAiplatformV1Content
+   */
+  public function setSystemInstruction(GoogleCloudAiplatformV1Content $systemInstruction)
+  {
+    $this->systemInstruction = $systemInstruction;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1Content
+   */
+  public function getSystemInstruction()
+  {
+    return $this->systemInstruction;
   }
   /**
    * @param GoogleCloudAiplatformV1Tool[]

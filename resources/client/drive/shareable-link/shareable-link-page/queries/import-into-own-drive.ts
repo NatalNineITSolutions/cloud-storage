@@ -1,12 +1,12 @@
 import {useMutation} from '@tanstack/react-query';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {DriveEntryUser} from '../../../files/drive-entry';
-import {toast} from '@common/ui/toast/toast';
+import {toast} from '@ui/toast/toast';
 import {useLinkPageStore} from '../link-page-store';
 import {apiClient, queryClient} from '@common/http/query-client';
 import {DriveQueryKeys} from '../../../drive-query-keys';
-import {message} from '@common/i18n/message';
-import {showHttpErrorToast} from '@common/utils/http/show-http-error-toast';
+import {message} from '@ui/i18n/message';
+import {showHttpErrorToast} from '@common/http/show-http-error-toast';
 
 interface Response extends BackendResponse {
   users: DriveEntryUser[];

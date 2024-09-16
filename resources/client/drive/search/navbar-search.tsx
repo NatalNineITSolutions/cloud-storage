@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {SearchIcon} from '@common/icons/material/Search';
-import {TextField} from '@common/ui/forms/input-field/text-field/text-field';
+import {SearchIcon} from '@ui/icons/material/Search';
+import {TextField} from '@ui/forms/input-field/text-field/text-field';
 import {SearchPage} from '../drive-page/drive-page';
-import {useTrans} from '@common/i18n/use-trans';
+import {useTrans} from '@ui/i18n/use-trans';
 import {useDriveStore} from '../drive-store';
-import {useNavigate} from '@common/utils/hooks/use-navigate';
 import {useSearchParams} from 'react-router-dom';
-import {IconButton} from '@common/ui/buttons/icon-button';
+import {IconButton} from '@ui/buttons/icon-button';
+import {useNavigate} from '@common/ui/navigation/use-navigate';
 
 export function NavbarSearch() {
   const {trans} = useTrans();
@@ -31,7 +31,7 @@ export function NavbarSearch() {
     >
       <TextField
         size="sm"
-        background="bg-paper"
+        background="bg"
         value={inputValue}
         onChange={e => setInputValue(e.target.value)}
         onFocus={() => {

@@ -1,5 +1,5 @@
-import {message} from '@common/i18n/message';
-import {MessageDescriptor} from '@common/i18n/message-descriptor';
+import {message} from '@ui/i18n/message';
+import {MessageDescriptor} from '@ui/i18n/message-descriptor';
 
 export const AVAILABLE_SORTS: DriveSortOption[] = [
   {id: 'file_size', label: message('Size')},

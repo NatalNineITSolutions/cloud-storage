@@ -3,21 +3,21 @@ import {arrayToTree} from 'performant-array-to-tree';
 import {useFolders} from '../../files/queries/use-folders';
 import {DriveFolder} from '../../files/drive-entry';
 import {driveState, useDriveStore} from '../../drive-store';
-import {FolderIcon} from '@common/icons/material/Folder';
+import {FolderIcon} from '@ui/icons/material/Folder';
 import {getPathForFolder, RootFolderPage} from '../../drive-page/drive-page';
 import {mergeProps} from '@react-aria/utils';
 import {
   ConnectedDraggable,
   useDraggable,
-} from '@common/ui/interactions/dnd/use-draggable';
+} from '@ui/interactions/dnd/use-draggable';
 import {useSidebarTreeDropTarget} from './use-sidebar-tree-drop-target';
 import {makeFolderTreeDragId} from './folder-tree-drag-id';
 import {FileEntry} from '@common/uploads/file-entry';
 import clsx from 'clsx';
-import {BackupIcon} from '@common/icons/material/Backup';
-import {TreeItem, TreeItemProps} from '@common/ui/tree/tree-item';
-import {Tree} from '@common/ui/tree/tree';
-import {useNavigate} from '@common/utils/hooks/use-navigate';
+import {BackupIcon} from '@ui/icons/material/Backup';
+import {useNavigate} from '@common/ui/navigation/use-navigate';
+import {Tree} from '@ui/tree/tree';
+import {TreeItem, TreeItemProps} from '@ui/tree/tree-item';
 
 interface TreeFolder extends DriveFolder {
   children: TreeFolder[];
@@ -74,7 +74,7 @@ function FolderTreeItem(props: Partial<TreeItemProps<TreeFolder>>) {
   const labelRef = useRef<HTMLDivElement>(null);
   const isRootFolder = node.id === 0;
   const isDragging = useDriveStore(s =>
-    s.entriesBeingDragged.includes(node.id)
+    s.entriesBeingDragged.includes(node.id),
   );
 
   const {draggableProps} = useDraggable({
@@ -117,7 +117,7 @@ function FolderTreeItem(props: Partial<TreeItemProps<TreeFolder>>) {
       labelClassName={clsx(
         isDragOver && 'bg-primary/selected ring ring-2 ring-inset ring-primary',
         isDragging && 'opacity-30',
-        isRootFolder && 'h-40'
+        isRootFolder && 'h-40',
       )}
       icon={
         isRootFolder ? (

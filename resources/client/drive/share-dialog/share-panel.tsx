@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button} from '@common/ui/buttons/button';
+import {Button} from '@ui/buttons/button';
 import {useShareEntry} from './queries/use-share-entry';
 import {
   PermissionSelector,
@@ -10,15 +10,15 @@ import {MemberList} from './member-list';
 import {
   ChipField,
   ChipValue,
-} from '@common/ui/forms/input-field/chip-field/chip-field';
-import {Avatar} from '@common/ui/images/avatar';
-import {useTrans} from '@common/i18n/use-trans';
-import {Trans} from '@common/i18n/trans';
+} from '@ui/forms/input-field/chip-field/chip-field';
+import {useTrans} from '@ui/i18n/use-trans';
+import {Trans} from '@ui/i18n/trans';
 import {DriveEntry} from '../files/drive-entry';
-import {Item} from '@common/ui/forms/listbox/item';
-import {isEmail} from '@common/utils/string/is-email';
-import {useNormalizedModels} from '@common/users/queries/use-normalized-models';
-import {useSettings} from '@common/core/settings/use-settings';
+import {Item} from '@ui/forms/listbox/item';
+import {useSettings} from '@ui/settings/use-settings';
+import {useNormalizedModels} from '@common/ui/normalized-model/use-normalized-models';
+import {isEmail} from '@ui/utils/string/is-email';
+import {Avatar} from '@ui/avatar/avatar';
 
 interface SharePanelProps {
   className?: string;
@@ -42,6 +42,7 @@ export function SharePanel({className, entry}: SharePanelProps) {
 
   // show user's email, instead of name in the chip
   const displayWith = (chip: ChipValue) => chip.description || chip.name;
+
   return (
     <div className={className}>
       <ChipField
@@ -113,10 +114,4 @@ export function SharePanel({className, entry}: SharePanelProps) {
       <MemberList className="mt-30" entry={entry} />
     </div>
   );
-
-
-
-
-
-
 }

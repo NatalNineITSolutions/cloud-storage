@@ -41,24 +41,6 @@ return [
     */
 
     'disks' => [
-
-        's3' => [
-            'driver' => 's3',
-            'key' => 'AKIA5YFYUXDUXEAWN3UT',
-            'secret' => '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',
-            'region' => 'ap-south-1',
-            'bucket' => 'jebin',
-        ],
-
-          's3' => [
-            'driver' => 's3',
-            'key' => env('S3_KEY'),
-            'secret' => env('S3_SECRET'),
-            'region' => env('S3_REGION'),
-            'bucket' => env('S3_BUCKET'),
-            'endpoint' => env('S3_ENDPOINT'),
-        ],
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -71,6 +53,7 @@ return [
                 storage_path('app/uploads'),
             ),
             'remote_root' => env('PRIVATE_UPLOADS_REMOTE_ROOT', 'uploads'),
+            'throw' => true,
         ],
 
         'public' => [

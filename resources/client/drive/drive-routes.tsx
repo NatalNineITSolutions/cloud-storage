@@ -1,71 +1,55 @@
-import {RouteObject, useRoutes} from 'react-router-dom';
+import {RouteObject} from 'react-router-dom';
 import React from 'react';
-import {ShareableLinkPage} from './shareable-link/shareable-link-page/shareable-link-page';
-import {DriveLayout} from './layout/drive-layout';
 import {AuthRoute} from '@common/auth/guards/auth-route';
-import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
+import {ActiveWorkspaceProvider} from '@common/workspace/active-workspace-id-context';
 
-const DriveRouteConfig: RouteObject[] = [
+const lazyDriveRoute = async (
+  cmp: keyof typeof import('@app/drive/drive-routes.lazy'),
+) => {
+  const exports = await import('@app/drive/drive-routes.lazy');
+  return {
+    Component: exports[cmp],
+  };
+};
+
+export const driveRoutes: RouteObject[] = [
   {
-    path: '/',
+    path: 'drive',
     element: (
-      <AuthRoute>
-        <DriveLayout />
-      </AuthRoute>
+      <ActiveWorkspaceProvider>
+        <AuthRoute />
+      </ActiveWorkspaceProvider>
     ),
+    children: [
+      {
+        index: true,
+        lazy: () => lazyDriveRoute('DriveLayout'),
+      },
+      {
+        path: 'folders/:hash',
+        lazy: () => lazyDriveRoute('DriveLayout'),
+      },
+      {
+        path: 'shares',
+        lazy: () => lazyDriveRoute('DriveLayout'),
+      },
+      {
+        path: 'recent',
+        lazy: () => lazyDriveRoute('DriveLayout'),
+      },
+      {
+        path: 'starred',
+        lazy: () => lazyDriveRoute('DriveLayout'),
+      },
+      {
+        path: 'trash',
+        lazy: () => lazyDriveRoute('DriveLayout'),
+      },
+      {
+        path: 'search',
+        lazy: () => lazyDriveRoute('DriveLayout'),
+      },
+      {path: 's/:hash', lazy: () => lazyDriveRoute('ShareableLinkPage')},
+    ],
   },
-  {
-    path: '/folders/:hash',
-    element: (
-      <AuthRoute>
-        <DriveLayout />
-      </AuthRoute>
-    ),
-  },
-  {
-    path: '/shares',
-    element: (
-      <AuthRoute>
-        <DriveLayout />
-      </AuthRoute>
-    ),
-  },
-  {
-    path: '/recent',
-    element: (
-      <AuthRoute>
-        <DriveLayout />
-      </AuthRoute>
-    ),
-  },
-  {
-    path: '/starred',
-    element: (
-      <AuthRoute>
-        <DriveLayout />
-      </AuthRoute>
-    ),
-  },
-  {
-    path: '/trash',
-    element: (
-      <AuthRoute>
-        <DriveLayout />
-      </AuthRoute>
-    ),
-  },
-  {
-    path: '/search',
-    element: (
-      <AuthRoute>
-        <DriveLayout />
-      </AuthRoute>
-    ),
-  },
-  {path: 's/:hash', element: <ShareableLinkPage />},
-  {path: '*', element: <NotFoundPage />},
 ];
-
-export default function DriveRoutes() {
-  return useRoutes(DriveRouteConfig);
-}

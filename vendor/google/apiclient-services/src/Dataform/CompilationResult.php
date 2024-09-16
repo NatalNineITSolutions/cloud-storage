@@ -20,18 +20,12 @@ namespace Google\Service\Dataform;
 class CompilationResult extends \Google\Collection
 {
   protected $collection_key = 'compilationErrors';
-  /**
-   * @var CodeCompilationConfig
-   */
-  public $codeCompilationConfig;
   protected $codeCompilationConfigType = CodeCompilationConfig::class;
   protected $codeCompilationConfigDataType = '';
-  /**
-   * @var CompilationError[]
-   */
-  public $compilationErrors;
   protected $compilationErrorsType = CompilationError::class;
   protected $compilationErrorsDataType = 'array';
+  protected $dataEncryptionStateType = DataEncryptionState::class;
+  protected $dataEncryptionStateDataType = '';
   /**
    * @var string
    */
@@ -84,6 +78,20 @@ class CompilationResult extends \Google\Collection
   public function getCompilationErrors()
   {
     return $this->compilationErrors;
+  }
+  /**
+   * @param DataEncryptionState
+   */
+  public function setDataEncryptionState(DataEncryptionState $dataEncryptionState)
+  {
+    $this->dataEncryptionState = $dataEncryptionState;
+  }
+  /**
+   * @return DataEncryptionState
+   */
+  public function getDataEncryptionState()
+  {
+    return $this->dataEncryptionState;
   }
   /**
    * @param string

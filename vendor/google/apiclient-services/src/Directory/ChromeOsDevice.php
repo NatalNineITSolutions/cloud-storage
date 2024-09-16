@@ -20,10 +20,6 @@ namespace Google\Service\Directory;
 class ChromeOsDevice extends \Google\Collection
 {
   protected $collection_key = 'systemRamFreeReports';
-  /**
-   * @var ChromeOsDeviceActiveTimeRanges[]
-   */
-  public $activeTimeRanges;
   protected $activeTimeRangesType = ChromeOsDeviceActiveTimeRanges::class;
   protected $activeTimeRangesDataType = 'array';
   /**
@@ -45,27 +41,25 @@ class ChromeOsDevice extends \Google\Collection
   /**
    * @var string
    */
+  public $autoUpdateThrough;
+  protected $backlightInfoType = BacklightInfo::class;
+  protected $backlightInfoDataType = 'array';
+  /**
+   * @var string
+   */
   public $bootMode;
   /**
-   * @var ChromeOsDeviceCpuInfo[]
+   * @var string
    */
-  public $cpuInfo;
+  public $chromeOsType;
   protected $cpuInfoType = ChromeOsDeviceCpuInfo::class;
   protected $cpuInfoDataType = 'array';
-  /**
-   * @var ChromeOsDeviceCpuStatusReports[]
-   */
-  public $cpuStatusReports;
   protected $cpuStatusReportsType = ChromeOsDeviceCpuStatusReports::class;
   protected $cpuStatusReportsDataType = 'array';
   /**
    * @var string
    */
   public $deprovisionReason;
-  /**
-   * @var ChromeOsDeviceDeviceFiles[]
-   */
-  public $deviceFiles;
   protected $deviceFilesType = ChromeOsDeviceDeviceFiles::class;
   protected $deviceFilesDataType = 'array';
   /**
@@ -76,10 +70,6 @@ class ChromeOsDevice extends \Google\Collection
    * @var string
    */
   public $deviceLicenseType;
-  /**
-   * @var ChromeOsDeviceDiskVolumeReports[]
-   */
-  public $diskVolumeReports;
   protected $diskVolumeReportsType = ChromeOsDeviceDiskVolumeReports::class;
   protected $diskVolumeReportsDataType = 'array';
   /**
@@ -98,6 +88,20 @@ class ChromeOsDevice extends \Google\Collection
    * @var string
    */
   public $ethernetMacAddress0;
+  /**
+   * @var bool
+   */
+  public $extendedSupportEligible;
+  /**
+   * @var bool
+   */
+  public $extendedSupportEnabled;
+  /**
+   * @var string
+   */
+  public $extendedSupportStart;
+  protected $fanInfoType = FanInfo::class;
+  protected $fanInfoDataType = 'array';
   /**
    * @var string
    */
@@ -118,10 +122,6 @@ class ChromeOsDevice extends \Google\Collection
    * @var string
    */
   public $lastEnrollmentTime;
-  /**
-   * @var ChromeOsDeviceLastKnownNetwork[]
-   */
-  public $lastKnownNetwork;
   protected $lastKnownNetworkType = ChromeOsDeviceLastKnownNetwork::class;
   protected $lastKnownNetworkDataType = 'array';
   /**
@@ -160,10 +160,6 @@ class ChromeOsDevice extends \Google\Collection
    * @var string
    */
   public $orgUnitPath;
-  /**
-   * @var OsUpdateStatus
-   */
-  public $osUpdateStatus;
   protected $osUpdateStatusType = OsUpdateStatus::class;
   protected $osUpdateStatusDataType = '';
   /**
@@ -174,16 +170,8 @@ class ChromeOsDevice extends \Google\Collection
    * @var string
    */
   public $platformVersion;
-  /**
-   * @var ChromeOsDeviceRecentUsers[]
-   */
-  public $recentUsers;
   protected $recentUsersType = ChromeOsDeviceRecentUsers::class;
   protected $recentUsersDataType = 'array';
-  /**
-   * @var ChromeOsDeviceScreenshotFiles[]
-   */
-  public $screenshotFiles;
   protected $screenshotFilesType = ChromeOsDeviceScreenshotFiles::class;
   protected $screenshotFilesDataType = 'array';
   /**
@@ -198,20 +186,12 @@ class ChromeOsDevice extends \Google\Collection
    * @var string
    */
   public $supportEndDate;
-  /**
-   * @var ChromeOsDeviceSystemRamFreeReports[]
-   */
-  public $systemRamFreeReports;
   protected $systemRamFreeReportsType = ChromeOsDeviceSystemRamFreeReports::class;
   protected $systemRamFreeReportsDataType = 'array';
   /**
    * @var string
    */
   public $systemRamTotal;
-  /**
-   * @var ChromeOsDeviceTpmVersionInfo
-   */
-  public $tpmVersionInfo;
   protected $tpmVersionInfoType = ChromeOsDeviceTpmVersionInfo::class;
   protected $tpmVersionInfoDataType = '';
   /**
@@ -292,6 +272,34 @@ class ChromeOsDevice extends \Google\Collection
   /**
    * @param string
    */
+  public function setAutoUpdateThrough($autoUpdateThrough)
+  {
+    $this->autoUpdateThrough = $autoUpdateThrough;
+  }
+  /**
+   * @return string
+   */
+  public function getAutoUpdateThrough()
+  {
+    return $this->autoUpdateThrough;
+  }
+  /**
+   * @param BacklightInfo[]
+   */
+  public function setBacklightInfo($backlightInfo)
+  {
+    $this->backlightInfo = $backlightInfo;
+  }
+  /**
+   * @return BacklightInfo[]
+   */
+  public function getBacklightInfo()
+  {
+    return $this->backlightInfo;
+  }
+  /**
+   * @param string
+   */
   public function setBootMode($bootMode)
   {
     $this->bootMode = $bootMode;
@@ -302,6 +310,20 @@ class ChromeOsDevice extends \Google\Collection
   public function getBootMode()
   {
     return $this->bootMode;
+  }
+  /**
+   * @param string
+   */
+  public function setChromeOsType($chromeOsType)
+  {
+    $this->chromeOsType = $chromeOsType;
+  }
+  /**
+   * @return string
+   */
+  public function getChromeOsType()
+  {
+    return $this->chromeOsType;
   }
   /**
    * @param ChromeOsDeviceCpuInfo[]
@@ -456,6 +478,62 @@ class ChromeOsDevice extends \Google\Collection
   public function getEthernetMacAddress0()
   {
     return $this->ethernetMacAddress0;
+  }
+  /**
+   * @param bool
+   */
+  public function setExtendedSupportEligible($extendedSupportEligible)
+  {
+    $this->extendedSupportEligible = $extendedSupportEligible;
+  }
+  /**
+   * @return bool
+   */
+  public function getExtendedSupportEligible()
+  {
+    return $this->extendedSupportEligible;
+  }
+  /**
+   * @param bool
+   */
+  public function setExtendedSupportEnabled($extendedSupportEnabled)
+  {
+    $this->extendedSupportEnabled = $extendedSupportEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getExtendedSupportEnabled()
+  {
+    return $this->extendedSupportEnabled;
+  }
+  /**
+   * @param string
+   */
+  public function setExtendedSupportStart($extendedSupportStart)
+  {
+    $this->extendedSupportStart = $extendedSupportStart;
+  }
+  /**
+   * @return string
+   */
+  public function getExtendedSupportStart()
+  {
+    return $this->extendedSupportStart;
+  }
+  /**
+   * @param FanInfo[]
+   */
+  public function setFanInfo($fanInfo)
+  {
+    $this->fanInfo = $fanInfo;
+  }
+  /**
+   * @return FanInfo[]
+   */
+  public function getFanInfo()
+  {
+    return $this->fanInfo;
   }
   /**
    * @param string

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sentry;
 
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Sentry\HttpClient\HttpClientInterface;
 use Sentry\Integration\ErrorListenerIntegration;
 use Sentry\Integration\IntegrationInterface;
@@ -338,6 +339,14 @@ final class Options
     }
 
     /**
+     * Helper to always get a logger instance even if it was not set.
+     */
+    public function getLoggerOrNullLogger(): LoggerInterface
+    {
+        return $this->getLogger() ?? new NullLogger();
+    }
+
+    /**
      * Sets a PSR-3 compatible logger to log internal debug messages.
      */
     public function setLogger(LoggerInterface $logger): self
@@ -529,6 +538,62 @@ final class Options
     public function setBeforeSendTransactionCallback(callable $callback): self
     {
         $options = array_merge($this->options, ['before_send_transaction' => $callback]);
+
+        $this->options = $this->resolver->resolve($options);
+
+        return $this;
+    }
+
+    /**
+     * Gets a callback that will be invoked before a check-in is sent to the server.
+     * If `null` is returned it won't be sent.
+     *
+     * @psalm-return callable(Event, ?EventHint): ?Event
+     */
+    public function getBeforeSendCheckInCallback(): callable
+    {
+        return $this->options['before_send_check_in'];
+    }
+
+    /**
+     * Sets a callable to be called to decide whether a check-in should
+     * be captured or not.
+     *
+     * @param callable $callback The callable
+     *
+     * @psalm-param callable(Event, ?EventHint): ?Event $callback
+     */
+    public function setBeforeSendCheckInCallback(callable $callback): self
+    {
+        $options = array_merge($this->options, ['before_send_check_in' => $callback]);
+
+        $this->options = $this->resolver->resolve($options);
+
+        return $this;
+    }
+
+    /**
+     * Gets a callback that will be invoked before metrics are sent to the server.
+     * If `null` is returned it won't be sent.
+     *
+     * @psalm-return callable(Event, ?EventHint): ?Event
+     */
+    public function getBeforeSendMetricsCallback(): callable
+    {
+        return $this->options['before_send_metrics'];
+    }
+
+    /**
+     * Sets a callable to be called to decide whether metrics should
+     * be send or not.
+     *
+     * @param callable $callback The callable
+     *
+     * @psalm-param callable(Event, ?EventHint): ?Event $callback
+     */
+    public function setBeforeSendMetricsCallback(callable $callback): self
+    {
+        $options = array_merge($this->options, ['before_send_metrics' => $callback]);
 
         $this->options = $this->resolver->resolve($options);
 
@@ -1045,6 +1110,12 @@ final class Options
             },
             'before_send_transaction' => static function (Event $transaction): Event {
                 return $transaction;
+            },
+            'before_send_check_in' => static function (Event $checkIn): Event {
+                return $checkIn;
+            },
+            'before_send_metrics' => static function (Event $metrics): Event {
+                return $metrics;
             },
             'trace_propagation_targets' => null,
             'tags' => [],

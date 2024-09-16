@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
 import {useSelectedEntry} from '../files/use-selected-entries';
-import {IllustratedMessage} from '@common/ui/images/illustrated-message';
-import {SvgImage} from '@common/ui/images/svg-image/svg-image';
-import {Trans} from '@common/i18n/trans';
+import {Trans} from '@ui/i18n/trans';
 import detailedExamination from './detailed-examination.svg';
 import clsx from 'clsx';
 import {DetailsSidebarHeader} from '@app/drive/details-sidebar/details-sidebar-header';
 import {DetailsSidebarProperties} from '@app/drive/details-sidebar/details-sidebar-properties';
+import {IllustratedMessage} from '@ui/images/illustrated-message';
+import {SvgImage} from '@ui/images/svg-image';
 
 interface DetailsSidebarProps {
   className?: string;
@@ -17,7 +17,7 @@ export function DetailsSidebar({className}: DetailsSidebarProps) {
     <div
       className={clsx(
         className,
-        'bg p-18 text-sm text-muted border-l h-full overflow-y-auto'
+        'h-full overflow-y-auto border-l bg p-18 text-sm text-muted',
       )}
     >
       {selectedEntry ? (

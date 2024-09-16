@@ -36,10 +36,6 @@ class GoogleCloudAiplatformV1Dataset extends \Google\Collection
    * @var string
    */
   public $displayName;
-  /**
-   * @var GoogleCloudAiplatformV1EncryptionSpec
-   */
-  public $encryptionSpec;
   protected $encryptionSpecType = GoogleCloudAiplatformV1EncryptionSpec::class;
   protected $encryptionSpecDataType = '';
   /**
@@ -65,11 +61,11 @@ class GoogleCloudAiplatformV1Dataset extends \Google\Collection
   /**
    * @var string
    */
-  public $name;
+  public $modelReference;
   /**
-   * @var GoogleCloudAiplatformV1SavedQuery[]
+   * @var string
    */
-  public $savedQueries;
+  public $name;
   protected $savedQueriesType = GoogleCloudAiplatformV1SavedQuery::class;
   protected $savedQueriesDataType = 'array';
   /**
@@ -216,6 +212,20 @@ class GoogleCloudAiplatformV1Dataset extends \Google\Collection
   public function getMetadataSchemaUri()
   {
     return $this->metadataSchemaUri;
+  }
+  /**
+   * @param string
+   */
+  public function setModelReference($modelReference)
+  {
+    $this->modelReference = $modelReference;
+  }
+  /**
+   * @return string
+   */
+  public function getModelReference()
+  {
+    return $this->modelReference;
   }
   /**
    * @param string

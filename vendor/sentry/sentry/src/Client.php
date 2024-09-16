@@ -32,7 +32,7 @@ class Client implements ClientInterface
     /**
      * The version of the SDK.
      */
-    public const SDK_VERSION = '4.3.1';
+    public const SDK_VERSION = '4.7.0';
 
     /**
      * @var Options The client options
@@ -148,6 +148,16 @@ class Client implements ClientInterface
      */
     public function captureException(\Throwable $exception, ?Scope $scope = null, ?EventHint $hint = null): ?EventId
     {
+        $className = \get_class($exception);
+        if ($this->isIgnoredException($className)) {
+            $this->logger->info(
+                'The exception will be discarded because it matches an entry in "ignore_exceptions".',
+                ['className' => $className]
+            );
+
+            return null; // short circuit to avoid unnecessary processing
+        }
+
         $hint = $hint ?? new EventHint();
 
         if ($hint->exception === null) {
@@ -230,6 +240,22 @@ class Client implements ClientInterface
     }
 
     /**
+     * @internal
+     */
+    public function getLogger(): LoggerInterface
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @internal
+     */
+    public function getTransport(): TransportInterface
+    {
+        return $this->transport;
+    }
+
+    /**
      * Assembles an event and prepares it to be sent of to Sentry.
      *
      * @param Event          $event The payload that will be converted to an Event
@@ -268,17 +294,24 @@ class Client implements ClientInterface
             $event->setEnvironment($this->options->getEnvironment() ?? Event::DEFAULT_ENVIRONMENT);
         }
 
+        $eventDescription = sprintf(
+            '%s%s [%s]',
+            $event->getLevel() !== null ? $event->getLevel() . ' ' : '',
+            (string) $event->getType(),
+            (string) $event->getId()
+        );
+
         $isEvent = EventType::event() === $event->getType();
         $sampleRate = $this->options->getSampleRate();
 
         // only sample with the `sample_rate` on errors/messages
         if ($isEvent && $sampleRate < 1 && mt_rand(1, 100) / 100.0 > $sampleRate) {
-            $this->logger->info('The event will be discarded because it has been sampled.', ['event' => $event]);
+            $this->logger->info(sprintf('The %s will be discarded because it has been sampled.', $eventDescription), ['event' => $event]);
 
             return null;
         }
 
-        $event = $this->applyIgnoreOptions($event);
+        $event = $this->applyIgnoreOptions($event, $eventDescription);
 
         if ($event === null) {
             return null;
@@ -290,7 +323,7 @@ class Client implements ClientInterface
 
             if ($event === null) {
                 $this->logger->info(
-                    'The event will be discarded because one of the event processors returned "null".',
+                    sprintf('The %s will be discarded because one of the event processors returned "null".', $eventDescription),
                     ['event' => $beforeEventProcessors]
                 );
 
@@ -304,7 +337,8 @@ class Client implements ClientInterface
         if ($event === null) {
             $this->logger->info(
                 sprintf(
-                    'The event will be discarded because the "%s" callback returned "null".',
+                    'The %s will be discarded because the "%s" callback returned "null".',
+                    $eventDescription,
                     $this->getBeforeSendCallbackName($beforeSendCallback)
                 ),
                 ['event' => $beforeSendCallback]
@@ -314,7 +348,18 @@ class Client implements ClientInterface
         return $event;
     }
 
-    private function applyIgnoreOptions(Event $event): ?Event
+    private function isIgnoredException(string $className): bool
+    {
+        foreach ($this->options->getIgnoreExceptions() as $ignoredException) {
+            if (is_a($className, $ignoredException, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function applyIgnoreOptions(Event $event, string $eventDescription): ?Event
     {
         if ($event->getType() === EventType::event()) {
             $exceptions = $event->getExceptions();
@@ -324,15 +369,13 @@ class Client implements ClientInterface
             }
 
             foreach ($exceptions as $exception) {
-                foreach ($this->options->getIgnoreExceptions() as $ignoredException) {
-                    if (is_a($exception->getType(), $ignoredException, true)) {
-                        $this->logger->info(
-                            'The event will be discarded because it matches an entry in "ignore_exceptions".',
-                            ['event' => $event]
-                        );
+                if ($this->isIgnoredException($exception->getType())) {
+                    $this->logger->info(
+                        sprintf('The %s will be discarded because it matches an entry in "ignore_exceptions".', $eventDescription),
+                        ['event' => $event]
+                    );
 
-                        return null;
-                    }
+                    return null;
                 }
             }
         }
@@ -346,7 +389,7 @@ class Client implements ClientInterface
 
             if (\in_array($transactionName, $this->options->getIgnoreTransactions(), true)) {
                 $this->logger->info(
-                    'The event will be discarded because it matches a entry in "ignore_transactions".',
+                    sprintf('The %s will be discarded because it matches a entry in "ignore_transactions".', $eventDescription),
                     ['event' => $event]
                 );
 
@@ -359,26 +402,32 @@ class Client implements ClientInterface
 
     private function applyBeforeSendCallback(Event $event, ?EventHint $hint): ?Event
     {
-        if ($event->getType() === EventType::event()) {
-            return ($this->options->getBeforeSendCallback())($event, $hint);
+        switch ($event->getType()) {
+            case EventType::event():
+                return ($this->options->getBeforeSendCallback())($event, $hint);
+            case EventType::transaction():
+                return ($this->options->getBeforeSendTransactionCallback())($event, $hint);
+            case EventType::checkIn():
+                return ($this->options->getBeforeSendCheckInCallback())($event, $hint);
+            case EventType::metrics():
+                return ($this->options->getBeforeSendMetricsCallback())($event, $hint);
+            default:
+                return $event;
         }
-
-        if ($event->getType() === EventType::transaction()) {
-            return ($this->options->getBeforeSendTransactionCallback())($event, $hint);
-        }
-
-        return $event;
     }
 
     private function getBeforeSendCallbackName(Event $event): string
     {
-        $beforeSendCallbackName = 'before_send';
-
-        if ($event->getType() === EventType::transaction()) {
-            $beforeSendCallbackName = 'before_send_transaction';
+        switch ($event->getType()) {
+            case EventType::transaction():
+                return 'before_send_transaction';
+            case EventType::checkIn():
+                return 'before_send_check_in';
+            case EventType::metrics():
+                return 'before_send_metrics';
+            default:
+                return 'before_send';
         }
-
-        return $beforeSendCallbackName;
     }
 
     /**

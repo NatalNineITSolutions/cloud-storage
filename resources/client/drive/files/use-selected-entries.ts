@@ -20,7 +20,7 @@ export function useSelectedEntry(): DriveEntry | null {
 export function useSelectedEntryParent(): DriveFolder | null | undefined {
   const entry = useSelectedEntry();
   const {data} = useFolders();
-  if (!entry || !data) return;
+  if (!entry || !data?.folders) return;
   return data.folders.find(e => e.id === entry.parent_id) as DriveFolder;
 }
 

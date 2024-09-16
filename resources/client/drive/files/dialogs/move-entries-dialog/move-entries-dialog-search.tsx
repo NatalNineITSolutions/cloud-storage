@@ -1,20 +1,22 @@
-import React from 'react';
-import {SearchIcon} from '@common/icons/material/Search';
-import {ComboBox} from '@common/ui/forms/combobox/combobox';
-import {Item} from '@common/ui/forms/listbox/item';
-import {useTrans} from '@common/i18n/use-trans';
-import {PartialFolder} from '../../utils/can-move-entries-into';
+import React, {useState} from 'react';
+import {SearchIcon} from '@ui/icons/material/Search';
+import {ComboBox} from '@ui/forms/combobox/combobox';
+import {Item} from '@ui/forms/listbox/item';
+import {useTrans} from '@ui/i18n/use-trans';
+import {useMoveEntriesDialogFolderSearch} from '@app/drive/files/dialogs/move-entries-dialog/use-move-entries-dialog-folder-search';
+import {DriveFolder} from '@app/drive/files/drive-entry';
 
 interface SearchComboBoxProps {
-  allFolders: PartialFolder[];
-  onFolderSelected: (folder: PartialFolder) => void;
+  onFolderSelected: (folder: DriveFolder) => void;
 }
 export function MoveEntriesDialogSearch({
-  allFolders,
   onFolderSelected,
 }: SearchComboBoxProps) {
   const {trans} = useTrans();
   const searchLabel = trans({message: 'Search folders'});
+  const [query, setQuery] = useState('');
+  const {isFetching, data} = useMoveEntriesDialogFolderSearch({query});
+  const folders = data?.data;
   return (
     <ComboBox
       size="sm"
@@ -23,21 +25,27 @@ export function MoveEntriesDialogSearch({
       aria-label={searchLabel}
       className="pt-20"
       endAdornmentIcon={<SearchIcon />}
-      items={allFolders}
+      isAsync
+      isLoading={isFetching}
+      inputValue={query}
+      onInputValueChange={setQuery}
+      blurReferenceOnItemSelection
       clearInputOnItemSelection
-      onItemSelected={value => {
-        const folderId = parseInt(value as string);
-        const folder = allFolders.find(f => f.id === folderId);
-        if (folder) {
-          onFolderSelected(folder);
-        }
-      }}
+      selectionMode="none"
+      openMenuOnFocus={false}
     >
-      {item => (
-        <Item key={item.id} value={item.id}>
-          {item.name}
+      {folders?.map(folder => (
+        <Item
+          key={folder.id}
+          value={folder.id}
+          textLabel={folder.name}
+          onSelected={() => {
+            onFolderSelected(folder);
+          }}
+        >
+          {folder.name}
         </Item>
-      )}
+      ))}
     </ComboBox>
   );
 }

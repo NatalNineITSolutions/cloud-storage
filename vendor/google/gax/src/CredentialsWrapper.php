@@ -34,6 +34,7 @@ namespace Google\ApiCore;
 use DomainException;
 use Exception;
 use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\ProjectIdProviderInterface;
 use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\CredentialsLoader;
@@ -50,7 +51,7 @@ use Psr\Cache\CacheItemPoolInterface;
 /**
  * The CredentialsWrapper object provides a wrapper around a FetchAuthTokenInterface.
  */
-class CredentialsWrapper
+class CredentialsWrapper implements ProjectIdProviderInterface
 {
     use ValidationTrait;
 
@@ -80,7 +81,7 @@ class CredentialsWrapper
         string $universeDomain = GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
     ) {
         $this->credentialsFetcher = $credentialsFetcher;
-        $this->authHttpHandler = $authHttpHandler ?: self::buildHttpHandlerFactory();
+        $this->authHttpHandler = $authHttpHandler;
         if (empty($universeDomain)) {
             throw new ValidationException('The universe domain cannot be empty');
         }
@@ -140,12 +141,11 @@ class CredentialsWrapper
         ];
 
         $keyFile = $args['keyFile'];
-        $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
 
         if (is_null($keyFile)) {
             $loader = self::buildApplicationDefaultCredentials(
                 $args['scopes'],
-                $authHttpHandler,
+                $args['authHttpHandler'],
                 $args['authCacheOptions'],
                 $args['authCache'],
                 $args['quotaProject'],
@@ -188,7 +188,7 @@ class CredentialsWrapper
             );
         }
 
-        return new CredentialsWrapper($loader, $authHttpHandler, $universeDomain);
+        return new CredentialsWrapper($loader, $args['authHttpHandler'], $universeDomain);
     }
 
     /**
@@ -198,6 +198,20 @@ class CredentialsWrapper
     {
         if ($this->credentialsFetcher instanceof GetQuotaProjectInterface) {
             return $this->credentialsFetcher->getQuotaProject();
+        }
+        return null;
+    }
+
+    public function getProjectId(callable $httpHandler = null): ?string
+    {
+        // Ensure that FetchAuthTokenCache does not throw an exception
+        if ($this->credentialsFetcher instanceof FetchAuthTokenCache
+            && !$this->credentialsFetcher->getFetcher() instanceof ProjectIdProviderInterface) {
+            return null;
+        }
+
+        if ($this->credentialsFetcher instanceof ProjectIdProviderInterface) {
+            return $this->credentialsFetcher->getProjectId($httpHandler);
         }
         return null;
     }
@@ -236,7 +250,7 @@ class CredentialsWrapper
 
                 // Call updateMetadata to take advantage of self-signed JWTs
                 if ($this->credentialsFetcher instanceof UpdateMetadataInterface) {
-                    return $this->credentialsFetcher->updateMetadata([], $audience);
+                    return $this->credentialsFetcher->updateMetadata([], $audience, $this->authHttpHandler);
                 }
 
                 // In case a custom fetcher is provided (unlikely) which doesn't
@@ -257,7 +271,7 @@ class CredentialsWrapper
     /**
      * Verify that the expected universe domain matches the universe domain from the credentials.
      */
-    private function checkUniverseDomain()
+    public function checkUniverseDomain()
     {
         if (false === $this->hasCheckedUniverse) {
             $credentialsUniverse = $this->credentialsFetcher instanceof GetUniverseDomainInterface
@@ -271,19 +285,6 @@ class CredentialsWrapper
                 ));
             }
             $this->hasCheckedUniverse = true;
-        }
-    }
-
-    /**
-     * @return Guzzle6HttpHandler|Guzzle7HttpHandler
-     * @throws ValidationException
-     */
-    private static function buildHttpHandlerFactory()
-    {
-        try {
-            return HttpHandlerFactory::build();
-        } catch (Exception $ex) {
-            throw new ValidationException("Failed to build HttpHandler", $ex->getCode(), $ex);
         }
     }
 

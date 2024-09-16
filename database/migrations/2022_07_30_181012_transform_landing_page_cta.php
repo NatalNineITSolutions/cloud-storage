@@ -14,7 +14,9 @@ class TransformLandingPageCta extends Migration
             return;
         }
 
-        $landingConfig = json_decode($landing['value'], true, 512, JSON_THROW_ON_ERROR);
+        $landingConfig = is_array($landing['value'])
+            ? $landing['value']
+            : json_decode($landing['value'], true);
         foreach ($landingConfig['actions'] as $key => $action) {
             if (is_string($action)) {
                 $landingConfig['actions'][$key] = [
@@ -25,7 +27,9 @@ class TransformLandingPageCta extends Migration
             }
         }
 
-        $landing->update(['value' => json_encode($landingConfig, JSON_THROW_ON_ERROR)]);
+        $landing->update([
+            'value' => json_encode($landingConfig),
+        ]);
     }
 
     public function down()

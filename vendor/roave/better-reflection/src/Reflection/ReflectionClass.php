@@ -357,7 +357,13 @@ class ReflectionClass implements Reflection
 
         if (array_key_exists($methodHash, $this->traitsData['modifiers'])) {
             // PhpParser modifiers are compatible with PHP reflection modifiers
-            $methodModifiers = ($methodModifiers & ~ Node\Stmt\Class_::VISIBILITY_MODIFIER_MASK) | $this->traitsData['modifiers'][$methodHash];
+            if ($this->traitsData['modifiers'][$methodHash] & Node\Stmt\Class_::VISIBILITY_MODIFIER_MASK) {
+                $methodModifiers = ($methodModifiers & ~ Node\Stmt\Class_::VISIBILITY_MODIFIER_MASK) | $this->traitsData['modifiers'][$methodHash];
+            }
+
+            if ($this->traitsData['modifiers'][$methodHash] & Node\Stmt\Class_::MODIFIER_FINAL) {
+                $methodModifiers |= Node\Stmt\Class_::MODIFIER_FINAL;
+            }
         }
 
         $createMethod = function (string|null $aliasMethodName) use ($method, $methodModifiers): ReflectionMethod {
@@ -1410,7 +1416,7 @@ class ReflectionClass implements Reflection
                 $methodHash = $this->methodHash($usedTrait->toString(), $adaptation->method->toString());
 
                 if ($adaptation instanceof Node\Stmt\TraitUseAdaptation\Alias) {
-                    if ($adaptation->newModifier) {
+                    if ($adaptation->newModifier !== null) {
                         /** @var int-mask-of<ReflectionMethodAdapter::IS_*> $modifier */
                         $modifier                             = $adaptation->newModifier;
                         $traitsData['modifiers'][$methodHash] = $modifier;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FileEntry;
+use App\Services\Entries\DriveEntriesLoader;
 use App\Services\Entries\FetchDriveEntries;
 use App\Services\Entries\SetPermissionsOnEntry;
 use Common\Files\Controllers\FileEntriesController;
@@ -37,6 +38,10 @@ class DriveEntriesController extends FileEntriesController
         $params['userId'] = Auth::id();
 
         $this->authorize('index', [FileEntry::class, null, $params['userId']]);
+
+        if (isset($params['section'])) {
+            return (new DriveEntriesLoader($params))->load();
+        }
 
         return app(FetchDriveEntries::class)->execute($params);
     }

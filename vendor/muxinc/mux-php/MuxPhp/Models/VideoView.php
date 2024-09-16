@@ -213,7 +213,16 @@ class VideoView implements ModelInterface, ArrayAccess, \JsonSerializable
         'ad_exit_before_start_count' => 'int',
         'ad_exit_before_start_percentage' => 'string',
         'long_resume' => 'bool',
-        'long_rebuffering' => 'bool'
+        'long_rebuffering' => 'bool',
+        'playback_failure_error_type_id' => 'int',
+        'playback_business_exception_error_type_id' => 'int',
+        'video_startup_business_exception_error_type_id' => 'int',
+        'playback_failure' => 'bool',
+        'ad_playback_failure_error_type_id' => 'int',
+        'view_content_startup_time' => 'int',
+        'ad_preroll_startup_time' => 'int',
+        'ad_watch_time' => 'int',
+        'view_content_watch_time' => 'int'
     ];
 
     /**
@@ -377,7 +386,16 @@ class VideoView implements ModelInterface, ArrayAccess, \JsonSerializable
         'ad_exit_before_start_count' => 'int32',
         'ad_exit_before_start_percentage' => null,
         'long_resume' => null,
-        'long_rebuffering' => null
+        'long_rebuffering' => null,
+        'playback_failure_error_type_id' => 'int32',
+        'playback_business_exception_error_type_id' => 'int32',
+        'video_startup_business_exception_error_type_id' => 'int32',
+        'playback_failure' => null,
+        'ad_playback_failure_error_type_id' => 'int32',
+        'view_content_startup_time' => 'int32',
+        'ad_preroll_startup_time' => 'int32',
+        'ad_watch_time' => 'int32',
+        'view_content_watch_time' => 'int32'
     ];
 
     /**
@@ -539,7 +557,16 @@ class VideoView implements ModelInterface, ArrayAccess, \JsonSerializable
         'ad_exit_before_start_count' => true,
         'ad_exit_before_start_percentage' => true,
         'long_resume' => false,
-        'long_rebuffering' => false
+        'long_rebuffering' => false,
+        'playback_failure_error_type_id' => true,
+        'playback_business_exception_error_type_id' => true,
+        'video_startup_business_exception_error_type_id' => true,
+        'playback_failure' => false,
+        'ad_playback_failure_error_type_id' => true,
+        'view_content_startup_time' => true,
+        'ad_preroll_startup_time' => true,
+        'ad_watch_time' => true,
+        'view_content_watch_time' => true
     ];
 
     /**
@@ -771,7 +798,16 @@ class VideoView implements ModelInterface, ArrayAccess, \JsonSerializable
         'ad_exit_before_start_count' => 'ad_exit_before_start_count',
         'ad_exit_before_start_percentage' => 'ad_exit_before_start_percentage',
         'long_resume' => 'long_resume',
-        'long_rebuffering' => 'long_rebuffering'
+        'long_rebuffering' => 'long_rebuffering',
+        'playback_failure_error_type_id' => 'playback_failure_error_type_id',
+        'playback_business_exception_error_type_id' => 'playback_business_exception_error_type_id',
+        'video_startup_business_exception_error_type_id' => 'video_startup_business_exception_error_type_id',
+        'playback_failure' => 'playback_failure',
+        'ad_playback_failure_error_type_id' => 'ad_playback_failure_error_type_id',
+        'view_content_startup_time' => 'view_content_startup_time',
+        'ad_preroll_startup_time' => 'ad_preroll_startup_time',
+        'ad_watch_time' => 'ad_watch_time',
+        'view_content_watch_time' => 'view_content_watch_time'
     ];
 
     /**
@@ -933,7 +969,16 @@ class VideoView implements ModelInterface, ArrayAccess, \JsonSerializable
         'ad_exit_before_start_count' => 'setAdExitBeforeStartCount',
         'ad_exit_before_start_percentage' => 'setAdExitBeforeStartPercentage',
         'long_resume' => 'setLongResume',
-        'long_rebuffering' => 'setLongRebuffering'
+        'long_rebuffering' => 'setLongRebuffering',
+        'playback_failure_error_type_id' => 'setPlaybackFailureErrorTypeId',
+        'playback_business_exception_error_type_id' => 'setPlaybackBusinessExceptionErrorTypeId',
+        'video_startup_business_exception_error_type_id' => 'setVideoStartupBusinessExceptionErrorTypeId',
+        'playback_failure' => 'setPlaybackFailure',
+        'ad_playback_failure_error_type_id' => 'setAdPlaybackFailureErrorTypeId',
+        'view_content_startup_time' => 'setViewContentStartupTime',
+        'ad_preroll_startup_time' => 'setAdPrerollStartupTime',
+        'ad_watch_time' => 'setAdWatchTime',
+        'view_content_watch_time' => 'setViewContentWatchTime'
     ];
 
     /**
@@ -1095,7 +1140,16 @@ class VideoView implements ModelInterface, ArrayAccess, \JsonSerializable
         'ad_exit_before_start_count' => 'getAdExitBeforeStartCount',
         'ad_exit_before_start_percentage' => 'getAdExitBeforeStartPercentage',
         'long_resume' => 'getLongResume',
-        'long_rebuffering' => 'getLongRebuffering'
+        'long_rebuffering' => 'getLongRebuffering',
+        'playback_failure_error_type_id' => 'getPlaybackFailureErrorTypeId',
+        'playback_business_exception_error_type_id' => 'getPlaybackBusinessExceptionErrorTypeId',
+        'video_startup_business_exception_error_type_id' => 'getVideoStartupBusinessExceptionErrorTypeId',
+        'playback_failure' => 'getPlaybackFailure',
+        'ad_playback_failure_error_type_id' => 'getAdPlaybackFailureErrorTypeId',
+        'view_content_startup_time' => 'getViewContentStartupTime',
+        'ad_preroll_startup_time' => 'getAdPrerollStartupTime',
+        'ad_watch_time' => 'getAdWatchTime',
+        'view_content_watch_time' => 'getViewContentWatchTime'
     ];
 
     /**
@@ -1312,6 +1366,15 @@ class VideoView implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('ad_exit_before_start_percentage', $data ?? [], null);
         $this->setIfExists('long_resume', $data ?? [], null);
         $this->setIfExists('long_rebuffering', $data ?? [], null);
+        $this->setIfExists('playback_failure_error_type_id', $data ?? [], null);
+        $this->setIfExists('playback_business_exception_error_type_id', $data ?? [], null);
+        $this->setIfExists('video_startup_business_exception_error_type_id', $data ?? [], null);
+        $this->setIfExists('playback_failure', $data ?? [], null);
+        $this->setIfExists('ad_playback_failure_error_type_id', $data ?? [], null);
+        $this->setIfExists('view_content_startup_time', $data ?? [], null);
+        $this->setIfExists('ad_preroll_startup_time', $data ?? [], null);
+        $this->setIfExists('ad_watch_time', $data ?? [], null);
+        $this->setIfExists('view_content_watch_time', $data ?? [], null);
     }
 
     /**
@@ -6742,6 +6805,323 @@ class VideoView implements ModelInterface, ArrayAccess, \JsonSerializable
         }
 
         $this->container['long_rebuffering'] = $long_rebuffering;
+
+        return $this;
+    }
+
+    /**
+     * Gets playback_failure_error_type_id
+     *
+     * @return int|null
+     */
+    public function getPlaybackFailureErrorTypeId()
+    {
+        return $this->container['playback_failure_error_type_id'];
+    }
+
+    /**
+     * Sets playback_failure_error_type_id
+     *
+     * @param int|null $playback_failure_error_type_id playback_failure_error_type_id
+     *
+     * @return self
+     */
+    public function setPlaybackFailureErrorTypeId($playback_failure_error_type_id)
+    {
+
+        if (is_null($playback_failure_error_type_id)) {
+            array_push($this->openAPINullablesSetToNull, 'playback_failure_error_type_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('playback_failure_error_type_id', $nullablesSetToNull, true);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+
+        $this->container['playback_failure_error_type_id'] = $playback_failure_error_type_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets playback_business_exception_error_type_id
+     *
+     * @return int|null
+     */
+    public function getPlaybackBusinessExceptionErrorTypeId()
+    {
+        return $this->container['playback_business_exception_error_type_id'];
+    }
+
+    /**
+     * Sets playback_business_exception_error_type_id
+     *
+     * @param int|null $playback_business_exception_error_type_id playback_business_exception_error_type_id
+     *
+     * @return self
+     */
+    public function setPlaybackBusinessExceptionErrorTypeId($playback_business_exception_error_type_id)
+    {
+
+        if (is_null($playback_business_exception_error_type_id)) {
+            array_push($this->openAPINullablesSetToNull, 'playback_business_exception_error_type_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('playback_business_exception_error_type_id', $nullablesSetToNull, true);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+
+        $this->container['playback_business_exception_error_type_id'] = $playback_business_exception_error_type_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets video_startup_business_exception_error_type_id
+     *
+     * @return int|null
+     */
+    public function getVideoStartupBusinessExceptionErrorTypeId()
+    {
+        return $this->container['video_startup_business_exception_error_type_id'];
+    }
+
+    /**
+     * Sets video_startup_business_exception_error_type_id
+     *
+     * @param int|null $video_startup_business_exception_error_type_id video_startup_business_exception_error_type_id
+     *
+     * @return self
+     */
+    public function setVideoStartupBusinessExceptionErrorTypeId($video_startup_business_exception_error_type_id)
+    {
+
+        if (is_null($video_startup_business_exception_error_type_id)) {
+            array_push($this->openAPINullablesSetToNull, 'video_startup_business_exception_error_type_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('video_startup_business_exception_error_type_id', $nullablesSetToNull, true);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+
+        $this->container['video_startup_business_exception_error_type_id'] = $video_startup_business_exception_error_type_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets playback_failure
+     *
+     * @return bool|null
+     */
+    public function getPlaybackFailure()
+    {
+        return $this->container['playback_failure'];
+    }
+
+    /**
+     * Sets playback_failure
+     *
+     * @param bool|null $playback_failure playback_failure
+     *
+     * @return self
+     */
+    public function setPlaybackFailure($playback_failure)
+    {
+
+        if (is_null($playback_failure)) {
+            throw new \InvalidArgumentException('non-nullable playback_failure cannot be null');
+        }
+
+        $this->container['playback_failure'] = $playback_failure;
+
+        return $this;
+    }
+
+    /**
+     * Gets ad_playback_failure_error_type_id
+     *
+     * @return int|null
+     */
+    public function getAdPlaybackFailureErrorTypeId()
+    {
+        return $this->container['ad_playback_failure_error_type_id'];
+    }
+
+    /**
+     * Sets ad_playback_failure_error_type_id
+     *
+     * @param int|null $ad_playback_failure_error_type_id ad_playback_failure_error_type_id
+     *
+     * @return self
+     */
+    public function setAdPlaybackFailureErrorTypeId($ad_playback_failure_error_type_id)
+    {
+
+        if (is_null($ad_playback_failure_error_type_id)) {
+            array_push($this->openAPINullablesSetToNull, 'ad_playback_failure_error_type_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('ad_playback_failure_error_type_id', $nullablesSetToNull, true);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+
+        $this->container['ad_playback_failure_error_type_id'] = $ad_playback_failure_error_type_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets view_content_startup_time
+     *
+     * @return int|null
+     */
+    public function getViewContentStartupTime()
+    {
+        return $this->container['view_content_startup_time'];
+    }
+
+    /**
+     * Sets view_content_startup_time
+     *
+     * @param int|null $view_content_startup_time view_content_startup_time
+     *
+     * @return self
+     */
+    public function setViewContentStartupTime($view_content_startup_time)
+    {
+
+        if (is_null($view_content_startup_time)) {
+            array_push($this->openAPINullablesSetToNull, 'view_content_startup_time');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('view_content_startup_time', $nullablesSetToNull, true);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+
+        $this->container['view_content_startup_time'] = $view_content_startup_time;
+
+        return $this;
+    }
+
+    /**
+     * Gets ad_preroll_startup_time
+     *
+     * @return int|null
+     */
+    public function getAdPrerollStartupTime()
+    {
+        return $this->container['ad_preroll_startup_time'];
+    }
+
+    /**
+     * Sets ad_preroll_startup_time
+     *
+     * @param int|null $ad_preroll_startup_time ad_preroll_startup_time
+     *
+     * @return self
+     */
+    public function setAdPrerollStartupTime($ad_preroll_startup_time)
+    {
+
+        if (is_null($ad_preroll_startup_time)) {
+            array_push($this->openAPINullablesSetToNull, 'ad_preroll_startup_time');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('ad_preroll_startup_time', $nullablesSetToNull, true);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+
+        $this->container['ad_preroll_startup_time'] = $ad_preroll_startup_time;
+
+        return $this;
+    }
+
+    /**
+     * Gets ad_watch_time
+     *
+     * @return int|null
+     */
+    public function getAdWatchTime()
+    {
+        return $this->container['ad_watch_time'];
+    }
+
+    /**
+     * Sets ad_watch_time
+     *
+     * @param int|null $ad_watch_time ad_watch_time
+     *
+     * @return self
+     */
+    public function setAdWatchTime($ad_watch_time)
+    {
+
+        if (is_null($ad_watch_time)) {
+            array_push($this->openAPINullablesSetToNull, 'ad_watch_time');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('ad_watch_time', $nullablesSetToNull, true);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+
+        $this->container['ad_watch_time'] = $ad_watch_time;
+
+        return $this;
+    }
+
+    /**
+     * Gets view_content_watch_time
+     *
+     * @return int|null
+     */
+    public function getViewContentWatchTime()
+    {
+        return $this->container['view_content_watch_time'];
+    }
+
+    /**
+     * Sets view_content_watch_time
+     *
+     * @param int|null $view_content_watch_time view_content_watch_time
+     *
+     * @return self
+     */
+    public function setViewContentWatchTime($view_content_watch_time)
+    {
+
+        if (is_null($view_content_watch_time)) {
+            array_push($this->openAPINullablesSetToNull, 'view_content_watch_time');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('view_content_watch_time', $nullablesSetToNull, true);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+
+        $this->container['view_content_watch_time'] = $view_content_watch_time;
 
         return $this;
     }
