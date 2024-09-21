@@ -21,4 +21,4 @@ Route::get('pricing', '\Common\Billing\PricingPageController');
 Route::fallback([HomeController::class, 'render']);
 
 //subscriptions plan Permission 
-Route::get('api/permissions/subscriptions/plan', [HomeController::class, 'permission']);
+// Route::get('api/permissions/subscriptions/plan', [HomeController::class, 'permission']);
