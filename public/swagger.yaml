@@ -2,7 +2,9 @@ openapi: 3.0.0
 info:
   description: 'Access token should be sent along with every request to SITE_NAME API in authorization header: `Authorization: Bearer <Token>` <br> This token can either be acquired via `auth/login` endpoint or from account settings page on [SITE_NAME website](SITE_URL/account-settings).'
   version: '1.0.0'
-  title: SITE_NAME API
+  title: Cloud Storage API
+  # title: SITE_NAME API
+
 security:
   - accessToken: []
 tags:
@@ -144,7 +146,7 @@ paths:
           $ref: '#/components/schemas/401-Response'
         '403':
           $ref: '#/components/schemas/403-Response'
-  /file-entries:
+  /file-entries/{entryId}:
     delete:
       tags:
         - Files and Folders
@@ -187,8 +189,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/422-Response'
-
-  /file-entries/{entryId}:
+ 
+  # /file-entries/{entryId}:
     put:
       tags:
         - Files and Folders
@@ -235,7 +237,7 @@ paths:
                 description:
                   type: string
                   example: 'New description for the entry'
-
+ 
   /folders:
     post:
       tags:
@@ -279,12 +281,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/422-Response'
-
+ 
   /file-entries/move:
     post:
       tags:
         - Files and Folders
-      summary: Movie specified entries to a different folder
+      summary: Move specified entries to a different folder
       operationId: entriesMove
       responses:
         '200':
@@ -422,7 +424,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/422-Response'
-
+ 
   /file-entries/{entryId}/share:
     post:
       tags:
@@ -579,7 +581,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/422-Response'
-
+ 
   /file-entries/star:
     post:
       tags:
@@ -658,7 +660,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/422-Response'
-
+ 
   /file-entries/{entryId}/shareable-link:
     get:
       tags:
@@ -805,7 +807,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/422-Response'
-
+ 
     delete:
       tags:
         - Shareable Links
@@ -842,7 +844,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/422-Response'
-
+ 
   /auth/register:
     post:
       security: []
@@ -884,6 +886,9 @@ paths:
                   type: string
                   example: 'example@gmail.com'
                 password:
+                  type: string
+                  example: 'password'
+                password_confirmation:
                   type: string
                   example: 'password'
                 token_name:
@@ -1126,8 +1131,10 @@ components:
             some_data_2:
               type: string
               example: Error message for data 2
-
+ 
   securitySchemes:
     accessToken:
       type: http
       scheme: bearer
+ 
+

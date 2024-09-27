@@ -32,7 +32,7 @@ Route::group(['prefix' => 'v1'], function() {
       SharesController::class,
       'changePermissions',
     ]);
-
+    
     // SHAREABLE LINK
     Route::get('file-entries/{id}/shareable-link', [
       ShareableLinksController::class,
@@ -46,10 +46,7 @@ Route::group(['prefix' => 'v1'], function() {
       ShareableLinksController::class,
       'update',
     ]);
-    Route::delete('file-entries/{id}/shareable-link', [
-      ShareableLinksController::class,
-      'destroy',
-    ]);
+   
     Route::post('shareable-links/{linkId}/import', [
       SharesController::class,
       'addCurrentUser',
@@ -91,6 +88,7 @@ Route::group(['prefix' => 'v1'], function() {
       FolderPathController::class,
       'show',
     ]);
+  
 
     // Tags/Labels
     Route::get('file-entry-tags', [
@@ -121,5 +119,5 @@ Route::group(['prefix' => 'v1'], function() {
   Route::post('shareable-links/{linkHash}/check-password', [
     ShareableLinkPasswordController::class,
     'check',
-  ]);
+  ]);  
 });

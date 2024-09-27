@@ -71,9 +71,11 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('file-entries', [FileEntriesController::class, 'index']);
         Route::post('file-entries/delete', [FileEntriesController::class, 'destroy']);
         Route::delete('file-entries/{entryIds}', [FileEntriesController::class, 'destroy']);
+        Route::delete('file-entries/{entryIds}/unshare', [FileEntriesController::class, 'destroy']);
         Route::get('file-entries/download/{hashes}', [DownloadFileController::class, 'download']);
         Route::post('file-entries/{id}/add-preview-token', [AddPreviewTokenController::class, 'store']);
         Route::post('file-entries/restore', [RestoreDeletedEntriesController::class, 'restore']);
+        Route::delete('file-entries/{id}/shareable-link', [FileEntriesController::class,'destroy']);
 
         // for swagger api docs
         Route::post('uploads', [FileEntriesController::class, 'store']);
