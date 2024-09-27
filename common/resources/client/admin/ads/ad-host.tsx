@@ -11,6 +11,7 @@ interface AdHostProps {
   slot: keyof Omit<NonNullable<Settings['ads']>, 'disable'>;
   className?: string;
 }
+
 export function AdHost({slot, className}: AdHostProps) {
   const settings = useSettings();
   const {isSubscribed} = useAuth();
@@ -28,6 +29,7 @@ interface InvariantAdProps {
   adCode: string;
   className?: string;
 }
+
 const InvariantAd = memo(
   ({slot, adCode, className}: InvariantAdProps) => {
     const ref = useRef<HTMLDivElement>(null);

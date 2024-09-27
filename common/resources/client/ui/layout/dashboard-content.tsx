@@ -5,6 +5,7 @@ interface DashboardContentProps {
   children: ReactElement<{className: string}>;
   isScrollable?: boolean;
 }
+
 export function DashboardContent({
   children,
   isScrollable = true,

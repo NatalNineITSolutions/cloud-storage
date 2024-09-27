@@ -97,6 +97,7 @@ interface EntryPreviewProps {
   points?: {start?: Point; end?: Point};
   state: DragPreviewState;
 }
+
 const EntryPreview = memo(
   ({entry, points, index, state}: EntryPreviewProps) => {
     const viewMode = useDriveStore(s => s.viewMode);

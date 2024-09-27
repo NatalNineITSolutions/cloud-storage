@@ -9,6 +9,8 @@ export interface DriveEntry extends FileEntry {
     'files.delete': boolean;
     'files.download': boolean;
   };
+  received_from_superadmin?: boolean;
+  
 }
 
 export interface DriveFolder extends DriveEntry {

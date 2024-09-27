@@ -23,7 +23,7 @@ export function AdminSidebar({className, isCompactMode}: Props) {
         orientation="vertical"
         onlyShowIcons={isCompactMode}
         itemClassName={({isActive}) =>
-          clsx(
+          clsx (
             'block w-full rounded-button py-12 px-16',
             isActive
               ? 'bg-primary/6 text-primary font-semibold'

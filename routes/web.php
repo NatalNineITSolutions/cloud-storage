@@ -22,3 +22,7 @@ Route::fallback([HomeController::class, 'render']);
 
 //subscriptions plan Permission 
 Route::get('api/permissions/subscriptions/plan', [HomeController::class, 'permission']);
+
+Route::get('/api/user', function () {
+    return auth()->user();
+});

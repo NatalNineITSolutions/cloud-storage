@@ -16,9 +16,15 @@ export function EntryPreviewDialog({selectedEntry}: EntryPreviewDialogProps) {
     file => file.id === selectedEntry?.id
   );
   const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
+
+  const filePermission: boolean | undefined = selectedEntry.users[1].entry_permissions.download;
+
+  const allowDownload:boolean = !!filePermission;
+
   return (
     <FilePreviewDialog
-      allowDownload={selectedEntry.permissions['files.download']}
+      // allowDownload={selectedEntry.permissions['files.download']}
+      allowDownload = {allowDownload}
       headerActionsLeft={
         <DriveActions activeIndex={activeIndex} entries={files} />
       }

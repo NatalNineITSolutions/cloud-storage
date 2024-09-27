@@ -5,6 +5,7 @@ import {useMemo} from 'react';
 import {Navbar} from '../ui/navigation/navbar/navbar';
 import {Footer} from '../ui/footer/footer';
 import {useSettings} from '../core/settings/use-settings';
+import './swagger.css';
 
 export default function SwaggerApiDocsPage() {
   const settings = useSettings();

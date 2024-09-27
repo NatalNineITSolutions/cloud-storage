@@ -20,6 +20,7 @@ export interface SidenavProps {
   overflow?: string;
   forceClosed?: boolean;
 }
+
 export function DashboardSidenav({
   className,
   position,

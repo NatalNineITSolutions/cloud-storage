@@ -78,8 +78,7 @@ export function DriveLayout() {
             onDrop={e => {
               // prevent files from desktop from blowing away the document
               e.preventDefault();
-            }}
-          >
+            }}>
             <Navbar />
             <DashboardSidenav position="left" size="md">
               <Sidebar />

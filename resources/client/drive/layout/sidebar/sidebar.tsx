@@ -15,17 +15,53 @@ import {useSettings} from '@common/core/settings/use-settings';
 interface SidebarProps {
   className?: string;
 }
-export function Sidebar({className}: SidebarProps) {
-  const {isSubscribed} = useAuth();
-  const {billing} = useSettings();
+
+// export function Sidebar({className}: SidebarProps) {
+//   const {isSubscribed} = useAuth();
+//   const {billing} = useSettings();
+//   return (
+//     <div
+//       className={clsx(
+//         className,
+//         'flex flex-col gap-20 border-r bg-alt text-sm font-medium text-muted'
+//       )}
+//     >
+//       <div className="flex-auto">
+//         <CreateNewButton className="px-12 pt-28 text-center" />
+//         <SidebarMenu />
+//         <StorageMeter />
+//         {billing.enable ? (
+//           <div className="mt-14 pl-60">
+//             <Button
+//               elementType={Link}
+//               to={isSubscribed ? '/billing/change-plan' : '/pricing'}
+//               variant="outline"
+//               color="primary"
+//               size="xs"
+//             >
+//               <Trans message="Upgrade" />
+//             </Button>
+//           </div>
+//         ) : null}
+//       </div>
+//        <WorkspaceSwitcher /> 
+//     </div>
+//   );
+// }
+
+export function Sidebar({ className }: SidebarProps) {
+  const { isSubscribed } = useAuth();
+  const { billing } = useSettings();
+  
   return (
     <div
       className={clsx(
         className,
-        'flex flex-col gap-20 border-r bg-alt text-sm font-medium text-muted'
+        'flex flex-col gap-20 border-r bg-alt text-sm font-medium text-muted h-screen'
       )}
     >
-      <div className="flex-auto">
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto">
         <CreateNewButton className="px-12 pt-28 text-center" />
         <SidebarMenu />
         <StorageMeter />
@@ -43,10 +79,16 @@ export function Sidebar({className}: SidebarProps) {
           </div>
         ) : null}
       </div>
-       <WorkspaceSwitcher /> 
+
+      {/* Fixed WorkspaceSwitcher at the bottom */}
+      <div className="sticky bottom-0 mt-40">
+        <WorkspaceSwitcher />
+      </div>
     </div>
   );
 }
+
+
 
 function WorkspaceSwitcher() {
   const navigate = useNavigate();

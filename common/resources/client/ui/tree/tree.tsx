@@ -20,6 +20,7 @@ interface TreeProps<T extends TreeNode> {
   defaultSelectedKeys?: Key[];
   onSelectedKeysChange?: (value: Key[]) => void;
 }
+
 export function Tree<T extends TreeNode>({
   children,
   nodes,
@@ -59,6 +60,7 @@ interface TreeRootProps<T extends TreeNode> {
   nodes: TreeNode[];
   itemRenderer: TreeItemRenderer<T>;
 }
+
 function TreeRoot<T extends TreeNode>(props: TreeRootProps<T>) {
   return (
     <ul className="overflow-hidden text-sm" role="tree">

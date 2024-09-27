@@ -23,6 +23,7 @@ import {DetailsSidebarTags} from '@app/drive/details-sidebar/details-sidebar-tag
 interface EntryPropertiesProps {
   entry: DriveEntry;
 }
+
 export function DetailsSidebarProperties({entry}: EntryPropertiesProps) {
   return (
     <div>
@@ -68,6 +69,7 @@ export function DetailsSidebarProperties({entry}: EntryPropertiesProps) {
 interface Props {
   entry: DriveEntry;
 }
+
 function PropertyList({entry}: Props) {
   const parent = useSelectedEntryParent();
   const navigate = useNavigate();

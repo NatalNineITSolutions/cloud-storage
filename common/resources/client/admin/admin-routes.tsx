@@ -54,8 +54,6 @@ import {ThemeRadiusPanel} from '@common/admin/appearance/sections/themes/theme-r
 
 const ReportsPage = React.lazy(() => import('./analytics/admin-report-page'));
 
-
-
 const AdminRouteConfig: RouteObject[] = [
   {
     path: 'appearance',
@@ -98,6 +96,27 @@ const AdminRouteConfig: RouteObject[] = [
             <ReportsPage />
           </React.Suspense>
         ),
+        // element: (
+        //   <AuthRoute permission="settings.update">
+        //     <SettingsLayout />
+        //   </AuthRoute>
+        // ),
+        // children: [
+        //   {index: true, element: <Navigate to={"uploading"} replace />},
+        //   {path: 'general', element: <GeneralSettings />},
+        //   {path: 'subscriptions', element: <SubscriptionSettings />},
+        //   // {path: 'localization', element: <LocalizationSettings />},
+        //   {path: 'authentication', element: <AuthenticationSettings />},
+        //   {path: 'uploading', element: <UploadingSettings />},
+        //   {path: 'outgoing-email', element: <OutgoingEmailSettings />},
+        //   {path: 'cache', element: <CacheSettings />},
+        //   {path: 'analytics', element: <ReportsSettings />},
+        //   {path: 'logging', element: <LoggingSettings />},
+        //   {path: 'queue', element: <QueueSettings />},
+        //   {path: 'recaptcha', element: <RecaptchaSettings />},
+        //   {path: 'gdpr', element: <GdprSettings />},
+        //   ...AppSettingsRoutes,
+        // ],
       },
       // USERS
       {

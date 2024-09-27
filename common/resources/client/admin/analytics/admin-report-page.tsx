@@ -20,8 +20,7 @@ export default function AdminReportPage() {
 
   //super_admin show the data
   const {user} = useAuth()
-  const isSuperAdmin = user?.user_type === 'super_admin'
-  console.log("isSuperAdmin",isSuperAdmin)
+  const isSuperAdmin = user?.user_type === 'super_admin';
   const userName = user?.first_name || 'User';
 
   return (
@@ -39,10 +38,11 @@ export default function AdminReportPage() {
         <ReportDateSelector value={dateRange} onChange={setDateRange} />
       </div>
       {/* <AdminHeaderReport report={data?.headerReport} /> */}
-      {isSuperAdmin && (
+      {/* {isSuperAdmin && (
         <AdminHeaderReport report={data?.headerReport} />
-      )}
-      <VisitorsReportCharts
+      )} */}
+      <AdminHeaderReport report={data?.headerReport} />
+      <VisitorsReportCharts 
         report={data?.visitorsReport}
         isLoading={isLoading}
       />

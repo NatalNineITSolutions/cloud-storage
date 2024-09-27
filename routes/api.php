@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 // prettier-ignore
 Route::group(['prefix' => 'v1'], function() {
   Route::group(['middleware' => ['optionalAuth:sanctum', 'verified', 'verifyApiAccess']], function () {
+    
     // SHARING
     Route::post('file-entries/{id}/share', [
       SharesController::class,

@@ -15,3 +15,4 @@ export interface CssTheme {
 export interface CssThemeColors {
   [key: string]: string;
 }
+

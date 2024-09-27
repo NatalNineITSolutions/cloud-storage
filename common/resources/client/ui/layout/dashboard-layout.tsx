@@ -26,6 +26,7 @@ interface DashboardLayoutProps extends ComponentPropsWithoutRef<'div'> {
   gridClassName?: string;
   blockBodyOverflow?: boolean;
 }
+
 export function DashboardLayout({
   children,
   leftSidenavStatus: leftSidenav,
@@ -75,6 +76,7 @@ export function DashboardLayout({
     rightSidenavStatusDefault,
     onRightSidenavChange,
   );
+
   const setRightSidenavStatus = useCallback(
     (status: DashboardSidenavStatus) => {
       _setRightSidenavStatus(status);

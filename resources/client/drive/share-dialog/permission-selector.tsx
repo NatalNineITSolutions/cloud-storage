@@ -23,7 +23,7 @@ export interface PermissionSelectorItem {
 export const PermissionSelectorItems: PermissionSelectorItem[] = [
   {
     key: 'view',
-    value: {view: true},
+    value: {view: true, download: false},
     label: message('Can view'),
   },
   {
@@ -42,6 +42,7 @@ interface Props {
   onChange: (value: PermissionSelectorItem) => void;
   value: PermissionSelectorItem;
 }
+
 export function PermissionSelector({value, onChange}: Props) {
   return (
     <MenuTrigger
@@ -86,3 +87,4 @@ export function getPermissionItemForUser(
   }
   return PermissionSelectorItems.find(item => item.key === 'view')!;
 }
+
