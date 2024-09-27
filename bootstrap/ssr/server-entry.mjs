@@ -1559,6 +1559,7 @@ function useAuth() {
   const getPermission = useCallback(
     (name) => {
       const permissions = (user == null ? void 0 : user.permissions) || (guest_role == null ? void 0 : guest_role.permissions);
+      console.log("user", user);
       if (!permissions)
         return;
       return permissions.find((p) => p.name === name);
@@ -1948,7 +1949,7 @@ function useUser(id2, params) {
 function fetchUser(id2, params) {
   return apiClient.get(`users/${id2}`, { params }).then((response) => response.data);
 }
-const mailSentSvg = "/assets/mail-sent-c2a25732.svg";
+const mailSentSvg = "/assets/mail-sent-1c55f94c.svg";
 function useResendVerificationEmail() {
   return useMutation({
     mutationFn: resendEmail,
@@ -4477,24 +4478,68 @@ function useCustomMenu(menuOrPosition) {
   var _a;
   const settings = useSettings();
   const { user, hasPermission } = useAuth();
+  console.log("user", user);
   if (!menuOrPosition) {
     return null;
   }
+  const userAccess = ["user.access"];
+  const fileAccess = ["file.access"];
+  const settingsAccess = ["settings.access"];
+  const subscriptionAccess = ["subscription.access"];
+  const planAccess = ["plan.access"];
+  const roleAccess = ["role.access"];
+  const appearanceAccess = ["appearance.access"];
   const menu = typeof menuOrPosition === "string" ? (_a = settings.menus) == null ? void 0 : _a.find((s) => {
     var _a2;
     return (_a2 = s.positions) == null ? void 0 : _a2.includes(menuOrPosition);
   }) : menuOrPosition;
+  console.log("menu", menu);
   if (menu) {
     menu.items = menu.items.filter((item) => {
+      var _a2, _b, _c, _d, _e, _f, _g;
+      if ((user == null ? void 0 : user.user_type) === "super_admin") {
+        return item.action;
+      }
       const hasRoles = (item.roles || []).every(
         (a) => user == null ? void 0 : user.roles.find((b) => b.id === a)
       );
       const hasPermissions = (item.permissions || []).every(
         (a) => hasPermission(a)
       );
+      const usersMenu = (_a2 = user == null ? void 0 : user.permissions) == null ? void 0 : _a2.some((item2) => userAccess.includes(item2.name));
+      const fileMenu = (_b = user == null ? void 0 : user.permissions) == null ? void 0 : _b.some((item2) => fileAccess.includes(item2.name));
+      const settingMenu = (_c = user == null ? void 0 : user.permissions) == null ? void 0 : _c.some((item2) => settingsAccess.includes(item2.name));
+      const subscriptionMenu = (_d = user == null ? void 0 : user.permissions) == null ? void 0 : _d.some((item2) => subscriptionAccess.includes(item2.name));
+      const planMenu = (_e = user == null ? void 0 : user.permissions) == null ? void 0 : _e.some((item2) => planAccess.includes(item2.name));
+      const roleMenu = (_f = user == null ? void 0 : user.permissions) == null ? void 0 : _f.some((item2) => roleAccess.includes(item2.name));
+      const appearanceMenu = (_g = user == null ? void 0 : user.permissions) == null ? void 0 : _g.some((item2) => appearanceAccess.includes(item2.name));
+      console.log("usersMenu", usersMenu);
+      if (item.action === "/admin/users" && !usersMenu) {
+        return false;
+      }
+      if (item.action === "/admin/files" && !fileMenu) {
+        return false;
+      }
+      if (item.action === "/admin/settings" && !settingMenu) {
+        return false;
+      }
+      if (item.action === "/admin/subscriptions" && !subscriptionMenu) {
+        return false;
+      }
+      if (item.action === "/admin/roles" && !roleMenu) {
+        return false;
+      }
+      if (item.action === "/admin/plans" && !planMenu) {
+        return false;
+      }
+      if (item.action === "/admin/appearance" && !appearanceMenu) {
+        return false;
+      }
+      console.log("item.action", item.action, "hasPermissions", hasPermissions, "hasrole", hasRoles, "usermenu", usersMenu, "file", fileMenu, "settings", settingMenu);
       return item.action && hasRoles && hasPermissions;
     });
   }
+  console.log("menu", menu);
   return menu;
 }
 function CustomMenu({
@@ -4620,7 +4665,7 @@ function CookieNotice() {
         /* @__PURE__ */ jsx(
           Trans,
           {
-            message: "We use cookies to optimize site functionality and provide you with the\n      best possible experience."
+            message: "We use cookies to optimize site functionality and provide you with the\r\n      best possible experience."
           }
         ),
         /* @__PURE__ */ jsx(InfoLink, {}),
@@ -5771,7 +5816,7 @@ function getSizeClassName(size2, imageHeight) {
       };
   }
 }
-const notifySvg = "/assets/notify-d1de4ec3.svg";
+const notifySvg = "/assets/notify-08766a3d.svg";
 function NotificationEmptyStateMessage() {
   const { notif } = useSettings();
   return /* @__PURE__ */ jsx(
@@ -6415,7 +6460,7 @@ function ThemeSwitcher() {
   );
 }
 function highlightCode(el) {
-  import("./assets/highlight-95c2906e.mjs").then(({ hljs }) => {
+  import("./assets/highlight-917b1416.mjs").then(({ hljs }) => {
     el.querySelectorAll("pre code").forEach((block) => {
       hljs.highlightElement(block);
     });
@@ -6476,7 +6521,7 @@ function NotFoundPage() {
         /* @__PURE__ */ jsx("p", { className: "my-16 text-main", children: /* @__PURE__ */ jsx(
           Trans,
           {
-            message: "Sorry about that! Please visit our homepage to get where you need\n                to go."
+            message: "Sorry about that! Please visit our homepage to get where you need\r\n                to go."
           }
         ) }),
         /* @__PURE__ */ jsx(
@@ -9201,7 +9246,7 @@ function PlainTextPreview({ plainTextToken }) {
     ] })
   ] });
 }
-const secureFilesSvg = "/assets/secure-files-17b4728d.svg";
+const secureFilesSvg = "/assets/secure-files-cffa0260.svg";
 function AccessTokenPanel({ user }) {
   const tokens = user.tokens || [];
   const { hasPermission } = useAuth();
@@ -10467,9 +10512,9 @@ function ContactSection() {
   ] });
 }
 const BillingPageRoutes = React.lazy(
-  () => import("./assets/billing-page-routes-92434965.mjs")
+  () => import("./assets/billing-page-routes-9653903a.mjs")
 );
-const CheckoutRoutes = React.lazy(() => import("./assets/checkout-routes-6d5ef179.mjs"));
+const CheckoutRoutes = React.lazy(() => import("./assets/checkout-routes-06abe468.mjs"));
 const BillingRoutes = /* @__PURE__ */ jsxs(Fragment, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/pricing", element: /* @__PURE__ */ jsx(PricingPage, {}) }),
   /* @__PURE__ */ jsx(
@@ -10853,10 +10898,10 @@ function ContactUsPage() {
     /* @__PURE__ */ jsx(Footer, { className: "container mx-auto px-24 flex-shrink-0" })
   ] });
 }
-const AdminRoutes = React.lazy(() => import("./assets/admin-routes-b78ba4b9.mjs").then((n) => n.z));
-const DriveRoutes = React.lazy(() => import("./assets/drive-routes-bf3bf54b.mjs"));
+const AdminRoutes = React.lazy(() => import("./assets/admin-routes-f08fe7b5.mjs").then((n) => n.z));
+const DriveRoutes = React.lazy(() => import("./assets/drive-routes-bb9dd678.mjs"));
 const SwaggerApiDocs = React.lazy(
-  () => import("./assets/swagger-api-docs-page-69df625c.mjs")
+  () => import("./assets/swagger-api-docs-page-a61ef8bf.mjs")
 );
 function AppRoutes() {
   const { billing, notifications, require_email_confirmation, api } = useSettings();
@@ -11017,7 +11062,7 @@ async function takeScreenshot(request, response) {
 }
 console.log(`Starting SSR server on port ${port}...`);
 export {
-  FormImageSelector as $,
+  useNavigate as $,
   ArrowDropDownIcon as A,
   Button as B,
   CustomMenu as C,
@@ -11029,35 +11074,35 @@ export {
   Item$1 as I,
   FormattedDate as J,
   Tooltip as K,
-  FileUploadProvider as L,
+  useAuth as L,
   MixedText as M,
-  useAppearanceEditorMode as N,
-  ProgressCircle as O,
+  FileUploadProvider as N,
+  useAppearanceEditorMode as O,
   ProgressBar as P,
-  ButtonBase as Q,
-  useValueLists as R,
+  ProgressCircle as Q,
+  ButtonBase as R,
   SearchIcon as S,
   Trans as T,
-  List as U,
-  ListItem as V,
-  clamp as W,
-  createSvgIconFromTree as X,
-  DoneAllIcon as Y,
-  Section as Z,
-  useNavigate as _,
+  useValueLists as U,
+  List as V,
+  ListItem as W,
+  clamp as X,
+  createSvgIconFromTree as Y,
+  DoneAllIcon as Z,
+  Section as _,
   apiClient as a,
   useListboxKeyboardNavigation as a$,
-  useBootstrapData as a0,
-  LinkStyle as a1,
-  SiteConfigContext as a2,
-  getBootstrapData as a3,
-  MenuTrigger as a4,
-  Menu as a5,
-  getInputFieldClassNames as a6,
-  FormRadioGroup as a7,
-  FormRadio as a8,
-  prettyBytes as a9,
-  useAuth as aA,
+  FormImageSelector as a0,
+  useBootstrapData as a1,
+  LinkStyle as a2,
+  SiteConfigContext as a3,
+  getBootstrapData as a4,
+  MenuTrigger as a5,
+  Menu as a6,
+  getInputFieldClassNames as a7,
+  FormRadioGroup as a8,
+  FormRadio as a9,
+  setInLocalStorage as aA,
   Navbar as aB,
   secureFilesSvg as aC,
   getAxiosErrorMessage as aD,
@@ -11084,32 +11129,32 @@ export {
   useListbox as aY,
   Listbox as aZ,
   Popover as a_,
-  useSocialLogin as aa,
-  ExternalLink as ab,
-  useField as ac,
-  Field as ad,
-  useResendVerificationEmail as ae,
-  useUser as af,
-  FullPageLoader as ag,
-  useUploadAvatar as ah,
-  useRemoveAvatar as ai,
-  FileTypeIcon as aj,
-  useProducts as ak,
-  FormattedPrice as al,
-  useActiveUpload as am,
-  UploadInputType as an,
-  Disk as ao,
-  WarningIcon as ap,
-  KeyboardArrowDownIcon as aq,
-  useCustomPage as ar,
-  PageMetaTags as as,
-  PageStatus as at,
-  useCollator as au,
-  loadFonts as av,
-  AuthRoute as aw,
-  NotFoundPage as ax,
-  getFromLocalStorage as ay,
-  setInLocalStorage as az,
+  prettyBytes as aa,
+  useSocialLogin as ab,
+  ExternalLink as ac,
+  useField as ad,
+  Field as ae,
+  useResendVerificationEmail as af,
+  useUser as ag,
+  FullPageLoader as ah,
+  useUploadAvatar as ai,
+  useRemoveAvatar as aj,
+  FileTypeIcon as ak,
+  useProducts as al,
+  FormattedPrice as am,
+  useActiveUpload as an,
+  UploadInputType as ao,
+  Disk as ap,
+  WarningIcon as aq,
+  KeyboardArrowDownIcon as ar,
+  useCustomPage as as,
+  PageMetaTags as at,
+  PageStatus as au,
+  useCollator as av,
+  loadFonts as aw,
+  AuthRoute as ax,
+  NotFoundPage as ay,
+  getFromLocalStorage as az,
   useIsMobileMediaQuery as b,
   Underlay as b0,
   useUserTimezone as b1,

@@ -1,24 +1,24 @@
 <?php
-
+ 
 namespace Common\Auth\Fortify;
-
+ 
 use App\Models\User;
 use Closure;
 use Common\Auth\Actions\CreateUser;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
-
+ 
 class FortifyRegisterUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
-
+ 
     public function create(array $input): User
     {
         if (settings('registration.disable')) {
             abort(404);
         }
-
+ 
         $appRules = config('common.registration-rules') ?? [];
         $commonRules = [
             'email' => [
@@ -36,7 +36,7 @@ class FortifyRegisterUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'token_name' => 'string|min:3|max:50',
         ];
-
+ 
         foreach ($appRules as $key => $rules) {
             $commonRules[$key] = array_map(function ($rule) {
                 if (str_contains($rule, '\\')) {
@@ -46,12 +46,20 @@ class FortifyRegisterUser implements CreatesNewUsers
                 return $rule;
             }, $rules);
         }
-
-        $data = Validator::make($input, $commonRules)->validate();
-
+ 
+        // $data = Validator::make($input, $commonRules)->validate();
+        // dd("hi", $data);
+ 
+        try {
+            $data = Validator::make($input, $commonRules)->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e; // This will show validation errors
+        }
+        
+ 
         return (new CreateUser())->execute($data);
     }
-
+ 
     public static function emailIsValid(string $email): bool
     {
         $blacklistedDomains = explode(
@@ -64,7 +72,8 @@ class FortifyRegisterUser implements CreatesNewUsers
                 return false;
             }
         }
-
+ 
         return true;
     }
 }
+ 

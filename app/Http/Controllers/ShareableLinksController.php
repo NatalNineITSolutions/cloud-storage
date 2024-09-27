@@ -85,14 +85,17 @@ class ShareableLinksController extends BaseController
         return $this->success(['link' => $link]);
     }
 
-    public function destroy(int $entryId): JsonResponse
+    public function delete(int $entryId): JsonResponse
     {
         $link = $this->link->where('entry_id', $entryId)->firstOrFail();
 
-        $this->authorize('destroy', $link);
+        $this->authorize('delete', $link);
 
         $link->delete();
 
-        return $this->success();
+        return response()->json([
+        'status' => 'success',
+        'message' => 'Link deleted successfully.',
+    ], 200);
     }
 }
