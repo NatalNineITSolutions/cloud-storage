@@ -17,9 +17,10 @@ export function EntryPreviewDialog({selectedEntry}: EntryPreviewDialogProps) {
   );
   const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
 
-  const filePermission: boolean | undefined = selectedEntry.users[1].entry_permissions.download;
+  const filePermission: boolean | undefined = selectedEntry?.users?.[1]?.entry_permissions?.download;
 
-  const allowDownload:boolean = !!filePermission;
+  const allowDownload: boolean = !!filePermission;
+  
 
   return (
     <FilePreviewDialog
