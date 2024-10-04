@@ -146,11 +146,18 @@ paths:
           $ref: '#/components/schemas/401-Response'
         '403':
           $ref: '#/components/schemas/403-Response'
+
   /file-entries/{entryId}:
     delete:
       tags:
         - Files and Folders
       summary: Move entries to trash or delete permanently
+      parameters:
+        - in: path
+          name: entryId
+          schema:
+            type: integer
+          required: true
       operationId: entriesDelete
       requestBody:
         required: true
@@ -541,7 +548,6 @@ paths:
         - Sharing
       summary: Unshare file or folder with specified user
       parameters:
-        - in: path
           name: entryId
           schema:
             type: integer
