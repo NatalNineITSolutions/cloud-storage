@@ -1,9 +1,11 @@
 import {RouteObject, useRoutes} from 'react-router-dom';
-import React from 'react';
 import {ShareableLinkPage} from './shareable-link/shareable-link-page/shareable-link-page';
 import {DriveLayout} from './layout/drive-layout';
 import {AuthRoute} from '@common/auth/guards/auth-route';
 import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
+import {WorkspaceLayout} from './layout/workspace-layout';
+import { SupportticketLayout } from './layout/supportticketlayout';
+import { IntegrationLayout } from './layout/Integrationlayout';
 
 const DriveRouteConfig: RouteObject[] = [
   {
@@ -59,6 +61,30 @@ const DriveRouteConfig: RouteObject[] = [
     element: (
       <AuthRoute>
         <DriveLayout />
+      </AuthRoute>
+    ),
+  },
+  {
+    path: '/workspace',
+    element: (
+      <AuthRoute>
+        <WorkspaceLayout/>
+      </AuthRoute>
+    ),
+  },
+  {
+    path: '/supportticket',
+    element: (
+      <AuthRoute>
+        <SupportticketLayout/>
+      </AuthRoute>
+    ),
+  },
+  {
+    path: '/integration',
+    element: (
+      <AuthRoute>
+        <IntegrationLayout/>
       </AuthRoute>
     ),
   },

@@ -35,6 +35,10 @@ import {useDeleteEntries} from '@app/drive/files/queries/use-delete-entries';
 import {createEventHandler} from '@common/utils/dom/create-event-handler';
 import {TrashPage} from '@app/drive/drive-page/drive-page';
 import {getSelectedEntries} from '@app/drive/files/use-selected-entries';
+import {CreateNewButton} from '../layout/create-new-button';
+import {WorkspaceSelector} from '@common/workspace/workspace-selector';
+import {RootFolderPage} from '../drive-page/drive-page';
+import {useNavigate} from '@common/utils/hooks/use-navigate';
 
 interface FileViewProps {
   className?: string;
@@ -62,7 +66,7 @@ export function FileView({className}: FileViewProps) {
     },
   });
 
-  console.log("entries", entries)
+  console.log("entries", entries);
 
   const {droppableProps} = useDroppable({
     id: 'driveRoot',
@@ -158,6 +162,7 @@ export function FileView({className}: FileViewProps) {
         <div className="relative flex-auto px-18 pb-18 md:px-24">
           <AdHost slot="drive" className="mb-24" />
           {content}
+          {/* <WorkspaceSwitcher /> */}
           <InfiniteScrollSentinel query={query} />
         </div>
         <div
@@ -171,12 +176,27 @@ export function FileView({className}: FileViewProps) {
   );
 }
 
+function WorkspaceSwitcher() {
+  const navigate = useNavigate();
+  return (
+    <WorkspaceSelector
+      onChange={() => {
+        navigate(RootFolderPage.path);
+      }}
+      className="w-full flex-shrink-0 border-t px-24 py-18"
+    />
+  );
+}
+
 function Toolbar() {
   const activePage = useDriveStore(s => s.activePage);
   return (
     <div className="my-10 flex min-h-42 items-center justify-between gap-40 px-10 text-muted md:px-18">
       <DriveSortButton isDisabled={activePage?.disableSort} />
       <EntryActionList className="text-muted" />
+      <div>
+        <CreateNewButton className="px-8 text-center" />
+      </div>
     </div>
   );
 }

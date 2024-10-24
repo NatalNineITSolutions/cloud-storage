@@ -30,7 +30,7 @@ export function CreateNewButton({isCompact, className}: CreateNewButtonProps) {
     </IconButton>
   ) : (
     <Button
-      className="min-w-160"
+      className="min-w-120"
       color="primary"
       variant="flat"
       size="sm"

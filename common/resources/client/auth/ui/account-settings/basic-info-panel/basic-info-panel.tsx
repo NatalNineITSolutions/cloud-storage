@@ -12,6 +12,7 @@ import {useRemoveAvatar} from '../avatar/remove-avatar';
 import {FormImageSelector} from '@common/ui/images/image-selector';
 import {FileUploadProvider} from '@common/uploads/uploader/file-upload-provider';
 import {AccountSettingsId} from '@common/auth/ui/account-settings/account-settings-sidenav';
+import { ChangePasswordPanel } from '../change-password-panel/change-password-panel';
 
 interface Props {
   user: User;
@@ -32,18 +33,18 @@ export function BasicInfoPanel({user}: Props) {
   return (
     <AccountSettingsPanel
       id={AccountSettingsId.AccountDetails}
-      title={<Trans message="Update name and profile image" />}
-      actions={
-        <Button
-          type="submit"
-          variant="flat"
-          color="primary"
-          form={formId}
-          disabled={updateDetails.isPending || !form.formState.isValid}
-        >
-          <Trans message="Save" />
-        </Button>
-      }
+      title={<Trans message="Account Detail" />}
+      // actions={
+      //   <Button
+      //     type="submit"
+      //     variant="flat"
+      //     color="primary"
+      //     form={formId}
+      //     disabled={updateDetails.isPending || !form.formState.isValid}
+      //   >
+      //     <Trans message="Save" />
+      //   </Button>
+      // }
     >
       <Form
         form={form}
@@ -54,34 +55,37 @@ export function BasicInfoPanel({user}: Props) {
         id={formId}
       >
         <div className="flex-auto w-full">
+        <FileUploadProvider>
+        <FormImageSelector
+          className="rounded-full flex items-center justify-center"
+          variant="avatar"
+          previewSize="w-90 h-90"
+          showRemoveButton
+          name="avatar"
+          diskPrefix="avatars"
+          onChange={url => {
+            if (url) {
+              uploadAvatar.mutate({ url });
+            } else {
+              removeAvatar.mutate();
+            }
+          }}
+        />
+        </FileUploadProvider>
+          <div className='flex justify-between gap-10 mt-40'>
           <FormTextField
-            className="mb-24"
+            className="w-1/2 px-20"
             name="first_name"
             label={<Trans message="First name" />}
           />
           <FormTextField
+            className="w-1/2 px-20"
             name="last_name"
             label={<Trans message="Last name" />}
           />
+          </div>
+          <ChangePasswordPanel/>
         </div>
-        <FileUploadProvider>
-          <FormImageSelector
-            className="md:mr-80"
-            variant="avatar"
-            previewSize="w-90 h-90"
-            showRemoveButton
-            name="avatar"
-            diskPrefix="avatars"
-            label={<Trans message="Profile image" />}
-            onChange={url => {
-              if (url) {
-                uploadAvatar.mutate({url});
-              } else {
-                removeAvatar.mutate();
-              }
-            }}
-          />
-        </FileUploadProvider>
       </Form>
     </AccountSettingsPanel>
   );

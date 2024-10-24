@@ -1,28 +1,26 @@
-import {ReactElement, ReactNode} from 'react';
+import { ReactElement, ReactNode } from 'react';
 import clsx from 'clsx';
-import {useAuth} from '@common/auth/use-auth';
-import {NotificationDialogTrigger} from '@common/notifications/dialog/notification-dialog-trigger';
-import {Menu, MenuTrigger} from '@common/ui/navigation/menu/menu-trigger';
-import {useCustomMenu} from '@common/menus/use-custom-menu';
-import {createSvgIconFromTree} from '@common/icons/create-svg-icon';
-import {Trans} from '@common/i18n/trans';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {Item} from '@common/ui/forms/listbox/item';
-import {useNavigate} from '@common/utils/hooks/use-navigate';
-import {useIsDarkMode} from '@common/ui/themes/use-is-dark-mode';
-import {CustomMenu} from '@common/menus/custom-menu';
-import {useSettings} from '@common/core/settings/use-settings';
-import {ButtonColor} from '@common/ui/buttons/get-shared-button-style';
-import {MenuIcon} from '@common/icons/material/Menu';
-import {MenuItemConfig} from '@common/core/settings/settings';
-import {
-  NavbarAuthUser,
-  NavbarAuthUserProps,
-} from '@common/ui/navigation/navbar/navbar-auth-user';
-import {NavbarAuthButtons} from '@common/ui/navigation/navbar/navbar-auth-buttons';
-import {useDarkThemeVariables} from '@common/ui/themes/use-dark-theme-variables';
-import {Logo} from '@common/ui/navigation/navbar/logo';
-import {useLightThemeVariables} from '@common/ui/themes/use-light-theme-variables';
+import { useAuth } from '@common/auth/use-auth';
+import { NotificationDialogTrigger } from '@common/notifications/dialog/notification-dialog-trigger';
+import { Menu, MenuTrigger } from '@common/ui/navigation/menu/menu-trigger';
+import { useCustomMenu } from '@common/menus/use-custom-menu';
+import { createSvgIconFromTree } from '@common/icons/create-svg-icon';
+import { Trans } from '@common/i18n/trans';
+import { IconButton } from '@common/ui/buttons/icon-button';
+import { Item } from '@common/ui/forms/listbox/item';
+import { useNavigate } from '@common/utils/hooks/use-navigate';
+import { useIsDarkMode } from '@common/ui/themes/use-is-dark-mode';
+import { CustomMenu } from '@common/menus/custom-menu';
+import { useSettings } from '@common/core/settings/use-settings';
+import { ButtonColor } from '@common/ui/buttons/get-shared-button-style';
+import { MenuIcon } from '@common/icons/material/Menu';
+import { MenuItemConfig } from '@common/core/settings/settings';
+import { NavbarAuthUser, NavbarAuthUserProps } from '@common/ui/navigation/navbar/navbar-auth-user';
+import { NavbarAuthButtons } from '@common/ui/navigation/navbar/navbar-auth-buttons';
+import { useDarkThemeVariables } from '@common/ui/themes/use-dark-theme-variables';
+import { Logo } from '@common/ui/navigation/navbar/logo';
+import { useLightThemeVariables } from '@common/ui/themes/use-light-theme-variables';
+import { Username } from '@common/ui/navigation/navbar/username';
 
 type NavbarColor = 'primary' | 'bg' | 'bg-alt' | 'transparent' | string;
 
@@ -45,6 +43,7 @@ export interface NavbarProps {
   alwaysDarkMode?: boolean;
   wrapInContainer?: boolean;
 }
+
 export function Navbar(props: NavbarProps) {
   let {
     hideLogo,
@@ -64,15 +63,16 @@ export function Navbar(props: NavbarProps) {
     alwaysDarkMode = false,
     wrapInContainer = false,
   } = props;
+
   const isDarkMode = useIsDarkMode() || alwaysDarkMode;
-  const {notifications} = useSettings();
-  const {isLoggedIn} = useAuth();
+  const { notifications } = useSettings();
+  const { isLoggedIn } = useAuth();
   const darkThemeVars = useDarkThemeVariables();
   const lightThemeVars = useLightThemeVariables();
   const showNotifButton = isLoggedIn && notifications?.integrated;
+  
   color = color ?? lightThemeVars?.['--be-navbar-color'] ?? 'primary';
-  darkModeColor =
-    darkModeColor ?? darkModeColor?.['--be-navbar-color'] ?? 'bg-alt';
+  darkModeColor = darkModeColor ?? darkModeColor?.['--be-navbar-color'] ?? 'bg-alt';
 
   if (isDarkMode) {
     color = darkModeColor;
@@ -97,14 +97,17 @@ export function Navbar(props: NavbarProps) {
         )}
       >
         {!hideLogo && (
-          <Logo isDarkMode={isDarkMode} color={color} logoColor={logoColor} />
+          <div className="flex items-center">
+            {/* <Logo isDarkMode={isDarkMode} color={color} logoColor={logoColor} /> */}
+            <Username />
+          </div>
         )}
-        {toggleButton}
-        {children}
+        {/* {toggleButton} */}
         <MobileMenu position={menuPosition} />
         <DesktopMenu position={menuPosition} />
         <div className="ml-auto flex items-center gap-4 md:gap-14">
           {rightChildren}
+          {children}
           {showNotifButton && <NotificationDialogTrigger />}
           {isLoggedIn ? (
             <NavbarAuthUser items={authMenuItems} />
@@ -123,11 +126,11 @@ export function Navbar(props: NavbarProps) {
 interface DesktopMenuProps {
   position: NavbarProps['menuPosition'];
 }
-function DesktopMenu({position}: DesktopMenuProps) {
+function DesktopMenu({ position }: DesktopMenuProps) {
   return (
     <CustomMenu
       className="mx-14 text-sm max-md:hidden"
-      itemClassName={isActive =>
+      itemClassName={(isActive) =>
         clsx(
           'opacity-90 hover:underline hover:opacity-100',
           isActive && 'opacity-100',
@@ -141,7 +144,7 @@ function DesktopMenu({position}: DesktopMenuProps) {
 interface MobileMenuProps {
   position: NavbarProps['menuPosition'];
 }
-function MobileMenu({position}: MobileMenuProps) {
+function MobileMenu({ position }: MobileMenuProps) {
   const navigate = useNavigate();
   const menu = useCustomMenu(position);
 
@@ -163,7 +166,7 @@ function MobileMenu({position}: MobileMenuProps) {
         <MenuIcon />
       </IconButton>
       <Menu>
-        {menu.items.map(item => {
+        {menu.items.map((item) => {
           const Icon = item.icon && createSvgIconFromTree(item.icon);
           return (
             <Item

@@ -134,7 +134,7 @@ export function ImageSelector({
   const removeButton = showRemoveButton ? (
     <Button
       variant="link"
-      color="danger"
+      color="black"
       size="xs"
       disabled={isDeletingEntry || !imageUrl || disabled}
       onClick={() => {
@@ -143,7 +143,7 @@ export function ImageSelector({
         });
       }}
     >
-      <Trans message="Remove image" />
+      <Trans message="Remove Picture" />
     </Button>
   ) : null;
 

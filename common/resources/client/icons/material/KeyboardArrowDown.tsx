@@ -1,5 +1,5 @@
 import {createSvgIcon} from '../create-svg-icon';
 
 export const KeyboardArrowDownIcon = createSvgIcon(
-  <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+  <path d="M12 8a2 2 0 110-4 2 2 0 010 4zm0 2a2 2 0 110 4 2 2 0 010-4zm0 6a2 2 0 110 4 2 2 0 010-4z" />
 , 'KeyboardArrowDownOutlined');

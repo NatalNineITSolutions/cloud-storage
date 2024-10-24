@@ -22,9 +22,11 @@ export function DangerZonePanel() {
           }
         }}
       >
-        <Button variant="flat" color="danger">
-          <Trans message="Delete account" />
-        </Button>
+        <div className='flex justify-center items-center'>
+          <Button variant="flat" color="danger" className="rounded-lg">
+            <Trans message="Delete account" />
+          </Button>
+        </div>
         <ConfirmationDialog
           isDanger
           title={<Trans message="Delete account?" />}

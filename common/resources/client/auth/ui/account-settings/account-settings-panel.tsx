@@ -1,4 +1,5 @@
 import {ReactNode} from 'react';
+import Accountsidebar from './account-sidebar';
 
 interface Props {
   id: string;
@@ -17,15 +18,15 @@ export function AccountSettingsPanel({
   return (
     <section
       id={id}
-      className="rounded-panel mb-24 w-full border bg-paper px-24 py-20"
+      className="mb-24 w-full bg-paper px-20 py-20"
     >
-      <div className="flex items-center gap-14 border-b pb-10">
+      <div className="flex items-center gap-14 pb-10">
         <div className="text-lg font-light">{title}</div>
         {titleSuffix && <div className="ml-auto">{titleSuffix}</div>}
       </div>
       <div className="pt-24">{children}</div>
       {actions && (
-        <div className="mt-36 flex justify-end border-t pt-10">{actions}</div>
+        <div className="mt-36 flex justify-end pt-10">{actions}</div>
       )}
     </section>
   );

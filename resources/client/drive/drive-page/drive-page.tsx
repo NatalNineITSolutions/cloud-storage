@@ -168,6 +168,23 @@ export const StarredPage: DrivePage = {
   }),
 };
 
+export const WorkspacePage: DrivePage = {
+  id: 'workspace',
+  label: message('workspace'),
+  path: '/drive/workspace',
+  sortDescriptor: defaultSortDescriptor,
+  queryParams: {
+    starredOnly: true,
+  },
+  noContentMessage: () => ({
+    title: message('Workspace is empty'),
+    description: message(
+      'There are no files or folders in your workspace'
+    ),
+    image: lovingItSvg,
+  }),
+};
+
 export const DRIVE_PAGES = [
   RootFolderPage,
   RecentPage,
@@ -175,4 +192,5 @@ export const DRIVE_PAGES = [
   SharesPage,
   TrashPage,
   StarredPage,
+  WorkspacePage,
 ];

@@ -15,7 +15,7 @@ export function ChangePasswordPanel() {
   return (
     <AccountSettingsPanel
       id={AccountSettingsId.Password}
-      title={<Trans message="Update password" />}
+      title={<Trans message="" />}
       actions={
         <Button
           type="submit"
@@ -24,7 +24,7 @@ export function ChangePasswordPanel() {
           color="primary"
           disabled={!form.formState.isValid || updatePassword.isPending}
         >
-          <Trans message="Update password" />
+          <Trans message="Save" />
         </Button>
       }
     >

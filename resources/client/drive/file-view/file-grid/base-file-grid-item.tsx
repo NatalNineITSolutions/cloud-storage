@@ -59,7 +59,7 @@ function Footer({entry, isSelected, isMobile, adornment}: FooterProps) {
       className={clsx(
         'text-sm h-48 flex-shrink-0 flex items-center',
         isMobile ? 'justify-between gap-10 pl-18 pr-2' : 'justify-center px-16',
-        isSelected && 'bg-primary-light/20'
+        // isSelected && 'bg-primary-light/20'
       )}
     >
       <div className="min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis">

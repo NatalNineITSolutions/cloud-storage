@@ -8,7 +8,6 @@ import clsx from 'clsx';
 export function StorageMeter() {
   const {isLoading, data} = useStorageSummary();
 
-  // prevent translation placeholders from showing if summary is not loaded yet
   const label = (
     <span className={clsx('whitespace-nowrap', isLoading && 'invisible')}>
       <Trans
@@ -21,8 +20,9 @@ export function StorageMeter() {
     </span>
   );
   return (
-    <div className="pl-24 pt-24 mt-24 border-t flex items-start gap-16">
-      <StorageIcon className="icon-md -mt-4" />
+    <div className="pl-24 pt-24 mt-24 flex flex-col items-start gap-16">
+      <img src="./images/Storage.jpeg" className='w-80 h-80'/>
+      {/* <StorageIcon className="icon-md -mt-4" /> */}
       <Meter
         className="flex-auto max-w-144"
         size="xs"

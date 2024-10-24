@@ -95,3 +95,63 @@
 .swagger-ui table thead tr th {
     color: white;
 }
+
+.swagger-ui .btn.authorize{
+    border:none;
+    color: #3f8cff;
+}
+
+.swagger-ui .btn.authorize svg{
+    display: none;
+}
+
+.swagger-ui div{
+    border:none;
+}
+
+.swagger-ui .opblock.opblock-post{
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.swagger-ui .opblock.opblock-get{
+    border-color: transparent;
+    background-color: transparent;
+}
+.swagger-ui .opblock.opblock-delete{
+    border-color: transparent;
+    background-color: transparent;
+}
+.swagger-ui .opblock.opblock-put{
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.swagger-ui .opblock.opblock-post .opblock-summary-method {
+    background: transparent;
+    color:#49cc90;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+    background: transparent;
+    color:#61affe;
+}
+
+.swagger-ui .opblock.opblock-put .opblock-summary-method {
+    background: transparent;
+    color:#fca130;
+}
+
+.swagger-ui .opblock.opblock-delete .opblock-summary-method {
+    background: transparent;
+    color:#f93e3e;
+}
+
+.swagger-ui .response-col_description{
+    color: black;
+}
+
+.swagger-ui .response-col_status{
+    color: black;
+}
+

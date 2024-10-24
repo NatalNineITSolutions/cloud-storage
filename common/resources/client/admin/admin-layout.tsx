@@ -14,7 +14,7 @@ export function AdminLayout() {
       </DashboardSidenav>
       <DashboardContent>
         <div className="bg dark:bg-alt">
-          <Outlet />
+          <Outlet/>
         </div>
       </DashboardContent>
     </DashboardLayout>
