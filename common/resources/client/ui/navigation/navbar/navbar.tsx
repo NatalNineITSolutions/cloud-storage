@@ -21,6 +21,8 @@ import { useDarkThemeVariables } from '@common/ui/themes/use-dark-theme-variable
 import { Logo } from '@common/ui/navigation/navbar/logo';
 import { useLightThemeVariables } from '@common/ui/themes/use-light-theme-variables';
 import { Username } from '@common/ui/navigation/navbar/username';
+import { SettingsIcon } from '@common/icons/material/Settings';
+import { AccountSettingsPage } from '@common/auth/ui/account-settings/account-settings-page';
 
 type NavbarColor = 'primary' | 'bg' | 'bg-alt' | 'transparent' | string;
 
@@ -43,6 +45,7 @@ export interface NavbarProps {
   alwaysDarkMode?: boolean;
   wrapInContainer?: boolean;
 }
+
 
 export function Navbar(props: NavbarProps) {
   let {
@@ -78,37 +81,44 @@ export function Navbar(props: NavbarProps) {
     color = darkModeColor;
   }
 
+  const navigate = useNavigate();
+
+  const handleSettingsClick = () => {
+    navigate('/account-settings'); // Replace with the route for your account settings page
+  };
+
   return (
     <div
       style={alwaysDarkMode ? darkThemeVars : undefined}
       className={clsx(
         getColorStyle(color, textColor),
-        size === 'md' && 'h-64 py-8',
-        size === 'sm' && 'h-54 py-4',
-        size === 'xs' && 'h-48 py-4',
+        size === 'md' && 'py-8',
+        size === 'sm' && 'py-4',
+        size === 'xs' && 'py-4',
         border,
         className,
       )}
     >
       <div
         className={clsx(
-          'flex h-full items-center justify-end gap-10 pl-14 pr-8 md:pl-20 md:pr-20',
+          'flex items-center justify-end gap-10 my-4 pl-14 pr-8 md:pl-20 md:pr-20',
           wrapInContainer && 'container mx-auto',
         )}
       >
         {!hideLogo && (
-          <div className="flex items-center">
-            {/* <Logo isDarkMode={isDarkMode} color={color} logoColor={logoColor} /> */}
+          <div className="flex items-center text-black">
             <Username />
           </div>
         )}
-        {/* {toggleButton} */}
         <MobileMenu position={menuPosition} />
         <DesktopMenu position={menuPosition} />
         <div className="ml-auto flex items-center gap-4 md:gap-14">
           {rightChildren}
           {children}
-          {showNotifButton && <NotificationDialogTrigger />}
+          {showNotifButton && <NotificationDialogTrigger className='text-black w-10 h-10 p-18 bg-white rounded-lg'/>}
+          <IconButton onClick={handleSettingsClick} aria-label="Account Settings">
+            <SettingsIcon className='text-black bg-white w-36 h-36 p-6 rounded-lg'/>
+          </IconButton>
           {isLoggedIn ? (
             <NavbarAuthUser items={authMenuItems} />
           ) : (
@@ -126,6 +136,7 @@ export function Navbar(props: NavbarProps) {
 interface DesktopMenuProps {
   position: NavbarProps['menuPosition'];
 }
+
 function DesktopMenu({ position }: DesktopMenuProps) {
   return (
     <CustomMenu
@@ -144,6 +155,7 @@ function DesktopMenu({ position }: DesktopMenuProps) {
 interface MobileMenuProps {
   position: NavbarProps['menuPosition'];
 }
+
 function MobileMenu({ position }: MobileMenuProps) {
   const navigate = useNavigate();
   const menu = useCustomMenu(position);

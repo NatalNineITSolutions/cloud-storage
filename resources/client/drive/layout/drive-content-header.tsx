@@ -1,27 +1,29 @@
-import {PageBreadcrumbs} from '../page-breadcrumbs';
-import {DashboardContentHeader} from '@common/ui/layout/dashboard-content-header';
-import React, {useContext} from 'react';
-import {driveState, useDriveStore} from '../drive-store';
-import {Trans} from '@common/i18n/trans';
-import {Tooltip} from '@common/ui/tooltip/tooltip';
-import {IconButton} from '@common/ui/buttons/icon-button';
-import {ViewListIcon} from '@common/icons/material/ViewList';
-import {ViewModuleIcon} from '@common/icons/material/ViewModule';
-import {DashboardLayoutContext} from '@common/ui/layout/dashboard-layout-context';
-import {InfoIcon} from '@common/icons/material/Info';
-import {DriveSortButton} from './sorting/drive-sort-button';
+import { PageBreadcrumbs } from '../page-breadcrumbs';
+import { DashboardContentHeader } from '@common/ui/layout/dashboard-content-header';
+import React, { useContext } from 'react';
+import { driveState, useDriveStore } from '../drive-store';
+import { Trans } from '@common/i18n/trans';
+import { Tooltip } from '@common/ui/tooltip/tooltip';
+import { IconButton } from '@common/ui/buttons/icon-button';
+import { ViewListIcon } from '@common/icons/material/ViewList';
+import { ViewModuleIcon } from '@common/icons/material/ViewModule';
+import { DashboardLayoutContext } from '@common/ui/layout/dashboard-layout-context';
+import { InfoIcon } from '@common/icons/material/Info';
+import { DriveSortButton } from './sorting/drive-sort-button';
+import clsx from 'clsx';
 
 export function DriveContentHeader() {
-  const {isMobileMode} = useContext(DashboardLayoutContext);
-  const activePage = useDriveStore(s => s.activePage);
+  const { isMobileMode } = useContext(DashboardLayoutContext);
+  const activePage = useDriveStore((s) => s.activePage);
+
   return (
-    <DashboardContentHeader className="px-8 md:px-26 py-4 flex items-center gap-20 border-b h-60">
+    <DashboardContentHeader className="px-8 md:px-26 py-4 mt-20 flex items-center gap-20 h-60">
       {isMobileMode ? (
         <DriveSortButton isDisabled={activePage?.disableSort} />
       ) : (
         <PageBreadcrumbs />
       )}
-      <div className="text-muted ml-auto flex-shrink-0">
+      <div className="ml-auto flex items-center gap-2"> 
         <ToggleViewModeButton />
         <ToggleDetailsButton />
       </div>
@@ -30,31 +32,39 @@ export function DriveContentHeader() {
 }
 
 function ToggleViewModeButton() {
-  const viewMode = useDriveStore(s => s.viewMode);
-  const tooltip =
-    viewMode === 'grid' ? (
-      <Trans message="List view" />
-    ) : (
-      <Trans message="Grid view" />
-    );
+  const viewMode = useDriveStore((s) => s.viewMode);
+
   return (
-    <Tooltip label={tooltip}>
-      <IconButton
-        size="md"
-        onClick={() => {
-          driveState().setViewMode(
-            driveState().viewMode === 'list' ? 'grid' : 'list'
-          );
-        }}
-      >
-        {viewMode === 'list' ? <ViewListIcon /> : <ViewModuleIcon />}
-      </IconButton>
-    </Tooltip>
+    <div className="flex gap-2">
+      <Tooltip label={<Trans message="Grid view" />}>
+        <IconButton
+          size="md"
+          onClick={() => {
+            driveState().setViewMode('grid');
+          }}
+          className={clsx(viewMode === 'grid' && 'text-blue-500')}
+        >
+          <ViewModuleIcon />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip label={<Trans message="List view" />}>
+        <IconButton
+          size="md"
+          onClick={() => {
+            driveState().setViewMode('list');
+          }}
+          className={clsx(viewMode === 'list' && 'text-blue-500')}
+        >
+          <ViewListIcon />
+        </IconButton>
+      </Tooltip>
+    </div>
   );
 }
 
 function ToggleDetailsButton() {
-  const {rightSidenavStatus: status, setRightSidenavStatus} = useContext(
+  const { rightSidenavStatus: status, setRightSidenavStatus } = useContext(
     DashboardLayoutContext
   );
   const tooltip = status ? (
@@ -62,6 +72,7 @@ function ToggleDetailsButton() {
   ) : (
     <Trans message="Show details" />
   );
+
   return (
     <Tooltip label={tooltip}>
       <IconButton

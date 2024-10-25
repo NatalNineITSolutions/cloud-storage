@@ -14,6 +14,7 @@ import { WorkspaceSelector } from '@common/workspace/workspace-selector';
 import { Sidebar } from './sidebar/sidebar';
 import { DashboardLayoutContext } from '@common/ui/layout/dashboard-layout-context'; 
 import {FileView} from '../file-view/workspacefileview';
+import { DriveContentHeader } from './drive-content-header';
 
 
 export function WorkspaceLayout() {
@@ -67,7 +68,7 @@ export function WorkspaceLayout() {
 }
 
 function Navbar() {
-  const { isMobileMode } = useContext(DashboardLayoutContext); // Ensure useContext is correct here
+  const { isMobileMode } = useContext(DashboardLayoutContext);
   const activePage = useDriveStore(s => s.activePage);
 
   const children = isMobileMode ? null : <NavbarSearch />;

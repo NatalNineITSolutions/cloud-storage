@@ -55,7 +55,7 @@ export function WorkspaceSelector({
   return (
     <Fragment>
       <div className={clsx('workspace-selector', className)}>
-        <div className="workspace-list flex flex-wrap gap-10 mt-40 mx-40 justify-between">
+        <div className="workspace-list flex flex-wrap gap-10 mt-80 mx-36 justify-between">
           <WorkspaceAddNewButton onChange={onChange} />
 
           {workspaces?.map(workspace => (
@@ -91,7 +91,7 @@ function WorkspaceAddNewButton({ onChange }: WorkspaceAddNewButtonProps) {
             onChange?.(workspaceId);
           }
         }}
-        className="relative h-full w-full rounded-xl bg-gradient-to-r from-[#6375f2] to-[#4a52ec] p-6 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300"
+        className="relative w-full rounded-xl bg-gradient-to-r from-[#6375f2] to-[#4a52ec] p-80 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300"
       >
         <div className="text-left w-full">
           <div className="text-xl font-semibold">+ Add New</div>
@@ -135,13 +135,13 @@ function WorkspaceItem({
         setSelectorIsOpen(false);
       }}
       className={clsx(
-        'mb-12 flex cursor-pointer items-center gap-4 p-20 rounded-lg shadow-md bg-white hover:bg-gray-50', isActive && 'bg-primary/5'
+        'mb-12 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white hover:bg-gray-50', isActive && 'bg-primary/5'
       )}
     >
-      <div className="w-60 bg-blue-100 rounded flex items-center justify-center">
+      <div className="w-40 py-2 px-8 bg-gray-100 rounded-2xl flex items-center justify-center">
         <svg
-          width="24"
-          height="24"
+          width="40"
+          height="40"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -264,7 +264,8 @@ function ManageButton({
         color="primary"
         size="xs"
         variant="outline"
-        endIcon={<KeyboardArrowDownIcon />}
+        endIcon={<KeyboardArrowDownIcon className='h-40' />}
+        className='border-none'
       >
         {/* <Trans message="Manage" /> */}
       </Button>

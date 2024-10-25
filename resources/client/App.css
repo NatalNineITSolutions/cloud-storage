@@ -17,6 +17,10 @@
   border-bottom-width: 0px;
 }
 
+.dashboard-grid-navbar{
+  margin-top: 0px;
+}
+
 @media screen and (min-width: 768px) {
   .landing-container {
     max-width: 750px;

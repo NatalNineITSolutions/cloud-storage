@@ -26,27 +26,30 @@ export function Sidebar({ className, logocolor }: SidebarProps) {
   
   return (
     <div
-      className={clsx(
-        className,
-        'flex flex-col gap-20 border-r bg-alt text-sm font-medium text-muted h-screen'
-      )}
-    >
+        className={clsx(
+          className,
+          'flex flex-col gap-20 bg-white text-sm font-medium text-muted h-screen'
+        )}
+        style={{ boxShadow: '4px 0 10px rgba(0, 0, 0, 0.1)' }}
+      >
       <div className="sticky bottom-0 mt-20 flex items-center justify-center">
         <Logo isDarkMode={isDarkMode} color={color} logoColor={logocolor} />
       </div>
 
-      <div className="flex-1 overflow-y-auto">
-        {/* Sidebar content */}
-        <SidebarMenu />
-        <StorageMeter />
-        {billing.enable ? (
-          <div className="mt-14 pl-30">
+        <div className="flex-1 overflow-y-auto">
+          <SidebarMenu />
+        </div>
+        <div className='mb-20 ml-20 w-200 bg-white rounded-2xl shadow-lg'>
+          <StorageMeter />
+          {billing.enable ? (
+            <div className="mt-14 mb-20 pl-30">
             <Button
               elementType={Link}
               to={isSubscribed ? '/billing/change-plan' : '/pricing'}
               variant="outline"
-              color="primary"
               size="xs"
+              color="primary"
+              className="bg-gray-200 hover:bg-gray-200 text-white"
             >
               <Trans message="Upgrade" />
             </Button>

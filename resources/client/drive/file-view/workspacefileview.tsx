@@ -39,6 +39,7 @@ import React, {
   import {WorkspaceSelector} from '@common/workspace/workspace-selector';
   import {RootFolderPage} from '../drive-page/drive-page';
   import {useNavigate} from '@common/utils/hooks/use-navigate';
+import { DriveContentHeader } from '../layout/drive-content-header';
   
   interface FileViewProps {
     className?: string;
@@ -187,6 +188,7 @@ import React, {
       />
     );
   }
+  
   
   function Toolbar() {
     const activePage = useDriveStore(s => s.activePage);

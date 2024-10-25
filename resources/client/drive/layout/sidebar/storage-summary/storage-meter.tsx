@@ -1,32 +1,36 @@
 import React from 'react';
-import {useStorageSummary} from './storage-summary';
-import {StorageIcon} from '@common/icons/material/Storage';
-import {Meter} from '@common/ui/progress/meter';
-import {Trans} from '@common/i18n/trans';
+import { useStorageSummary } from './storage-summary';
+import { StorageIcon } from '@common/icons/material/Storage';
+import { Meter } from '@common/ui/progress/meter';
+import { Trans } from '@common/i18n/trans';
 import clsx from 'clsx';
 
 export function StorageMeter() {
-  const {isLoading, data} = useStorageSummary();
+  const { isLoading, data } = useStorageSummary();
+
+  
+  const roundedPercentage = data?.percentage ? Math.round(data.percentage) : 0;
 
   const label = (
     <span className={clsx('whitespace-nowrap', isLoading && 'invisible')}>
       <Trans
-        message=":used of :available used"
+        message=":usedGB of :availableGB used (:percentage%)"
         values={{
-          used: data?.usedFormatted,
-          available: data?.availableFormatted,
+          usedGB: data?.usedFormatted,          
+          availableGB: data?.availableFormatted, 
+          percentage: roundedPercentage,       
         }}
       />
     </span>
   );
+
   return (
     <div className="pl-24 pt-24 mt-24 flex flex-col items-start gap-16">
-      <img src="./images/Storage.jpeg" className='w-80 h-80'/>
-      {/* <StorageIcon className="icon-md -mt-4" /> */}
+      <img src="./images/Storage.jpeg" alt="Storage" className="w-80 h-80" />
       <Meter
         className="flex-auto max-w-144"
         size="xs"
-        value={data?.percentage}
+        value={roundedPercentage}
         label={label}
         showValueLabel={false}
         labelPosition="bottom"

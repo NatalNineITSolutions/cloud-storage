@@ -15,6 +15,12 @@ module.exports = {
     ...sharedOverride,
     extend: {
       ...sharedExtend,
+      colors: {
+        gray: {
+          100: '#EBF2FF',
+          200: '#0061FF',
+        },
+      },
     },
     screens: {
       sm: '640px',

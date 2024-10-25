@@ -50,7 +50,7 @@ export function NotificationDialogTrigger({
           ) : undefined
         }
       >
-        <NotificationsIcon />
+        <NotificationsIcon className="text-black bg-#ffffff w-30 h-30" />
       </IconButton>
       <Dialog>
         <DialogHeader
@@ -65,7 +65,7 @@ export function NotificationDialogTrigger({
                 to="/notifications/settings"
                 target="_blank"
               >
-                <SettingsIcon />
+                <SettingsIcon/>
               </IconButton>
             )
           }

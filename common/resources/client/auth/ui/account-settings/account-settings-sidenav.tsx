@@ -35,7 +35,7 @@ export function AccountSettingsSidenav() {
     social?.envato || social?.google || social?.facebook || social?.twitter;
 
   return (
-    <aside className="sticky top-10 hidden flex-shrink-0 lg:block">
+    <aside className="sticky top-10 mt-160 hidden flex-shrink-0 lg:block">
       <List padding="p-0">
         {auth.accountSettingsPanels?.map(panel => (
           <Item
@@ -52,11 +52,11 @@ export function AccountSettingsSidenav() {
         {/* <Item icon={<LanguageIcon />} panel={p.LocationAndLanguage}>
           <Trans message="Location and language" />
         </Item> */}
-        {api?.integrated && hasPermission('api.access') ? (
+        {/* {api?.integrated && hasPermission('api.access') ? (
           <Item icon={<ApiIcon />} panel={p.Developers}>
             <Trans message="Developers" />
           </Item>
-        ) : null}
+        ) : null} */}
         <Item icon={<DangerousIcon />} panel={p.DeleteAccount}>
           <Trans message="Delete account" />
         </Item>

@@ -19,6 +19,7 @@ import {NotificationRoutes} from '@common/notifications/notification-routes';
 import {ContactUsPage} from '@common/contact/contact-us-page';
 import {CustomPageLayout} from '@common/custom-page/custom-page-layout';
 import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
+import AccessTokenPage from '@common/swagger/Accesstokenpage';
 
 const AdminRoutes = React.lazy(() => import('@common/admin/admin-routes'));
 const DriveRoutes = React.lazy(() => import('./drive/drive-routes'));
@@ -97,6 +98,7 @@ export function AppRoutes() {
         <Route path="contact" element={<ContactUsPage />}></Route>
         <Route path="pages/:pageSlug" element={<CustomPageLayout />}></Route>
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="accesstoken" element={<AccessTokenPage />}></Route>
       </Routes>
       <DialogStoreOutlet />
     </Fragment>
