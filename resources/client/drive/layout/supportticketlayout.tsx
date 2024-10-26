@@ -14,6 +14,7 @@ import { Sidebar } from './sidebar/sidebar';
 import { DashboardLayoutContext } from '@common/ui/layout/dashboard-layout-context'; 
 import {FileView} from '../file-view/workspacefileview';
 import { CreateQuickTicket } from '@common/supportticket/supportticket';
+import Accountsidebar from '@common/auth/ui/account-settings/account-sidebar';
 
 
 export function SupportticketLayout() {
@@ -57,7 +58,7 @@ export function SupportticketLayout() {
           }}>
           <Navbar />
           <DashboardSidenav position="left" size="md">
-            <Sidebar />
+            <Accountsidebar />
           </DashboardSidenav>
           <CreateQuickTicket/>
         </DashboardLayout>

@@ -50,7 +50,7 @@ export function NotificationDialogTrigger({
           ) : undefined
         }
       >
-        <NotificationsIcon className="text-black bg-#ffffff w-30 h-30" />
+        <NotificationsIcon className='bg-white text-black w-34 h-34 p-6 rounded-lg'/>
       </IconButton>
       <Dialog>
         <DialogHeader

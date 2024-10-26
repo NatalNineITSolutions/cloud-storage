@@ -16,13 +16,13 @@ export default function SwaggerApiDocsPage() {
   }, [settings]);
 
   return (
-    <div className="h-screen flex bg-#EFF5F5">
+    <div className="h-screen flex">
       <div className="h-screen bg-gray-100 fixed top-0">
         <Swaggersidebar />
       </div>
 
       <div className="flex-1 flex flex-col ml-240">
-        <Navbar size="sm" />
+        <Navbar/>
 
         <div className="flex-1 p-4 overflow-y-auto">
           <SwaggerUI

@@ -1,25 +1,28 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // use this if you're using react-router
+import { useNavigate } from 'react-router-dom';
 import { CloudUploadIcon } from '@common/icons/material/CloudUpload';
 import UploadingSettings from '@common/admin/settings/pages/uploading-settings/uploading-settings';
 
 const initialIntegrations = [
   {
     name: 'AWS',
-    description: 'Excel learns your patterns, organizing your data to save you time.',
+    description: 'Build, Deploy, and Manage Websites, Apps or Processes On AWS Secure, Reliable Network.',
     status: 'connect',
+    integration: 'Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance. Customers of all sizes and industries can use Amazon S3 to store and protect any amount of data for a range of use cases, such as data lakes, websites, mobile applications, backup and restore, archive, enterprise applications, IoT devices, and big data analytics. Amazon S3 provides management features so that you can optimize, organize, and configure access to your data to meet your specific business, organizational, and compliance requirements.',
     logo: '/images/AWS.png',
   },
   {
     name: 'Zeedone',
     description: 'Zeedone offers a wide variety of CRM categories and systems to meet your needs.',
     status: 'connect',
+    integration: 'CRM stands for customer relationship management, which is a system for managing all of your companys interactions with current and potential customers. The goal is simple: improve relationships to grow your business.',
     logo: '/images/Zeedone.png',
   },
 ];
 
 export default function IntegrationGrid() {
   const [integrations, setIntegrations] = useState(initialIntegrations);
+  const [selectedIntegration, setSelectedIntegration] = useState(null);
   const navigate = useNavigate();
 
   const handleConnect = (name) => {
@@ -30,7 +33,15 @@ export default function IntegrationGrid() {
           : integration
       )
     );
-    navigate('/admin/settings/uploading'); 
+    navigate('/admin/settings/uploading');
+  };
+
+  const handleDetails = (integration) => {
+    setSelectedIntegration(integration);
+  };
+
+  const closeModal = () => {
+    setSelectedIntegration(null);
   };
 
   return (
@@ -39,7 +50,7 @@ export default function IntegrationGrid() {
         {integrations.map((integration) => (
           <div
             key={integration.name}
-            className="p-32 bg-white rounded-lg shadow-md flex flex-col justify-between gap-10"
+            className="p-32 bg-white dark:bg-gray-300 rounded-lg shadow-md flex flex-col justify-between gap-10"
           >
             <div className="flex items-center mb-4">
               <img src={integration.logo} alt={`${integration.name} logo`} className="w-80 h-40 mr-4" />
@@ -51,20 +62,47 @@ export default function IntegrationGrid() {
                 onClick={() => handleConnect(integration.name)}
                 className={`${
                   integration.status === 'connected'
-                    ? 'bg-black text-white shadow-md'
-                    : 'bg-white border-gray-300 text-black shadow-md hover:bg-gray-100'
+                    ? 'bg-black text-white shadow-md dark:bg-gray-300'
+                    : 'bg-white border-gray-300 text-black shadow-md dark:bg-gray-300 dark:text-white'
                 } border px-12 py-4 rounded-2xl flex gap-5`}
               >
                 {integration.status === 'connected' ? 'Connected' : 'Connect'}
                 <CloudUploadIcon />
               </button>
-              <a href="#" className="text-blue-500 hover:underline">
+              <button onClick={() => handleDetails(integration)} className="text-blue-500 hover:underline">
                 Integration details →
-              </a>
+              </button>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Modal for Integration Details */}
+      {selectedIntegration && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 transition-opacity duration-300 ease-out">
+        <div className="bg-white dark:bg-gray-800 p-10 rounded-xl max-w-lg w-full shadow-2xl transform transition-transform duration-300 ease-out scale-95 hover:scale-100 relative">
+          <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
+            aria-label="Close modal"
+          >
+            ✕
+          </button>
+          <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+            Integration Details
+          </h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            {selectedIntegration.integration}
+          </p>
+          <button
+            onClick={closeModal}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-500 transition duration-200 ease-in-out"
+          >
+            Close
+          </button>
+        </div>
+      </div>      
+      )}
     </div>
   );
 }

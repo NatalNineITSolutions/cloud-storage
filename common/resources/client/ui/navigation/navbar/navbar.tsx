@@ -106,18 +106,18 @@ export function Navbar(props: NavbarProps) {
         )}
       >
         {!hideLogo && (
-          <div className="flex items-center text-black">
+          <div className="flex items-center text-black dark:text-white">
             <Username />
           </div>
         )}
         <MobileMenu position={menuPosition} />
         <DesktopMenu position={menuPosition} />
-        <div className="ml-auto flex items-center gap-4 md:gap-14">
+        <div className="ml-auto flex items-center gap-16">
           {rightChildren}
           {children}
-          {showNotifButton && <NotificationDialogTrigger className='text-black w-10 h-10 p-18 bg-white rounded-lg'/>}
+          {showNotifButton && <NotificationDialogTrigger/>}
           <IconButton onClick={handleSettingsClick} aria-label="Account Settings">
-            <SettingsIcon className='text-black bg-white w-36 h-36 p-6 rounded-lg'/>
+            <SettingsIcon className='bg-white text-black w-34 h-34 p-6 rounded-lg'/>
           </IconButton>
           {isLoggedIn ? (
             <NavbarAuthUser items={authMenuItems} />

@@ -76,16 +76,15 @@ export function DriveLayout() {
               e.dataTransfer.dropEffect = 'none';
             }}
             onDrop={e => {
-              // prevent files from desktop from blowing away the document
               e.preventDefault();
             }}>
-            <Navbar />
+            <Navbar/>
             <DashboardSidenav position="left" size="md">
-              <Sidebar />
+              <Sidebar/>
             </DashboardSidenav>
             <DriveContentHeader />
             <DashboardContent>
-              <FileView />
+              <FileView/>
             </DashboardContent>
             <UploadQueue />
             <DriveDialogsContainer />

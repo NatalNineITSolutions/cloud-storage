@@ -36,7 +36,7 @@ export function NavbarAuthUser({items = []}: NavbarAuthUserProps) {
   const desktopButton = (
     <ButtonBase className="flex items-center max-md:hidden" role="presentation">
       <img
-        className="mr-12 h-32 w-32 flex-shrink-0 rounded object-cover"
+        className="mr-12 h-34 w-34 mt-6 flex-shrink-0 rounded-lg object-cover"
         src={user.avatar}
         alt=""
       />

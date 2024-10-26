@@ -19,7 +19,12 @@ module.exports = {
         gray: {
           100: '#EBF2FF',
           200: '#0061FF',
+          300: '#222226',
+          400: '#00000099'
         },
+      },
+      boxShadow: {
+        'custom-blue': '0px 6px 12px 0px rgba(63, 140, 255, 0.26)', 
       },
     },
     screens: {

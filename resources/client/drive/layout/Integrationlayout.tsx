@@ -10,10 +10,9 @@ import { DashboardSidenav } from '@common/ui/layout/dashboard-sidenav';
 import { Trans } from '@common/i18n/trans';
 import { NavbarSearch } from '../search/navbar-search';
 import { CreateNewButton } from './create-new-button';
-import { WorkspaceSelector } from '@common/workspace/workspace-selector';
-import { Sidebar } from './sidebar/sidebar';
 import { DashboardLayoutContext } from '@common/ui/layout/dashboard-layout-context'; 
 import IntegrationGrid from '@common/Integration/Integration';
+import Accountsidebar from '@common/auth/ui/account-settings/account-sidebar';
 
 
 export function IntegrationLayout() {
@@ -57,7 +56,7 @@ export function IntegrationLayout() {
           }}>
           <Navbar />
           <DashboardSidenav position="left" size="md">
-            <Sidebar />
+            <Accountsidebar/>
           </DashboardSidenav>
           <IntegrationGrid/>
         </DashboardLayout>

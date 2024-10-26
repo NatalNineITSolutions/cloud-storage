@@ -19,13 +19,13 @@ export function AccountSettingsPage() {
 
   return (
     <div className="min-h-screen bg-alt flex">
-      <div className="w-1/7 h-screen bg-gray-100 sticky top-0">
+      <div className="h-screen bg-gray-100 sticky top-0">
         <Accountsidebar />
       </div>
 
       <div className="flex-1 flex flex-col">
         <div className="w-full">
-          <Navbar menuPosition="account-settings-page" />
+          <Navbar/>
         </div>
         
         <div className='flex'>

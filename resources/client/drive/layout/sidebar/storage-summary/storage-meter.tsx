@@ -25,8 +25,8 @@ export function StorageMeter() {
   );
 
   return (
-    <div className="pl-24 pt-24 mt-24 flex flex-col items-start gap-16">
-      <img src="./images/Storage.jpeg" alt="Storage" className="w-80 h-80" />
+    <div className="pt-24 mt-24 pl-20 flex flex-col items-start gap-16">
+      <img src="./images/Files.png" alt="Storage" className="w-80 h-80" />
       <Meter
         className="flex-auto max-w-144"
         size="xs"

@@ -17,7 +17,7 @@ export function NavbarSearch() {
 
   return (
     <form
-      className="max-w-620 flex-auto"
+      className="max-w-620 flex-auto rounded-lg"
       onSubmit={e => {
         e.preventDefault();
         navigate(
@@ -44,7 +44,7 @@ export function NavbarSearch() {
             <SearchIcon />
           </IconButton>
         }
-        className="max-w-600 flex-auto"
+        className="max-w-600 flex-auto rounded-lg"
         placeholder={trans({message: 'Search anything here'})}
         aria-label={trans({message: 'Search files and folders'})}
       />

@@ -42,7 +42,9 @@ function ToggleViewModeButton() {
           onClick={() => {
             driveState().setViewMode('grid');
           }}
-          className={clsx(viewMode === 'grid' && 'text-blue-500')}
+          className={clsx(
+            viewMode === 'grid' ? 'text-gray-200 dark:text-white' : 'text-gray-400'
+          )}
         >
           <ViewModuleIcon />
         </IconButton>
@@ -54,12 +56,15 @@ function ToggleViewModeButton() {
           onClick={() => {
             driveState().setViewMode('list');
           }}
-          className={clsx(viewMode === 'list' && 'text-blue-500')}
+          className={clsx(
+            viewMode === 'list' ? 'text-gray-200 dark:text-white' : 'text-gray-400'
+          )}
         >
           <ViewListIcon />
         </IconButton>
       </Tooltip>
     </div>
+
   );
 }
 

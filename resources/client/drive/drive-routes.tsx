@@ -72,22 +72,22 @@ const DriveRouteConfig: RouteObject[] = [
       </AuthRoute>
     ),
   },
-  {
-    path: '/supportticket',
-    element: (
-      <AuthRoute>
-        <SupportticketLayout/>
-      </AuthRoute>
-    ),
-  },
-  {
-    path: '/integration',
-    element: (
-      <AuthRoute>
-        <IntegrationLayout/>
-      </AuthRoute>
-    ),
-  },
+  // {
+  //   path: '/supportticket',
+  //   element: (
+  //     <AuthRoute>
+  //       <SupportticketLayout/>
+  //     </AuthRoute>
+  //   ),
+  // },
+  // {
+  //   path: '/integration',
+  //   element: (
+  //     <AuthRoute>
+  //       <IntegrationLayout/>
+  //     </AuthRoute>
+  //   ),
+  // },
   {path: 's/:hash', element: <ShareableLinkPage />},
   {path: '*', element: <NotFoundPage />},
 ];

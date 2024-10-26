@@ -1,14 +1,8 @@
 import {List, ListItem} from '@common/ui/list/list';
 import {PersonIcon} from '@common/icons/material/Person';
 import {Trans} from '@common/i18n/trans';
-import {LoginIcon} from '@common/icons/material/Login';
-import {LockIcon} from '@common/icons/material/Lock';
-import {PhonelinkLockIcon} from '@common/icons/material/PhonelinkLock';
-import {LanguageIcon} from '@common/icons/material/Language';
-import {ApiIcon} from '@common/icons/material/Api';
 import {DangerousIcon} from '@common/icons/material/Dangerous';
 import {ReactNode, useContext} from 'react';
-import {DevicesIcon} from '@common/icons/material/Devices';
 import {useAuth} from '@common/auth/use-auth';
 import {useSettings} from '@common/core/settings/use-settings';
 import {SiteConfigContext} from '@common/core/settings/site-config-context';
@@ -46,20 +40,22 @@ export function AccountSettingsSidenav() {
             <Trans {...panel.label} />
           </Item>
         ))}
-        <Item icon={<PersonIcon />} panel={p.AccountDetails}>
-          <Trans message="Account details" />
-        </Item>
-        {/* <Item icon={<LanguageIcon />} panel={p.LocationAndLanguage}>
-          <Trans message="Location and language" />
-        </Item> */}
-        {/* {api?.integrated && hasPermission('api.access') ? (
-          <Item icon={<ApiIcon />} panel={p.Developers}>
-            <Trans message="Developers" />
+        <div className='bg-white rounded-lg shadow-lg py-10 px-8 ml-10'>
+          <Item icon={<PersonIcon />} panel={p.AccountDetails}>
+            <Trans message="Account details" />
           </Item>
-        ) : null} */}
-        <Item icon={<DangerousIcon />} panel={p.DeleteAccount}>
-          <Trans message="Delete account" />
-        </Item>
+          {/* <Item icon={<LanguageIcon />} panel={p.LocationAndLanguage}>
+            <Trans message="Location and language" />
+          </Item> */}
+          {/* {api?.integrated && hasPermission('api.access') ? (
+            <Item icon={<ApiIcon />} panel={p.Developers}>
+              <Trans message="Developers" />
+            </Item>
+          ) : null} */}
+          <Item icon={<DangerousIcon />} panel={p.DeleteAccount}>
+            <Trans message="Delete account" />
+          </Item>
+        </div>
       </List>
     </aside>
   );

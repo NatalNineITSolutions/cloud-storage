@@ -28,7 +28,7 @@ export function Sidebar({ className, logocolor }: SidebarProps) {
     <div
         className={clsx(
           className,
-          'flex flex-col gap-20 bg-white text-sm font-medium text-muted h-screen'
+          'flex flex-col gap-20 bg-white dark:bg-gray-300  text-sm font-medium text-muted h-screen'
         )}
         style={{ boxShadow: '4px 0 10px rgba(0, 0, 0, 0.1)' }}
       >
@@ -39,7 +39,7 @@ export function Sidebar({ className, logocolor }: SidebarProps) {
         <div className="flex-1 overflow-y-auto">
           <SidebarMenu />
         </div>
-        <div className='mb-20 ml-20 w-200 bg-white rounded-2xl shadow-lg'>
+        <div className='mb-20 ml-20 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg'>
           <StorageMeter />
           {billing.enable ? (
             <div className="mt-14 mb-20 pl-30">
@@ -49,7 +49,7 @@ export function Sidebar({ className, logocolor }: SidebarProps) {
               variant="outline"
               size="xs"
               color="primary"
-              className="bg-gray-200 hover:bg-gray-200 text-white"
+              className="text-gray-200"
             >
               <Trans message="Upgrade" />
             </Button>

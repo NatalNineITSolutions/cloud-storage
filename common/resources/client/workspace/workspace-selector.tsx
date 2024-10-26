@@ -98,14 +98,15 @@ function WorkspaceAddNewButton({ onChange }: WorkspaceAddNewButtonProps) {
           <div className="text-3xl font-bold mt-1">Workspace</div>
         </div>
 
-        <div className="absolute top-4 right-8">
-          <svg width="50" height="50" viewBox="0 0 100 100" fill="none">
-            <path
-              d="M10 60 C 40 20, 80 20, 90 60"
-              stroke="rgba(255, 255, 255, 0.4)"
-              strokeWidth="8"
-              strokeLinecap="round"
-            />
+        <div className="absolute top-30 right-8">
+          <svg width="92" height="45" viewBox="0 0 92 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 42.2949C2 42.2949 8.27975 -5.21045 24 16.7949C39.7203 38.8003 46 37.7896 52 20.7949C59.4168 -0.212582 86.758 17.8755 89.5 2.79492" stroke="url(#paint0_linear_26_2666)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+            <linearGradient id="paint0_linear_26_2666" x1="-1.50002" y1="47.2949" x2="70.5778" y2="-16.1194" gradientUnits="userSpaceOnUse">
+            <stop stop-color="white"/>
+            <stop offset="1" stop-color="white" stop-opacity="0"/>
+            </linearGradient>
+            </defs>
           </svg>
         </div>
       </Button>
@@ -135,7 +136,7 @@ function WorkspaceItem({
         setSelectorIsOpen(false);
       }}
       className={clsx(
-        'mb-12 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white hover:bg-gray-50', isActive && 'bg-primary/5'
+        'mb-12 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white dark:bg-gray-300 text-black dark:text-white', isActive && 'bg-primary/5'
       )}
     >
       <div className="w-40 py-2 px-8 bg-gray-100 rounded-2xl flex items-center justify-center">

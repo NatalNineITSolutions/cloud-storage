@@ -11,9 +11,9 @@ export function CreateQuickTicket() {
   };
 
   return (
-    <div className="w-4/8 mx-40 mt-40 bg-white p-40 rounded-2xl shadow-md overflow-visible">
-      <h2 className="text-xl font-semibold mb-6">Create Quick Ticket</h2>
-      <p>Write and address new queries and issues</p>
+    <div className="w-4/8 mx-40 mt-40 dark:bg-gray-300 p-40 rounded-2xl shadow-md overflow-visible">
+      <h2 className="text-xl font-semibold mb-6 text-black dark:text-white">Create Quick Ticket</h2>
+      <p className="text-black dark:text-white">Write and address new queries and issues</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-30 mt-40">
         <div>
           <label className="block text-gray-500 mb-2 text-sm">Email</label>
@@ -22,7 +22,7 @@ export function CreateQuickTicket() {
             placeholder="Type Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
@@ -31,12 +31,12 @@ export function CreateQuickTicket() {
           <select
             value={ticketType}
             onChange={(e) => setTicketType(e.target.value)}
-            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value="">Choose Type</option>
-            <option value="bug">Bug Report</option>
-            <option value="feature">Feature Request</option>
-            <option value="inquiry">General Inquiry</option>
+            <option value="" className='dark:text-gray-300'>Choose Type</option>
+            <option value="bug" className='dark:text-gray-300'>Bug Report</option>
+            <option value="feature" className='dark:text-gray-300'>Feature Request</option>
+            <option value="inquiry" className='dark:text-gray-300'>General Inquiry</option>
           </select>
         </div>
 
@@ -45,12 +45,12 @@ export function CreateQuickTicket() {
           <select
             value={priorityStatus}
             onChange={(e) => setPriorityStatus(e.target.value)}
-            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value="">Select Status</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+            <option value="" className='dark:text-gray-300'>Select Status</option>
+            <option value="low" className='dark:text-gray-300'>Low</option>
+            <option value="medium" className='dark:text-gray-300'>Medium</option>
+            <option value="high" className='dark:text-gray-300'>High</option>
           </select>
         </div>
       </div>
@@ -61,7 +61,7 @@ export function CreateQuickTicket() {
           placeholder="Type ticket issue here..."
           value={ticketBody}
           onChange={(e) => setTicketBody(e.target.value)}
-          className="w-full mt-8 h-200 px-20 py-12 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full mt-8 h-200 px-20 py-12 border border-gray-300 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
 
@@ -74,7 +74,7 @@ export function CreateQuickTicket() {
         </button>
         <button
           onClick={handleSendTicket}
-          className="px-6 py-2 bg-black text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-6 py-2 text-white rounded-md bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Send Ticket
         </button>
