@@ -10,8 +10,8 @@ export function Username(): ReactElement | null {
 
   return (
     <div className="flex flex-col pl-16">
-      <h1 className="text-2xl font-semibold text-blue-900">My Cloud</h1>
-      <p className="text-lg text-gray-500">
+      <h1 className="text-2xl font-semibold text-gray-300 dark:text-white">My Cloud</h1>
+      <p className="text-lg text-gray-300 dark:text-white">
         Welcome, {user.display_name}! <span className="wave-emoji">👋</span>
       </p>
     </div>

@@ -16,22 +16,22 @@ export function CreateQuickTicket() {
       <p className="text-black dark:text-white">Write and address new queries and issues</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-30 mt-40">
         <div>
-          <label className="block text-gray-500 mb-2 text-sm">Email</label>
+          <label className="block text-gray-300 mb-2 text-sm">Email</label>
           <input
             type="email"
             placeholder="Type Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full mt-8 px-20 py-12 border border-gray-500 rounded-md text-gray-300 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
         <div>
-          <label className="block text-gray-500 mb-2 text-sm">Request Ticket Type</label>
+          <label className="block text-gray-300 mb-2 text-sm">Request Ticket Type</label>
           <select
             value={ticketType}
             onChange={(e) => setTicketType(e.target.value)}
-            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full mt-8 px-20 py-12 border border-gray-500 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="" className='dark:text-gray-300'>Choose Type</option>
             <option value="bug" className='dark:text-gray-300'>Bug Report</option>
@@ -41,11 +41,11 @@ export function CreateQuickTicket() {
         </div>
 
         <div>
-          <label className="block text-gray-500 mb-2 text-sm">Priority Status</label>
+          <label className="block text-gray-300 mb-2 text-sm">Priority Status</label>
           <select
             value={priorityStatus}
             onChange={(e) => setPriorityStatus(e.target.value)}
-            className="w-full mt-8 px-20 py-12 border border-gray-300 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full mt-8 px-20 py-12 border border-gray-500 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="" className='dark:text-gray-300'>Select Status</option>
             <option value="low" className='dark:text-gray-300'>Low</option>
@@ -56,19 +56,19 @@ export function CreateQuickTicket() {
       </div>
 
       <div className="mt-6">
-        <label className="block text-gray-500 mb-2 mt-20 text-sm">Ticket Body</label>
+        <label className="block text-gray-300 mb-2 mt-20 text-sm">Ticket Body</label>
         <textarea
           placeholder="Type ticket issue here..."
           value={ticketBody}
           onChange={(e) => setTicketBody(e.target.value)}
-          className="w-full mt-8 h-200 px-20 py-12 border border-gray-300 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full mt-8 h-200 px-20 py-12 border border-gray-500 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
 
       <div className="flex justify-end mt-6 space-x-4">
         <button
           onClick={() => console.log('Cancelled')}
-          className="px-5 py-2 border border-gray-300 text-gray-500 rounded-md hover:bg-gray-100"
+          className="px-5 py-2 border border-gray-300 text-gray-300 dark:text-white rounded-md hover:bg-gray-100"
         >
           Cancel
         </button>

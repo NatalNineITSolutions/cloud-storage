@@ -40,7 +40,7 @@ export function AccountSettingsSidenav() {
             <Trans {...panel.label} />
           </Item>
         ))}
-        <div className='bg-white rounded-lg shadow-lg py-10 px-8 ml-10'>
+        <div className='bg-white dark:bg-gray-300 rounded-lg shadow-lg py-10 px-8 ml-10'>
           <Item icon={<PersonIcon />} panel={p.AccountDetails}>
             <Trans message="Account details" />
           </Item>

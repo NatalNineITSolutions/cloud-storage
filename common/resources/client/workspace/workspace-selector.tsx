@@ -158,7 +158,7 @@ function WorkspaceItem({
         <div className={clsx('text-lg font-semibold text-gray-900')}>
           {workspace.name || "Project 29"}
         </div>
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-300 dark:text-white">
           {workspace.date || "Sep 25, 2024, 1:25 PM"}
         </div>
       </div>

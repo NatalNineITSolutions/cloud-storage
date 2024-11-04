@@ -107,7 +107,7 @@ export function Navbar(props: NavbarProps) {
       >
         {!hideLogo && (
           <div className="flex items-center text-black dark:text-white">
-            <Username />
+            {/* <Username /> */}
           </div>
         )}
         <MobileMenu position={menuPosition} />

@@ -23,7 +23,7 @@ export function AccountSettingsPage() {
         <Accountsidebar />
       </div>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex-col">
         <div className="w-full">
           <Navbar/>
         </div>
@@ -31,8 +31,8 @@ export function AccountSettingsPage() {
         <div className='flex'>
           <AccountSettingsSidenav/>
 
-            <div className="container px-8 py-4 mt-60">
-              <div className='-ml-140'>
+            <div className="container px-8 pl-40 pr-40 mt-60">
+              <div>
                 <StaticPageTitle>
                   <Trans message="Account Settings" />
                 </StaticPageTitle>
