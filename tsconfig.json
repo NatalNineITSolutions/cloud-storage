@@ -22,5 +22,6 @@
     "jsx": "react-jsx"
   },
   "include": ["resources/client", "common/resources/client"],
-  "references": [{"path": "./tsconfig.node.json"}]
+  "references": [{"path": "./tsconfig.node.json"}],
+  "exclude": ["node_modules/@types/ramda"]
 }

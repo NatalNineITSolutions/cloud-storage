@@ -1,71 +1,109 @@
-import { Navbar } from '@common/ui/navigation/navbar/navbar';
-import { useUser } from '../use-user';
-import { ProgressCircle } from '@common/ui/progress/progress-circle';
-import { BasicInfoPanel } from './basic-info-panel/basic-info-panel';
-import { AccessTokenPanel } from './access-token-panel/access-token-panel';
-import { DangerZonePanel } from './danger-zone-panel/danger-zone-panel';
+import React, { useState } from "react";
+import { Logo } from '@common/ui/navigation/navbar/logo';
+import { Button } from '@common/ui/buttons/button';
+import { Link, useLocation } from 'react-router-dom';
 import { Trans } from '@common/i18n/trans';
-import { StaticPageTitle } from '@common/seo/static-page-title';
-import { useContext, useState } from 'react';
-import { SiteConfigContext } from '@common/core/settings/site-config-context';
-import Accountsidebar from './account-sidebar';
-import { AccountSettingsSidenav } from './account-settings-sidenav';
+import { useAuth } from '@common/auth/use-auth';
+import { useSettings } from '@common/core/settings/use-settings';
+import { ApiIcon } from "@common/icons/material/Api";
+import { TokenIcon } from "@common/icons/material/Token";
+import { DeveloperModeIcon } from "@common/icons/material/DeveloperMode";
+import { MenuIcon } from '@common/icons/material/Menu';
+import { CloseIcon } from '@common/icons/material/Close';
+import { StorageMeter } from "@app/drive/layout/sidebar/storage-summary/storage-meter";
+import { DashboardIcon } from "@common/icons/material/Dashboard";
+import { WorkspacesIcon } from "@common/icons/material/Workspaces";
+import { SupportIcon } from "@common/icons/material/Support";
+import { WorkIcon } from "@common/icons/material/Work";
+import { InterestsIcon } from "@common/icons/material/Interests";
+import { AutoGraphIcon } from "@common/icons/material/AutoGraph";
 
-export function AccountSettingsPage() {
-  const { auth } = useContext(SiteConfigContext);
-  const { data, isLoading } = useUser('me', {
-    with: ['roles', 'social_profiles', 'tokens'],
-  });
+function Accountsidebar() {
+  const { isSubscribed } = useAuth();
+  const { billing } = useSettings();
+  const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-alt">
+    <div className="relative h-screen">
+      {/* Hamburger Menu Button */}
+      <button
+        className="fixed top-4 left-4 lg:hidden text-gray-700 dark:text-gray-300"
+        onClick={toggleSidebar}
+        aria-label="Toggle Sidebar"
+      >
+        {isSidebarOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+      </button>
+      {/* Sidebar Overlay for Mobile */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={toggleSidebar}
+        ></div>
+      )}
       {/* Sidebar */}
-      <div className="lg:h-auto w-full lg:w-1/4 bg-gray-100 lg:sticky top-0">
-        <Accountsidebar />
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        <Navbar className="w-full" />
-        
-        <div className="flex flex-col lg:flex-row flex-1 overflow-y-auto">
-          {/* Account Settings Sidebar */}
-          <div className="lg:w-1/4 px-4 lg:px-8 mt-8 lg:mt-0">
-            <AccountSettingsSidenav />
+      <div
+        className={`h-screen bg-white dark:bg-gray-300 lg:static transition-transform transform ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0 z-50 flex flex-col justify-center items-center`}
+      >
+        <div className="p-4 border-b">
+          <div className="sticky bottom-0 mt-20 flex items-center justify-center">
+            <Logo />
           </div>
-
-          {/* Content Section */}
-          <div className="flex-1 px-4 lg:px-12 py-8 mt-12 lg:mt-0">
-            <StaticPageTitle>
-              <Trans message="Account Settings" />
-            </StaticPageTitle>
-
-            <h1 className="text-3xl">
-              <Trans message="Account settings" />
-            </h1>
-            <p className="mb-4 text-base text-muted">
-              <Trans message="View and update your account details, profile and more." />
-            </p>
-
-            {isLoading || !data ? (
-              <ProgressCircle
-                className="my-20"
-                aria-label="Loading user.."
-                isIndeterminate
-              />
-            ) : (
-              <div className="space-y-8 mt-12">
-                {auth.accountSettingsPanels?.map((panel) => (
-                  <panel.component key={panel.id} user={data.user} />
-                ))}
-                <BasicInfoPanel user={data.user} />
-                <DangerZonePanel />
-              </div>
-            )}
-          </div>
+        </div>
+        <div className="flex-1 overflow-y-auto py-12 px-16 bg-white dark:bg-gray-300">
+          <ul className="w-full list-none p-20 m-0 flex flex-col gap-16">
+            <li className="py-2 flex items-center">
+              <Link to="/drive" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/api-docs' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+                <DashboardIcon/>
+                Dashboard
+              </Link>
+            </li>
+            <li className="py-2 flex items-center">
+              <Link to="/drive/workspace" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/accesstoken' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+                <WorkIcon />
+                Workspace
+              </Link>
+            </li>
+            <li className="py-2 flex items-center">
+              <Link to="/api-docs" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/accesstoken' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+                <DeveloperModeIcon />
+                Developers Tool
+              </Link>
+            </li>
+            <li className="py-2 flex items-center">
+              <Link to="/integration" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/accesstoken' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+                <AutoGraphIcon />
+                Integration
+              </Link>
+            </li>
+            <li className="py-2 flex items-center">
+              <Link to="/supportticket" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/accesstoken' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+                <SupportIcon />
+                Supportticket
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="mb-20 ml-20 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg">
+          <StorageMeter/>
+          {billing?.enable && (
+            <div className="mt-14 mb-20 pl-30">
+              <Button
+                elementType={Link}
+                to={isSubscribed ? '/billing/change-plan' : '/pricing'}
+                variant="outline"
+                color="primary"
+                size="xs"
+              >
+                <Trans message="Upgrade" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
+export default Accountsidebar;
