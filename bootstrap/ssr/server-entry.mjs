@@ -4,6 +4,7 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
+var _a, _b;
 import { jsxs, jsx, Fragment as Fragment$1 } from "react/jsx-runtime";
 import { renderToPipeableStream } from "react-dom/server";
 import process$1 from "process";
@@ -50,8 +51,8 @@ function isAbsoluteUrl(url) {
   return /^[a-zA-Z][a-zA-Z\d+\-.]*?:/.test(url);
 }
 function errorStatusIs(err, status) {
-  var _a;
-  return axios.isAxiosError(err) && ((_a = err.response) == null ? void 0 : _a.status) == status;
+  var _a2;
+  return axios.isAxiosError(err) && ((_a2 = err.response) == null ? void 0 : _a2.status) == status;
 }
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -72,8 +73,8 @@ apiClient.defaults.headers = {
   }
 };
 apiClient.interceptors.request.use((config) => {
-  var _a, _b, _c, _d, _e, _f, _g;
-  if (!((_a = config.url) == null ? void 0 : _a.startsWith("auth")) && !((_b = config.url) == null ? void 0 : _b.startsWith("secure")) && !isAbsoluteUrl(config == null ? void 0 : config.url)) {
+  var _a2, _b2, _c, _d, _e, _f, _g;
+  if (!((_a2 = config.url) == null ? void 0 : _a2.startsWith("auth")) && !((_b2 = config.url) == null ? void 0 : _b2.startsWith("secure")) && !isAbsoluteUrl(config == null ? void 0 : config.url)) {
     config.url = `api/v1/${config.url}`;
   }
   const method = (_c = config.method) == null ? void 0 : _c.toUpperCase();
@@ -820,7 +821,7 @@ const FormattedRelativeTime = memo(
   shallowEqual
 );
 function Line({ notification, line, index, iconRenderer }) {
-  var _a, _b;
+  var _a2, _b2;
   const isPrimary = line.type === "primary" || index === 0;
   const Icon = iconRenderer || DefaultIconRenderer;
   const Element = line.action ? "a" : "div";
@@ -833,8 +834,8 @@ function Line({ notification, line, index, iconRenderer }) {
           line.action && "hover:underline",
           isPrimary ? "text-sm mnarktext-main whitespace-nowrap" : "text-xs text-muted mt-6"
         ),
-        href: (_a = line.action) == null ? void 0 : _a.action,
-        title: (_b = line.action) == null ? void 0 : _b.label,
+        href: (_a2 = line.action) == null ? void 0 : _a2.action,
+        title: (_b2 = line.action) == null ? void 0 : _b2.label,
         children: [
           line.icon && /* @__PURE__ */ jsx(Icon, { icon: line.icon }),
           /* @__PURE__ */ jsx(
@@ -936,9 +937,9 @@ const useToastStore = create()(
     },
     remove: (toastId) => {
       const newToasts = get().toasts.filter((toast2) => {
-        var _a;
+        var _a2;
         if (toastId === toast2.id) {
-          (_a = toast2.timer) == null ? void 0 : _a.clear();
+          (_a2 = toast2.timer) == null ? void 0 : _a2.clear();
           return false;
         }
         return true;
@@ -965,11 +966,11 @@ toast.loading = (message2, opts) => {
   toastState().add(message2, { ...opts, type: "loading" });
 };
 function getAxiosErrorMessage(err, field) {
-  var _a;
+  var _a2;
   if (axios.isAxiosError(err) && err.response) {
     const response = err.response.data;
     if (field != null) {
-      const fieldMessage = (_a = response.errors) == null ? void 0 : _a[field];
+      const fieldMessage = (_a2 = response.errors) == null ? void 0 : _a2[field];
       return Array.isArray(fieldMessage) ? fieldMessage[0] : fieldMessage;
     }
     return response == null ? void 0 : response.message;
@@ -977,9 +978,9 @@ function getAxiosErrorMessage(err, field) {
 }
 const defaultErrorMessage = message("There was an issue. Please try again.");
 function showHttpErrorToast(err, defaultMessage = defaultErrorMessage, field, toastOptions) {
-  var _a, _b;
+  var _a2, _b2;
   toast.danger(getAxiosErrorMessage(err, field) || defaultMessage, {
-    action: (_b = (_a = err.response) == null ? void 0 : _a.data) == null ? void 0 : _b.action,
+    action: (_b2 = (_a2 = err.response) == null ? void 0 : _a2.data) == null ? void 0 : _b2.action,
     ...toastOptions
   });
 }
@@ -1032,9 +1033,9 @@ function NotificationList({
 }) {
   const { notifications: config } = useContext(SiteConfigContext);
   return /* @__PURE__ */ jsx("div", { className, children: notifications.map((notification, index) => {
-    var _a;
+    var _a2;
     const isLast = notifications.length - 1 === index;
-    const Renderer = ((_a = config == null ? void 0 : config.renderMap) == null ? void 0 : _a[notification.type]) || NotificationListItem;
+    const Renderer = ((_a2 = config == null ? void 0 : config.renderMap) == null ? void 0 : _a2[notification.type]) || NotificationListItem;
     return /* @__PURE__ */ jsx(
       Renderer,
       {
@@ -1059,13 +1060,13 @@ function NotificationListItem({
     "div",
     {
       onClick: () => {
-        var _a;
+        var _a2;
         if (!markAsRead.isPending && !notification.read_at) {
           markAsRead.mutate({ ids: [notification.id] });
         }
         if (mainAction == null ? void 0 : mainAction.action) {
           if (isAbsoluteUrl(mainAction.action)) {
-            (_a = window.open(mainAction.action, "_blank")) == null ? void 0 : _a.focus();
+            (_a2 = window.open(mainAction.action, "_blank")) == null ? void 0 : _a2.focus();
           } else {
             navigate(mainAction.action);
           }
@@ -1137,7 +1138,13 @@ const AudioFileIcon = createSvgIcon(
   /* @__PURE__ */ jsx("g", { children: /* @__PURE__ */ jsx("path", { d: "M 21.65625 4 C 20.320313 4 19.0625 4.519531 18.121094 5.464844 L 9.464844 14.121094 C 8.519531 15.066406 8 16.320313 8 17.65625 L 8 57 C 8 58.652344 9.347656 60 11 60 L 51 60 C 52.652344 60 54 58.652344 54 57 L 54 7 C 54 5.347656 52.652344 4 51 4 Z M 22 6 L 51 6 C 51.550781 6 52 6.449219 52 7 L 52 57 C 52 57.550781 51.550781 58 51 58 L 11 58 C 10.449219 58 10 57.550781 10 57 L 10 18 L 19 18 C 20.652344 18 22 16.652344 22 15 Z M 20 6.5 L 20 15 C 20 15.550781 19.550781 16 19 16 L 10.5 16 C 10.609375 15.835938 10.734375 15.679688 10.878906 15.535156 L 19.535156 6.878906 C 19.679688 6.734375 19.835938 6.609375 20 6.5 Z M 42.78125 18.023438 L 24.78125 22.023438 C 24.328125 22.125 24 22.53125 24 23 L 24 37 C 20.691406 37 18 39.242188 18 42 C 18 44.757813 20.691406 47 24 47 C 27.308594 47 30 44.757813 30 42 L 30 29.910156 L 38 28.136719 L 38 33 C 34.691406 33 32 35.242188 32 38 C 32 40.757813 34.691406 43 38 43 C 41.308594 43 44 40.757813 44 38 L 44 19 C 44 18.695313 43.863281 18.410156 43.625 18.21875 C 43.390625 18.03125 43.082031 17.960938 42.78125 18.023438 Z M 42 20.246094 L 42 38 C 42 39.652344 40.207031 41 38 41 C 35.792969 41 34 39.652344 34 38 C 34 36.347656 35.792969 35 38 35 C 38.28125 35 38.5625 35.023438 38.839844 35.066406 C 39.128906 35.117188 39.421875 35.03125 39.648438 34.84375 C 39.871094 34.652344 40 34.375 40 34.078125 L 40 26.890625 C 40 26.585938 39.863281 26.300781 39.625 26.109375 C 39.390625 25.921875 39.078125 25.847656 38.78125 25.910156 L 28.78125 28.136719 C 28.328125 28.238281 28 28.644531 28 29.109375 L 28 42 C 28 43.652344 26.207031 45 24 45 C 21.792969 45 20 43.652344 20 42 C 20 40.347656 21.792969 39 24 39 C 24.28125 39 24.5625 39.023438 24.839844 39.066406 C 25.128906 39.117188 25.425781 39.03125 25.648438 38.84375 C 25.871094 38.652344 26 38.375 26 38.078125 L 26 23.800781 Z M 13 52 C 12.449219 52 12 52.445313 12 53 L 12 55 C 12 55.554688 12.449219 56 13 56 C 13.550781 56 14 55.554688 14 55 L 14 53 C 14 52.445313 13.550781 52 13 52 Z M 18 52 C 17.449219 52 17 52.445313 17 53 L 17 55 C 17 55.554688 17.449219 56 18 56 C 18.550781 56 19 55.554688 19 55 L 19 53 C 19 52.445313 18.550781 52 18 52 Z M 23 52 C 22.449219 52 22 52.445313 22 53 L 22 55 C 22 55.554688 22.449219 56 23 56 C 23.550781 56 24 55.554688 24 55 L 24 53 C 24 52.445313 23.550781 52 23 52 Z M 28 52 C 27.449219 52 27 52.445313 27 53 L 27 55 C 27 55.554688 27.449219 56 28 56 C 28.550781 56 29 55.554688 29 55 L 29 53 C 29 52.445313 28.550781 52 28 52 Z M 33 52 C 32.449219 52 32 52.445313 32 53 L 32 55 C 32 55.554688 32.449219 56 33 56 C 33.550781 56 34 55.554688 34 55 L 34 53 C 34 52.445313 33.550781 52 33 52 Z M 38 52 C 37.449219 52 37 52.445313 37 53 L 37 55 C 37 55.554688 37.449219 56 38 56 C 38.550781 56 39 55.554688 39 55 L 39 53 C 39 52.445313 38.550781 52 38 52 Z M 43 52 C 42.449219 52 42 52.445313 42 53 L 42 55 C 42 55.554688 42.449219 56 43 56 C 43.550781 56 44 55.554688 44 55 L 44 53 C 44 52.445313 43.550781 52 43 52 Z M 48 52 C 47.449219 52 47 52.445313 47 53 L 47 55 C 47 55.554688 47.449219 56 48 56 C 48.550781 56 49 55.554688 49 55 L 49 53 C 49 52.445313 48.550781 52 48 52 Z " }) })
 );
 const VideoFileIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("g", { children: /* @__PURE__ */ jsx("path", { d: "M 23.65625 4 C 22.320313 4 21.0625 4.519531 20.121094 5.464844 L 11.464844 14.121094 C 10.519531 15.066406 10 16.320313 10 17.65625 L 10 57 C 10 58.652344 11.347656 60 13 60 L 53 60 C 54.652344 60 56 58.652344 56 57 L 56 7 C 56 5.347656 54.652344 4 53 4 Z M 24 6 L 53 6 C 53.550781 6 54 6.449219 54 7 L 54 57 C 54 57.550781 53.550781 58 53 58 L 13 58 C 12.449219 58 12 57.550781 12 57 L 12 18 L 21 18 C 22.652344 18 24 16.652344 24 15 Z M 22 6.5 L 22 15 C 22 15.550781 21.550781 16 21 16 L 12.5 16 C 12.613281 15.835938 12.738281 15.675781 12.878906 15.535156 L 21.535156 6.878906 C 21.679688 6.734375 21.835938 6.609375 22 6.5 Z M 28.023438 21.816406 C 27.671875 21.808594 27.316406 21.890625 26.996094 22.0625 C 26.355469 22.417969 25.964844 23.085938 25.964844 23.816406 L 25.964844 42.183594 C 25.964844 42.910156 26.355469 43.582031 26.996094 43.933594 C 27.296875 44.097656 27.632813 44.183594 27.964844 44.183594 C 28.335938 44.183594 28.707031 44.078125 29.03125 43.871094 L 43.53125 34.6875 C 44.113281 34.320313 44.464844 33.6875 44.464844 33 C 44.464844 32.308594 44.113281 31.679688 43.53125 31.3125 L 29.03125 22.125 C 28.722656 21.933594 28.375 21.828125 28.023438 21.816406 Z M 27.964844 23.816406 L 42.464844 33 L 27.964844 42.1875 Z M 15 52 C 14.449219 52 14 52.449219 14 53 L 14 55 C 14 55.550781 14.449219 56 15 56 C 15.550781 56 16 55.550781 16 55 L 16 53 C 16 52.449219 15.550781 52 15 52 Z M 20 52 C 19.449219 52 19 52.449219 19 53 L 19 55 C 19 55.550781 19.449219 56 20 56 C 20.550781 56 21 55.550781 21 55 L 21 53 C 21 52.449219 20.550781 52 20 52 Z M 25 52 C 24.449219 52 24 52.449219 24 53 L 24 55 C 24 55.550781 24.449219 56 25 56 C 25.550781 56 26 55.550781 26 55 L 26 53 C 26 52.449219 25.550781 52 25 52 Z M 30 52 C 29.449219 52 29 52.449219 29 53 L 29 55 C 29 55.550781 29.449219 56 30 56 C 30.550781 56 31 55.550781 31 55 L 31 53 C 31 52.449219 30.550781 52 30 52 Z M 35 52 C 34.449219 52 34 52.449219 34 53 L 34 55 C 34 55.550781 34.449219 56 35 56 C 35.550781 56 36 55.550781 36 55 L 36 53 C 36 52.449219 35.550781 52 35 52 Z M 40 52 C 39.449219 52 39 52.449219 39 53 L 39 55 C 39 55.550781 39.449219 56 40 56 C 40.550781 56 41 55.550781 41 55 L 41 53 C 41 52.449219 40.550781 52 40 52 Z M 45 52 C 44.449219 52 44 52.449219 44 53 L 44 55 C 44 55.550781 44.449219 56 45 56 C 45.550781 56 46 55.550781 46 55 L 46 53 C 46 52.449219 45.550781 52 45 52 Z M 50 52 C 49.449219 52 49 52.449219 49 53 L 49 55 C 49 55.550781 49.449219 56 50 56 C 50.550781 56 51 55.550781 51 55 L 51 53 C 51 52.449219 50.550781 52 50 52 Z " }) })
+  /* @__PURE__ */ jsxs("svg", { width: "60", height: "60", viewBox: "0 0 19 19", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
+    /* @__PURE__ */ jsxs("g", { "clip-path": "url(#clip0_26_6314)", children: [
+      /* @__PURE__ */ jsx("path", { d: "M10.8066 4.50781H2.59437C1.51121 4.50781 0.625 5.39403 0.625 6.47718V13.1139C0.625 14.1971 1.51121 15.0833 2.59437 15.0833H10.8066C11.8898 15.0833 12.776 14.1971 12.776 13.1139V6.47718C12.776 5.37433 11.8898 4.50781 10.8066 4.50781Z", fill: "#BB6BD9" }),
+      /* @__PURE__ */ jsx("path", { d: "M17.1687 5.59031C17.0506 5.61001 16.9324 5.66909 16.8339 5.72817L13.7617 7.5006V12.0695L16.8536 13.842C17.4247 14.1767 18.1337 13.9798 18.4685 13.4087C18.567 13.2315 18.6261 13.0345 18.6261 12.8179V6.73255C18.6261 6.00388 17.9368 5.41307 17.1687 5.59031Z", fill: "#BB6BD9" })
+    ] }),
+    /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsx("clipPath", { id: "clip0_26_6314", children: /* @__PURE__ */ jsx("rect", { width: "18", height: "18", fill: "white", transform: "translate(0.625 0.794922)" }) }) })
+  ] })
 );
 const TextFileIcon = createSvgIcon(
   /* @__PURE__ */ jsx("g", { children: /* @__PURE__ */ jsx("path", { d: "M 17.660156 4 C 16.320313 4 15.058594 4.519531 14.121094 5.460938 L 5.460938 14.121094 C 4.519531 15.070313 4 16.320313 4 17.660156 L 4 57 C 4 58.648438 5.351563 60 7 60 L 47 60 C 48.648438 60 50 58.648438 50 57 L 50 46 L 58 46 C 59.101563 46 60 45.101563 60 44 L 60 24 C 60 22.898438 59.101563 22 58 22 L 50 22 L 50 7 C 50 5.351563 48.648438 4 47 4 Z M 18 6 L 47 6 C 47.550781 6 48 6.449219 48 7 L 48 22 L 16 22 C 14.898438 22 14 22.898438 14 24 L 14 44 C 14 45.101563 14.898438 46 16 46 L 48 46 L 48 57 C 48 57.550781 47.550781 58 47 58 L 7 58 C 6.449219 58 6 57.550781 6 57 L 6 18 L 15 18 C 16.652344 18 18 16.652344 18 15 Z M 16 6.5 L 16 15 C 16 15.550781 15.550781 16 15 16 L 6.5 16 C 6.613281 15.835938 6.738281 15.679688 6.882813 15.539063 L 15.539063 6.882813 C 15.679688 6.738281 15.835938 6.609375 16 6.5 Z M 16 24 L 58 24 L 58 44 L 16 44 Z M 24 28 C 23.449219 28 23 28.445313 23 29 C 23 29.554688 23.449219 30 24 30 L 26 30 L 26 39 C 26 39.554688 26.449219 40 27 40 C 27.550781 40 28 39.554688 28 39 L 28 30 L 30 30 C 30.550781 30 31 29.554688 31 29 C 31 28.445313 30.550781 28 30 28 Z M 44 28 C 43.449219 28 43 28.445313 43 29 C 43 29.554688 43.449219 30 44 30 L 46 30 L 46 39 C 46 39.554688 46.449219 40 47 40 C 47.550781 40 48 39.554688 48 39 L 48 30 L 50 30 C 50.550781 30 51 29.554688 51 29 C 51 28.445313 50.550781 28 50 28 Z M 33.859375 28.011719 C 33.730469 28.027344 33.601563 28.070313 33.484375 28.140625 C 33.011719 28.425781 32.859375 29.039063 33.140625 29.515625 L 35.832031 34 L 33.140625 38.484375 C 32.859375 38.957031 33.011719 39.574219 33.484375 39.859375 C 33.644531 39.953125 33.824219 40 34 40 C 34.339844 40 34.671875 39.828125 34.859375 39.515625 L 37 35.941406 L 39.140625 39.515625 C 39.328125 39.828125 39.660156 40 40 40 C 40.175781 40 40.355469 39.953125 40.515625 39.859375 C 40.988281 39.574219 41.140625 38.957031 40.859375 38.484375 L 38.167969 34 L 40.859375 29.515625 C 41.140625 29.042969 40.988281 28.425781 40.515625 28.140625 C 40.042969 27.859375 39.425781 28.011719 39.140625 28.484375 L 37 32.058594 L 34.859375 28.484375 C 34.644531 28.128906 34.246094 27.957031 33.859375 28.011719 Z M 9 52 C 8.449219 52 8 52.445313 8 53 L 8 55 C 8 55.554688 8.449219 56 9 56 C 9.550781 56 10 55.554688 10 55 L 10 53 C 10 52.445313 9.550781 52 9 52 Z M 14 52 C 13.449219 52 13 52.445313 13 53 L 13 55 C 13 55.554688 13.449219 56 14 56 C 14.550781 56 15 55.554688 15 55 L 15 53 C 15 52.445313 14.550781 52 14 52 Z M 19 52 C 18.449219 52 18 52.445313 18 53 L 18 55 C 18 55.554688 18.449219 56 19 56 C 19.550781 56 20 55.554688 20 55 L 20 53 C 20 52.445313 19.550781 52 19 52 Z M 24 52 C 23.449219 52 23 52.445313 23 53 L 23 55 C 23 55.554688 23.449219 56 24 56 C 24.550781 56 25 55.554688 25 55 L 25 53 C 25 52.445313 24.550781 52 24 52 Z M 29 52 C 28.449219 52 28 52.445313 28 53 L 28 55 C 28 55.554688 28.449219 56 29 56 C 29.550781 56 30 55.554688 30 55 L 30 53 C 30 52.445313 29.550781 52 29 52 Z M 34 52 C 33.449219 52 33 52.445313 33 53 L 33 55 C 33 55.554688 33.449219 56 34 56 C 34.550781 56 35 55.554688 35 55 L 35 53 C 35 52.445313 34.550781 52 34 52 Z M 39 52 C 38.449219 52 38 52.445313 38 53 L 38 55 C 38 55.554688 38.449219 56 39 56 C 39.550781 56 40 55.554688 40 55 L 40 53 C 40 52.445313 39.550781 52 39 52 Z M 44 52 C 43.449219 52 43 52.445313 43 53 L 43 55 C 43 55.554688 43.449219 56 44 56 C 44.550781 56 45 55.554688 45 55 L 45 53 C 45 52.445313 44.550781 52 44 52 Z " }) })
@@ -1149,10 +1156,14 @@ const ArchiveFileIcon = createSvgIcon(
   /* @__PURE__ */ jsx("g", { children: /* @__PURE__ */ jsx("path", { d: "M 21.65625 4 C 20.320313 4 19.066406 4.519531 18.121094 5.464844 L 9.464844 14.121094 C 8.519531 15.066406 8 16.320313 8 17.65625 L 8 57 C 8 58.652344 9.347656 60 11 60 L 51 60 C 52.652344 60 54 58.652344 54 57 L 54 7 C 54 5.347656 52.652344 4 51 4 Z M 22 6 L 36 6 L 36 27.59375 C 35.144531 27.222656 34.210938 27 33.226563 27 L 32.773438 27 C 31.789063 27 30.859375 27.222656 30 27.59375 L 30 9 C 30 8.449219 29.554688 8 29 8 C 28.449219 8 28 8.449219 28 9 L 28 28.902344 C 27.015625 29.824219 26.277344 31.023438 25.953125 32.425781 L 24.875 37.097656 C 24.597656 38.292969 24.878906 39.53125 25.640625 40.488281 C 26.40625 41.449219 27.546875 42 28.769531 42 L 37.230469 42 C 38.457031 42 39.59375 41.449219 40.359375 40.488281 C 41.121094 39.53125 41.402344 38.292969 41.125 37.097656 L 40.046875 32.425781 C 39.726563 31.023438 38.984375 29.824219 38 28.902344 L 38 6 L 51 6 C 51.550781 6 52 6.449219 52 7 L 52 57 C 52 57.550781 51.550781 58 51 58 L 11 58 C 10.449219 58 10 57.550781 10 57 L 10 18 L 19 18 C 20.652344 18 22 16.652344 22 15 Z M 20 6.5 L 20 15 C 20 15.550781 19.550781 16 19 16 L 10.5 16 C 10.609375 15.835938 10.734375 15.679688 10.878906 15.535156 L 19.535156 6.878906 C 19.679688 6.738281 19.835938 6.609375 20 6.5 Z M 32 8 C 31.449219 8 31 8.445313 31 9 C 31 9.554688 31.449219 10 32 10 L 34 10 C 34.550781 10 35 9.554688 35 9 C 35 8.445313 34.550781 8 34 8 Z M 32 13 C 31.449219 13 31 13.445313 31 14 C 31 14.554688 31.449219 15 32 15 L 34 15 C 34.550781 15 35 14.554688 35 14 C 35 13.445313 34.550781 13 34 13 Z M 32 18 C 31.449219 18 31 18.445313 31 19 C 31 19.554688 31.449219 20 32 20 L 34 20 C 34.550781 20 35 19.554688 35 19 C 35 18.445313 34.550781 18 34 18 Z M 32 23 C 31.449219 23 31 23.445313 31 24 C 31 24.554688 31.449219 25 32 25 L 34 25 C 34.550781 25 35 24.554688 35 24 C 35 23.445313 34.550781 23 34 23 Z M 32.773438 29 L 33.226563 29 C 35.570313 29 37.574219 30.59375 38.097656 32.875 L 39.175781 37.550781 C 39.316406 38.148438 39.175781 38.765625 38.796875 39.246094 C 38.414063 39.722656 37.839844 40 37.230469 40 L 28.769531 40 C 28.160156 40 27.589844 39.722656 27.207031 39.246094 C 26.824219 38.765625 26.683594 38.148438 26.824219 37.550781 L 27.902344 32.875 C 28.429688 30.59375 30.429688 29 32.773438 29 Z M 31 34 C 30.449219 34 30 34.445313 30 35 C 30 35.554688 30.449219 36 31 36 L 35 36 C 35.550781 36 36 35.554688 36 35 C 36 34.445313 35.550781 34 35 34 Z M 13 52 C 12.449219 52 12 52.445313 12 53 C 12 53.554688 12.449219 54 13 54 L 17 54 C 17.550781 54 18 53.554688 18 53 C 18 52.445313 17.550781 52 17 52 Z M 21 52 C 20.449219 52 20 52.445313 20 53 C 20 53.554688 20.449219 54 21 54 L 49 54 C 49.550781 54 50 53.554688 50 53 C 50 52.445313 49.550781 52 49 52 Z " }) })
 );
 const FolderFileIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("g", { children: /* @__PURE__ */ jsx("path", { d: "M 5 10 C 3.300781 10 2 11.300781 2 13 L 2 52 C 2 54.199219 3.800781 56 6 56 L 60 56 C 62.199219 56 64 54.199219 64 52 L 64 23 C 64 21.300781 62.699219 20 61 20 L 58 20 L 58 19 C 58 17.300781 56.699219 16 55 16 L 29.699219 16 C 28.898438 16 28.199219 15.699219 27.597656 15.097656 L 23.902344 11.402344 C 23 10.5 21.699219 10 20.402344 10 Z M 5 12 L 20.402344 12 C 21.199219 12 21.898438 12.300781 22.5 12.902344 L 26.199219 16.597656 C 27.097656 17.5 28.398438 18 29.699219 18 L 55 18 C 55.601563 18 56 18.398438 56 19 L 56 52 C 56 52.601563 56.199219 53.300781 56.597656 54 L 6 54 C 4.898438 54 4 53.101563 4 52 L 4 46 L 45 46 C 45.601563 46 46 45.601563 46 45 C 46 44.398438 45.601563 44 45 44 L 4 44 L 4 13 C 4 12.398438 4.398438 12 5 12 Z M 58 22 L 61 22 C 61.601563 22 62 22.398438 62 23 L 62 52 C 62 53.101563 61.101563 54 60 54 C 58.800781 54 58 52.601563 58 52 Z M 11 24 C 10.398438 24 10 24.398438 10 25 C 10 25.601563 10.398438 26 11 26 L 21 26 C 21.601563 26 22 25.601563 22 25 C 22 24.398438 21.601563 24 21 24 Z M 25 24 C 24.398438 24 24 24.398438 24 25 C 24 25.601563 24.398438 26 25 26 L 31 26 C 31.601563 26 32 25.601563 32 25 C 32 24.398438 31.601563 24 31 24 Z M 11 28 C 10.398438 28 10 28.398438 10 29 C 10 29.601563 10.398438 30 11 30 L 15 30 C 15.601563 30 16 29.601563 16 29 C 16 28.398438 15.601563 28 15 28 Z M 19 28 C 18.398438 28 18 28.398438 18 29 C 18 29.601563 18.398438 30 19 30 L 26 30 C 26.601563 30 27 29.601563 27 29 C 27 28.398438 26.601563 28 26 28 Z M 49 44 C 48.398438 44 48 44.398438 48 45 C 48 45.601563 48.398438 46 49 46 L 53 46 C 53.601563 46 54 45.601563 54 45 C 54 44.398438 53.601563 44 53 44 Z M 7 48 C 6.398438 48 6 48.398438 6 49 L 6 51 C 6 51.601563 6.398438 52 7 52 C 7.601563 52 8 51.601563 8 51 L 8 49 C 8 48.398438 7.601563 48 7 48 Z M 12 48 C 11.398438 48 11 48.398438 11 49 L 11 51 C 11 51.601563 11.398438 52 12 52 C 12.601563 52 13 51.601563 13 51 L 13 49 C 13 48.398438 12.601563 48 12 48 Z M 17 48 C 16.398438 48 16 48.398438 16 49 L 16 51 C 16 51.601563 16.398438 52 17 52 C 17.601563 52 18 51.601563 18 51 L 18 49 C 18 48.398438 17.601563 48 17 48 Z M 22 48 C 21.398438 48 21 48.398438 21 49 L 21 51 C 21 51.601563 21.398438 52 22 52 C 22.601563 52 23 51.601563 23 51 L 23 49 C 23 48.398438 22.601563 48 22 48 Z M 27 48 C 26.398438 48 26 48.398438 26 49 L 26 51 C 26 51.601563 26.398438 52 27 52 C 27.601563 52 28 51.601563 28 51 L 28 49 C 28 48.398438 27.601563 48 27 48 Z M 32 48 C 31.398438 48 31 48.398438 31 49 L 31 51 C 31 51.601563 31.398438 52 32 52 C 32.601563 52 33 51.601563 33 51 L 33 49 C 33 48.398438 32.601563 48 32 48 Z M 37 48 C 36.398438 48 36 48.398438 36 49 L 36 51 C 36 51.601563 36.398438 52 37 52 C 37.601563 52 38 51.601563 38 51 L 38 49 C 38 48.398438 37.601563 48 37 48 Z M 42 48 C 41.398438 48 41 48.398438 41 49 L 41 51 C 41 51.601563 41.398438 52 42 52 C 42.601563 52 43 51.601563 43 51 L 43 49 C 43 48.398438 42.601563 48 42 48 Z M 47 48 C 46.398438 48 46 48.398438 46 49 L 46 51 C 46 51.601563 46.398438 52 47 52 C 47.601563 52 48 51.601563 48 51 L 48 49 C 48 48.398438 47.601563 48 47 48 Z M 52 48 C 51.398438 48 51 48.398438 51 49 L 51 51 C 51 51.601563 51.398438 52 52 52 C 52.601563 52 53 51.601563 53 51 L 53 49 C 53 48.398438 52.601563 48 52 48 Z " }) })
+  /* @__PURE__ */ jsx("svg", { width: "60", height: "60", viewBox: "0 0 19 19", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M17.5658 2.58916H10.0079L8.50457 0.883277C8.454 0.825237 8.37821 0.792688 8.2992 0.795041H2.20157C1.27059 0.801512 0.519531 1.52386 0.519531 2.41269V12.9048C0.520661 13.7967 1.27768 14.5195 2.21183 14.5205H17.5658C18.4999 14.5195 19.257 13.7967 19.2581 12.9048V4.20484C19.257 3.31298 18.4999 2.59024 17.5658 2.58916Z", fill: "#0061FF" }) })
 );
 const ImageFileIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("g", { children: /* @__PURE__ */ jsx("path", { d: "M 21.65625 4 C 20.320313 4 19.066406 4.519531 18.121094 5.464844 L 9.464844 14.121094 C 8.519531 15.066406 8 16.320313 8 17.65625 L 8 57 C 8 58.652344 9.347656 60 11 60 L 51 60 C 52.652344 60 54 58.652344 54 57 L 54 7 C 54 5.347656 52.652344 4 51 4 Z M 22 6 L 51 6 C 51.550781 6 52 6.449219 52 7 L 52 57 C 52 57.550781 51.550781 58 51 58 L 11 58 C 10.449219 58 10 57.550781 10 57 L 10 18 L 19 18 C 20.652344 18 22 16.652344 22 15 Z M 20 6.5 L 20 15 C 20 15.550781 19.550781 16 19 16 L 10.5 16 C 10.605469 15.835938 10.734375 15.679688 10.878906 15.535156 L 19.535156 6.878906 C 19.679688 6.738281 19.835938 6.613281 20 6.5 Z M 20 24 C 17.792969 24 16 25.792969 16 28 C 16 30.207031 17.792969 32 20 32 C 22.207031 32 24 30.207031 24 28 C 24 25.792969 22.207031 24 20 24 Z M 20 25.75 C 21.242188 25.75 22.25 26.757813 22.25 28 C 22.25 29.242188 21.242188 30.25 20 30.25 C 18.757813 30.25 17.75 29.242188 17.75 28 C 17.75 26.757813 18.757813 25.75 20 25.75 Z M 37 30.414063 C 36.488281 30.414063 35.976563 30.609375 35.585938 31 L 29 37.585938 L 26.414063 35 C 25.632813 34.21875 24.363281 34.21875 23.585938 35 L 14.585938 44 L 13.042969 44 C 12.417969 44 12 44.398438 12 45 C 12 45.601563 12.523438 46 13.042969 46 L 48.980469 46 C 49.5 46 50.023438 45.601563 50.023438 45 C 50.023438 44.398438 49.5 44 48.980469 44 L 25.414063 44 L 37 32.414063 L 45.292969 40.707031 C 45.683594 41.097656 46.316406 41.097656 46.707031 40.707031 C 47.097656 40.316406 47.097656 39.683594 46.707031 39.292969 L 38.414063 31 C 38.023438 30.609375 37.511719 30.414063 37 30.414063 Z M 25 36.414063 L 27.585938 39 L 22.585938 44 L 17.414063 44 Z M 13 52 C 12.449219 52 12 52.449219 12 53 L 12 55 C 12 55.550781 12.449219 56 13 56 C 13.550781 56 14 55.550781 14 55 L 14 53 C 14 52.449219 13.550781 52 13 52 Z M 18 52 C 17.449219 52 17 52.449219 17 53 L 17 55 C 17 55.550781 17.449219 56 18 56 C 18.550781 56 19 55.550781 19 55 L 19 53 C 19 52.449219 18.550781 52 18 52 Z M 23 52 C 22.449219 52 22 52.449219 22 53 L 22 55 C 22 55.550781 22.449219 56 23 56 C 23.550781 56 24 55.550781 24 55 L 24 53 C 24 52.449219 23.550781 52 23 52 Z M 28 52 C 27.449219 52 27 52.449219 27 53 L 27 55 C 27 55.550781 27.449219 56 28 56 C 28.550781 56 29 55.550781 29 55 L 29 53 C 29 52.449219 28.550781 52 28 52 Z M 33 52 C 32.449219 52 32 52.449219 32 53 L 32 55 C 32 55.550781 32.449219 56 33 56 C 33.550781 56 34 55.550781 34 55 L 34 53 C 34 52.449219 33.550781 52 33 52 Z M 38 52 C 37.449219 52 37 52.449219 37 53 L 37 55 C 37 55.550781 37.449219 56 38 56 C 38.550781 56 39 55.550781 39 55 L 39 53 C 39 52.449219 38.550781 52 38 52 Z M 43 52 C 42.449219 52 42 52.449219 42 53 L 42 55 C 42 55.550781 42.449219 56 43 56 C 43.550781 56 44 55.550781 44 55 L 44 53 C 44 52.449219 43.550781 52 43 52 Z M 48 52 C 47.449219 52 47 52.449219 47 53 L 47 55 C 47 55.550781 47.449219 56 48 56 C 48.550781 56 49 55.550781 49 55 L 49 53 C 49 52.449219 48.550781 52 48 52 Z " }) })
+  /* @__PURE__ */ jsxs("svg", { width: "60", height: "60", viewBox: "0 0 25 25", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
+    /* @__PURE__ */ jsx("rect", { x: "0.769531", y: "0.0683594", width: "23.5575", height: "23.6532", rx: "5", fill: "#21A345" }),
+    /* @__PURE__ */ jsx("path", { d: "M22.8984 17.1448V18.8478C22.8984 19.758 22.0958 20.4957 21.1056 20.4957H4.70295C3.71288 20.4957 2.91016 19.758 2.91016 18.8478V17.7228L6.73051 15.3841C7.33295 15.0197 8.11415 15.0225 8.71344 15.391L10.9956 16.7946C11.7937 17.2857 12.8712 17.1113 13.4388 16.3992L16.4914 12.5687C16.8325 12.1408 17.3766 11.8899 17.9535 11.8946C18.5305 11.8993 19.0698 12.1588 19.4024 12.5922L22.8984 17.1448Z", fill: "white" }),
+    /* @__PURE__ */ jsx("path", { d: "M9.87203 5.44336C11.3506 5.44318 12.5491 6.6466 12.5493 8.13113C12.5493 9.61566 11.3507 10.8191 9.87221 10.8191C8.39368 10.8191 7.19513 9.61548 7.19531 8.13095C7.19531 6.6466 8.39368 5.44336 9.87203 5.44336Z", fill: "white" })
+  ] })
 );
 const PowerPointFileIcon = createSvgIcon(
   /* @__PURE__ */ jsx("g", { children: /* @__PURE__ */ jsx("path", { d: "M 35.136719 2.386719 C 34.917969 2.378906 34.699219 2.390625 34.480469 2.429688 L 5.304688 7.578125 C 3.390625 7.917969 2 9.574219 2 11.515625 L 2 50.484375 C 2 52.429688 3.390625 54.085938 5.304688 54.421875 L 34.480469 59.570313 C 34.652344 59.601563 34.828125 59.613281 35 59.613281 C 35.703125 59.613281 36.382813 59.371094 36.925781 58.914063 C 37.609375 58.34375 38 57.503906 38 56.613281 L 38 52 L 57 52 C 58.652344 52 60 50.652344 60 49 L 60 13 C 60 11.347656 58.652344 10 57 10 L 38 10 L 38 5.382813 C 38 4.496094 37.609375 3.65625 36.925781 3.085938 C 36.417969 2.65625 35.789063 2.414063 35.136719 2.386719 Z M 35.105469 4.390625 C 35.359375 4.414063 35.542969 4.535156 35.640625 4.617188 C 35.777344 4.730469 36 4.980469 36 5.382813 L 36 56.613281 C 36 57.019531 35.777344 57.269531 35.640625 57.382813 C 35.507813 57.496094 35.226563 57.667969 34.828125 57.601563 L 5.652344 52.453125 C 4.695313 52.285156 4 51.457031 4 50.484375 L 4 11.515625 C 4 10.542969 4.695313 9.714844 5.652344 9.546875 L 34.824219 4.398438 C 34.925781 4.382813 35.019531 4.378906 35.105469 4.390625 Z M 38 12 L 57 12 C 57.550781 12 58 12.449219 58 13 L 58 49 C 58 49.550781 57.550781 50 57 50 L 38 50 L 38 45.949219 L 52.949219 45.949219 C 53.5 45.949219 53.949219 45.554688 53.949219 45 C 53.949219 44.445313 53.5 44 52.949219 44 L 50 44 L 50 41 C 50 40.445313 49.550781 40 49 40 L 46 40 L 46 37 C 46 36.445313 45.550781 36 45 36 L 41 36 C 40.449219 36 40 36.445313 40 37 L 40 39 L 38 39 L 38 32.46875 C 39.46875 33.449219 41.203125 34 43 34 C 47.960938 34 52 29.964844 52 25 C 52 20.035156 47.960938 16 43 16 C 41.1875 16 39.464844 16.535156 38 17.519531 Z M 42 18.078125 L 42 24.832031 C 42 25.027344 42.070313 25.203125 42.171875 25.359375 C 42.21875 25.492188 42.289063 25.617188 42.394531 25.726563 L 47.234375 30.5625 C 46.054688 31.460938 44.589844 32 43 32 C 41.113281 32 39.316406 31.230469 38 29.886719 L 38 20.105469 C 39.089844 18.992188 40.484375 18.292969 42 18.078125 Z M 44 18.078125 C 47.386719 18.566406 50 21.480469 50 25 C 50 26.546875 49.488281 27.976563 48.636719 29.136719 L 44 24.5 Z M 15 20 C 14.449219 20 14 20.445313 14 21 L 14 41 C 14 41.554688 14.449219 42 15 42 C 15.550781 42 16 41.554688 16 41 L 16 34 L 21 34 C 23.757813 34 26 31.757813 26 29 L 26 25 C 26 22.242188 23.757813 20 21 20 Z M 16 22 L 21 22 C 22.652344 22 24 23.347656 24 25 L 24 29 C 24 30.652344 22.652344 32 21 32 L 16 32 Z M 42 38 L 44 38 L 44 44 L 42 44 Z M 38 41 L 40 41 L 40 44 L 38 44 Z M 46 42 L 48 42 L 48 44 L 46 44 Z " }) })
@@ -1549,7 +1560,7 @@ function removeFromLocalStorage(key) {
   }
 }
 function useAuth() {
-  var _a;
+  var _a2;
   const {
     data: { user, guest_role }
   } = useBootstrapData();
@@ -1588,7 +1599,7 @@ function useAuth() {
     },
     [user == null ? void 0 : user.permissions, guest_role == null ? void 0 : guest_role.permissions, getPermission]
   );
-  const isSubscribed = ((_a = user == null ? void 0 : user.subscriptions) == null ? void 0 : _a.find((sub) => sub.valid)) != null;
+  const isSubscribed = ((_a2 = user == null ? void 0 : user.subscriptions) == null ? void 0 : _a2.find((sub) => sub.valid)) != null;
   const getRedirectUri = useCallback(() => {
     const onboarding = getFromLocalStorage("be.onboarding.selected");
     if (onboarding) {
@@ -1598,8 +1609,8 @@ function useAuth() {
   }, [redirectUri]);
   const hasRole = useCallback(
     (roleId) => {
-      var _a2;
-      return ((_a2 = user == null ? void 0 : user.roles) == null ? void 0 : _a2.find((role) => role.id === roleId)) != null;
+      var _a3;
+      return ((_a3 = user == null ? void 0 : user.roles) == null ? void 0 : _a3.find((role) => role.id === roleId)) != null;
     },
     [user]
   );
@@ -1845,12 +1856,12 @@ function ToastContainer() {
             "flex items-center gap-10 min-w-288 max-w-500 shadow-lg w-min rounded-lg pl-16 pr-6 py-6 text-sm pointer-events-auto max-h-100 bg-paper text-main bg-paper border mx-auto min-h-50"
           ),
           onPointerEnter: () => {
-            var _a;
-            return (_a = toast2.timer) == null ? void 0 : _a.pause();
+            var _a2;
+            return (_a2 = toast2.timer) == null ? void 0 : _a2.pause();
           },
           onPointerLeave: () => {
-            var _a;
-            return (_a = toast2.timer) == null ? void 0 : _a.resume();
+            var _a2;
+            return (_a2 = toast2.timer) == null ? void 0 : _a2.resume();
           },
           role: "alert",
           "aria-live": toast2.type === "danger" ? "assertive" : "polite",
@@ -1893,12 +1904,12 @@ function ToastContainer() {
                 size: "sm",
                 className: "flex-shrink-0",
                 onFocus: () => {
-                  var _a;
-                  return (_a = toast2.timer) == null ? void 0 : _a.pause();
+                  var _a2;
+                  return (_a2 = toast2.timer) == null ? void 0 : _a2.pause();
                 },
                 onBlur: () => {
-                  var _a;
-                  return (_a = toast2.timer) == null ? void 0 : _a.resume();
+                  var _a2;
+                  return (_a2 = toast2.timer) == null ? void 0 : _a2.resume();
                 },
                 onClick: () => toastState().remove(toast2.id),
                 elementType: Link,
@@ -1910,12 +1921,12 @@ function ToastContainer() {
               IconButton,
               {
                 onFocus: () => {
-                  var _a;
-                  return (_a = toast2.timer) == null ? void 0 : _a.pause();
+                  var _a2;
+                  return (_a2 = toast2.timer) == null ? void 0 : _a2.pause();
                 },
                 onBlur: () => {
-                  var _a;
-                  return (_a = toast2.timer) == null ? void 0 : _a.resume();
+                  var _a2;
+                  return (_a2 = toast2.timer) == null ? void 0 : _a2.resume();
                 },
                 type: "button",
                 className: "flex-shrink-0",
@@ -2060,8 +2071,8 @@ const useDialogStore = create()(
       });
     },
     closeActiveDialog: (value) => {
-      var _a, _b;
-      (_b = (_a = get()).resolveClosePromise) == null ? void 0 : _b.call(_a, value);
+      var _a2, _b2;
+      (_b2 = (_a2 = get()).resolveClosePromise) == null ? void 0 : _b2.call(_a2, value);
       set((state) => {
         state.dialog = null;
         state.data = void 0;
@@ -2270,9 +2281,9 @@ function useCloseOnInteractOutside({
   }, [isTopMostPopover, state]);
   const clickedOnTriggerElement = useCallback(
     (el) => {
-      var _a, _b;
+      var _a2, _b2;
       if (triggerRef.current && "contains" in triggerRef.current) {
-        return (_b = (_a = triggerRef.current).contains) == null ? void 0 : _b.call(_a, el);
+        return (_b2 = (_a2 = triggerRef.current).contains) == null ? void 0 : _b2.call(_a2, el);
       }
       return false;
     },
@@ -2607,12 +2618,12 @@ const childrenToCollection = memoize(
   }
 );
 function getTextLabel(item) {
-  var _a;
+  var _a2;
   const content2 = item.props.children;
   if (item.props.textLabel) {
     return item.props.textLabel;
   }
-  if ((_a = content2 == null ? void 0 : content2.props) == null ? void 0 : _a.message) {
+  if ((_a2 = content2 == null ? void 0 : content2.props) == null ? void 0 : _a2.message) {
     return content2.props.message;
   }
   return `${content2}` || "";
@@ -2694,7 +2705,7 @@ function useListbox(props, ref) {
   };
   const focusItem = useCallback(
     (fallbackOperation, newIndex) => {
-      var _a, _b;
+      var _a2, _b2;
       const items2 = [...collection.values()];
       const allItemsDisabled = !items2.find((i) => !i.isDisabled);
       const lastIndex = collection.size - 1;
@@ -2710,11 +2721,11 @@ function useListbox(props, ref) {
       );
       setActiveIndex(newIndex);
       if (virtualFocus) {
-        (_a = listItemsRef.current[newIndex]) == null ? void 0 : _a.scrollIntoView({
+        (_a2 = listItemsRef.current[newIndex]) == null ? void 0 : _a2.scrollIntoView({
           block: "nearest"
         });
       } else {
-        (_b = listItemsRef.current[newIndex]) == null ? void 0 : _b.focus();
+        (_b2 = listItemsRef.current[newIndex]) == null ? void 0 : _b2.focus();
       }
     },
     [collection, virtualFocus, loopFocus]
@@ -2812,9 +2823,9 @@ function useListbox(props, ref) {
   };
 }
 function getNonDisabledIndex(items, newIndex, loopFocus, operation) {
-  var _a;
+  var _a2;
   const lastIndex = items.length - 1;
-  while ((_a = items[newIndex]) == null ? void 0 : _a.isDisabled) {
+  while ((_a2 = items[newIndex]) == null ? void 0 : _a2.isDisabled) {
     if (operation === "increment") {
       newIndex++;
       if (newIndex >= lastIndex) {
@@ -2992,8 +3003,8 @@ function FocusContainer({
       const indexToFocus = activeIndex ?? selectedIndex;
       if (indexToFocus == null && !virtualFocus) {
         requestAnimationFrame(() => {
-          var _a;
-          (_a = domRef.current) == null ? void 0 : _a.focus({ preventScroll: true });
+          var _a2;
+          (_a2 = domRef.current) == null ? void 0 : _a2.focus({ preventScroll: true });
         });
       } else if (indexToFocus != null) {
         requestAnimationFrame(() => {
@@ -3154,7 +3165,7 @@ function Item$1({
   onClick,
   ...domProps
 }) {
-  var _a;
+  var _a2;
   const {
     collection,
     showCheckmark,
@@ -3166,7 +3177,7 @@ function Item$1({
     state: { selectedValues, activeIndex, setActiveIndex }
   } = useListboxContext();
   const isSelected = selectedValues.includes(value);
-  const index = (_a = collection.get(value)) == null ? void 0 : _a.index;
+  const index = (_a2 = collection.get(value)) == null ? void 0 : _a2.index;
   const isActive = activeIndex === index;
   if (index == null) {
     return null;
@@ -3297,13 +3308,13 @@ function useListboxKeyboardNavigation({
     }
   };
   const handleListboxSearchFieldKeydown = (e) => {
-    var _a, _b;
+    var _a2, _b2;
     if (e.key === "Enter" && activeIndex != null && collection.size) {
       e.preventDefault();
       const [value, obj] = [...collection.entries()][activeIndex];
       if (value) {
         handleItemSelection(value);
-        (_b = (_a = obj.element.props).onSelected) == null ? void 0 : _b.call(_a);
+        (_b2 = (_a2 = obj.element.props).onSelected) == null ? void 0 : _b2.call(_a2);
       }
       return;
     }
@@ -3708,9 +3719,9 @@ function useAutoFocus({ autoFocus, autoSelectText }, ref) {
   useEffect(() => {
     if (autoFocusRef.current && ref.current) {
       requestAnimationFrame(() => {
-        var _a, _b;
-        (_a = ref.current) == null ? void 0 : _a.focus();
-        if (autoSelectText && ((_b = ref.current) == null ? void 0 : _b.nodeName.toLowerCase()) === "input") {
+        var _a2, _b2;
+        (_a2 = ref.current) == null ? void 0 : _a2.focus();
+        if (autoSelectText && ((_b2 = ref.current) == null ? void 0 : _b2.nodeName.toLowerCase()) === "input") {
           ref.current.select();
         }
       });
@@ -3967,8 +3978,8 @@ const MenuTrigger = forwardRef(
           ref: reference,
           onKeyDown: handleTriggerKeyDown,
           onClick: createEventHandler((e) => {
-            var _a, _b;
-            (_b = (_a = menuTrigger.props) == null ? void 0 : _a.onClick) == null ? void 0 : _b.call(_a, e);
+            var _a2, _b2;
+            (_b2 = (_a2 = menuTrigger.props) == null ? void 0 : _a2.onClick) == null ? void 0 : _b2.call(_a2, e);
             setIsOpen(!isOpen);
           })
         })
@@ -4007,8 +4018,8 @@ function ContextMenu({ position, children, ...props }) {
         preventContextOnMenu
       );
       return () => {
-        var _a;
-        (_a = refs.floating.current) == null ? void 0 : _a.removeEventListener(
+        var _a2;
+        (_a2 = refs.floating.current) == null ? void 0 : _a2.removeEventListener(
           "contextmenu",
           preventContextOnMenu
         );
@@ -4062,8 +4073,8 @@ function useCallbackRef(callback) {
     callbackRef.current = callback;
   });
   return useMemo(() => (...args) => {
-    var _a;
-    return (_a = callbackRef.current) == null ? void 0 : _a.call(callbackRef, ...args);
+    var _a2;
+    return (_a2 = callbackRef.current) == null ? void 0 : _a2.call(callbackRef, ...args);
   }, []);
 }
 function DialogTrigger(props) {
@@ -4257,8 +4268,8 @@ class LazyLoader {
     __publicField(this, "loadedAssets", {});
   }
   loadAsset(url, params = { type: "js" }) {
-    var _a;
-    const currentState = (_a = this.loadedAssets[url]) == null ? void 0 : _a.state;
+    var _a2;
+    const currentState = (_a2 = this.loadedAssets[url]) == null ? void 0 : _a2.state;
     if (currentState === "loaded" && !params.force) {
       return new Promise((resolve) => resolve());
     }
@@ -4294,7 +4305,7 @@ class LazyLoader {
     return this.loadedAssets[url] != null;
   }
   loadStyleAsset(options) {
-    var _a;
+    var _a2;
     const doc = options.document || document;
     const parentEl = options.parentEl || doc.head;
     const style = doc.createElement("link");
@@ -4304,7 +4315,7 @@ class LazyLoader {
     style.href = options.url;
     try {
       if (parentEl.querySelector(`#${prefixedId}`)) {
-        (_a = parentEl.querySelector(`#${prefixedId}`)) == null ? void 0 : _a.remove();
+        (_a2 = parentEl.querySelector(`#${prefixedId}`)) == null ? void 0 : _a2.remove();
       }
     } catch (e) {
     }
@@ -4315,7 +4326,7 @@ class LazyLoader {
     parentEl.appendChild(style);
   }
   loadScriptAsset(options) {
-    var _a;
+    var _a2;
     const doc = options.document || document;
     const parentEl = options.parentEl || doc.body;
     const script = doc.createElement("script");
@@ -4325,7 +4336,7 @@ class LazyLoader {
     script.src = options.url;
     try {
       if (parentEl.querySelector(`#${prefixedId}`)) {
-        (_a = parentEl.querySelector(`#${prefixedId}`)) == null ? void 0 : _a.remove();
+        (_a2 = parentEl.querySelector(`#${prefixedId}`)) == null ? void 0 : _a2.remove();
       }
     } catch (e) {
     }
@@ -4451,8 +4462,8 @@ function AppearanceListener() {
   return null;
 }
 function isAppearanceEvent(e) {
-  var _a;
-  return ((_a = e.data) == null ? void 0 : _a.source) === "be-appearance-editor";
+  var _a2;
+  return ((_a2 = e.data) == null ? void 0 : _a2.source) === "be-appearance-editor";
 }
 function eventIsTrusted(e) {
   return new URL(e.origin).hostname === window.location.hostname;
@@ -4475,7 +4486,7 @@ function renderCustomCode(mode, value) {
   }
 }
 function useCustomMenu(menuOrPosition) {
-  var _a;
+  var _a2;
   const settings = useSettings();
   const { user, hasPermission } = useAuth();
   console.log("user", user);
@@ -4489,14 +4500,14 @@ function useCustomMenu(menuOrPosition) {
   const planAccess = ["plan.access"];
   const roleAccess = ["role.access"];
   const appearanceAccess = ["appearance.access"];
-  const menu = typeof menuOrPosition === "string" ? (_a = settings.menus) == null ? void 0 : _a.find((s) => {
-    var _a2;
-    return (_a2 = s.positions) == null ? void 0 : _a2.includes(menuOrPosition);
+  const menu = typeof menuOrPosition === "string" ? (_a2 = settings.menus) == null ? void 0 : _a2.find((s) => {
+    var _a3;
+    return (_a3 = s.positions) == null ? void 0 : _a3.includes(menuOrPosition);
   }) : menuOrPosition;
   console.log("menu", menu);
   if (menu) {
     menu.items = menu.items.filter((item) => {
-      var _a2, _b, _c, _d, _e, _f, _g;
+      var _a3, _b2, _c, _d, _e, _f, _g;
       if ((user == null ? void 0 : user.user_type) === "super_admin") {
         return item.action;
       }
@@ -4506,8 +4517,8 @@ function useCustomMenu(menuOrPosition) {
       const hasPermissions = (item.permissions || []).every(
         (a) => hasPermission(a)
       );
-      const usersMenu = (_a2 = user == null ? void 0 : user.permissions) == null ? void 0 : _a2.some((item2) => userAccess.includes(item2.name));
-      const fileMenu = (_b = user == null ? void 0 : user.permissions) == null ? void 0 : _b.some((item2) => fileAccess.includes(item2.name));
+      const usersMenu = (_a3 = user == null ? void 0 : user.permissions) == null ? void 0 : _a3.some((item2) => userAccess.includes(item2.name));
+      const fileMenu = (_b2 = user == null ? void 0 : user.permissions) == null ? void 0 : _b2.some((item2) => fileAccess.includes(item2.name));
       const settingMenu = (_c = user == null ? void 0 : user.permissions) == null ? void 0 : _c.some((item2) => settingsAccess.includes(item2.name));
       const subscriptionMenu = (_d = user == null ? void 0 : user.permissions) == null ? void 0 : _d.some((item2) => subscriptionAccess.includes(item2.name));
       const planMenu = (_e = user == null ? void 0 : user.permissions) == null ? void 0 : _e.some((item2) => planAccess.includes(item2.name));
@@ -5196,12 +5207,12 @@ const facebookLabel = message("Continue with facebook");
 const twitterLabel = message("Continue with twitter");
 const envatoLabel = message("Continue with envato");
 function SocialAuthSection({ dividerMessage }) {
-  var _a, _b, _c, _d, _e, _f, _g, _h;
+  var _a2, _b2, _c, _d, _e, _f, _g, _h;
   const { social } = useSettings();
   const navigate = useNavigate();
   const { getRedirectUri } = useAuth();
   const { loginWithSocial, requestingPassword, setIsRequestingPassword } = useSocialLogin();
-  const allSocialsDisabled = !((_a = social == null ? void 0 : social.google) == null ? void 0 : _a.enable) && !((_b = social == null ? void 0 : social.facebook) == null ? void 0 : _b.enable) && !((_c = social == null ? void 0 : social.twitter) == null ? void 0 : _c.enable) && !((_d = social == null ? void 0 : social.envato) == null ? void 0 : _d.enable);
+  const allSocialsDisabled = !((_a2 = social == null ? void 0 : social.google) == null ? void 0 : _a2.enable) && !((_b2 = social == null ? void 0 : social.facebook) == null ? void 0 : _b2.enable) && !((_c = social == null ? void 0 : social.twitter) == null ? void 0 : _c.enable) && !((_d = social == null ? void 0 : social.envato) == null ? void 0 : _d.enable);
   if (allSocialsDisabled) {
     return null;
   }
@@ -5551,10 +5562,10 @@ function useRecaptcha(action) {
 async function execute(siteKey, action) {
   await load(siteKey);
   return new Promise((resolve) => {
-    var _a;
-    (_a = window.grecaptcha) == null ? void 0 : _a.ready(async () => {
-      var _a2;
-      const token = await ((_a2 = window.grecaptcha) == null ? void 0 : _a2.execute(siteKey, { action }));
+    var _a2;
+    (_a2 = window.grecaptcha) == null ? void 0 : _a2.ready(async () => {
+      var _a3;
+      const token = await ((_a3 = window.grecaptcha) == null ? void 0 : _a3.execute(siteKey, { action }));
       const result = apiClient.post("recaptcha/verify", { token }).then((r2) => r2.data.success).catch(() => false);
       resolve(result ?? false);
     });
@@ -5735,8 +5746,8 @@ function useCustomPage(pageId) {
     queryKey: [endpoint$1(pageId)],
     queryFn: () => fetchCustomPage(pageId),
     initialData: () => {
-      var _a;
-      const data = (_a = getBootstrapData().loaders) == null ? void 0 : _a.customPage;
+      var _a2;
+      const data = (_a2 = getBootstrapData().loaders) == null ? void 0 : _a2.customPage;
       if ((data == null ? void 0 : data.page) && (data.page.id == pageId || data.page.slug == pageId)) {
         return data;
       }
@@ -5866,7 +5877,7 @@ function NotificationDialogTrigger({
         size: "md",
         className,
         badge: hasUnread ? /* @__PURE__ */ jsx(Badge, { className: "max-md:hidden", children: user == null ? void 0 : user.unread_notifications_count }) : void 0,
-        children: /* @__PURE__ */ jsx(NotificationsIcon, {})
+        children: /* @__PURE__ */ jsx(NotificationsIcon, { className: "bg-white text-black w-34 h-34 p-6 rounded-lg" })
       }
     ),
     /* @__PURE__ */ jsxs(Dialog, { children: [
@@ -5922,10 +5933,6 @@ const MenuIcon = createSvgIcon(
 const PersonIcon = createSvgIcon(
   /* @__PURE__ */ jsx("path", { d: "M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" }),
   "PersonOutlined"
-);
-const ArrowDropDownIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "m7 10 5 5 5-5H7z" }),
-  "ArrowDropDownOutlined"
 );
 const PaymentsIcon = createSvgIcon(
   /* @__PURE__ */ jsx("path", { d: "M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-2 0H3V6h14v8zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zm13 0v11c0 1.1-.9 2-2 2H4v-2h17V7h2z" }),
@@ -6073,18 +6080,14 @@ function NavbarAuthUser({ items = [] }) {
       children: /* @__PURE__ */ jsx(PersonIcon, {})
     }
   );
-  const desktopButton = /* @__PURE__ */ jsxs(ButtonBase, { className: "flex items-center max-md:hidden", role: "presentation", children: [
-    /* @__PURE__ */ jsx(
-      "img",
-      {
-        className: "mr-12 h-32 w-32 flex-shrink-0 rounded object-cover",
-        src: user.avatar,
-        alt: ""
-      }
-    ),
-    /* @__PURE__ */ jsx("span", { className: "mr-2 block max-w-124 overflow-x-hidden overflow-ellipsis text-sm", children: user.display_name }),
-    /* @__PURE__ */ jsx(ArrowDropDownIcon, { className: "block icon-sm" })
-  ] });
+  const desktopButton = /* @__PURE__ */ jsx(ButtonBase, { className: "flex items-center max-md:hidden", role: "presentation", children: /* @__PURE__ */ jsx(
+    "img",
+    {
+      className: "mr-12 h-34 w-34 mt-6 flex-shrink-0 rounded-lg object-cover",
+      src: user.avatar,
+      alt: ""
+    }
+  ) });
   return /* @__PURE__ */ jsx(NavbarAuthMenu, { items, children: /* @__PURE__ */ jsxs("span", { role: "button", children: [
     mobileButton,
     desktopButton
@@ -6139,55 +6142,20 @@ function MobileButtons() {
   ] });
 }
 function useDarkThemeVariables() {
-  var _a;
+  var _a2;
   const { data } = useBootstrapData();
   const isDarkMode = useIsDarkMode();
   if (isDarkMode) {
     return void 0;
   }
-  return (_a = data.themes.all.find((theme) => theme.is_dark && theme.default_dark)) == null ? void 0 : _a.values;
-}
-function Logo({ color, logoColor, isDarkMode }) {
-  const { trans } = useTrans();
-  const { branding } = useSettings();
-  let desktopLogo;
-  let mobileLogo;
-  if (isDarkMode || !branding.logo_dark || logoColor !== "dark" && color !== "bg" && color !== "bg-alt") {
-    desktopLogo = branding.logo_light;
-    mobileLogo = branding.logo_light_mobile;
-  } else {
-    desktopLogo = branding.logo_dark;
-    mobileLogo = branding.logo_dark_mobile;
-  }
-  if (!mobileLogo && !desktopLogo) {
-    return null;
-  }
-  return /* @__PURE__ */ jsx(
-    Link,
-    {
-      to: "/",
-      className: "mr-4 block h-full max-h-26 flex-shrink-0 md:mr-24 md:max-h-36",
-      "aria-label": trans({ message: "Go to homepage" }),
-      children: /* @__PURE__ */ jsxs("picture", { children: [
-        /* @__PURE__ */ jsx("source", { srcSet: mobileLogo || desktopLogo, media: "(max-width: 768px)" }),
-        /* @__PURE__ */ jsx("source", { srcSet: desktopLogo, media: "(min-width: 768px)" }),
-        /* @__PURE__ */ jsx(
-          "img",
-          {
-            className: "block h-full max-h-26 w-auto md:max-h-36",
-            alt: trans({ message: "Site logo" })
-          }
-        )
-      ] })
-    }
-  );
+  return (_a2 = data.themes.all.find((theme) => theme.is_dark && theme.default_dark)) == null ? void 0 : _a2.values;
 }
 function useLightThemeVariables() {
-  var _a;
+  var _a2;
   const { data } = useBootstrapData();
-  return (_a = data.themes.all.find((theme) => !theme.is_dark && theme.default_light)) == null ? void 0 : _a.values;
+  return (_a2 = data.themes.all.find((theme) => !theme.is_dark && theme.default_light)) == null ? void 0 : _a2.values;
 }
-function Navbar(props) {
+function Navbar$4(props) {
   let {
     hideLogo,
     toggleButton,
@@ -6217,15 +6185,19 @@ function Navbar(props) {
   if (isDarkMode) {
     color = darkModeColor;
   }
+  const navigate = useNavigate();
+  const handleSettingsClick = () => {
+    navigate("/account-settings");
+  };
   return /* @__PURE__ */ jsx(
     "div",
     {
       style: alwaysDarkMode ? darkThemeVars : void 0,
       className: clsx(
         getColorStyle(color, textColor),
-        size2 === "md" && "h-64 py-8",
-        size2 === "sm" && "h-54 py-4",
-        size2 === "xs" && "h-48 py-4",
+        size2 === "md" && "py-8",
+        size2 === "sm" && "py-4",
+        size2 === "xs" && "py-4",
         border,
         className
       ),
@@ -6233,18 +6205,18 @@ function Navbar(props) {
         "div",
         {
           className: clsx(
-            "flex h-full items-center justify-end gap-10 pl-14 pr-8 md:pl-20 md:pr-20",
+            "flex items-center justify-end gap-10 my-4 pl-14 pr-8 md:pl-20 md:pr-20",
             wrapInContainer && "container mx-auto"
           ),
           children: [
-            !hideLogo && /* @__PURE__ */ jsx(Logo, { isDarkMode, color, logoColor }),
-            toggleButton,
-            children,
+            !hideLogo && /* @__PURE__ */ jsx("div", { className: "flex items-center text-black dark:text-white" }),
             /* @__PURE__ */ jsx(MobileMenu, { position: menuPosition }),
             /* @__PURE__ */ jsx(DesktopMenu, { position: menuPosition }),
-            /* @__PURE__ */ jsxs("div", { className: "ml-auto flex items-center gap-4 md:gap-14", children: [
+            /* @__PURE__ */ jsxs("div", { className: "ml-auto flex items-center gap-16", children: [
               rightChildren,
+              children,
               showNotifButton && /* @__PURE__ */ jsx(NotificationDialogTrigger, {}),
+              /* @__PURE__ */ jsx(IconButton, { onClick: handleSettingsClick, "aria-label": "Account Settings", children: /* @__PURE__ */ jsx(SettingsIcon, { className: "bg-white text-black dark:text-black w-34 h-34 p-6 rounded-lg" }) }),
               isLoggedIn ? /* @__PURE__ */ jsx(NavbarAuthUser, { items: authMenuItems }) : /* @__PURE__ */ jsx(
                 NavbarAuthButtons,
                 {
@@ -6279,11 +6251,11 @@ function MobileMenu({ position }) {
     return null;
   }
   const handleItemClick = (item) => {
-    var _a;
+    var _a2;
     if (item.type === "route") {
       navigate(item.action);
     } else {
-      (_a = window.open(item.action, item.target)) == null ? void 0 : _a.focus();
+      (_a2 = window.open(item.action, item.target)) == null ? void 0 : _a2.focus();
     }
   };
   return /* @__PURE__ */ jsxs(MenuTrigger, { children: [
@@ -6346,7 +6318,7 @@ const LanguageIcon = createSvgIcon(
   "LanguageOutlined"
 );
 const KeyboardArrowDownIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" }),
+  /* @__PURE__ */ jsx("path", { d: "M12 8a2 2 0 110-4 2 2 0 010 4zm0 2a2 2 0 110 4 2 2 0 010-4zm0 6a2 2 0 110 4 2 2 0 010-4z" }),
   "KeyboardArrowDownOutlined"
 );
 function useChangeLocale() {
@@ -6492,11 +6464,11 @@ function DefaultMetaTags() {
   return /* @__PURE__ */ jsx(Helmet, { tags: default_meta_tags });
 }
 function PageMetaTags({ query }) {
-  var _a, _b;
-  if ((_a = query.data) == null ? void 0 : _a.set_seo) {
+  var _a2, _b2;
+  if ((_a2 = query.data) == null ? void 0 : _a2.set_seo) {
     return null;
   }
-  return ((_b = query.data) == null ? void 0 : _b.seo) ? /* @__PURE__ */ jsx(Helmet, { tags: query.data.seo }) : /* @__PURE__ */ jsx(DefaultMetaTags, {});
+  return ((_b2 = query.data) == null ? void 0 : _b2.seo) ? /* @__PURE__ */ jsx(Helmet, { tags: query.data.seo }) : /* @__PURE__ */ jsx(DefaultMetaTags, {});
 }
 function FullPageLoader({ className, screen }) {
   return /* @__PURE__ */ jsx(
@@ -6631,15 +6603,15 @@ function CustomPageLayout({ slug }) {
   const { pageSlug } = useParams();
   const query = useCustomPage(slug || pageSlug);
   useEffect(() => {
-    var _a;
-    if ((_a = query.data) == null ? void 0 : _a.page) {
+    var _a2;
+    if ((_a2 = query.data) == null ? void 0 : _a2.page) {
       window.scrollTo(0, 0);
     }
   }, [query]);
   return /* @__PURE__ */ jsxs("div", { className: "flex flex-col min-h-screen bg", children: [
     /* @__PURE__ */ jsx(PageMetaTags, { query }),
     /* @__PURE__ */ jsx(
-      Navbar,
+      Navbar$4,
       {
         menuPosition: "custom-page-navbar",
         className: "flex-shrink-0 sticky top-0"
@@ -6882,13 +6854,13 @@ function DynamicHomepage({ homepageResolver }) {
   return (homepageResolver == null ? void 0 : homepageResolver(homepage == null ? void 0 : homepage.type)) || null;
 }
 function AdHost({ slot, className }) {
-  var _a;
+  var _a2;
   const settings = useSettings();
   const { isSubscribed } = useAuth();
   const adCode2 = useMemo(() => {
     return dot.pick(`ads.${slot}`, settings);
   }, [slot, settings]);
-  if (((_a = settings.ads) == null ? void 0 : _a.disable) || isSubscribed || !adCode2)
+  if (((_a2 = settings.ads) == null ? void 0 : _a2.disable) || isSubscribed || !adCode2)
     return null;
   return /* @__PURE__ */ jsx(InvariantAd, { className, slot, adCode: adCode2 });
 }
@@ -7020,7 +6992,7 @@ function HeroHeader({
         ),
         /* @__PURE__ */ jsxs("div", { className: "relative z-20 flex h-full flex-col", children: [
           /* @__PURE__ */ jsx(
-            Navbar,
+            Navbar$4,
             {
               color: "transparent",
               className: "flex-shrink-0",
@@ -7103,13 +7075,13 @@ function CtaButton({ item, ...buttonProps }) {
   );
 }
 function PrimaryFeatures({ content: content2 }) {
-  var _a;
+  var _a2;
   return /* @__PURE__ */ jsx(
     "div",
     {
       className: "landing-container items-stretch gap-26 md:flex",
       id: "primary-features",
-      children: (_a = content2 == null ? void 0 : content2.primaryFeatures) == null ? void 0 : _a.map((feature, index) => /* @__PURE__ */ jsxs(
+      children: (_a2 = content2 == null ? void 0 : content2.primaryFeatures) == null ? void 0 : _a2.map((feature, index) => /* @__PURE__ */ jsxs(
         "div",
         {
           className: "mb-14 flex-1 rounded-2xl px-24 py-36 text-center shadow-[0_10px_30px_rgba(0,0,0,0.08)] md:mb-0",
@@ -7147,8 +7119,8 @@ function PrimaryFeatures({ content: content2 }) {
   );
 }
 function SecondaryFeatures({ content: content2 }) {
-  var _a;
-  return /* @__PURE__ */ jsx("div", { className: "landing-container", children: (_a = content2 == null ? void 0 : content2.secondaryFeatures) == null ? void 0 : _a.map((feature, index) => {
+  var _a2;
+  return /* @__PURE__ */ jsx("div", { className: "landing-container", children: (_a2 = content2 == null ? void 0 : content2.secondaryFeatures) == null ? void 0 : _a2.map((feature, index) => {
     const isEven = index % 2 === 0;
     return /* @__PURE__ */ jsxs(
       "div",
@@ -7202,7 +7174,7 @@ function SecondaryFeatures({ content: content2 }) {
   }) });
 }
 function BottomCta({ content: content2 }) {
-  var _a;
+  var _a2;
   return /* @__PURE__ */ jsxs(
     "div",
     {
@@ -7229,7 +7201,7 @@ function BottomCta({ content: content2 }) {
         /* @__PURE__ */ jsx(
           CtaButton,
           {
-            item: (_a = content2.actions) == null ? void 0 : _a.cta3,
+            item: (_a2 = content2.actions) == null ? void 0 : _a2.cta3,
             size: "lg",
             variant: "outline",
             color: "paper",
@@ -7262,14 +7234,14 @@ function AccountSettingsPanel({
     "section",
     {
       id: id2,
-      className: "rounded-panel mb-24 w-full border bg-paper px-24 py-20",
+      className: "mb-24 w-full bg-paper px-20 py-20",
       children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-14 border-b pb-10", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-14 pb-10", children: [
           /* @__PURE__ */ jsx("div", { className: "text-lg font-light", children: title }),
           titleSuffix && /* @__PURE__ */ jsx("div", { className: "ml-auto", children: titleSuffix })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "pt-24", children }),
-        actions && /* @__PURE__ */ jsx("div", { className: "mt-36 flex justify-end border-t pt-10", children: actions })
+        actions && /* @__PURE__ */ jsx("div", { className: "mt-36 flex justify-end pt-10", children: actions })
       ]
     }
   );
@@ -7350,12 +7322,12 @@ class S3MultipartUpload {
     return `s3-multipart::${this.file.fingerprint}`;
   }
   async start() {
-    var _a, _b, _c, _d, _e;
+    var _a2, _b2, _c, _d, _e;
     const storedUrl = getFromLocalStorage(this.storageKey);
     if (storedUrl) {
       await this.getUploadedParts(storedUrl);
     }
-    if (!((_a = this.uploadedParts) == null ? void 0 : _a.length)) {
+    if (!((_a2 = this.uploadedParts) == null ? void 0 : _a2.length)) {
       await this.createMultipartUpload();
       if (!this.uploadId)
         return;
@@ -7369,7 +7341,7 @@ class S3MultipartUpload {
       try {
         const response = await this.createFileEntry();
         if (response == null ? void 0 : response.fileEntry) {
-          (_c = (_b = this.config).onSuccess) == null ? void 0 : _c.call(_b, response == null ? void 0 : response.fileEntry, this.file);
+          (_c = (_b2 = this.config).onSuccess) == null ? void 0 : _c.call(_b2, response == null ? void 0 : response.fileEntry, this.file);
           removeFromLocalStorage(this.storageKey);
           return;
         }
@@ -7436,7 +7408,7 @@ class S3MultipartUpload {
       withCredentials: false,
       signal: this.abortController.signal,
       onUploadProgress: (e) => {
-        var _a, _b;
+        var _a2, _b2;
         if (!e.event.lengthComputable)
           return;
         chunk.bytesUploaded = e.loaded;
@@ -7444,7 +7416,7 @@ class S3MultipartUpload {
           (n, c) => n + c.bytesUploaded,
           0
         );
-        (_b = (_a = this.config).onProgress) == null ? void 0 : _b.call(_a, {
+        (_b2 = (_a2 = this.config).onProgress) == null ? void 0 : _b2.call(_a2, {
           bytesUploaded: totalUploaded,
           bytesTotal: this.file.size
         });
@@ -7470,9 +7442,9 @@ class S3MultipartUpload {
       extension: this.file.extension,
       ...this.config.metadata
     }).then((r2) => r2.data).catch((err) => {
-      var _a, _b;
+      var _a2, _b2;
       if (err.code !== "ERR_CANCELED") {
-        (_b = (_a = this.config).onError) == null ? void 0 : _b.call(_a, getAxiosErrorMessage(err), this.file);
+        (_b2 = (_a2 = this.config).onError) == null ? void 0 : _b2.call(_a2, getAxiosErrorMessage(err), this.file);
       }
     });
     if (response) {
@@ -7486,7 +7458,7 @@ class S3MultipartUpload {
     }
   }
   async getUploadedParts({ fileKey, uploadId }) {
-    var _a;
+    var _a2;
     const response = await apiClient.post("s3/multipart/get-uploaded-parts", {
       key: fileKey,
       uploadId
@@ -7494,7 +7466,7 @@ class S3MultipartUpload {
       removeFromLocalStorage(this.storageKey);
       return null;
     });
-    if ((_a = response == null ? void 0 : response.parts) == null ? void 0 : _a.length) {
+    if ((_a2 = response == null ? void 0 : response.parts) == null ? void 0 : _a2.length) {
       this.uploadedParts = response.parts;
       this.uploadId = uploadId;
       this.fileKey = fileKey;
@@ -7511,8 +7483,8 @@ class S3MultipartUpload {
         };
       })
     }).then((r2) => r2.data).catch(() => {
-      var _a, _b;
-      (_b = (_a = this.config).onError) == null ? void 0 : _b.call(_a, null, this.file);
+      var _a2, _b2;
+      (_b2 = (_a2 = this.config).onError) == null ? void 0 : _b2.call(_a2, null, this.file);
       this.abortUploadOnS3();
     }).finally(() => {
       removeFromLocalStorage(this.storageKey);
@@ -7529,7 +7501,7 @@ class S3MultipartUpload {
     }).then((r2) => r2.data).catch();
   }
   prepareChunks() {
-    var _a;
+    var _a2;
     this.chunks = [];
     const minChunkSize = Math.max(5 * oneMB, Math.ceil(this.file.size / 1e4));
     const chunkSize = Math.max(desiredChunkSize, minChunkSize);
@@ -7544,7 +7516,7 @@ class S3MultipartUpload {
       let partNumber = 1;
       for (let i = 0; i < this.file.size; i += chunkSize) {
         const end = Math.min(this.file.size, i + chunkSize);
-        const previouslyUploaded = (_a = this.uploadedParts) == null ? void 0 : _a.find(
+        const previouslyUploaded = (_a2 = this.uploadedParts) == null ? void 0 : _a2.find(
           (p) => p.PartNumber === partNumber
         );
         this.chunks.push({
@@ -7606,10 +7578,10 @@ class TusUpload {
         "X-XSRF-TOKEN": getCookie$1("XSRF-TOKEN")
       },
       onError: (err) => {
-        var _a;
+        var _a2;
         if ("originalResponse" in err && err.originalResponse) {
           try {
-            const message2 = (_a = JSON.parse(err.originalResponse.getBody())) == null ? void 0 : _a.message;
+            const message2 = (_a2 = JSON.parse(err.originalResponse.getBody())) == null ? void 0 : _a2.message;
             onError == null ? void 0 : onError(message2, file);
           } catch (e) {
             onError == null ? void 0 : onError(null, file);
@@ -7622,8 +7594,8 @@ class TusUpload {
         onProgress == null ? void 0 : onProgress({ bytesUploaded, bytesTotal });
       },
       onSuccess: async () => {
-        var _a;
-        const uploadKey = (_a = upload.url) == null ? void 0 : _a.split("/").pop();
+        var _a2;
+        const uploadKey = (_a2 = upload.url) == null ? void 0 : _a2.split("/").pop();
         try {
           if (uploadKey) {
             const response = await createFileEntry(uploadKey);
@@ -7659,7 +7631,7 @@ class S3Upload {
     this.abortController = new AbortController();
   }
   async start() {
-    var _a, _b, _c, _d;
+    var _a2, _b2, _c, _d;
     this.presignedRequest = await this.presignPostUrl();
     if (!this.presignedRequest)
       return;
@@ -7668,7 +7640,7 @@ class S3Upload {
       return;
     const response = await this.createFileEntry();
     if (response == null ? void 0 : response.fileEntry) {
-      (_b = (_a = this.config).onSuccess) == null ? void 0 : _b.call(_a, response.fileEntry, this.file);
+      (_b2 = (_a2 = this.config).onSuccess) == null ? void 0 : _b2.call(_a2, response.fileEntry, this.file);
     } else if (!this.abortController.signal) {
       (_d = (_c = this.config).onError) == null ? void 0 : _d.call(_c, null, this.file);
     }
@@ -7678,22 +7650,22 @@ class S3Upload {
     return Promise.resolve();
   }
   presignPostUrl() {
-    var _a;
+    var _a2;
     return apiClient.post(
       "s3/simple/presign",
       {
         filename: this.file.name,
         mime: this.file.mime,
-        disk: (_a = this.config.metadata) == null ? void 0 : _a.disk,
+        disk: (_a2 = this.config.metadata) == null ? void 0 : _a2.disk,
         size: this.file.size,
         extension: this.file.extension,
         ...this.config.metadata
       },
       { signal: this.abortController.signal }
     ).then((r2) => r2.data).catch((err) => {
-      var _a2, _b;
+      var _a3, _b2;
       if (err.code !== "ERR_CANCELED") {
-        (_b = (_a2 = this.config).onError) == null ? void 0 : _b.call(_a2, getAxiosErrorMessage(err), this.file);
+        (_b2 = (_a3 = this.config).onError) == null ? void 0 : _b2.call(_a3, getAxiosErrorMessage(err), this.file);
       }
     });
   }
@@ -7707,18 +7679,18 @@ class S3Upload {
         "x-amz-acl": acl
       },
       onUploadProgress: (e) => {
-        var _a, _b;
+        var _a2, _b2;
         if (e.event.lengthComputable) {
-          (_b = (_a = this.config).onProgress) == null ? void 0 : _b.call(_a, {
+          (_b2 = (_a2 = this.config).onProgress) == null ? void 0 : _b2.call(_a2, {
             bytesUploaded: e.loaded,
             bytesTotal: e.total || 0
           });
         }
       }
     }).then(() => "uploaded").catch((err) => {
-      var _a, _b;
+      var _a2, _b2;
       if (err.code !== "ERR_CANCELED") {
-        (_b = (_a = this.config).onError) == null ? void 0 : _b.call(_a, getAxiosErrorMessage(err), this.file);
+        (_b2 = (_a2 = this.config).onError) == null ? void 0 : _b2.call(_a2, getAxiosErrorMessage(err), this.file);
       }
     });
   }
@@ -7733,9 +7705,9 @@ class S3Upload {
     }).then((r2) => {
       return r2.data;
     }).catch((err) => {
-      var _a, _b;
+      var _a2, _b2;
       if (err.code !== "ERR_CANCELED") {
-        (_b = (_a = this.config).onError) == null ? void 0 : _b.call(_a, getAxiosErrorMessage(err), this.file);
+        (_b2 = (_a2 = this.config).onError) == null ? void 0 : _b2.call(_a2, getAxiosErrorMessage(err), this.file);
       }
     });
   }
@@ -7873,7 +7845,7 @@ class ProgressTimeout {
   }
 }
 async function startUploading(upload, state) {
-  var _a, _b;
+  var _a2, _b2;
   const settings = getBootstrapData().settings;
   const options = upload.options;
   const file = upload.file;
@@ -7898,40 +7870,40 @@ async function startUploading(upload, state) {
     metadata: {
       ...options == null ? void 0 : options.metadata,
       relativePath: file.relativePath,
-      disk: ((_a = options == null ? void 0 : options.metadata) == null ? void 0 : _a.disk) || Disk.uploads,
-      parentId: ((_b = options == null ? void 0 : options.metadata) == null ? void 0 : _b.parentId) || ""
+      disk: ((_a2 = options == null ? void 0 : options.metadata) == null ? void 0 : _a2.disk) || Disk.uploads,
+      parentId: ((_b2 = options == null ? void 0 : options.metadata) == null ? void 0 : _b2.parentId) || ""
     },
     chunkSize: settings.uploads.chunk_size,
     baseUrl: settings.base_url,
     onError: (errorMessage) => {
-      var _a2;
+      var _a3;
       state.updateFileUpload(file.id, {
         errorMessage,
         status: "failed"
       });
       state.runQueue();
       timer.done();
-      (_a2 = options == null ? void 0 : options.onError) == null ? void 0 : _a2.call(options, errorMessage, file);
+      (_a3 = options == null ? void 0 : options.onError) == null ? void 0 : _a3.call(options, errorMessage, file);
     },
     onSuccess: (entry) => {
-      var _a2;
+      var _a3;
       state.updateFileUpload(file.id, {
         status: "completed",
         entry
       });
       state.runQueue();
       timer.done();
-      (_a2 = options == null ? void 0 : options.onSuccess) == null ? void 0 : _a2.call(options, entry, file);
+      (_a3 = options == null ? void 0 : options.onSuccess) == null ? void 0 : _a3.call(options, entry, file);
     },
     onProgress: ({ bytesUploaded, bytesTotal }) => {
-      var _a2;
+      var _a3;
       const percentage = bytesUploaded / bytesTotal * 100;
       state.updateFileUpload(file.id, {
         percentage,
         bytesUploaded
       });
       timer.progress();
-      (_a2 = options == null ? void 0 : options.onProgress) == null ? void 0 : _a2.call(options, { bytesUploaded, bytesTotal });
+      (_a3 = options == null ? void 0 : options.onProgress) == null ? void 0 : _a3.call(options, { bytesUploaded, bytesTotal });
     }
   };
   const strategy = chooseUploadStrategy(file, config);
@@ -7955,9 +7927,9 @@ const OneMB = 1024 * 1024;
 const FourMB = 4 * OneMB;
 const HundredMB = 100 * OneMB;
 const chooseUploadStrategy = (file, config) => {
-  var _a;
+  var _a2;
   const settings = getBootstrapData().settings;
-  const disk = ((_a = config.metadata) == null ? void 0 : _a.disk) || Disk.uploads;
+  const disk = ((_a2 = config.metadata) == null ? void 0 : _a2.disk) || Disk.uploads;
   const driver = disk === Disk.uploads ? settings.uploads.uploads_driver : settings.uploads.public_driver;
   if ((driver == null ? void 0 : driver.endsWith("s3")) && settings.uploads.s3_direct_upload) {
     return file.size >= HundredMB ? S3MultipartUpload : S3Upload;
@@ -7966,9 +7938,9 @@ const chooseUploadStrategy = (file, config) => {
   }
 };
 function extensionFromFilename(fullFileName) {
-  var _a;
+  var _a2;
   const re = /(?:\.([^.]+))?$/;
-  return ((_a = re.exec(fullFileName)) == null ? void 0 : _a[1]) || "";
+  return ((_a2 = re.exec(fullFileName)) == null ? void 0 : _a2[1]) || "";
 }
 function getFileMime(file) {
   const extensionsToMime = {
@@ -8103,10 +8075,10 @@ const createFileUploadStore = ({ settings }) => create()(
         get().runQueue();
       },
       abortUpload: (id2) => {
-        var _a;
+        var _a2;
         const upload = get().fileUploads.get(id2);
         if (upload) {
-          (_a = upload.request) == null ? void 0 : _a.abort();
+          (_a2 = upload.request) == null ? void 0 : _a2.abort();
           get().updateFileUpload(id2, { status: "aborted", percentage: 0 });
           get().runQueue();
         }
@@ -8269,9 +8241,9 @@ function useActiveUpload() {
   );
   const selectAndUploadFile = useCallback(
     async (config) => {
-      var _a;
+      var _a2;
       const files = await openUploadWindow({
-        types: (_a = config == null ? void 0 : config.restrictions) == null ? void 0 : _a.allowedFileTypes
+        types: (_a2 = config == null ? void 0 : config.restrictions) == null ? void 0 : _a2.allowedFileTypes
       });
       uploadFile(files[0], config);
       return files[0];
@@ -8280,7 +8252,7 @@ function useActiveUpload() {
   );
   const deleteEntry = useCallback(
     ({ onSuccess, entryPath }) => {
-      var _a, _b, _c;
+      var _a2, _b2, _c;
       const handleSuccess = () => {
         if (activeUpload) {
           updateFileUpload(activeUpload.file.id, {
@@ -8290,14 +8262,14 @@ function useActiveUpload() {
         }
         onSuccess();
       };
-      if (!entryPath && !((_a = activeUpload == null ? void 0 : activeUpload.entry) == null ? void 0 : _a.id)) {
+      if (!entryPath && !((_a2 = activeUpload == null ? void 0 : activeUpload.entry) == null ? void 0 : _a2.id)) {
         handleSuccess();
         return;
       }
       deleteFileEntries2.mutate(
         {
           paths: entryPath ? [entryPath] : void 0,
-          entryIds: ((_b = activeUpload == null ? void 0 : activeUpload.entry) == null ? void 0 : _b.id) ? [(_c = activeUpload == null ? void 0 : activeUpload.entry) == null ? void 0 : _c.id] : void 0,
+          entryIds: ((_b2 = activeUpload == null ? void 0 : activeUpload.entry) == null ? void 0 : _b2.id) ? [(_c = activeUpload == null ? void 0 : activeUpload.entry) == null ? void 0 : _c.id] : void 0,
           deleteForever: true
         },
         { onSuccess: handleSuccess }
@@ -8348,7 +8320,7 @@ function ProgressBarBase(props) {
     radius = "rounded",
     trackColor = "bg-primary-light",
     progressColor = "bg-primary",
-    trackHeight = getSize(size2)
+    trackHeight = getSize$1(size2)
   } = props;
   const id2 = useId();
   value = clamp(value, minValue, maxValue);
@@ -8396,7 +8368,7 @@ function ProgressBarBase(props) {
     }
   );
 }
-function getSize(size2) {
+function getSize$1(size2) {
   switch (size2) {
     case "sm":
       return "h-6";
@@ -8488,7 +8460,7 @@ function ImageSelector({
     Button,
     {
       variant: "link",
-      color: "danger",
+      color: "primary",
       size: "xs",
       disabled: isDeletingEntry || !imageUrl || disabled,
       onClick: () => {
@@ -8496,7 +8468,7 @@ function ImageSelector({
           onSuccess: () => onChange == null ? void 0 : onChange("")
         });
       },
-      children: /* @__PURE__ */ jsx(Trans, { message: "Remove image" })
+      children: /* @__PURE__ */ jsx(Trans, { message: "Remove Picture" })
     }
   ) : null;
   const useDefaultButton = defaultValue != null && value !== defaultValue ? /* @__PURE__ */ jsx(
@@ -8513,8 +8485,8 @@ function ImageSelector({
     }
   ) : null;
   const handleUpload = useCallback(() => {
-    var _a;
-    (_a = inputRef.current) == null ? void 0 : _a.click();
+    var _a2;
+    (_a2 = inputRef.current) == null ? void 0 : _a2.click();
   }, []);
   return /* @__PURE__ */ jsxs("div", { className: clsx("text-sm", className), children: [
     label && /* @__PURE__ */ jsx("div", { id: labelId, className: inputFieldClassNames.label, children: label }),
@@ -8553,8 +8525,8 @@ function ImageSelector({
                   disabled: uploadStatus === "inProgress",
                   className: "sr-only",
                   onChange: (e) => {
-                    var _a;
-                    if ((_a = e.target.files) == null ? void 0 : _a.length) {
+                    var _a2;
+                    if ((_a2 = e.target.files) == null ? void 0 : _a2.length) {
                       uploadFile(e.target.files[0], uploadOptions);
                     }
                   }
@@ -8836,10 +8808,6 @@ const ListItem = forwardRef(
     ) });
   }
 );
-const ApiIcon = createSvgIcon(
-  /* @__PURE__ */ jsx("path", { d: "m14 12-2 2-2-2 2-2 2 2zm-2-6 2.12 2.12 2.5-2.5L12 1 7.38 5.62l2.5 2.5L12 6zm-6 6 2.12-2.12-2.5-2.5L1 12l4.62 4.62 2.5-2.5L6 12zm12 0-2.12 2.12 2.5 2.5L23 12l-4.62-4.62-2.5 2.5L18 12zm-6 6-2.12-2.12-2.5 2.5L12 23l4.62-4.62-2.5-2.5L12 18z" }),
-  "ApiOutlined"
-);
 const DangerousIcon = createSvgIcon(
   /* @__PURE__ */ jsx("path", { d: "M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3zM19 14.9 14.9 19H9.1L5 14.9V9.1L9.1 5h5.8L19 9.1v5.8zm-4.17-7.14L12 10.59 9.17 7.76 7.76 9.17 10.59 12l-2.83 2.83 1.41 1.41L12 13.41l2.83 2.83 1.41-1.41L13.41 12l2.83-2.83-1.41-1.41z" }),
   "DangerousOutlined"
@@ -8856,14 +8824,14 @@ var AccountSettingsId = /* @__PURE__ */ ((AccountSettingsId2) => {
   return AccountSettingsId2;
 })(AccountSettingsId || {});
 function AccountSettingsSidenav() {
-  var _a;
+  var _a2;
   const p = AccountSettingsId;
-  const { hasPermission } = useAuth();
+  useAuth();
   const { api, social } = useSettings();
   const { auth } = useContext(SiteConfigContext);
   (social == null ? void 0 : social.envato) || (social == null ? void 0 : social.google) || (social == null ? void 0 : social.facebook) || (social == null ? void 0 : social.twitter);
-  return /* @__PURE__ */ jsx("aside", { className: "sticky top-10 hidden flex-shrink-0 lg:block", children: /* @__PURE__ */ jsxs(List, { padding: "p-0", children: [
-    (_a = auth.accountSettingsPanels) == null ? void 0 : _a.map((panel) => /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ jsx("aside", { className: "sticky top-10 mt-160 hidden flex-shrink-0 lg:block", children: /* @__PURE__ */ jsxs(List, { padding: "p-0", children: [
+    (_a2 = auth.accountSettingsPanels) == null ? void 0 : _a2.map((panel) => /* @__PURE__ */ jsx(
       Item,
       {
         icon: /* @__PURE__ */ jsx(panel.icon, { viewBox: "0 0 50 50" }),
@@ -8872,9 +8840,10 @@ function AccountSettingsSidenav() {
       },
       panel.id
     )),
-    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(PersonIcon, {}), panel: p.AccountDetails, children: /* @__PURE__ */ jsx(Trans, { message: "Account details" }) }),
-    (api == null ? void 0 : api.integrated) && hasPermission("api.access") ? /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(ApiIcon, {}), panel: p.Developers, children: /* @__PURE__ */ jsx(Trans, { message: "Developers" }) }) : null,
-    /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(DangerousIcon, {}), panel: p.DeleteAccount, children: /* @__PURE__ */ jsx(Trans, { message: "Delete account" }) })
+    /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-gray-300 rounded-lg shadow-lg py-10 px-8 ml-10", children: [
+      /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(PersonIcon, {}), panel: p.AccountDetails, children: /* @__PURE__ */ jsx(Trans, { message: "Account details" }) }),
+      /* @__PURE__ */ jsx(Item, { icon: /* @__PURE__ */ jsx(DangerousIcon, {}), panel: p.DeleteAccount, children: /* @__PURE__ */ jsx(Trans, { message: "Delete account" }) })
+    ] })
   ] }) });
 }
 function Item({ children, icon, isLast, panel }) {
@@ -8893,86 +8862,6 @@ function Item({ children, icon, isLast, panel }) {
         }
       },
       children
-    }
-  );
-}
-function BasicInfoPanel({ user }) {
-  const uploadAvatar = useUploadAvatar({ user });
-  const removeAvatar2 = useRemoveAvatar({ user });
-  const formId = useId();
-  const form = useForm({
-    defaultValues: {
-      first_name: user.first_name || "",
-      last_name: user.last_name || "",
-      avatar: user.avatar
-    }
-  });
-  const updateDetails = useUpdateAccountDetails(form);
-  return /* @__PURE__ */ jsx(
-    AccountSettingsPanel,
-    {
-      id: AccountSettingsId.AccountDetails,
-      title: /* @__PURE__ */ jsx(Trans, { message: "Update name and profile image" }),
-      actions: /* @__PURE__ */ jsx(
-        Button,
-        {
-          type: "submit",
-          variant: "flat",
-          color: "primary",
-          form: formId,
-          disabled: updateDetails.isPending || !form.formState.isValid,
-          children: /* @__PURE__ */ jsx(Trans, { message: "Save" })
-        }
-      ),
-      children: /* @__PURE__ */ jsxs(
-        Form,
-        {
-          form,
-          className: "flex flex-col flex-col-reverse md:flex-row items-center gap-40 md:gap-80",
-          onSubmit: (newDetails) => {
-            updateDetails.mutate(newDetails);
-          },
-          id: formId,
-          children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex-auto w-full", children: [
-              /* @__PURE__ */ jsx(
-                FormTextField,
-                {
-                  className: "mb-24",
-                  name: "first_name",
-                  label: /* @__PURE__ */ jsx(Trans, { message: "First name" })
-                }
-              ),
-              /* @__PURE__ */ jsx(
-                FormTextField,
-                {
-                  name: "last_name",
-                  label: /* @__PURE__ */ jsx(Trans, { message: "Last name" })
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx(FileUploadProvider, { children: /* @__PURE__ */ jsx(
-              FormImageSelector,
-              {
-                className: "md:mr-80",
-                variant: "avatar",
-                previewSize: "w-90 h-90",
-                showRemoveButton: true,
-                name: "avatar",
-                diskPrefix: "avatars",
-                label: /* @__PURE__ */ jsx(Trans, { message: "Profile image" }),
-                onChange: (url) => {
-                  if (url) {
-                    uploadAvatar.mutate({ url });
-                  } else {
-                    removeAvatar2.mutate();
-                  }
-                }
-              }
-            ) })
-          ]
-        }
-      )
     }
   );
 }
@@ -8996,7 +8885,7 @@ function ChangePasswordPanel() {
     AccountSettingsPanel,
     {
       id: AccountSettingsId.Password,
-      title: /* @__PURE__ */ jsx(Trans, { message: "Update password" }),
+      title: /* @__PURE__ */ jsx(Trans, { message: "" }),
       actions: /* @__PURE__ */ jsx(
         Button,
         {
@@ -9005,7 +8894,7 @@ function ChangePasswordPanel() {
           variant: "flat",
           color: "primary",
           disabled: !form.formState.isValid || updatePassword2.isPending,
-          children: /* @__PURE__ */ jsx(Trans, { message: "Update password" })
+          children: /* @__PURE__ */ jsx(Trans, { message: "Save" })
         }
       ),
       children: /* @__PURE__ */ jsxs(
@@ -9059,48 +8948,76 @@ function ChangePasswordPanel() {
     }
   );
 }
-function useDateFormatter(options) {
-  const lastOptions = useRef(
-    null
-  );
-  if (options && lastOptions.current && shallowEqual(options, lastOptions.current)) {
-    options = lastOptions.current;
-  }
-  lastOptions.current = options;
-  const { localeCode } = useSelectedLocale();
-  return useMemo(
-    () => new DateFormatter(localeCode, options),
-    [localeCode, options]
+function BasicInfoPanel({ user }) {
+  const uploadAvatar = useUploadAvatar({ user });
+  const removeAvatar2 = useRemoveAvatar({ user });
+  const formId = useId();
+  const form = useForm({
+    defaultValues: {
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+      avatar: user.avatar
+    }
+  });
+  const updateDetails = useUpdateAccountDetails(form);
+  return /* @__PURE__ */ jsx(
+    AccountSettingsPanel,
+    {
+      id: AccountSettingsId.AccountDetails,
+      title: /* @__PURE__ */ jsx(Trans, { message: "Account Detail" }),
+      children: /* @__PURE__ */ jsx(
+        Form,
+        {
+          form,
+          className: "flex flex-col flex-col-reverse md:flex-row items-center gap-40 md:gap-80",
+          onSubmit: (newDetails) => {
+            updateDetails.mutate(newDetails);
+          },
+          id: formId,
+          children: /* @__PURE__ */ jsxs("div", { className: "flex-auto w-full", children: [
+            /* @__PURE__ */ jsx(FileUploadProvider, { children: /* @__PURE__ */ jsx(
+              FormImageSelector,
+              {
+                className: "rounded-full flex items-center justify-center",
+                variant: "avatar",
+                previewSize: "w-90 h-90",
+                showRemoveButton: true,
+                name: "avatar",
+                diskPrefix: "avatars",
+                onChange: (url) => {
+                  if (url) {
+                    uploadAvatar.mutate({ url });
+                  } else {
+                    removeAvatar2.mutate();
+                  }
+                }
+              }
+            ) }),
+            /* @__PURE__ */ jsxs("div", { className: "flex justify-between gap-10 mt-40", children: [
+              /* @__PURE__ */ jsx(
+                FormTextField,
+                {
+                  className: "w-1/2 px-20",
+                  name: "first_name",
+                  label: /* @__PURE__ */ jsx(Trans, { message: "First name" })
+                }
+              ),
+              /* @__PURE__ */ jsx(
+                FormTextField,
+                {
+                  className: "w-1/2 px-20",
+                  name: "last_name",
+                  label: /* @__PURE__ */ jsx(Trans, { message: "Last name" })
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx(ChangePasswordPanel, {})
+          ] })
+        }
+      )
+    }
   );
 }
-const DateFormatPresets = {
-  numeric: { year: "numeric", month: "2-digit", day: "2-digit" },
-  short: { year: "numeric", month: "short", day: "2-digit" },
-  long: { month: "long", day: "2-digit", year: "numeric" }
-};
-const FormattedDate = memo(
-  ({ date, options, preset }) => {
-    const { dates } = useSettings();
-    const timezone = useUserTimezone();
-    const formatter = useDateFormatter(
-      options || DateFormatPresets[preset || (dates == null ? void 0 : dates.format)]
-    );
-    if (!date) {
-      return null;
-    }
-    try {
-      if (typeof date === "string") {
-        date = parseAbsoluteToLocal(date).toDate();
-      } else if ("toDate" in date) {
-        date = date.toDate(timezone);
-      }
-    } catch (e) {
-      return null;
-    }
-    return /* @__PURE__ */ jsx(Fragment, { children: formatter.format(date) });
-  },
-  shallowEqual
-);
 function ConfirmationDialog({
   className,
   title,
@@ -9150,200 +9067,6 @@ function ConfirmationDialog({
     ] })
   ] });
 }
-function deleteAccessToken({ id: id2 }) {
-  return apiClient.delete(`access-tokens/${id2}`).then((r2) => r2.data);
-}
-function useDeleteAccessToken() {
-  return useMutation({
-    mutationFn: (props) => deleteAccessToken(props),
-    onSuccess: () => {
-      toast(message("Token deleted"));
-    },
-    onError: (err) => showHttpErrorToast(err)
-  });
-}
-function createAccessToken(payload) {
-  return apiClient.post(`access-tokens`, payload).then((r2) => r2.data);
-}
-function useCreateAccessToken(form) {
-  return useMutation({
-    mutationFn: (props) => createAccessToken(props),
-    onSuccess: () => {
-      toast(message("Token create"));
-    },
-    onError: (r2) => onFormQueryError(r2, form)
-  });
-}
-function CreateNewTokenDialog() {
-  const form = useForm();
-  const { formId, close } = useDialogContext();
-  const createToken = useCreateAccessToken(form);
-  const [plainTextToken, setPlainTextToken] = useState();
-  const formNode = /* @__PURE__ */ jsx(
-    Form,
-    {
-      form,
-      id: formId,
-      onSubmit: (values) => {
-        createToken.mutate(values, {
-          onSuccess: (response) => {
-            setPlainTextToken(response.plainTextToken);
-            queryClient.invalidateQueries({ queryKey: ["users"] });
-          }
-        });
-      },
-      children: /* @__PURE__ */ jsx(
-        FormTextField,
-        {
-          name: "tokenName",
-          label: /* @__PURE__ */ jsx(Trans, { message: "Token name" }),
-          required: true,
-          autoFocus: true
-        }
-      )
-    }
-  );
-  return /* @__PURE__ */ jsxs(Dialog, { children: [
-    /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(Trans, { message: "Create new token" }) }),
-    /* @__PURE__ */ jsx(DialogBody, { children: plainTextToken ? /* @__PURE__ */ jsx(PlainTextPreview, { plainTextToken }) : formNode }),
-    /* @__PURE__ */ jsxs(DialogFooter, { children: [
-      /* @__PURE__ */ jsx(Button, { variant: "text", onClick: close, children: /* @__PURE__ */ jsx(Trans, { message: "Done" }) }),
-      !plainTextToken && /* @__PURE__ */ jsx(
-        Button,
-        {
-          variant: "flat",
-          color: "primary",
-          type: "submit",
-          form: formId,
-          disabled: createToken.isPending,
-          children: /* @__PURE__ */ jsx(Trans, { message: "Create" })
-        }
-      )
-    ] })
-  ] });
-}
-function PlainTextPreview({ plainTextToken }) {
-  const [isCopied, copyToClipboard] = useClipboard(plainTextToken || "", {
-    successDuration: 1e3
-  });
-  return /* @__PURE__ */ jsxs(Fragment$1, { children: [
-    /* @__PURE__ */ jsx(
-      TextField,
-      {
-        readOnly: true,
-        value: plainTextToken,
-        autoFocus: true,
-        onClick: (e) => {
-          e.currentTarget.focus();
-          e.currentTarget.select();
-        },
-        endAppend: /* @__PURE__ */ jsx(Button, { variant: "flat", color: "primary", onClick: copyToClipboard, children: isCopied ? /* @__PURE__ */ jsx(Trans, { message: "Copied!" }) : /* @__PURE__ */ jsx(Trans, { message: "Copy" }) })
-      }
-    ),
-    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-10 mt-14 text-sm", children: [
-      /* @__PURE__ */ jsx(ErrorIcon, { size: "sm", className: "text-danger" }),
-      /* @__PURE__ */ jsx(Trans, { message: "Make sure to store the token in a safe place. After this dialog is closed, token will not be viewable anymore." })
-    ] })
-  ] });
-}
-const secureFilesSvg = "/assets/secure-files-cffa0260.svg";
-function AccessTokenPanel({ user }) {
-  const tokens = user.tokens || [];
-  const { hasPermission } = useAuth();
-  const { api } = useSettings();
-  if (!(api == null ? void 0 : api.integrated) || !hasPermission("api.access"))
-    return null;
-  return /* @__PURE__ */ jsx(
-    AccountSettingsPanel,
-    {
-      id: AccountSettingsId.Developers,
-      title: /* @__PURE__ */ jsx(Trans, { message: "API access tokens" }),
-      titleSuffix: /* @__PURE__ */ jsx(Link, { className: LinkStyle, to: "/api-docs", target: "_blank", children: /* @__PURE__ */ jsx(Trans, { message: "Documentation" }) }),
-      actions: /* @__PURE__ */ jsx(CreateNewTokenButton, {}),
-      children: !tokens.length ? /* @__PURE__ */ jsx(
-        IllustratedMessage,
-        {
-          className: "py-40",
-          image: /* @__PURE__ */ jsx(SvgImage, { src: secureFilesSvg }),
-          title: /* @__PURE__ */ jsx(Trans, { message: "You have no personal access tokens yet" })
-        }
-      ) : tokens.map((token, index) => /* @__PURE__ */ jsx(
-        TokenLine,
-        {
-          token,
-          isLast: index === tokens.length - 1
-        },
-        token.id
-      ))
-    }
-  );
-}
-function TokenLine({ token, isLast }) {
-  return /* @__PURE__ */ jsxs(
-    "div",
-    {
-      className: clsx(
-        "flex items-center gap-24",
-        !isLast && "mb-12 pb-12 border-b"
-      ),
-      children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-sm", children: [
-          /* @__PURE__ */ jsx("div", { className: "font-semibold", children: /* @__PURE__ */ jsx(Trans, { message: "Name" }) }),
-          /* @__PURE__ */ jsx("div", { children: token.name }),
-          /* @__PURE__ */ jsx("div", { className: "font-semibold mt-10", children: /* @__PURE__ */ jsx(Trans, { message: "Last used" }) }),
-          /* @__PURE__ */ jsx("div", { children: token.last_used_at ? /* @__PURE__ */ jsx(FormattedDate, { date: token.last_used_at }) : /* @__PURE__ */ jsx(Trans, { message: "Never" }) })
-        ] }),
-        /* @__PURE__ */ jsx(DeleteTokenButton, { token })
-      ]
-    }
-  );
-}
-function CreateNewTokenButton() {
-  return /* @__PURE__ */ jsxs(DialogTrigger, { type: "modal", children: [
-    /* @__PURE__ */ jsx(Button, { variant: "flat", color: "primary", children: /* @__PURE__ */ jsx(Trans, { message: "Create token" }) }),
-    /* @__PURE__ */ jsx(CreateNewTokenDialog, {})
-  ] });
-}
-function DeleteTokenButton({ token }) {
-  const deleteToken = useDeleteAccessToken();
-  return /* @__PURE__ */ jsxs(
-    DialogTrigger,
-    {
-      type: "modal",
-      onClose: (isConfirmed) => {
-        if (isConfirmed) {
-          deleteToken.mutate(
-            { id: token.id },
-            {
-              onSuccess: () => queryClient.invalidateQueries({ queryKey: ["users"] })
-            }
-          );
-        }
-      },
-      children: [
-        /* @__PURE__ */ jsx(
-          Button,
-          {
-            size: "xs",
-            variant: "outline",
-            color: "danger",
-            className: "flex-shrink-0 ml-auto",
-            children: /* @__PURE__ */ jsx(Trans, { message: "Delete" })
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          ConfirmationDialog,
-          {
-            isDanger: true,
-            title: /* @__PURE__ */ jsx(Trans, { message: "Delete token?" }),
-            body: /* @__PURE__ */ jsx(Trans, { message: "This token will be deleted immediately and permanently. Once deleted, it can no longer be used to make API requests." }),
-            confirm: /* @__PURE__ */ jsx(Trans, { message: "Delete" })
-          }
-        )
-      ]
-    }
-  );
-}
 function deleteAccount(userId) {
   return apiClient.delete(`users/${userId}`, { params: { deleteCurrentUser: true } }).then((r2) => r2.data);
 }
@@ -9376,7 +9099,7 @@ function DangerZonePanel() {
             }
           },
           children: [
-            /* @__PURE__ */ jsx(Button, { variant: "flat", color: "danger", children: /* @__PURE__ */ jsx(Trans, { message: "Delete account" }) }),
+            /* @__PURE__ */ jsx("div", { className: "flex justify-center items-center", children: /* @__PURE__ */ jsx(Button, { variant: "flat", color: "danger", className: "rounded-lg", children: /* @__PURE__ */ jsx(Trans, { message: "Delete account" }) }) }),
             /* @__PURE__ */ jsx(
               ConfirmationDialog,
               {
@@ -9392,36 +9115,334 @@ function DangerZonePanel() {
     }
   );
 }
+function Logo({ color, logoColor, isDarkMode }) {
+  const { trans } = useTrans();
+  const { branding } = useSettings();
+  let desktopLogo;
+  let mobileLogo;
+  if (isDarkMode || !branding.logo_dark || logoColor !== "dark" && color !== "bg" && color !== "bg-alt") {
+    desktopLogo = branding.logo_light;
+    mobileLogo = branding.logo_light_mobile;
+  } else {
+    desktopLogo = branding.logo_dark;
+    mobileLogo = branding.logo_dark_mobile;
+  }
+  if (!mobileLogo && !desktopLogo) {
+    return null;
+  }
+  return /* @__PURE__ */ jsx(
+    Link,
+    {
+      to: "/",
+      className: "mr-4 block h-full max-h-26 flex-shrink-0 md:mr-24 md:max-h-36",
+      "aria-label": trans({ message: "Go to homepage" }),
+      children: /* @__PURE__ */ jsxs("picture", { children: [
+        /* @__PURE__ */ jsx("source", { srcSet: mobileLogo || desktopLogo, media: "(max-width: 768px)" }),
+        /* @__PURE__ */ jsx("source", { srcSet: desktopLogo, media: "(min-width: 768px)" }),
+        /* @__PURE__ */ jsx(
+          "img",
+          {
+            className: "block h-full max-h-26 w-auto md:max-h-36",
+            alt: trans({ message: "Site logo" })
+          }
+        )
+      ] })
+    }
+  );
+}
+const ApiIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "m14 12-2 2-2-2 2-2 2 2zm-2-6 2.12 2.12 2.5-2.5L12 1 7.38 5.62l2.5 2.5L12 6zm-6 6 2.12-2.12-2.5-2.5L1 12l4.62 4.62 2.5-2.5L6 12zm12 0-2.12 2.12 2.5 2.5L23 12l-4.62-4.62-2.5 2.5L18 12zm-6 6-2.12-2.12-2.5 2.5L12 23l4.62-4.62-2.5-2.5L12 18z" }),
+  "ApiOutlined"
+);
+const TokenIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "m21 7-9-5-9 5v10l9 5 9-5V7zm-9-2.71 5.91 3.28-3.01 1.67C14.17 8.48 13.14 8 12 8s-2.17.48-2.9 1.24L6.09 7.57 12 4.29zm-1 14.87-6-3.33V9.26L8.13 11c-.09.31-.13.65-.13 1 0 1.86 1.27 3.43 3 3.87v3.29zM10 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm3 7.16v-3.28c1.73-.44 3-2.01 3-3.87 0-.35-.04-.69-.13-1.01L19 9.26v6.57l-6 3.33z" }),
+  "TokenOutlined"
+);
+const DriveQueryKeys = {
+  fetchEntries: (params) => {
+    const key = ["drive-entries"];
+    if (params)
+      key.push(params);
+    return key;
+  },
+  fetchUserFolders(params) {
+    const key = ["user-folders"];
+    if (params) {
+      key.push(params);
+    }
+    return key;
+  },
+  fetchShareableLink: (params) => {
+    const key = ["shareable-link"];
+    if (params) {
+      key.push(params);
+    }
+    return key;
+  },
+  fetchFolderPath(hash, params) {
+    const key = ["folder-path"];
+    if (hash) {
+      key.push(hash);
+    }
+    if (params) {
+      key.push(params);
+    }
+    return key;
+  },
+  fetchEntryShareableLink: (entryId) => {
+    return ["file-entries", entryId, "shareable-link"];
+  },
+  fetchFileEntry: (id2) => {
+    const key = ["drive/file-entries/model"];
+    if (id2)
+      key.push(id2);
+    return key;
+  },
+  fetchStorageSummary: ["storage-summary"]
+};
+function invalidateEntryQueries() {
+  return Promise.all([
+    queryClient.invalidateQueries({ queryKey: DriveQueryKeys.fetchEntries() }),
+    queryClient.invalidateQueries({ queryKey: DriveQueryKeys.fetchFolderPath() }),
+    queryClient.invalidateQueries({
+      queryKey: DriveQueryKeys.fetchUserFolders()
+    }),
+    // fetching model for single file entry in "useFileEntry"
+    queryClient.invalidateQueries({ queryKey: DriveQueryKeys.fetchFileEntry() })
+  ]);
+}
+function useStorageSummary() {
+  return useQuery({
+    queryKey: DriveQueryKeys.fetchStorageSummary,
+    queryFn: fetchStorageSummary,
+    select: formatResponse
+  });
+}
+function fetchStorageSummary() {
+  return apiClient.get(`user/space-usage`).then((response) => response.data);
+}
+function formatResponse(response) {
+  const percentage = response.available === null ? 0 : response.used * 100 / response.available;
+  return {
+    usedFormatted: prettyBytes(response.used, 2),
+    availableFormatted: prettyBytes(response.available, 0),
+    percentage,
+    used: response.used,
+    available: response.available
+  };
+}
+function Meter(props) {
+  return /* @__PURE__ */ jsx(ProgressBarBase, { ...props, role: "meter progressbar" });
+}
+function StorageMeter() {
+  const { isLoading, data } = useStorageSummary();
+  const roundedPercentage = (data == null ? void 0 : data.percentage) ? Math.round(data.percentage) : 0;
+  const label = /* @__PURE__ */ jsx("span", { className: clsx("whitespace-nowrap", isLoading && "invisible"), children: /* @__PURE__ */ jsx(
+    Trans,
+    {
+      message: ":usedGB of :availableGB used (:percentage%)",
+      values: {
+        usedGB: data == null ? void 0 : data.usedFormatted,
+        availableGB: data == null ? void 0 : data.availableFormatted,
+        percentage: roundedPercentage
+      }
+    }
+  ) });
+  return /* @__PURE__ */ jsxs("div", { className: "pt-24 mt-24 pl-20 flex flex-col items-start gap-16", children: [
+    /* @__PURE__ */ jsx("img", { src: "./images/Files.png", alt: "Storage", className: "w-80 h-80" }),
+    /* @__PURE__ */ jsx(
+      Meter,
+      {
+        className: "flex-auto max-w-144",
+        size: "xs",
+        value: roundedPercentage,
+        label,
+        showValueLabel: false,
+        labelPosition: "bottom"
+      }
+    )
+  ] });
+}
+const DashboardIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z" }),
+  "DashboardOutlined"
+);
+const SupportAgentIcon = createSvgIcon(
+  [/* @__PURE__ */ jsx("path", { d: "M21 12.22C21 6.73 16.74 3 12 3c-4.69 0-9 3.65-9 9.28-.6.34-1 .98-1 1.72v2c0 1.1.9 2 2 2h1v-6.1c0-3.87 3.13-7 7-7s7 3.13 7 7V19h-8v2h8c1.1 0 2-.9 2-2v-1.22c.59-.31 1-.92 1-1.64v-2.3c0-.7-.41-1.31-1-1.62z" }, "0"), /* @__PURE__ */ jsx("circle", { cx: "9", cy: "13", r: "1" }, "1"), /* @__PURE__ */ jsx("circle", { cx: "15", cy: "13", r: "1" }, "2"), /* @__PURE__ */ jsx("path", { d: "M18 11.03C17.52 8.18 15.04 6 12.05 6c-3.03 0-6.29 2.51-6.03 6.45 2.47-1.01 4.33-3.21 4.86-5.89 1.31 2.63 4 4.44 7.12 4.47z" }, "3")],
+  "SupportAgentOutlined"
+);
+const SupportIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm7.46 7.12-2.78 1.15c-.51-1.36-1.58-2.44-2.95-2.94l1.15-2.78c2.1.8 3.77 2.47 4.58 4.57zM12 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zM9.13 4.54l1.17 2.78c-1.38.5-2.47 1.59-2.98 2.97L4.54 9.13c.81-2.11 2.48-3.78 4.59-4.59zM4.54 14.87l2.78-1.15c.51 1.38 1.59 2.46 2.97 2.96l-1.17 2.78c-2.1-.81-3.77-2.48-4.58-4.59zm10.34 4.59-1.15-2.78c1.37-.51 2.45-1.59 2.95-2.97l2.78 1.17c-.81 2.1-2.48 3.77-4.58 4.58z" }),
+  "SupportOutlined"
+);
+const AutoGraphIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M14.06 9.94 12 9l2.06-.94L15 6l.94 2.06L18 9l-2.06.94L15 12l-.94-2.06zM4 14l.94-2.06L7 11l-2.06-.94L4 8l-.94 2.06L1 11l2.06.94L4 14zm4.5-5 1.09-2.41L12 5.5 9.59 4.41 8.5 2 7.41 4.41 5 5.5l2.41 1.09L8.5 9zm-4 11.5 6-6.01 4 4L23 8.93l-1.41-1.41-7.09 7.97-4-4L3 19l1.5 1.5z" }),
+  "AutoGraphOutlined"
+);
+const GraphicEqIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M7 18h2V6H7v12zm4 4h2V2h-2v20zm-8-8h2v-4H3v4zm12 4h2V6h-2v12zm4-8v4h2v-4h-2z" }),
+  "GraphicEqOutlined"
+);
+function Accountsidebar() {
+  const { isSubscribed } = useAuth();
+  const { billing } = useSettings();
+  const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  return /* @__PURE__ */ jsxs("div", { className: "relative h-screen", children: [
+    /* @__PURE__ */ jsx(
+      "button",
+      {
+        className: "fixed top-4 left-4 lg:hidden text-gray-700 dark:text-gray-300",
+        onClick: toggleSidebar,
+        "aria-label": "Toggle Sidebar",
+        children: isSidebarOpen ? /* @__PURE__ */ jsx(CloseIcon, { fontSize: "large" }) : /* @__PURE__ */ jsx(MenuIcon, { fontSize: "large" })
+      }
+    ),
+    isSidebarOpen && /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: "fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden",
+        onClick: toggleSidebar
+      }
+    ),
+    /* @__PURE__ */ jsxs(
+      "div",
+      {
+        className: `h-screen w-240 bg-white dark:bg-gray-300 lg:static transition-transform transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 z-50 flex flex-col justify-center items-center`,
+        children: [
+          /* @__PURE__ */ jsx("div", { className: "p-4 border-b", children: /* @__PURE__ */ jsx("div", { className: "sticky bottom-0 mt-20 flex items-center justify-center", children: /* @__PURE__ */ jsx(Logo, {}) }) }),
+          /* @__PURE__ */ jsx("div", { className: "flex-1 overflow-y-auto py-12 px-16 bg-white dark:bg-gray-300", children: /* @__PURE__ */ jsxs("ul", { className: "list-none p-20 m-0 flex flex-col gap-16", children: [
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/drive",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/drive" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(DashboardIcon, {}),
+                  "Dashboard"
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/drive/workspace",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/drive/workspace" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(TokenIcon, {}),
+                  "Workspace"
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/api-docs",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/api-docs" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(ApiIcon, {}),
+                  "Developer API"
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/integration",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/integration" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(SupportIcon, {}),
+                  "Integration"
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/supportticket",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/supportticket" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(SupportAgentIcon, {}),
+                  "Support Ticket"
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/costoptimizer",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/costoptimizer" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(AutoGraphIcon, {}),
+                  "Cost Optimizer"
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/auditlogs",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/auditlogs" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(GraphicEqIcon, {}),
+                  "Audit Logs"
+                ]
+              }
+            ) })
+          ] }) }),
+          /* @__PURE__ */ jsxs("div", { className: "mb-20 ml-20 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg", children: [
+            /* @__PURE__ */ jsx(StorageMeter, {}),
+            (billing == null ? void 0 : billing.enable) && /* @__PURE__ */ jsx("div", { className: "mt-14 mb-20 pl-30", children: /* @__PURE__ */ jsx(
+              Button,
+              {
+                elementType: Link,
+                to: isSubscribed ? "/billing/change-plan" : "/pricing",
+                variant: "outline",
+                color: "primary",
+                size: "xs",
+                children: /* @__PURE__ */ jsx(Trans, { message: "Upgrade" })
+              }
+            ) })
+          ] })
+        ]
+      }
+    )
+  ] });
+}
 function AccountSettingsPage() {
-  var _a;
+  var _a2;
   const { auth } = useContext(SiteConfigContext);
   const { data, isLoading } = useUser("me", {
     with: ["roles", "social_profiles", "tokens"]
   });
-  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-alt", children: [
-    /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(Trans, { message: "Account Settings" }) }),
-    /* @__PURE__ */ jsx(Navbar, { menuPosition: "account-settings-page" }),
-    /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto my-24 px-24", children: [
-      /* @__PURE__ */ jsx("h1", { className: "text-3xl", children: /* @__PURE__ */ jsx(Trans, { message: "Account settings" }) }),
-      /* @__PURE__ */ jsx("div", { className: "mb-40 text-base text-muted", children: /* @__PURE__ */ jsx(Trans, { message: "View and update your account details, profile and more." }) }),
-      isLoading || !data ? /* @__PURE__ */ jsx(
-        ProgressCircle,
-        {
-          className: "my-80",
-          "aria-label": "Loading user..",
-          isIndeterminate: true
-        }
-      ) : /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-24", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-alt flex", children: [
+    /* @__PURE__ */ jsx("div", { className: "h-screen bg-gray-100 sticky top-0", children: /* @__PURE__ */ jsx(Accountsidebar, {}) }),
+    /* @__PURE__ */ jsxs("div", { className: "flex-1 flex-col", children: [
+      /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(Navbar$4, {}) }),
+      /* @__PURE__ */ jsxs("div", { className: "flex", children: [
         /* @__PURE__ */ jsx(AccountSettingsSidenav, {}),
-        /* @__PURE__ */ jsxs("main", { className: "flex-auto", children: [
-          (_a = auth.accountSettingsPanels) == null ? void 0 : _a.map((panel) => /* @__PURE__ */ jsx(panel.component, { user: data.user }, panel.id)),
-          /* @__PURE__ */ jsx(BasicInfoPanel, { user: data.user }),
-          /* @__PURE__ */ jsx(ChangePasswordPanel, {}),
-          /* @__PURE__ */ jsx(AccessTokenPanel, { user: data.user }),
-          /* @__PURE__ */ jsx(DangerZonePanel, {})
+        /* @__PURE__ */ jsxs("div", { className: "container px-8 pl-40 pr-40 mt-60", children: [
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(Trans, { message: "Account Settings" }) }),
+            /* @__PURE__ */ jsx("h1", { className: "text-3xl", children: /* @__PURE__ */ jsx(Trans, { message: "Account settings" }) }),
+            /* @__PURE__ */ jsx("div", { className: "mb-4 text-base text-muted", children: /* @__PURE__ */ jsx(Trans, { message: "View and update your account details, profile and more." }) })
+          ] }),
+          isLoading || !data ? /* @__PURE__ */ jsx(
+            ProgressCircle,
+            {
+              className: "my-20",
+              "aria-label": "Loading user..",
+              isIndeterminate: true
+            }
+          ) : /* @__PURE__ */ jsxs("div", { className: "space-y-8 mt-28", children: [
+            (_a2 = auth.accountSettingsPanels) == null ? void 0 : _a2.map((panel) => /* @__PURE__ */ jsx(panel.component, { user: data.user }, panel.id)),
+            /* @__PURE__ */ jsx(BasicInfoPanel, { user: data.user }),
+            /* @__PURE__ */ jsx(DangerZonePanel, {})
+          ] })
         ] })
       ] })
-    ] }) })
+    ] })
   ] });
 }
 function useSendPasswordResetEmail(form) {
@@ -9633,9 +9654,9 @@ function useProducts(loader) {
     queryKey: [endpoint],
     queryFn: () => fetchProducts(),
     initialData: () => {
-      var _a;
+      var _a2;
       if (loader) {
-        return (_a = getBootstrapData().loaders) == null ? void 0 : _a[loader];
+        return (_a2 = getBootstrapData().loaders) == null ? void 0 : _a2[loader];
       }
     }
   });
@@ -9936,10 +9957,10 @@ let globalWarmedUp = false;
 let globalWarmUpTimeout = null;
 let globalCooldownTimeout = null;
 const closeOpenTooltips = (tooltipId) => {
-  var _a;
+  var _a2;
   for (const hideTooltipId in tooltips) {
     if (hideTooltipId !== tooltipId) {
-      (_a = tooltips[hideTooltipId]) == null ? void 0 : _a.call(tooltips, true);
+      (_a2 = tooltips[hideTooltipId]) == null ? void 0 : _a2.call(tooltips, true);
       delete tooltips[hideTooltipId];
     }
   }
@@ -10465,13 +10486,13 @@ function PlanSkeleton() {
   );
 }
 function PricingPage() {
-  var _a;
+  var _a2;
   const query = useProducts("pricingPage");
   const [selectedCycle, setSelectedCycle] = useState("yearly");
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(Trans, { message: "Pricing" }) }),
     /* @__PURE__ */ jsx(
-      Navbar,
+      Navbar$4,
       {
         color: "bg",
         darkModeColor: "transparent",
@@ -10484,7 +10505,7 @@ function PricingPage() {
       /* @__PURE__ */ jsx(
         BillingCycleRadio,
         {
-          products: (_a = query.data) == null ? void 0 : _a.products,
+          products: (_a2 = query.data) == null ? void 0 : _a2.products,
           selectedCycle,
           onChange: setSelectedCycle,
           className: "mb-40 flex justify-center md:mb-70",
@@ -10512,9 +10533,9 @@ function ContactSection() {
   ] });
 }
 const BillingPageRoutes = React.lazy(
-  () => import("./assets/billing-page-routes-9653903a.mjs")
+  () => import("./assets/billing-page-routes-af2029d8.mjs")
 );
-const CheckoutRoutes = React.lazy(() => import("./assets/checkout-routes-06abe468.mjs"));
+const CheckoutRoutes = React.lazy(() => import("./assets/checkout-routes-b51b0bbb.mjs"));
 const BillingRoutes = /* @__PURE__ */ jsxs(Fragment, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/pricing", element: /* @__PURE__ */ jsx(PricingPage, {}) }),
   /* @__PURE__ */ jsx(
@@ -10560,7 +10581,7 @@ function NotificationsPage() {
   );
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(Trans, { message: "Notifications" }) }),
-    /* @__PURE__ */ jsx(Navbar, { menuPosition: "notifications-page" }),
+    /* @__PURE__ */ jsx(Navbar$4, { menuPosition: "notifications-page" }),
     /* @__PURE__ */ jsxs("div", { className: "container mx-auto min-h-[1000px] p-16 md:p-24", children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-30 flex items-center gap-24", children: [
         /* @__PURE__ */ jsx("h1", { className: "text-3xl", children: /* @__PURE__ */ jsx(Trans, { message: "Notifications" }) }),
@@ -10649,7 +10670,7 @@ function NotificationSettingsPage() {
     return /* @__PURE__ */ jsx(Navigate, { to: "/", replace: true });
   }
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-alt", children: [
-    /* @__PURE__ */ jsx(Navbar, { menuPosition: "notifications-page" }),
+    /* @__PURE__ */ jsx(Navbar$4, { menuPosition: "notifications-page" }),
     !isFetched || !data || !selection ? /* @__PURE__ */ jsx("div", { className: "container mx-auto my-100 flex justify-center", children: /* @__PURE__ */ jsx(
       ProgressCircle,
       {
@@ -10831,7 +10852,7 @@ function ContactUsPage() {
   return /* @__PURE__ */ jsxs("div", { className: "flex flex-col bg-alt min-h-screen", children: [
     /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(Trans, { message: "Contact us" }) }),
     /* @__PURE__ */ jsx(
-      Navbar,
+      Navbar$4,
       {
         className: "flex-shrink-0 sticky top-0",
         menuPosition: "contact-us-page"
@@ -10898,10 +10919,1405 @@ function ContactUsPage() {
     /* @__PURE__ */ jsx(Footer, { className: "container mx-auto px-24 flex-shrink-0" })
   ] });
 }
-const AdminRoutes = React.lazy(() => import("./assets/admin-routes-f08fe7b5.mjs").then((n) => n.z));
-const DriveRoutes = React.lazy(() => import("./assets/drive-routes-bb9dd678.mjs"));
+const DeveloperModeIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M7 5h10v2h2V3c0-1.1-.9-1.99-2-1.99L7 1c-1.1 0-2 .9-2 2v4h2V5zm8.41 11.59L20 12l-4.59-4.59L14 8.83 17.17 12 14 15.17l1.41 1.42zM10 15.17 6.83 12 10 8.83 8.59 7.41 4 12l4.59 4.59L10 15.17zM17 19H7v-2H5v4c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-4h-2v2z" }),
+  "DeveloperModeOutlined"
+);
+function Swaggersidebar() {
+  const { isSubscribed } = useAuth();
+  const { billing } = useSettings();
+  const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  return /* @__PURE__ */ jsxs("div", { className: "relative h-screen", children: [
+    /* @__PURE__ */ jsx(
+      "button",
+      {
+        className: "fixed top-4 left-4 lg:hidden text-gray-700 dark:text-gray-300",
+        onClick: toggleSidebar,
+        "aria-label": "Toggle Sidebar",
+        children: isSidebarOpen ? /* @__PURE__ */ jsx(CloseIcon, { fontSize: "large" }) : /* @__PURE__ */ jsx(MenuIcon, { fontSize: "large" })
+      }
+    ),
+    isSidebarOpen && /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: "fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden",
+        onClick: toggleSidebar
+      }
+    ),
+    /* @__PURE__ */ jsxs(
+      "div",
+      {
+        className: `h-screen w-240 bg-white dark:bg-gray-300 lg:static transition-transform transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 z-50 flex flex-col justify-center items-center`,
+        children: [
+          /* @__PURE__ */ jsx("div", { className: "p-4 border-b", children: /* @__PURE__ */ jsx("div", { className: "sticky bottom-0 mt-20 flex items-center justify-center", children: /* @__PURE__ */ jsx(Logo, {}) }) }),
+          /* @__PURE__ */ jsx("div", { className: "flex-1 overflow-y-auto py-12 px-16 bg-white dark:bg-gray-300", children: /* @__PURE__ */ jsxs("ul", { className: "list-none p-20 m-0 flex flex-col gap-16", children: [
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/api-docs",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/api-docs" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(DeveloperModeIcon, {}),
+                  "Developer API"
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsx("li", { className: "py-2 flex items-center", children: /* @__PURE__ */ jsxs(
+              Link,
+              {
+                to: "/accesstoken",
+                className: `text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${location.pathname === "/accesstoken" ? "text-gray-200 dark:text-gray-200" : "text-gray-400 dark:text-white"} hover:bg-gray-100 dark:hover:bg-gray-700`,
+                children: [
+                  /* @__PURE__ */ jsx(TokenIcon, {}),
+                  "Access Token"
+                ]
+              }
+            ) })
+          ] }) }),
+          /* @__PURE__ */ jsxs("div", { className: "mb-20 ml-20 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg", children: [
+            /* @__PURE__ */ jsx(StorageMeter, {}),
+            (billing == null ? void 0 : billing.enable) && /* @__PURE__ */ jsx("div", { className: "mt-14 mb-20 pl-30", children: /* @__PURE__ */ jsx(
+              Button,
+              {
+                elementType: Link,
+                to: isSubscribed ? "/billing/change-plan" : "/pricing",
+                variant: "outline",
+                color: "primary",
+                size: "xs",
+                children: /* @__PURE__ */ jsx(Trans, { message: "Upgrade" })
+              }
+            ) })
+          ] })
+        ]
+      }
+    )
+  ] });
+}
+function useDateFormatter(options) {
+  const lastOptions = useRef(
+    null
+  );
+  if (options && lastOptions.current && shallowEqual(options, lastOptions.current)) {
+    options = lastOptions.current;
+  }
+  lastOptions.current = options;
+  const { localeCode } = useSelectedLocale();
+  return useMemo(
+    () => new DateFormatter(localeCode, options),
+    [localeCode, options]
+  );
+}
+const DateFormatPresets = {
+  numeric: { year: "numeric", month: "2-digit", day: "2-digit" },
+  short: { year: "numeric", month: "short", day: "2-digit" },
+  long: { month: "long", day: "2-digit", year: "numeric" }
+};
+const FormattedDate = memo(
+  ({ date, options, preset }) => {
+    const { dates } = useSettings();
+    const timezone = useUserTimezone();
+    const formatter = useDateFormatter(
+      options || DateFormatPresets[preset || (dates == null ? void 0 : dates.format)]
+    );
+    if (!date) {
+      return null;
+    }
+    try {
+      if (typeof date === "string") {
+        date = parseAbsoluteToLocal(date).toDate();
+      } else if ("toDate" in date) {
+        date = date.toDate(timezone);
+      }
+    } catch (e) {
+      return null;
+    }
+    return /* @__PURE__ */ jsx(Fragment, { children: formatter.format(date) });
+  },
+  shallowEqual
+);
+function deleteAccessToken({ id: id2 }) {
+  return apiClient.delete(`access-tokens/${id2}`).then((r2) => r2.data);
+}
+function useDeleteAccessToken() {
+  return useMutation({
+    mutationFn: (props) => deleteAccessToken(props),
+    onSuccess: () => {
+      toast(message("Token deleted"));
+    },
+    onError: (err) => showHttpErrorToast(err)
+  });
+}
+function createAccessToken(payload) {
+  return apiClient.post(`access-tokens`, payload).then((r2) => r2.data);
+}
+function useCreateAccessToken(form) {
+  return useMutation({
+    mutationFn: (props) => createAccessToken(props),
+    onSuccess: () => {
+      toast(message("Token create"));
+    },
+    onError: (r2) => onFormQueryError(r2, form)
+  });
+}
+function CreateNewTokenDialog() {
+  const form = useForm();
+  const { formId, close } = useDialogContext();
+  const createToken = useCreateAccessToken(form);
+  const [plainTextToken, setPlainTextToken] = useState();
+  const formNode = /* @__PURE__ */ jsx(
+    Form,
+    {
+      form,
+      id: formId,
+      onSubmit: (values) => {
+        createToken.mutate(values, {
+          onSuccess: (response) => {
+            setPlainTextToken(response.plainTextToken);
+            queryClient.invalidateQueries({ queryKey: ["users"] });
+          }
+        });
+      },
+      children: /* @__PURE__ */ jsx(
+        FormTextField,
+        {
+          name: "tokenName",
+          label: /* @__PURE__ */ jsx(Trans, { message: "Token name" }),
+          required: true,
+          autoFocus: true
+        }
+      )
+    }
+  );
+  return /* @__PURE__ */ jsxs(Dialog, { children: [
+    /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(Trans, { message: "Create new token" }) }),
+    /* @__PURE__ */ jsx(DialogBody, { children: plainTextToken ? /* @__PURE__ */ jsx(PlainTextPreview, { plainTextToken }) : formNode }),
+    /* @__PURE__ */ jsxs(DialogFooter, { children: [
+      /* @__PURE__ */ jsx(Button, { variant: "text", onClick: close, children: /* @__PURE__ */ jsx(Trans, { message: "Done" }) }),
+      !plainTextToken && /* @__PURE__ */ jsx(
+        Button,
+        {
+          variant: "flat",
+          color: "primary",
+          type: "submit",
+          form: formId,
+          disabled: createToken.isPending,
+          children: /* @__PURE__ */ jsx(Trans, { message: "Create" })
+        }
+      )
+    ] })
+  ] });
+}
+function PlainTextPreview({ plainTextToken }) {
+  const [isCopied, copyToClipboard] = useClipboard(plainTextToken || "", {
+    successDuration: 1e3
+  });
+  return /* @__PURE__ */ jsxs(Fragment$1, { children: [
+    /* @__PURE__ */ jsx(
+      TextField,
+      {
+        readOnly: true,
+        value: plainTextToken,
+        autoFocus: true,
+        onClick: (e) => {
+          e.currentTarget.focus();
+          e.currentTarget.select();
+        },
+        endAppend: /* @__PURE__ */ jsx(Button, { variant: "flat", color: "primary", onClick: copyToClipboard, children: isCopied ? /* @__PURE__ */ jsx(Trans, { message: "Copied!" }) : /* @__PURE__ */ jsx(Trans, { message: "Copy" }) })
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-10 mt-14 text-sm", children: [
+      /* @__PURE__ */ jsx(ErrorIcon, { size: "sm", className: "text-danger" }),
+      /* @__PURE__ */ jsx(Trans, { message: "Make sure to store the token in a safe place. After this dialog is closed, token will not be viewable anymore." })
+    ] })
+  ] });
+}
+const secureFilesSvg = "/assets/secure-files-cffa0260.svg";
+function AccessTokenPanel({ user }) {
+  const tokens = user.tokens || [];
+  const { hasPermission } = useAuth();
+  const { api } = useSettings();
+  if (!(api == null ? void 0 : api.integrated) || !hasPermission("api.access"))
+    return null;
+  return /* @__PURE__ */ jsx(
+    AccountSettingsPanel,
+    {
+      id: AccountSettingsId.Developers,
+      title: /* @__PURE__ */ jsx(Trans, { message: "API access tokens" }),
+      titleSuffix: /* @__PURE__ */ jsx("div", { className: "flex gap-4", children: /* @__PURE__ */ jsx(CreateNewTokenButton, {}) }),
+      children: !tokens.length ? /* @__PURE__ */ jsx(
+        IllustratedMessage,
+        {
+          className: "py-40",
+          image: /* @__PURE__ */ jsx(SvgImage, { src: secureFilesSvg }),
+          title: /* @__PURE__ */ jsx(Trans, { message: "You have no personal access tokens yet" })
+        }
+      ) : tokens.map((token, index) => /* @__PURE__ */ jsx(TokenLine, { token, isLast: index === tokens.length - 1 }, token.id))
+    }
+  );
+}
+function TokenLine({ token, isLast }) {
+  return /* @__PURE__ */ jsxs(
+    "div",
+    {
+      className: clsx(
+        "gap-4 p-4 rounded-lg bg-white dark:bg-gray-300",
+        !isLast && "mb-4"
+      ),
+      children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex justify-start items-center gap-60", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col flex-start", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-sm font-semibold text-gray-800", children: /* @__PURE__ */ jsx(Trans, { message: "Name" }) }),
+            /* @__PURE__ */ jsx("div", { className: "w-500 mt-1 p-8 border border-gray-300 rounded-md bg-gray-50 text-gray-600", children: token.name })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-sm font-semibold text-gray-800 mt-4", children: /* @__PURE__ */ jsx(Trans, { message: "Last used" }) }),
+            /* @__PURE__ */ jsx("div", { className: "w-500 mt-1 p-8 border border-gray-300 rounded-md bg-gray-50 text-gray-600", children: token.last_used_at ? /* @__PURE__ */ jsx(FormattedDate, { date: token.last_used_at }) : /* @__PURE__ */ jsx(Trans, { message: "Never" }) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(DeleteTokenButton, { token })
+      ]
+    }
+  );
+}
+function CreateNewTokenButton() {
+  return /* @__PURE__ */ jsxs(DialogTrigger, { type: "modal", children: [
+    /* @__PURE__ */ jsx(Button, { className: "create px-4 py-2 text-white rounded-lg flex", children: /* @__PURE__ */ jsx(Trans, { message: "Create Token" }) }),
+    /* @__PURE__ */ jsx(CreateNewTokenDialog, {})
+  ] });
+}
+function DeleteTokenButton({ token }) {
+  const deleteToken = useDeleteAccessToken();
+  return /* @__PURE__ */ jsxs(
+    DialogTrigger,
+    {
+      type: "modal",
+      onClose: (isConfirmed) => {
+        if (isConfirmed) {
+          deleteToken.mutate(
+            { id: token.id },
+            {
+              onSuccess: () => queryClient.invalidateQueries({ queryKey: ["users"] })
+            }
+          );
+        }
+      },
+      children: [
+        /* @__PURE__ */ jsx(
+          Button,
+          {
+            size: "xs",
+            className: "delete px-12 py-12 mt-32 text-white rounded-lg",
+            children: /* @__PURE__ */ jsx(Trans, { message: "Delete" })
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          ConfirmationDialog,
+          {
+            isDanger: true,
+            title: /* @__PURE__ */ jsx(Trans, { message: "Delete token?" }),
+            body: /* @__PURE__ */ jsx(Trans, { message: "This token will be deleted immediately and permanently. Once deleted, it can no longer be used to make API requests." }),
+            confirm: /* @__PURE__ */ jsx(Trans, { message: "Delete" })
+          }
+        )
+      ]
+    }
+  );
+}
+const AccessHeader = () => {
+  useState(false);
+  return /* @__PURE__ */ jsx("div", { className: "flex justify-between items-center p-40 border-b border-gray-200", children: /* @__PURE__ */ jsx("h2", { className: "text-2xl font-semibold text-gray-800", children: "API access tokens" }) });
+};
+function AccessTokenPage() {
+  const { data, isLoading } = useUser("me", {
+    with: ["roles", "social_profiles", "tokens"]
+  });
+  return /* @__PURE__ */ jsxs("div", { className: "h-screen flex", children: [
+    /* @__PURE__ */ jsx("div", { className: "h-screen bg-gray-100", children: /* @__PURE__ */ jsx(Swaggersidebar, {}) }),
+    /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col", children: [
+      /* @__PURE__ */ jsx(Navbar$4, {}),
+      /* @__PURE__ */ jsx(AccessHeader, {}),
+      /* @__PURE__ */ jsx("div", { className: "px-32 overflow-y-auto", children: /* @__PURE__ */ jsx("div", { children: !isLoading && (data == null ? void 0 : data.user) ? /* @__PURE__ */ jsx(AccessTokenPanel, { user: data.user }) : /* @__PURE__ */ jsx("p", { children: "Loading..." }) }) })
+    ] })
+  ] });
+}
+const stableArray = [];
+enableMapSet();
+const initialState = {
+  uploadQueueIsOpen: false,
+  contextMenuData: null,
+  selectedEntries: /* @__PURE__ */ new Set(),
+  entriesBeingDragged: [],
+  activeActionDialog: null,
+  sidebarExpandedKeys: [],
+  viewMode: getFromLocalStorage(
+    "drive.viewMode",
+    ((_b = (_a = getBootstrapData().settings) == null ? void 0 : _a.drive) == null ? void 0 : _b.default_view) || "grid"
+  ),
+  sortDescriptor: {
+    orderBy: "updated_at",
+    orderDir: "desc"
+  }
+};
+const useDriveStore = create()(
+  immer((set, get) => ({
+    ...initialState,
+    setUploadQueueIsOpen: (isOpen) => {
+      set((state) => {
+        state.uploadQueueIsOpen = isOpen;
+      });
+    },
+    setContextMenuData: (data) => {
+      set((state) => {
+        state.contextMenuData = data;
+      });
+    },
+    setSortDescriptor: (value) => {
+      set((state) => {
+        var _a2;
+        const activePageId = (_a2 = get().activePage) == null ? void 0 : _a2.id;
+        if (activePageId) {
+          setInLocalStorage("selectedSorting", {
+            ...getFromLocalStorage("selectedSorting"),
+            [activePageId]: value
+          });
+        }
+        state.sortDescriptor = value;
+      });
+    },
+    setActivePage: (value) => {
+      set((state) => {
+        var _a2;
+        state.activePage = value;
+        const storedDescriptor = (_a2 = getFromLocalStorage("selectedSorting")) == null ? void 0 : _a2[value.id];
+        state.sortDescriptor = storedDescriptor ? storedDescriptor : value.sortDescriptor;
+      });
+    },
+    setEntriesBeingDragged: (value) => {
+      set((state) => {
+        state.entriesBeingDragged = value;
+      });
+    },
+    setActiveActionDialog: (name, entries = stableArray) => {
+      set((state) => {
+        const current = get().activeActionDialog;
+        if ((current == null ? void 0 : current.name) !== name || current.entries !== entries) {
+          state.activeActionDialog = name ? { name, entries } : null;
+        }
+      });
+    },
+    setViewMode: (mode) => {
+      set((state) => {
+        state.viewMode = mode;
+        setInLocalStorage("drive.viewMode", mode);
+      });
+    },
+    setSidebarExpandedKeys: (value) => set((state) => {
+      state.sidebarExpandedKeys = value;
+    }),
+    expandSidebarItem: (key) => set((state) => {
+      if (!state.sidebarExpandedKeys.includes(key)) {
+        state.sidebarExpandedKeys.push(key);
+      }
+    }),
+    collapseSidebarItem: (key) => set((state) => {
+      const index = state.sidebarExpandedKeys.indexOf(key);
+      if (index > -1) {
+        state.sidebarExpandedKeys.splice(index, 1);
+      }
+    }),
+    toggleSidebarItem: (key) => set((state) => {
+      if (state.sidebarExpandedKeys.includes(key)) {
+        state.expandSidebarItem(key);
+      } else {
+        state.collapseSidebarItem(key);
+      }
+    }),
+    selectEntries: (entries, merge) => {
+      set((state) => {
+        if (!merge) {
+          state.selectedEntries.clear();
+        }
+        entries.forEach((e) => e && state.selectedEntries.add(e));
+      });
+    },
+    deselectEntries: (entries) => {
+      set((state) => {
+        if (!state.selectedEntries.size)
+          return;
+        if (entries === "all") {
+          state.selectedEntries = /* @__PURE__ */ new Set();
+        } else {
+          entries.forEach((e) => state.selectedEntries.delete(e));
+        }
+      });
+    },
+    reset: () => {
+      set(initialState);
+    }
+  }))
+);
+function driveState() {
+  return useDriveStore.getState();
+}
+function useActiveDialogEntry() {
+  const dialog = useDriveStore((s) => s.activeActionDialog);
+  return dialog == null ? void 0 : dialog.entries[0];
+}
+const DashboardLayoutContext = createContext(
+  null
+);
+function useBlockBodyOverflow(disable = false) {
+  useEffect(() => {
+    if (disable) {
+      document.documentElement.classList.remove("no-page-overflow");
+    } else {
+      document.documentElement.classList.add("no-page-overflow");
+    }
+    return () => {
+      document.documentElement.classList.remove("no-page-overflow");
+    };
+  }, [disable]);
+}
+function DashboardLayout({
+  children,
+  leftSidenavStatus: leftSidenav,
+  onLeftSidenavChange,
+  rightSidenavStatus: rightSidenav,
+  initialRightSidenavStatus,
+  onRightSidenavChange,
+  name,
+  leftSidenavCanBeCompact,
+  height = "h-screen",
+  className,
+  gridClassName = "dashboard-grid",
+  blockBodyOverflow = true,
+  ...domProps
+}) {
+  useBlockBodyOverflow(!blockBodyOverflow);
+  const isMobile = useMediaQuery("(max-width: 1024px)");
+  const isCompactModeInitially = useMemo(() => {
+    return !name ? false : getFromLocalStorage(`${name}.sidenav.compact`);
+  }, [name]);
+  const defaultLeftSidenavStatus = isCompactModeInitially ? "compact" : "open";
+  const [leftSidenavStatus, setLeftSidenavStatus] = useControlledState(
+    leftSidenav,
+    isMobile ? "closed" : defaultLeftSidenavStatus,
+    onLeftSidenavChange
+  );
+  const rightSidenavStatusDefault = useMemo(() => {
+    if (isMobile) {
+      return "closed";
+    }
+    if (initialRightSidenavStatus != null) {
+      return initialRightSidenavStatus;
+    }
+    const userSelected = getFromLocalStorage(
+      `${name}.sidenav.right.position`,
+      "open"
+    );
+    if (userSelected != null) {
+      return userSelected;
+    }
+    return initialRightSidenavStatus || "closed";
+  }, [isMobile, name, initialRightSidenavStatus]);
+  const [rightSidenavStatus, _setRightSidenavStatus] = useControlledState(
+    rightSidenav,
+    rightSidenavStatusDefault,
+    onRightSidenavChange
+  );
+  const setRightSidenavStatus = useCallback(
+    (status) => {
+      _setRightSidenavStatus(status);
+      setInLocalStorage(`${name}.sidenav.right.position`, status);
+    },
+    [_setRightSidenavStatus, name]
+  );
+  const shouldShowUnderlay = isMobile && (leftSidenavStatus === "open" || rightSidenavStatus === "open");
+  return /* @__PURE__ */ jsx(
+    DashboardLayoutContext.Provider,
+    {
+      value: {
+        leftSidenavStatus,
+        setLeftSidenavStatus,
+        rightSidenavStatus,
+        setRightSidenavStatus,
+        leftSidenavCanBeCompact,
+        name,
+        isMobileMode: isMobile
+      },
+      children: /* @__PURE__ */ jsxs(
+        "div",
+        {
+          ...domProps,
+          className: clsx("relative isolate", gridClassName, className, height),
+          children: [
+            children,
+            /* @__PURE__ */ jsx(AnimatePresence, { children: shouldShowUnderlay && /* @__PURE__ */ jsx(
+              Underlay,
+              {
+                position: "fixed",
+                onClick: () => {
+                  setLeftSidenavStatus("closed");
+                  setRightSidenavStatus("closed");
+                }
+              },
+              "dashboard-underlay"
+            ) })
+          ]
+        }
+      )
+    }
+  );
+}
+const MenuOpenIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M3 18h13v-2H3v2zm0-5h10v-2H3v2zm0-7v2h13V6H3zm18 9.59L17.42 12 21 8.41 19.59 7l-5 5 5 5L21 15.59z" }),
+  "MenuOpenOutlined"
+);
+function DashboardNavbar({
+  children,
+  className,
+  hideToggleButton,
+  ...props
+}) {
+  const {
+    isMobileMode,
+    leftSidenavStatus,
+    setLeftSidenavStatus,
+    name,
+    leftSidenavCanBeCompact
+  } = useContext(DashboardLayoutContext);
+  const shouldToggleCompactMode = leftSidenavCanBeCompact && !isMobileMode;
+  const shouldShowToggle = !hideToggleButton && (isMobileMode || leftSidenavCanBeCompact);
+  const handleToggle = () => {
+    setLeftSidenavStatus(leftSidenavStatus === "open" ? "closed" : "open");
+  };
+  const handleCompactModeToggle = () => {
+    const newStatus = leftSidenavStatus === "compact" ? "open" : "compact";
+    setInLocalStorage(`${name}.sidenav.compact`, newStatus === "compact");
+    setLeftSidenavStatus(newStatus);
+  };
+  return /* @__PURE__ */ jsx(
+    Navbar$4,
+    {
+      className: clsx("dashboard-grid-navbar", className),
+      border: "border-b",
+      size: "sm",
+      toggleButton: shouldShowToggle ? /* @__PURE__ */ jsx(
+        IconButton,
+        {
+          size: "md",
+          onClick: () => {
+            if (shouldToggleCompactMode) {
+              handleCompactModeToggle();
+            } else {
+              handleToggle();
+            }
+          },
+          children: /* @__PURE__ */ jsx(MenuOpenIcon, {})
+        }
+      ) : void 0,
+      ...props,
+      children
+    }
+  );
+}
+function DashboardSidenav({
+  className,
+  position,
+  children,
+  size: size2 = "md",
+  mode,
+  overlayPosition = "fixed",
+  display = "flex",
+  overflow = "overflow-hidden",
+  forceClosed = false
+}) {
+  const {
+    isMobileMode,
+    leftSidenavStatus,
+    setLeftSidenavStatus,
+    rightSidenavStatus,
+    setRightSidenavStatus
+  } = useContext(DashboardLayoutContext);
+  const status = position === "left" ? leftSidenavStatus : rightSidenavStatus;
+  const isOverlayMode = isMobileMode || mode === "overlay";
+  const variants = {
+    open: { display, width: null },
+    compact: {
+      display,
+      width: null
+    },
+    closed: {
+      width: 0,
+      transitionEnd: {
+        display: "none"
+      }
+    }
+  };
+  const sizeClassName = getSize(status === "compact" ? "compact" : size2);
+  return /* @__PURE__ */ jsx(
+    m.div,
+    {
+      variants,
+      initial: false,
+      animate: forceClosed ? "closed" : status,
+      transition: { type: "tween", duration: 0.15 },
+      onClick: (e) => {
+        const target = e.target;
+        if (isMobileMode && (target.closest("button") || target.closest("a"))) {
+          setLeftSidenavStatus("closed");
+          setRightSidenavStatus("closed");
+        }
+      },
+      className: clsx(
+        className,
+        position === "left" ? "dashboard-grid-sidenav-left" : "dashboard-grid-sidenav-right",
+        "will-change-[width]",
+        overflow,
+        sizeClassName,
+        isOverlayMode && `${overlayPosition} bottom-0 top-0 z-20 shadow-2xl`,
+        isOverlayMode && position === "left" && "left-0",
+        isOverlayMode && position === "right" && "right-0"
+      ),
+      children: cloneElement(children, {
+        className: clsx(
+          children.props.className,
+          "w-full h-full",
+          status === "compact" && "compact-scrollbar"
+        ),
+        isCompactMode: status === "compact"
+      })
+    }
+  );
+}
+function getSize(size2) {
+  switch (size2) {
+    case "compact":
+      return "w-80";
+    case "sm":
+      return "w-224";
+    case "md":
+      return "w-240";
+    case "lg":
+      return "w-288";
+    default:
+      return size2 || "";
+  }
+}
+const addFilesSvg = "/assets/add-files-477f2f7e.svg";
+const timeManagement = "/assets/time-management-468b570b.svg";
+const fileSearching = "/assets/file-searching-9e047848.svg";
+const throwAwaySvg = "/assets/throw-away-18cdb22c.svg";
+const lovingItSvg = "/assets/loving-it-55a9e8bc.svg";
+const shareSvg = "/assets/share-9fa4dd2e.svg";
+const defaultSortDescriptor = {
+  orderBy: "updated_at",
+  orderDir: "desc"
+};
+function makeFolderPage(folder) {
+  return {
+    ...makePartialFolderPage(folder.hash),
+    canUpload: folder.permissions["files.create"] || folder.permissions["files.update"],
+    label: folder.name,
+    folder
+  };
+}
+function makePartialFolderPage(hash) {
+  return {
+    id: hash,
+    label: "",
+    path: getPathForFolder(hash),
+    hasActions: true,
+    canUpload: false,
+    sortDescriptor: defaultSortDescriptor,
+    isFolderPage: true,
+    noContentMessage: () => ({
+      title: message("Drop files or folders here"),
+      description: message('Or use the "Upload" button'),
+      image: addFilesSvg
+    })
+  };
+}
+function getPathForFolder(hash) {
+  if (hash === "0") {
+    return "/drive";
+  }
+  return `/drive/folders/${hash}`;
+}
+const rootFolder = getBootstrapData().rootFolder;
+const RootFolderPage = makeFolderPage(rootFolder);
+const RecentPage = {
+  id: "recent",
+  label: message("Recent"),
+  path: "/drive/recent",
+  disableSort: true,
+  sortDescriptor: {
+    orderBy: "created_at",
+    orderDir: "desc"
+  },
+  queryParams: {
+    recentOnly: true
+  },
+  noContentMessage: () => ({
+    title: message("No recent entries"),
+    description: message("You have not uploaded any files or folders yet"),
+    image: timeManagement
+  })
+};
+const SearchPage = {
+  id: "search",
+  label: message("Search results"),
+  path: "/drive/search",
+  sortDescriptor: defaultSortDescriptor,
+  noContentMessage: (isSearchingOrFiltering) => {
+    if (isSearchingOrFiltering) {
+      return {
+        title: message("No matching results"),
+        description: message("Try changing your search query or filters"),
+        image: fileSearching
+      };
+    }
+    return {
+      title: message("Begin typing or select a filter to search"),
+      description: message("Search for files, folders and other content"),
+      image: fileSearching
+    };
+  }
+};
+const SharesPage = {
+  id: "shares",
+  label: message("Shared"),
+  path: "/drive/shares",
+  sortDescriptor: defaultSortDescriptor,
+  queryParams: {
+    sharedOnly: true
+  },
+  noContentMessage: () => ({
+    title: message("Shared with me"),
+    description: message("Files and folders other people have shared with you"),
+    image: shareSvg
+  })
+};
+const TrashPage = {
+  id: "trash",
+  label: message("Trash"),
+  path: "/drive/trash",
+  sortDescriptor: defaultSortDescriptor,
+  hasActions: true,
+  queryParams: {
+    deletedOnly: true
+  },
+  noContentMessage: () => ({
+    title: message("Trash is empty"),
+    description: message(
+      "There are no files or folders in your trash currently"
+    ),
+    image: throwAwaySvg
+  })
+};
+const StarredPage = {
+  id: "starred",
+  label: message("Starred"),
+  path: "/drive/starred",
+  sortDescriptor: defaultSortDescriptor,
+  queryParams: {
+    starredOnly: true
+  },
+  noContentMessage: () => ({
+    title: message("Nothing is starred"),
+    description: message(
+      "Add stars to files and folders that you want to easily find later"
+    ),
+    image: lovingItSvg
+  })
+};
+const WorkspacePage = {
+  id: "workspace",
+  label: message("workspace"),
+  path: "/drive/workspace",
+  sortDescriptor: defaultSortDescriptor,
+  queryParams: {
+    starredOnly: true
+  },
+  noContentMessage: () => ({
+    title: message("Workspace is empty"),
+    description: message(
+      "There are no files or folders in your workspace"
+    ),
+    image: lovingItSvg
+  })
+};
+const DRIVE_PAGES = [
+  RootFolderPage,
+  RecentPage,
+  SearchPage,
+  SharesPage,
+  TrashPage,
+  StarredPage,
+  WorkspacePage
+];
+function NavbarSearch() {
+  const { trans } = useTrans();
+  const navigate = useNavigate();
+  const activePage = useDriveStore((s) => s.activePage);
+  const [searchParams] = useSearchParams();
+  const [inputValue, setInputValue] = useState(searchParams.get("query") || "");
+  return /* @__PURE__ */ jsx(
+    "form",
+    {
+      className: "max-w-620 flex-auto rounded-lg",
+      onSubmit: (e) => {
+        e.preventDefault();
+        navigate(
+          {
+            pathname: SearchPage.path,
+            search: `?query=${inputValue}`
+          },
+          { replace: true }
+        );
+      },
+      children: /* @__PURE__ */ jsx(
+        TextField,
+        {
+          size: "sm",
+          background: "bg-paper",
+          value: inputValue,
+          onChange: (e) => setInputValue(e.target.value),
+          onFocus: () => {
+            if (activePage !== SearchPage) {
+              navigate(SearchPage.path);
+            }
+          },
+          startAdornment: /* @__PURE__ */ jsx(IconButton, { type: "submit", children: /* @__PURE__ */ jsx(SearchIcon, {}) }),
+          className: "placeholder search-text max-w-600 flex-auto rounded-lg",
+          placeholder: trans({ message: "Search anything here" }),
+          "aria-label": trans({ message: "Search files and folders" })
+        }
+      )
+    }
+  );
+}
+const EightMB = 8388608;
+function useDriveUploadQueue() {
+  const uploadMultiple = useFileUploadStore((s) => s.uploadMultiple);
+  const { data: usage } = useStorageSummary();
+  const { uploads } = useSettings();
+  const maxFileSize = uploads.max_size || EightMB;
+  const allowedFileTypes = uploads.allowed_extensions;
+  const blockedFileTypes = uploads.blocked_extensions;
+  const uploadFiles = useCallback(
+    (files, options = {}) => {
+      var _a2, _b2;
+      if (!options.metadata) {
+        options.metadata = {};
+      }
+      options.metadata.workspaceId = getActiveWorkspaceId();
+      if (!options.metadata.parentId) {
+        options.metadata.parentId = ((_b2 = (_a2 = driveState().activePage) == null ? void 0 : _a2.folder) == null ? void 0 : _b2.id) ?? null;
+      }
+      files = [...files].map((file) => {
+        return file instanceof UploadedFile ? file : new UploadedFile(file);
+      });
+      if (usage) {
+        const sizeOfFiles = files.reduce((sum, file) => sum + file.size, 0);
+        const currentlyUsing = usage.used;
+        const availableSpace = usage.available;
+        if (sizeOfFiles + currentlyUsing > availableSpace) {
+          toast.danger(
+            message(
+              "You have exhausted your allowed space of :space. Delete some files or upgrade your plan.",
+              { values: { space: usage.availableFormatted } }
+            ),
+            { action: { action: "/pricing", label: message("Upgrade") } }
+          );
+          return;
+        }
+      }
+      uploadMultiple(files, {
+        ...options,
+        restrictions: {
+          maxFileSize,
+          allowedFileTypes,
+          blockedFileTypes
+        },
+        onSuccess: (entry, file) => {
+          var _a3;
+          (_a3 = options == null ? void 0 : options.onSuccess) == null ? void 0 : _a3.call(options, entry, file);
+          invalidateEntryQueries();
+          queryClient.invalidateQueries({
+            queryKey: DriveQueryKeys.fetchStorageSummary
+          });
+        }
+      });
+      driveState().setUploadQueueIsOpen(true);
+    },
+    [uploadMultiple, allowedFileTypes, blockedFileTypes, maxFileSize, usage]
+  );
+  return { uploadFiles };
+}
+const FileUploadIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z" }),
+  "FileUploadOutlined"
+);
+const CreateNewFolderIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm0 12H4V6h5.17l2 2H20v10zm-8-4h2v2h2v-2h2v-2h-2v-2h-2v2h-2z" }),
+  "CreateNewFolderOutlined"
+);
+const UploadFileIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11 8 15.01z" }),
+  "UploadFileOutlined"
+);
+const DriveFolderUploadIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10zM9.41 14.42 11 12.84V17h2v-4.16l1.59 1.59L16 13.01 12.01 9 8 13.01l1.41 1.41z" }),
+  "DriveFolderUploadOutlined"
+);
+const AddIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" }),
+  "AddOutlined"
+);
+function CreateNewButton({ isCompact, className }) {
+  const activePage = useDriveStore((s) => s.activePage);
+  const { uploadFiles } = useDriveUploadQueue();
+  const button = isCompact ? /* @__PURE__ */ jsx(IconButton, { size: "md", children: /* @__PURE__ */ jsx(AddIcon, {}) }) : /* @__PURE__ */ jsx(
+    Button,
+    {
+      className: "min-w-120",
+      color: "primary",
+      variant: "flat",
+      size: "sm",
+      startIcon: /* @__PURE__ */ jsx(FileUploadIcon, {}),
+      disabled: !(activePage == null ? void 0 : activePage.canUpload),
+      children: /* @__PURE__ */ jsx(Trans, { message: "Upload" })
+    }
+  );
+  return /* @__PURE__ */ jsx("div", { className, children: /* @__PURE__ */ jsxs(
+    MenuTrigger,
+    {
+      onItemSelected: async (value) => {
+        var _a2;
+        if (value === "uploadFiles") {
+          uploadFiles(await openUploadWindow({ multiple: true }));
+        } else if (value === "uploadFolder") {
+          uploadFiles(await openUploadWindow({ directory: true }));
+        } else if (value === "newFolder") {
+          const activeFolder = (_a2 = driveState().activePage) == null ? void 0 : _a2.folder;
+          driveState().setActiveActionDialog(
+            "newFolder",
+            activeFolder ? [activeFolder] : []
+          );
+        }
+      },
+      children: [
+        button,
+        /* @__PURE__ */ jsxs(Menu, { children: [
+          /* @__PURE__ */ jsx(Item$1, { value: "uploadFiles", startIcon: /* @__PURE__ */ jsx(UploadFileIcon, {}), children: /* @__PURE__ */ jsx(Trans, { message: "Upload files" }) }),
+          /* @__PURE__ */ jsx(Item$1, { value: "uploadFolder", startIcon: /* @__PURE__ */ jsx(DriveFolderUploadIcon, {}), children: /* @__PURE__ */ jsx(Trans, { message: "Upload folder" }) }),
+          /* @__PURE__ */ jsx(Item$1, { value: "newFolder", startIcon: /* @__PURE__ */ jsx(CreateNewFolderIcon, {}), children: /* @__PURE__ */ jsx(Trans, { message: "Create folder" }) })
+        ] })
+      ]
+    }
+  ) });
+}
+function CreateQuickTicket() {
+  const [email, setEmail] = useState("");
+  const [ticketType, setTicketType] = useState("");
+  const [priorityStatus, setPriorityStatus] = useState("");
+  const [ticketBody, setTicketBody] = useState("");
+  const handleSendTicket = () => {
+    console.log("Ticket sent with details:", { email, ticketType, priorityStatus, ticketBody });
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "w-4/8 mx-40 mt-40 dark:bg-gray-300 p-40 rounded-2xl shadow-md overflow-visible", children: [
+    /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold mb-6 text-black dark:text-white", children: "Create Quick Ticket" }),
+    /* @__PURE__ */ jsx("p", { className: "text-black dark:text-white", children: "Write and address new queries and issues" }),
+    /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-30 mt-40", children: [
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("label", { className: "block text-gray-300 mb-2 text-sm", children: "Email" }),
+        /* @__PURE__ */ jsx(
+          "input",
+          {
+            type: "email",
+            placeholder: "Type Email",
+            value: email,
+            onChange: (e) => setEmail(e.target.value),
+            className: "w-full mt-8 px-20 py-12 border border-gray-500 rounded-md text-gray-300 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("label", { className: "block text-gray-300 mb-2 text-sm", children: "Request Ticket Type" }),
+        /* @__PURE__ */ jsxs(
+          "select",
+          {
+            value: ticketType,
+            onChange: (e) => setTicketType(e.target.value),
+            className: "w-full mt-8 px-20 py-12 border border-gray-500 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+            children: [
+              /* @__PURE__ */ jsx("option", { value: "", className: "dark:text-gray-300", children: "Choose Type" }),
+              /* @__PURE__ */ jsx("option", { value: "bug", className: "dark:text-gray-300", children: "Bug Report" }),
+              /* @__PURE__ */ jsx("option", { value: "feature", className: "dark:text-gray-300", children: "Feature Request" }),
+              /* @__PURE__ */ jsx("option", { value: "inquiry", className: "dark:text-gray-300", children: "General Inquiry" })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("label", { className: "block text-gray-300 mb-2 text-sm", children: "Priority Status" }),
+        /* @__PURE__ */ jsxs(
+          "select",
+          {
+            value: priorityStatus,
+            onChange: (e) => setPriorityStatus(e.target.value),
+            className: "w-full mt-8 px-20 py-12 border border-gray-500 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+            children: [
+              /* @__PURE__ */ jsx("option", { value: "", className: "dark:text-gray-300", children: "Select Status" }),
+              /* @__PURE__ */ jsx("option", { value: "low", className: "dark:text-gray-300", children: "Low" }),
+              /* @__PURE__ */ jsx("option", { value: "medium", className: "dark:text-gray-300", children: "Medium" }),
+              /* @__PURE__ */ jsx("option", { value: "high", className: "dark:text-gray-300", children: "High" })
+            ]
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs("div", { className: "mt-6", children: [
+      /* @__PURE__ */ jsx("label", { className: "block text-gray-300 mb-2 mt-20 text-sm", children: "Ticket Body" }),
+      /* @__PURE__ */ jsx(
+        "textarea",
+        {
+          placeholder: "Type ticket issue here...",
+          value: ticketBody,
+          onChange: (e) => setTicketBody(e.target.value),
+          className: "w-full mt-8 h-200 px-20 py-12 border border-gray-500 rounded-md text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxs("div", { className: "flex justify-end mt-6 space-x-4", children: [
+      /* @__PURE__ */ jsx(
+        "button",
+        {
+          onClick: () => console.log("Cancelled"),
+          className: "px-5 py-2 border border-gray-300 text-gray-300 dark:text-white rounded-md hover:bg-gray-100",
+          children: "Cancel"
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "button",
+        {
+          onClick: handleSendTicket,
+          className: "px-6 py-2 text-white rounded-md bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500",
+          children: "Send Ticket"
+        }
+      )
+    ] })
+  ] });
+}
+function SupportticketLayout() {
+  useLocation();
+  const { workspaceId } = useActiveWorkspaceId();
+  const activePage = useDriveStore((s) => s.activePage);
+  useMemo(() => {
+    return { workspaceId };
+  }, [workspaceId]);
+  useEffect(() => {
+    return () => {
+      driveState().reset();
+    };
+  }, []);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    (activePage == null ? void 0 : activePage.label) && /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(
+      Trans,
+      {
+        message: typeof activePage.label === "string" ? activePage.label : activePage.label.message
+      }
+    ) }),
+    /* @__PURE__ */ jsx(FileUploadProvider, { children: /* @__PURE__ */ jsxs(
+      DashboardLayout,
+      {
+        name: "workspace",
+        onDragOver: (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.dataTransfer.dropEffect = "none";
+        },
+        onDrop: (e) => {
+          e.preventDefault();
+        },
+        children: [
+          /* @__PURE__ */ jsx(Navbar$3, {}),
+          /* @__PURE__ */ jsx(DashboardSidenav, { position: "left", size: "md", children: /* @__PURE__ */ jsx(Accountsidebar, {}) }),
+          /* @__PURE__ */ jsx(CreateQuickTicket, {})
+        ]
+      }
+    ) })
+  ] });
+}
+function Navbar$3() {
+  const { isMobileMode } = useContext(DashboardLayoutContext);
+  useDriveStore((s) => s.activePage);
+  const children = isMobileMode ? null : /* @__PURE__ */ jsx(NavbarSearch, {});
+  const mobileRightChildren = /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(CreateNewButton, { isCompact: true }) });
+  return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
+    DashboardNavbar,
+    {
+      rightChildren: isMobileMode && mobileRightChildren,
+      menuPosition: "workspace-navbar",
+      children
+    }
+  ) });
+}
+const CloudUploadIcon = createSvgIcon(
+  /* @__PURE__ */ jsx("path", { d: "M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z" }),
+  "CloudUploadOutlined"
+);
+const initialIntegrations = [
+  {
+    name: "AWS",
+    description: "Build, Deploy, and Manage Websites, Apps or Processes On AWS Secure, Reliable Network.",
+    status: "connect",
+    integration: "Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance. Customers of all sizes and industries can use Amazon S3 to store and protect any amount of data for a range of use cases, such as data lakes, websites, mobile applications, backup and restore, archive, enterprise applications, IoT devices, and big data analytics. Amazon S3 provides management features so that you can optimize, organize, and configure access to your data to meet your specific business, organizational, and compliance requirements.",
+    logo: "/images/AWS.png"
+  },
+  {
+    name: "Zeedone",
+    description: "Zeedone offers a wide variety of CRM categories and systems to meet your needs.",
+    status: "connect",
+    integration: "CRM stands for customer relationship management, which is a system for managing all of your companys interactions with current and potential customers. The goal is simple: improve relationships to grow your business.",
+    logo: "/images/Zeed.png"
+  }
+];
+function IntegrationGrid() {
+  const [integrations, setIntegrations] = useState(initialIntegrations);
+  const [selectedIntegration, setSelectedIntegration] = useState(null);
+  const navigate = useNavigate$1();
+  const handleConnect = (name) => {
+    setIntegrations(
+      (prevIntegrations) => prevIntegrations.map(
+        (integration) => integration.name === name ? { ...integration, status: "connected" } : integration
+      )
+    );
+    navigate("/admin/settings/uploading");
+  };
+  const handleDetails = (integration) => {
+    setSelectedIntegration(integration);
+  };
+  const closeModal = () => {
+    setSelectedIntegration(null);
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "container ml-40 mt-40 p-8", children: [
+    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-20", children: integrations.map((integration) => /* @__PURE__ */ jsxs(
+      "div",
+      {
+        className: "p-32 bg-white dark:bg-gray-300 rounded-lg shadow-md flex flex-col justify-between gap-10",
+        children: [
+          /* @__PURE__ */ jsx("div", { className: "flex items-center mb-4", children: /* @__PURE__ */ jsx("img", { src: integration.logo, alt: `${integration.name} logo`, className: "w-80 h-40 mr-4" }) }),
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-medium", children: integration.name }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300 dark:text-white mb-4", children: integration.description }),
+          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+            /* @__PURE__ */ jsxs(
+              "button",
+              {
+                onClick: () => handleConnect(integration.name),
+                className: `${integration.status === "connected" ? "bg-black text-white shadow-md dark:bg-gray-300" : "bg-white border-gray-300 text-black shadow-md dark:bg-gray-300 dark:text-white"} border px-12 py-4 rounded-2xl flex gap-5`,
+                children: [
+                  integration.status === "connected" ? "Connected" : "Connect",
+                  /* @__PURE__ */ jsx(CloudUploadIcon, {})
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsx("button", { onClick: () => handleDetails(integration), className: "text-blue-500 hover:underline", children: "Integration details →" })
+          ] })
+        ]
+      },
+      integration.name
+    )) }),
+    selectedIntegration && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 transition-opacity duration-300 ease-out", children: /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-gray-800 p-10 rounded-xl max-w-lg w-full shadow-2xl transform transition-transform duration-300 ease-out scale-95 hover:scale-100 relative", children: [
+      /* @__PURE__ */ jsx(
+        "button",
+        {
+          onClick: closeModal,
+          className: "absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200",
+          "aria-label": "Close modal",
+          children: "✕"
+        }
+      ),
+      /* @__PURE__ */ jsx("h3", { className: "text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2", children: "Integration Details" }),
+      /* @__PURE__ */ jsx("p", { className: "text-gray-600 dark:text-gray-300 mb-6", children: selectedIntegration.integration }),
+      /* @__PURE__ */ jsx(
+        "button",
+        {
+          onClick: closeModal,
+          className: "mt-4 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-500 transition duration-200 ease-in-out",
+          children: "Close"
+        }
+      )
+    ] }) })
+  ] });
+}
+function IntegrationLayout() {
+  useLocation();
+  const { workspaceId } = useActiveWorkspaceId();
+  const activePage = useDriveStore((s) => s.activePage);
+  useMemo(() => {
+    return { workspaceId };
+  }, [workspaceId]);
+  useEffect(() => {
+    return () => {
+      driveState().reset();
+    };
+  }, []);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    (activePage == null ? void 0 : activePage.label) && /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(
+      Trans,
+      {
+        message: typeof activePage.label === "string" ? activePage.label : activePage.label.message
+      }
+    ) }),
+    /* @__PURE__ */ jsx(FileUploadProvider, { children: /* @__PURE__ */ jsxs(
+      DashboardLayout,
+      {
+        name: "workspace",
+        onDragOver: (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.dataTransfer.dropEffect = "none";
+        },
+        onDrop: (e) => {
+          e.preventDefault();
+        },
+        children: [
+          /* @__PURE__ */ jsx(Navbar$2, {}),
+          /* @__PURE__ */ jsx(DashboardSidenav, { position: "left", size: "md", children: /* @__PURE__ */ jsx(Accountsidebar, {}) }),
+          /* @__PURE__ */ jsx(IntegrationGrid, {})
+        ]
+      }
+    ) })
+  ] });
+}
+function Navbar$2() {
+  const { isMobileMode } = useContext(DashboardLayoutContext);
+  useDriveStore((s) => s.activePage);
+  const children = isMobileMode ? null : /* @__PURE__ */ jsx(NavbarSearch, {});
+  const mobileRightChildren = /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(CreateNewButton, { isCompact: true }) });
+  return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
+    DashboardNavbar,
+    {
+      rightChildren: isMobileMode && mobileRightChildren,
+      menuPosition: "workspace-navbar",
+      children
+    }
+  ) });
+}
+function CostoptimizerLayout() {
+  useLocation();
+  const { workspaceId } = useActiveWorkspaceId();
+  const activePage = useDriveStore((s) => s.activePage);
+  useMemo(() => {
+    return { workspaceId };
+  }, [workspaceId]);
+  useEffect(() => {
+    return () => {
+      driveState().reset();
+    };
+  }, []);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    (activePage == null ? void 0 : activePage.label) && /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(
+      Trans,
+      {
+        message: typeof activePage.label === "string" ? activePage.label : activePage.label.message
+      }
+    ) }),
+    /* @__PURE__ */ jsx(FileUploadProvider, { children: /* @__PURE__ */ jsxs(
+      DashboardLayout,
+      {
+        name: "workspace",
+        onDragOver: (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.dataTransfer.dropEffect = "none";
+        },
+        onDrop: (e) => {
+          e.preventDefault();
+        },
+        children: [
+          /* @__PURE__ */ jsx(Navbar$1, {}),
+          /* @__PURE__ */ jsx(DashboardSidenav, { position: "left", size: "md", children: /* @__PURE__ */ jsx(Accountsidebar, {}) })
+        ]
+      }
+    ) })
+  ] });
+}
+function Navbar$1() {
+  const { isMobileMode } = useContext(DashboardLayoutContext);
+  useDriveStore((s) => s.activePage);
+  const children = isMobileMode ? null : /* @__PURE__ */ jsx(NavbarSearch, {});
+  const mobileRightChildren = /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(CreateNewButton, { isCompact: true }) });
+  return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
+    DashboardNavbar,
+    {
+      rightChildren: isMobileMode && mobileRightChildren,
+      menuPosition: "workspace-navbar",
+      children
+    }
+  ) });
+}
+function AuditlogLayout() {
+  useLocation();
+  const { workspaceId } = useActiveWorkspaceId();
+  const activePage = useDriveStore((s) => s.activePage);
+  useMemo(() => {
+    return { workspaceId };
+  }, [workspaceId]);
+  useEffect(() => {
+    return () => {
+      driveState().reset();
+    };
+  }, []);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    (activePage == null ? void 0 : activePage.label) && /* @__PURE__ */ jsx(StaticPageTitle, { children: /* @__PURE__ */ jsx(
+      Trans,
+      {
+        message: typeof activePage.label === "string" ? activePage.label : activePage.label.message
+      }
+    ) }),
+    /* @__PURE__ */ jsx(FileUploadProvider, { children: /* @__PURE__ */ jsxs(
+      DashboardLayout,
+      {
+        name: "workspace",
+        onDragOver: (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.dataTransfer.dropEffect = "none";
+        },
+        onDrop: (e) => {
+          e.preventDefault();
+        },
+        children: [
+          /* @__PURE__ */ jsx(Navbar, {}),
+          /* @__PURE__ */ jsx(DashboardSidenav, { position: "left", size: "md", children: /* @__PURE__ */ jsx(Accountsidebar, {}) })
+        ]
+      }
+    ) })
+  ] });
+}
+function Navbar() {
+  const { isMobileMode } = useContext(DashboardLayoutContext);
+  useDriveStore((s) => s.activePage);
+  const children = isMobileMode ? null : /* @__PURE__ */ jsx(NavbarSearch, {});
+  const mobileRightChildren = /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(CreateNewButton, { isCompact: true }) });
+  return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
+    DashboardNavbar,
+    {
+      rightChildren: isMobileMode && mobileRightChildren,
+      menuPosition: "workspace-navbar",
+      children
+    }
+  ) });
+}
+const AdminRoutes = React.lazy(() => import("./assets/admin-routes-e9b7e0a0.mjs").then((n) => n.A));
+const DriveRoutes = React.lazy(() => import("./assets/drive-routes-31c4ba6b.mjs"));
 const SwaggerApiDocs = React.lazy(
-  () => import("./assets/swagger-api-docs-page-a61ef8bf.mjs")
+  () => import("./assets/swagger-api-docs-page-fa894c84.mjs")
 );
 function AppRoutes() {
   const { billing, notifications, require_email_confirmation, api } = useSettings();
@@ -10956,7 +12372,12 @@ function AppRoutes() {
       ),
       /* @__PURE__ */ jsx(Route, { path: "contact", element: /* @__PURE__ */ jsx(ContactUsPage, {}) }),
       /* @__PURE__ */ jsx(Route, { path: "pages/:pageSlug", element: /* @__PURE__ */ jsx(CustomPageLayout, {}) }),
-      /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(NotFoundPage, {}) })
+      /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(NotFoundPage, {}) }),
+      /* @__PURE__ */ jsx(Route, { path: "accesstoken", element: /* @__PURE__ */ jsx(AccessTokenPage, {}) }),
+      /* @__PURE__ */ jsx(Route, { path: "integration", element: /* @__PURE__ */ jsx(IntegrationLayout, {}) }),
+      /* @__PURE__ */ jsx(Route, { path: "supportticket", element: /* @__PURE__ */ jsx(SupportticketLayout, {}) }),
+      /* @__PURE__ */ jsx(Route, { path: "costoptimizer", element: /* @__PURE__ */ jsx(CostoptimizerLayout, {}) }),
+      /* @__PURE__ */ jsx(Route, { path: "auditlogs", element: /* @__PURE__ */ jsx(AuditlogLayout, {}) })
     ] }),
     /* @__PURE__ */ jsx(DialogStoreOutlet, {})
   ] });
@@ -11062,165 +12483,199 @@ async function takeScreenshot(request, response) {
 }
 console.log(`Starting SSR server on port ${port}...`);
 export {
-  useNavigate as $,
-  ArrowDropDownIcon as A,
+  createSvgIconFromTree as $,
+  AddIcon as A,
   Button as B,
   CustomMenu as C,
-  Dialog as D,
-  CheckIcon as E,
+  DashboardLayout as D,
+  DialogFooter as E,
   Form as F,
-  CloseIcon as G,
-  Chip as H,
+  onFormQueryError as G,
+  FormTextField as H,
   Item$1 as I,
-  FormattedDate as J,
-  Tooltip as K,
-  useAuth as L,
-  MixedText as M,
-  FileUploadProvider as N,
-  useAppearanceEditorMode as O,
+  CheckIcon as J,
+  CloseIcon as K,
+  Chip as L,
+  FormattedDate as M,
+  Tooltip as N,
+  useAuth as O,
   ProgressBar as P,
-  ProgressCircle as Q,
-  ButtonBase as R,
+  MixedText as Q,
+  FileUploadProvider as R,
   SearchIcon as S,
   Trans as T,
-  useValueLists as U,
-  List as V,
-  ListItem as W,
-  clamp as X,
-  createSvgIconFromTree as Y,
-  DoneAllIcon as Z,
-  Section as _,
-  apiClient as a,
-  useListboxKeyboardNavigation as a$,
-  FormImageSelector as a0,
-  useBootstrapData as a1,
-  LinkStyle as a2,
-  SiteConfigContext as a3,
-  getBootstrapData as a4,
-  MenuTrigger as a5,
-  Menu as a6,
-  getInputFieldClassNames as a7,
-  FormRadioGroup as a8,
-  FormRadio as a9,
-  setInLocalStorage as aA,
-  Navbar as aB,
-  secureFilesSvg as aC,
-  getAxiosErrorMessage as aD,
-  useFileUploadStore as aE,
-  getActiveWorkspaceId as aF,
-  UploadedFile as aG,
-  openUploadWindow as aH,
-  AdHost as aI,
-  ProgressBarBase as aJ,
-  WorkspaceQueryKeys as aK,
-  useActiveWorkspaceId as aL,
-  PersonalWorkspace as aM,
-  ExitToAppIcon as aN,
-  useUserWorkspaces as aO,
-  openDialog as aP,
-  createEventHandler as aQ,
-  CustomMenuItem as aR,
-  shallowEqual as aS,
-  ContextMenu as aT,
-  useMediaQuery as aU,
-  useActiveWorkspace as aV,
-  ErrorIcon as aW,
-  CheckCircleIcon as aX,
-  useListbox as aY,
-  Listbox as aZ,
-  Popover as a_,
-  prettyBytes as aa,
-  useSocialLogin as ab,
-  ExternalLink as ac,
-  useField as ad,
-  Field as ae,
-  useResendVerificationEmail as af,
-  useUser as ag,
-  FullPageLoader as ah,
-  useUploadAvatar as ai,
-  useRemoveAvatar as aj,
-  FileTypeIcon as ak,
-  useProducts as al,
-  FormattedPrice as am,
-  useActiveUpload as an,
-  UploadInputType as ao,
-  Disk as ap,
-  WarningIcon as aq,
-  KeyboardArrowDownIcon as ar,
-  useCustomPage as as,
-  PageMetaTags as at,
-  PageStatus as au,
-  useCollator as av,
-  loadFonts as aw,
-  AuthRoute as ax,
-  NotFoundPage as ay,
-  getFromLocalStorage as az,
-  useIsMobileMediaQuery as b,
-  Underlay as b0,
-  useUserTimezone as b1,
-  useSelectedLocale as b2,
-  useDateFormatter as b3,
-  DateFormatPresets as b4,
-  useAutoFocus as b5,
-  useIsDarkMode as b6,
-  useListboxContext as b7,
-  useTypeSelect as b8,
-  AvatarPlaceholderIcon as b9,
-  PersonIcon as bA,
-  SettingsIcon as bB,
-  elementToTree as bC,
-  EnvatoIcon as bD,
-  FacebookIcon as bE,
-  TwitterIcon as bF,
-  isAbsoluteUrl as ba,
-  Footer as bb,
-  BillingCycleRadio as bc,
-  findBestPrice as bd,
-  FormattedCurrency as be,
-  removeFromLocalStorage as bf,
-  LocaleSwitcher as bg,
-  ProductFeatureList as bh,
-  useCallbackRef as bi,
-  AccountCircleIcon as bj,
-  AddAPhotoIcon as bk,
-  ApiIcon as bl,
-  CheckBoxOutlineBlankIcon as bm,
-  DangerousIcon as bn,
-  DarkModeIcon as bo,
-  ErrorOutlineIcon as bp,
-  FileDownloadDoneIcon as bq,
-  ForumIcon as br,
-  GroupAddIcon as bs,
-  LanguageIcon as bt,
-  LightModeIcon as bu,
-  LightbulbIcon as bv,
-  MenuIcon as bw,
-  NotificationsIcon as bx,
-  PaymentsIcon as by,
-  PeopleIcon as bz,
-  useNumberFormatter as c,
-  IconButton as d,
-  createSvgIcon as e,
-  useDialogContext as f,
-  DialogHeader as g,
-  DialogBody as h,
-  Checkbox as i,
-  DialogTrigger as j,
-  useTrans as k,
-  TextField as l,
+  useAppearanceEditorMode as U,
+  ProgressCircle as V,
+  ButtonBase as W,
+  useValueLists as X,
+  List as Y,
+  ListItem as Z,
+  clamp as _,
+  DashboardNavbar as a,
+  createEventHandler as a$,
+  DoneAllIcon as a0,
+  Section as a1,
+  useNavigate as a2,
+  FormImageSelector as a3,
+  useBootstrapData as a4,
+  LinkStyle as a5,
+  SiteConfigContext as a6,
+  getBootstrapData as a7,
+  MenuTrigger as a8,
+  Menu as a9,
+  AuthRoute as aA,
+  NotFoundPage as aB,
+  getFromLocalStorage as aC,
+  setInLocalStorage as aD,
+  DriveQueryKeys as aE,
+  Navbar$4 as aF,
+  secureFilesSvg as aG,
+  invalidateEntryQueries as aH,
+  getAxiosErrorMessage as aI,
+  driveState as aJ,
+  useDriveStore as aK,
+  TrashPage as aL,
+  SharesPage as aM,
+  CreateNewFolderIcon as aN,
+  useDriveUploadQueue as aO,
+  FileUploadIcon as aP,
+  openUploadWindow as aQ,
+  DriveFolderUploadIcon as aR,
+  RootFolderPage as aS,
+  AdHost as aT,
+  shareSvg as aU,
+  WorkspaceQueryKeys as aV,
+  useActiveWorkspaceId as aW,
+  PersonalWorkspace as aX,
+  ExitToAppIcon as aY,
+  useUserWorkspaces as aZ,
+  openDialog as a_,
+  getInputFieldClassNames as aa,
+  FormRadioGroup as ab,
+  FormRadio as ac,
+  prettyBytes as ad,
+  useSocialLogin as ae,
+  ExternalLink as af,
+  useField as ag,
+  Field as ah,
+  useResendVerificationEmail as ai,
+  useUser as aj,
+  FullPageLoader as ak,
+  useUploadAvatar as al,
+  useRemoveAvatar as am,
+  FileTypeIcon as an,
+  useProducts as ao,
+  FormattedPrice as ap,
+  useActiveUpload as aq,
+  UploadInputType as ar,
+  Disk as as,
+  WarningIcon as at,
+  KeyboardArrowDownIcon as au,
+  useCustomPage as av,
+  PageMetaTags as aw,
+  PageStatus as ax,
+  useCollator as ay,
+  loadFonts as az,
+  DashboardSidenav as b,
+  NotificationsIcon as b$,
+  getPathForFolder as b0,
+  CustomMenuItem as b1,
+  useIsDarkMode as b2,
+  MenuIcon as b3,
+  Logo as b4,
+  StorageMeter as b5,
+  shallowEqual as b6,
+  makeFolderPage as b7,
+  SearchPage as b8,
+  DashboardLayoutContext as b9,
+  Footer as bA,
+  BillingCycleRadio as bB,
+  findBestPrice as bC,
+  FormattedCurrency as bD,
+  removeFromLocalStorage as bE,
+  LocaleSwitcher as bF,
+  ProductFeatureList as bG,
+  useCallbackRef as bH,
+  AccountCircleIcon as bI,
+  AddAPhotoIcon as bJ,
+  ApiIcon as bK,
+  AutoGraphIcon as bL,
+  CheckBoxOutlineBlankIcon as bM,
+  CloudUploadIcon as bN,
+  DangerousIcon as bO,
+  DarkModeIcon as bP,
+  DashboardIcon as bQ,
+  DeveloperModeIcon as bR,
+  ErrorOutlineIcon as bS,
+  FileDownloadDoneIcon as bT,
+  ForumIcon as bU,
+  GraphicEqIcon as bV,
+  GroupAddIcon as bW,
+  LanguageIcon as bX,
+  LightModeIcon as bY,
+  LightbulbIcon as bZ,
+  MenuOpenIcon as b_,
+  ContextMenu as ba,
+  useMediaQuery as bb,
+  useActiveWorkspace as bc,
+  CreateNewButton as bd,
+  useFileUploadStore as be,
+  ErrorIcon as bf,
+  CheckCircleIcon as bg,
+  useActiveDialogEntry as bh,
+  useListbox as bi,
+  Listbox as bj,
+  Popover as bk,
+  useListboxKeyboardNavigation as bl,
+  DRIVE_PAGES as bm,
+  makePartialFolderPage as bn,
+  NavbarSearch as bo,
+  useUserTimezone as bp,
+  useSelectedLocale as bq,
+  useDateFormatter as br,
+  DateFormatPresets as bs,
+  useAutoFocus as bt,
+  useListboxContext as bu,
+  useTypeSelect as bv,
+  AvatarPlaceholderIcon as bw,
+  UploadedFile as bx,
+  isAbsoluteUrl as by,
+  Swaggersidebar as bz,
+  apiClient as c,
+  PaymentsIcon as c0,
+  PeopleIcon as c1,
+  PersonIcon as c2,
+  SettingsIcon as c3,
+  SupportAgentIcon as c4,
+  SupportIcon as c5,
+  TokenIcon as c6,
+  UploadFileIcon as c7,
+  elementToTree as c8,
+  EnvatoIcon as c9,
+  FacebookIcon as ca,
+  TwitterIcon as cb,
+  useIsMobileMediaQuery as d,
+  useNumberFormatter as e,
+  IconButton as f,
+  createSvgIcon as g,
+  useDialogContext as h,
+  Dialog as i,
+  DialogHeader as j,
+  DialogBody as k,
+  Checkbox as l,
   message as m,
-  Skeleton as n,
-  opacityAnimation as o,
-  StaticPageTitle as p,
-  queryClient as q,
-  ConfirmationDialog as r,
-  showHttpErrorToast as s,
-  toast as t,
+  DialogTrigger as n,
+  useTrans as o,
+  TextField as p,
+  opacityAnimation as q,
+  Skeleton as r,
+  StaticPageTitle as s,
+  queryClient as t,
   useSettings as u,
-  IllustratedMessage as v,
-  SvgImage as w,
-  DialogFooter as x,
-  onFormQueryError as y,
-  FormTextField as z
+  toast as v,
+  showHttpErrorToast as w,
+  ConfirmationDialog as x,
+  IllustratedMessage as y,
+  SvgImage as z
 };
 //# sourceMappingURL=server-entry.mjs.map

@@ -21,10 +21,10 @@ const initialIntegrations = [
 
 export default function IntegrationGrid() {
   const [integrations, setIntegrations] = useState(initialIntegrations);
-  const [selectedIntegration, setSelectedIntegration] = useState(null);
+  const [selectedIntegration, setSelectedIntegration] = useState<any>(null);
   const navigate = useNavigate();
 
-  const handleConnect = (name) => {
+  const handleConnect = (name:any) => {
     setIntegrations((prevIntegrations) =>
       prevIntegrations.map((integration) =>
         integration.name === name
@@ -35,7 +35,7 @@ export default function IntegrationGrid() {
     navigate('/admin/settings/uploading');
   };
 
-  const handleDetails = (integration) => {
+  const handleDetails = (integration:any) => {
     setSelectedIntegration(integration);
   };
 
@@ -46,7 +46,7 @@ export default function IntegrationGrid() {
   return (
     <div className="container ml-40 mt-40 p-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-20">
-        {integrations.map((integration) => (
+        {integrations.map((integration:any) => (
           <div
             key={integration.name}
             className="p-32 bg-white dark:bg-gray-300 rounded-lg shadow-md flex flex-col justify-between gap-10"

@@ -134,7 +134,7 @@ export function ImageSelector({
   const removeButton = showRemoveButton ? (
     <Button
       variant="link"
-      color="black"
+      color="primary"
       size="xs"
       disabled={isDeletingEntry || !imageUrl || disabled}
       onClick={() => {
