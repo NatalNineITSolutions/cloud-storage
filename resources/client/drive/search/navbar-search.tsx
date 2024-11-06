@@ -44,9 +44,9 @@ export function NavbarSearch() {
             <SearchIcon />
           </IconButton>
         }
-        className="max-w-600 flex-auto rounded-lg"
-        placeholder={trans({message: 'Search anything here'})}
-        aria-label={trans({message: 'Search files and folders'})}
+        className="placeholder search-text max-w-600 flex-auto rounded-lg"
+        placeholder={trans({ message: 'Search anything here' })}
+        aria-label={trans({ message: 'Search files and folders' })}
       />
     </form>
   );

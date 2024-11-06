@@ -43,7 +43,7 @@ function ToggleViewModeButton() {
             driveState().setViewMode('grid');
           }}
           className={clsx(
-            viewMode === 'grid' ? 'text-gray-200 dark:text-white' : 'text-gray-400'
+            viewMode === 'grid' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white'
           )}
         >
           <ViewModuleIcon />
@@ -57,7 +57,7 @@ function ToggleViewModeButton() {
             driveState().setViewMode('list');
           }}
           className={clsx(
-            viewMode === 'list' ? 'text-gray-200 dark:text-white' : 'text-gray-400'
+            viewMode === 'list' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white'
           )}
         >
           <ViewListIcon />

@@ -52,7 +52,7 @@ export function WorkspaceSelector({
   return (
     <Fragment>
       <div className={clsx('workspace-selector', className)}>
-        <div className="workspace-list flex flex-wrap gap-10 mt-20 mx-36 justify-between">
+        <div className="workspace-list flex flex-wrap gap-10 mx-36 justify-between">
           <WorkspaceAddNewButton onChange={onChange} />
 
           {workspaces?.map(workspace => (
@@ -77,7 +77,7 @@ function WorkspaceAddNewButton({ onChange }: WorkspaceAddNewButtonProps) {
   const { setWorkspaceId } = useActiveWorkspaceId();
   
   return (
-    <div className="mb-4 px-4 text-center w-1/5">
+    <div className="add-workspace mb-4 px-4 text-center w-1/5">
       <Button
         onClick={async (e) => {
           e.preventDefault();
@@ -145,7 +145,7 @@ function WorkspaceItem({
         setSelectorIsOpen(false);
       }}
       className={clsx(
-        'mb-4 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white dark:bg-gray-300 text-black dark:text-white dark:border-2 border-gray-600', isActive && 'bg-primary/5'
+        'add-workspace mb-4 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white dark:bg-gray-300 text-black dark:text-white dark:border-2 border-gray-700', isActive && 'bg-primary/5'
       )}
     >
       <div className="w-40 py-2 px-8 bg-gray-100 rounded-2xl flex items-center justify-center">
@@ -274,8 +274,8 @@ function ManageButton({
         color="primary"
         size="xs"
         variant="outline"
-        endIcon={<KeyboardArrowDownIcon className='h-40' />}
-        className='border-none'
+        endIcon={<KeyboardArrowDownIcon className='h-40 hover:bg-transparent' />}
+        className='border-none hover:bg-transparent'
       >
         {/* <Trans message="Manage" /> */}
       </Button>

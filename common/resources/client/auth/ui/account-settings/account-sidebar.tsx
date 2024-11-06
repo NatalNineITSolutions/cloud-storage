@@ -19,6 +19,7 @@ import { AutoGraphIcon } from "@common/icons/material/AutoGraph";
 import { AdUnitsIcon } from "@common/icons/material/AdUnits";
 import { LoginIcon } from "@common/icons/material/Login";
 import { LocalShippingIcon } from "@common/icons/material/LocalShipping";
+import { GraphicEqIcon } from "@common/icons/material/GraphicEq";
 
 function Accountsidebar() {
   const { isSubscribed } = useAuth();  
@@ -61,47 +62,96 @@ function Accountsidebar() {
         <div className="flex-1 overflow-y-auto py-12 px-16 bg-white dark:bg-gray-300"> 
           <ul className="list-none p-20 m-0 flex flex-col gap-16"> 
             <li className="py-2 flex items-center">
-              <Link to="/drive" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/drive' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
-                <DashboardIcon/>
+              <Link
+                to="/drive"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/drive'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
+                <DashboardIcon />
                 Dashboard
               </Link>
             </li>
             <li className="py-2 flex items-center">
-              <Link to="/drive/workspace" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/drive/workspace' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+              <Link
+                to="/drive/workspace"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/drive/workspace'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
                 <TokenIcon />
                 Workspace
               </Link>
-            </li> 
+            </li>
             <li className="py-2 flex items-center">
-              <Link to="/api-docs" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/api-docs' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+              <Link
+                to="/api-docs"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/api-docs'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
                 <ApiIcon />
                 Developer API
               </Link>
-            </li> 
+            </li>
             <li className="py-2 flex items-center">
-              <Link to="/integration" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/integration' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+              <Link
+                to="/integration"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/integration'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
                 <SupportIcon />
                 Integration
               </Link>
-            </li> 
+            </li>
             <li className="py-2 flex items-center">
-              <Link to="/supportticket" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/supportticket' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
-                <SupportAgentIcon/>
+              <Link
+                to="/supportticket"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/supportticket'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
+                <SupportAgentIcon />
                 Support Ticket
               </Link>
-            </li> 
+            </li>
             <li className="py-2 flex items-center">
-              <Link to="/costoptimizer" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/costoptimizer' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
-                <AutoGraphIcon/>
+              <Link
+                to="/costoptimizer"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/costoptimizer'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
+                <AutoGraphIcon />
                 Cost Optimizer
               </Link>
-            </li> 
+            </li>
             <li className="py-2 flex items-center">
-              <Link to="/auditlogs" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/auditlogs' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
-                <AdUnitsIcon/>
+              <Link
+                to="/auditlogs"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/auditlogs'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
+                <GraphicEqIcon />
                 Audit Logs
               </Link>
-            </li> 
+            </li>
           </ul>
         </div>
         <div className="mb-20 ml-20 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg">

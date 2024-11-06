@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CloudUploadIcon } from '@common/icons/material/CloudUpload';
-import UploadingSettings from '@common/admin/settings/pages/uploading-settings/uploading-settings';
 
 const initialIntegrations = [
   {
@@ -16,7 +15,7 @@ const initialIntegrations = [
     description: 'Zeedone offers a wide variety of CRM categories and systems to meet your needs.',
     status: 'connect',
     integration: 'CRM stands for customer relationship management, which is a system for managing all of your companys interactions with current and potential customers. The goal is simple: improve relationships to grow your business.',
-    logo: '/images/Zeedone.png',
+    logo: '/images/Zeed.png',
   },
 ];
 
@@ -46,7 +45,7 @@ export default function IntegrationGrid() {
 
   return (
     <div className="container ml-40 mt-40 p-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-20">
         {integrations.map((integration) => (
           <div
             key={integration.name}

@@ -53,17 +53,32 @@ function Swaggersidebar() {
         <div className="flex-1 overflow-y-auto py-12 px-16 bg-white dark:bg-gray-300"> 
           <ul className="list-none p-20 m-0 flex flex-col gap-16"> 
             <li className="py-2 flex items-center">
-              <Link to="/api-docs" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/api-docs' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
-                <DeveloperModeIcon/>
+              <Link
+                to="/api-docs"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/api-docs'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
+                <DeveloperModeIcon />
                 Developer API
               </Link>
             </li>
             <li className="py-2 flex items-center">
-              <Link to="/accesstoken" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/accesstoken' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
+              <Link
+                to="/accesstoken"
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                  location.pathname === '/accesstoken'
+                    ? 'text-gray-200 dark:text-gray-200'
+                    : 'text-gray-400 dark:text-white'
+                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+              >
                 <TokenIcon />
                 Access Token
               </Link>
-            </li> 
+            </li>
+
           </ul>
         </div>
         <div className="mb-20 ml-20 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg">

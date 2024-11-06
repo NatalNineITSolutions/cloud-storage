@@ -117,7 +117,7 @@ export function Navbar(props: NavbarProps) {
           {children}
           {showNotifButton && <NotificationDialogTrigger/>}
           <IconButton onClick={handleSettingsClick} aria-label="Account Settings">
-            <SettingsIcon className='bg-white text-black w-34 h-34 p-6 rounded-lg'/>
+            <SettingsIcon className='bg-white text-black dark:text-black w-34 h-34 p-6 rounded-lg'/>
           </IconButton>
           {isLoggedIn ? (
             <NavbarAuthUser items={authMenuItems} />

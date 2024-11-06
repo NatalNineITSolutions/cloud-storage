@@ -70,7 +70,7 @@ function TokenLine({ token, isLast }: TokenLineProps) {
   return (
     <div
       className={clsx(
-        'gap-4 p-4 rounded-lg bg-white dark:bg-gray-300 shadow-md',
+        'gap-4 p-4 rounded-lg bg-white dark:bg-gray-300',
         !isLast && 'mb-4'
       )}
     >
