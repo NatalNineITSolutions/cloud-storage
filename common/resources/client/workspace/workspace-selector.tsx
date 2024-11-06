@@ -1,14 +1,10 @@
 import clsx from 'clsx';
-import { Fragment, ReactElement, useEffect } from 'react';
-import { ButtonBase } from '../ui/buttons/button-base';
 import { PersonalWorkspace, useUserWorkspaces } from './user-workspaces';
-import { AddIcon } from '../icons/material/Add';
 import { NewWorkspaceDialog } from './new-workspace-dialog';
 import { WorkspaceMembersDialog } from './workspace-members-dialog';
 import { useActiveWorkspaceId } from './active-workspace-id-context';
 import { Workspace } from './types/workspace';
 import { Button, ButtonProps } from '../ui/buttons/button';
-import { CheckIcon } from '../icons/material/Check';
 import { Menu, MenuItem, MenuTrigger } from '../ui/navigation/menu/menu-trigger';
 import { KeyboardArrowDownIcon } from '../icons/material/KeyboardArrowDown';
 import { PersonAddIcon } from '../icons/material/PersonAdd';
@@ -23,6 +19,7 @@ import { useAuth } from '../auth/use-auth';
 import { Trans } from '../i18n/trans';
 import { LeaveWorkspaceConfirmation } from './leave-workspace-confirmation';
 import { openDialog } from '@common/ui/overlays/store/dialog-store';
+import React, { useEffect, Fragment, ReactElement, useState } from 'react';
 
 interface WorkspaceSelectorProps {
   className?: string;
@@ -55,7 +52,7 @@ export function WorkspaceSelector({
   return (
     <Fragment>
       <div className={clsx('workspace-selector', className)}>
-        <div className="workspace-list flex flex-wrap gap-10 mt-80 mx-36 justify-between">
+        <div className="workspace-list flex flex-wrap gap-10 mt-20 mx-36 justify-between">
           <WorkspaceAddNewButton onChange={onChange} />
 
           {workspaces?.map(workspace => (
@@ -128,6 +125,18 @@ function WorkspaceItem({
   const { workspaceId, setWorkspaceId } = useActiveWorkspaceId();
   const isActive = workspaceId === workspace.id;
 
+  // Check if workspace.createdAt exists and is a valid value
+  const creationDate = workspace.created_at ? new Date(workspace.created_at) : new Date();
+
+  // If the creationDate is invalid, fallback to the current date
+  const formattedTime = creationDate instanceof Date && !isNaN(creationDate.getTime())
+    ? creationDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    : 'Invalid time';
+
+  const formattedDate = creationDate instanceof Date && !isNaN(creationDate.getTime())
+    ? creationDate.toLocaleDateString()
+    : 'Invalid date';
+
   return (
     <div
       onClick={() => {
@@ -136,7 +145,7 @@ function WorkspaceItem({
         setSelectorIsOpen(false);
       }}
       className={clsx(
-        'mb-12 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white dark:bg-gray-300 text-black dark:text-white', isActive && 'bg-primary/5'
+        'mb-4 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white dark:bg-gray-300 text-black dark:text-white dark:border-2 border-gray-600', isActive && 'bg-primary/5'
       )}
     >
       <div className="w-40 py-2 px-8 bg-gray-100 rounded-2xl flex items-center justify-center">
@@ -159,7 +168,7 @@ function WorkspaceItem({
           {workspace.name || "Project 29"}
         </div>
         <div className="text-sm text-gray-300 dark:text-white">
-          {workspace.date || "Sep 25, 2024, 1:25 PM"}
+          {formattedDate} {formattedTime}
         </div>
       </div>
 

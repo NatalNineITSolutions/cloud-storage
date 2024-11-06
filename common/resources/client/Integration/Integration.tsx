@@ -56,7 +56,7 @@ export default function IntegrationGrid() {
               <img src={integration.logo} alt={`${integration.name} logo`} className="w-80 h-40 mr-4" />
             </div>
             <h3 className="text-xl font-medium">{integration.name}</h3>
-            <p className="text-gray-500 mb-4">{integration.description}</p>
+            <p className="text-gray-300 dark:text-white mb-4">{integration.description}</p>
             <div className="flex justify-between items-center">
               <button
                 onClick={() => handleConnect(integration.name)}

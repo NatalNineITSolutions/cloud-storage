@@ -22,6 +22,8 @@ import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
 import AccessTokenPage from '@common/swagger/Accesstokenpage';
 import { SupportticketLayout } from './drive/layout/supportticketlayout';
 import { IntegrationLayout } from './drive/layout/Integrationlayout';
+import { CostoptimizerLayout } from './drive/layout/costoptimizer-layout';
+import { AuditlogLayout } from './drive/layout/auditlog-layout';
 
 const AdminRoutes = React.lazy(() => import('@common/admin/admin-routes'));
 const DriveRoutes = React.lazy(() => import('./drive/drive-routes'));
@@ -103,6 +105,8 @@ export function AppRoutes() {
         <Route path="accesstoken" element={<AccessTokenPage />}></Route>
         <Route path="integration" element={<IntegrationLayout />}></Route>
         <Route path="supportticket" element={<SupportticketLayout />}></Route>
+        <Route path="costoptimizer" element={<CostoptimizerLayout/>}></Route>
+        <Route path="auditlogs" element={<AuditlogLayout />}></Route>
       </Routes>
       <DialogStoreOutlet />
     </Fragment>

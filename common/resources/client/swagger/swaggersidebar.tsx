@@ -41,7 +41,7 @@ function Swaggersidebar() {
 
       {/* Sidebar */}
       <div
-        className={`h-screen bg-white dark:bg-gray-300 lg:static transition-transform transform ${
+        className={`h-screen w-240 bg-white dark:bg-gray-300 lg:static transition-transform transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0 z-50 flex flex-col justify-center items-center`}
       >
@@ -51,7 +51,7 @@ function Swaggersidebar() {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto py-12 px-16 bg-white dark:bg-gray-300"> 
-          <ul className="w-full list-none p-20 m-0 flex flex-col gap-16"> 
+          <ul className="list-none p-20 m-0 flex flex-col gap-16"> 
             <li className="py-2 flex items-center">
               <Link to="/api-docs" className={`text-blue-500 font-semibold flex gap-10 ${location.pathname === '/api-docs' ? 'text-gray-200 dark:text-gray-200' : 'text-gray-400 dark:text-white'}`}>
                 <DeveloperModeIcon/>
