@@ -50,6 +50,41 @@
   color: white;
 }
 
+.nav-search {
+  border-radius: 8px !important;
+}
+
+.nav-search input {
+  background-color: white;
+}
+
+.nav-search button {
+  color: black;
+}
+
+.sidebar-storage {
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); /* Increased shadow */
+}
+
+.sidebar-storage a {
+  width: 100%;
+  background-color: #0061FF;
+  color: white;
+  border-radius: 8px;
+}
+
+.storage-meter .h-4 {
+  background-color: #c5c6c7;
+}
+
+.storage-meter .bg-primary {
+  background-color: #051F61;
+}
+
+.main-sidebar {
+  padding: 0 15px;
+}
+
 @media screen and (min-width: 768px) {
   .landing-container {
     max-width: 750px;

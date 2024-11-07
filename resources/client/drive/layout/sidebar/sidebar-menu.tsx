@@ -18,7 +18,7 @@ export function SidebarMenu() {
   const {workspaceId} = useActiveWorkspaceId();
   return (
     <div className="container" >
-    <div className="text-muted mt-26 px-12">
+    <div className="text-muted mt-26">
       <FolderTree />
       <CustomMenu
         menu={MenuPositions.DriveSidebar}

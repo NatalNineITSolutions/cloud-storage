@@ -40,12 +40,14 @@ export function Sidebar({ className, logocolor }: SidebarProps) {
       <div
         className={clsx(
           className,
-          'flex flex-col gap-20 bg-white dark:bg-gray-300 text-sm font-medium text-muted h-screen fixed z-40 transition-transform duration-300 ease-in-out',
+          'flex flex-col gap-20 bg-white dark:bg-gray-300 text-sm font-medium text-muted h-screen fixed z-40 transition-transform duration-300 ease-in-out main-sidebar',
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full', 
           'lg:translate-x-0', 
           'lg:w-240 w-240' 
         )}
-        style={{ boxShadow: '4px 0 10px rgba(0, 0, 0, 0.1)' }}
+        style={{
+          boxShadow: '8px 0 20px rgba(0, 0, 0, 0.2)', // Increased shadow further
+        }}               
       >
         
         <div className="sticky bottom-0 mt-20 flex items-center justify-center">
@@ -56,17 +58,17 @@ export function Sidebar({ className, logocolor }: SidebarProps) {
           <SidebarMenu />
         </div>
 
-        <div className="mb-20 ml-4 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg">
+        <div className="mb-20 ml-4 w-200 bg-white dark:bg-gray-300 rounded-2xl sidebar-storage">
           <StorageMeter />
           {billing.enable ? (
-            <div className="mt-14 mb-20 pl-20">
+            <div className="mt-14 mb-20 pl-20 pr-20 ">
               <Button
                 elementType={Link}
                 to={isSubscribed ? '/billing/change-plan' : '/pricing'}
                 variant="outline"
                 size="xs"
                 color="primary"
-                className="text-gray-200"
+                className="text-gray-200 w-100"
               >
                 <Trans message="Upgrade" />
               </Button>
