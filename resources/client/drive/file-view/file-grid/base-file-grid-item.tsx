@@ -24,8 +24,8 @@ export const BaseFileGridItem = React.forwardRef<
         {...domProps}
         ref={ref}
         className={clsx(
-          'shadow rounded border aspect-square flex flex-col grid-item transition-shadow-opacity select-none overflow-hidden outline-none dark:bg-alt',
-          isSelected && 'border-primary',
+          'drive-files rounded aspect-square flex flex-col grid-item transition-shadow-opacity select-none overflow-hidden outline-none bg-white dark:bg-transparent dark:border',
+          isSelected &&'',
           className
         )}
       >
@@ -53,15 +53,19 @@ interface FooterProps {
   isMobile?: boolean;
   adornment?: ReactNode;
 }
-function Footer({entry, isSelected, isMobile, adornment}: FooterProps) {
+function Footer({ entry, isSelected, isMobile, adornment }: FooterProps) {
   return (
     <div
       className={clsx(
-        'text-sm h-48 flex-shrink-0 flex items-center',
-        isMobile ? 'justify-between gap-10 pl-18 pr-2' : 'justify-center px-16',
-        // isSelected && 'bg-primary-light/20'
+        'text-sm h-48 flex-shrink-0 flex items-center gap-10',
+        isMobile ? 'justify-between pl-18 pr-2' : 'justify-center px-16'
       )}
     >
+      <FileThumbnail
+        className="w-20 h-20 mr-8" 
+        iconClassName="block"
+        file={entry}
+      />
       <div className="min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis">
         {entry.name}
       </div>

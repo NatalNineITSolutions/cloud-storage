@@ -14,6 +14,7 @@ import { WorkspaceSelector } from '@common/workspace/workspace-selector';
 import { Sidebar } from './sidebar/sidebar';
 import { DashboardLayoutContext } from '@common/ui/layout/dashboard-layout-context'; 
 import { WorkspaceContentHeader } from './workspace-content-header';
+import Accountsidebar from '@common/auth/ui/account-settings/account-sidebar';
 
 
 export function WorkspaceLayout() {
@@ -60,7 +61,7 @@ export function WorkspaceLayout() {
             <Sidebar />
           </DashboardSidenav>
           <WorkspaceContentHeader/>
-          <WorkspaceSelector />
+          <WorkspaceSelector/>
         </DashboardLayout>
       </FileUploadProvider>
     </Fragment>

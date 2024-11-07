@@ -16,7 +16,7 @@ export function DetailsSidebarHeader({entryType, entryName}: HeaderProps) {
       <div className="text-xl font-normal text-ellipsis flex-auto mr-auto min-w-0 break-words">
         {entryName}
       </div>
-      <IconButton
+      {/* <IconButton
         size="md"
         className="flex-shrink-0"
         onClick={() => {
@@ -24,7 +24,7 @@ export function DetailsSidebarHeader({entryType, entryName}: HeaderProps) {
         }}
       >
         <CloseIcon />
-      </IconButton>
+      </IconButton> */}
     </div>
   );
 }

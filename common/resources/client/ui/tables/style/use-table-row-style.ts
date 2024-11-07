@@ -16,12 +16,12 @@ export function useTableRowStyle({index, isSelected, isHeader}: Props) {
     useContext(TableContext);
   const isFirst = index === 0;
   return clsx(
-    'flex gap-x-16 break-inside-avoid outline-none border border-transparent',
+    'flex gap-x-16 py-12  break-inside-avoid outline-none border border-transparent',
     onAction && 'cursor-pointer',
     isMobile && collapseOnMobile && hideBorder
       ? 'mb-8 pl-8 pr-0 rounded'
       : 'px-16',
-    !hideBorder && 'border-b-divider',
+    !hideBorder && '',
     !hideBorder && isFirst && 'border-t-divider',
     isSelected &&
       !isDarkMode &&

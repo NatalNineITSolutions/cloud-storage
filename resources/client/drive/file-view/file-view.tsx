@@ -159,7 +159,8 @@ export function FileView({className}: FileViewProps) {
           <Toolbar />
         )}
         <SearchFilterList />
-        <div className="relative flex-auto px-18 pb-18 md:px-24">
+        <div className={clsx('drive-view-list relative flex-auto gap-10 mx-20 px-18 py-18 pb-18 md:px-24', viewMode === 'list' ? 'bg-white dark:bg-transparent' : 'bg-transparent')}
+        >
           <AdHost slot="drive" className="mb-24" />
           {content}
           {/* <WorkspaceSwitcher /> */}

@@ -17,9 +17,9 @@ export function WorkspaceContentHeader() {
   const activePage = useDriveStore((s) => s.activePage);
 
   return (
-    <DashboardContentHeader className="px-8 md:px-26 py-4 mt-20 flex items-center gap-20 h-60">
+    <DashboardContentHeader className="px-8 mb-8 md:px-26 py-4 mt-20 flex items-center gap-20 h-60">
         <li className='relative inline-flex min-w-0 flex-shrink-0 items-center justify-start text-lg'>
-            <div className='ml-16 cursor-pointer overflow-hidden whitespace-nowrap rounded px-8 py-4 font-semibold text-bg-600 hover:bg-hover'>Workspace</div>
+            <div className='ml-16 cursor-pointer overflow-hidden whitespace-nowrap rounded px-8 py-4 font-semibold text-bg-600 hover:bg-hover text-2xl'>Workspace</div>
         </li>
       {/* {isMobileMode ? (
         <DriveSortButton isDisabled={activePage?.disableSort} />

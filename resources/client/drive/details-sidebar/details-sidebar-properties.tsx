@@ -33,7 +33,9 @@ export function DetailsSidebarProperties({entry}: EntryPropertiesProps) {
       )}
       <div>
         <DetailsSidebarSectionHeader>
-          <Trans message="Who has access" />
+          <div className='font-semibold text-base'>
+            <Trans message="Who can access"/>
+          </div>
         </DetailsSidebarSectionHeader>
         <div className="flex items-center gap-14">
           {entry.workspace_id ? (

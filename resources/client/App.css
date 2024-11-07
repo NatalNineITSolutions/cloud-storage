@@ -43,11 +43,20 @@
 
 .add-workspace{
   height: 150px;
-  margin-top: 15px;
+  width: 260px;
+  border-radius:24px;
 }
 
-.dark .placeholder::placeholder{
-  color: white;
+.drive-files{
+  border-radius: 15px;
+}
+
+.add-workspace button{
+  border-radius:24px;
+}
+
+.drive-view-list{
+  border-radius: 20px;
 }
 
 @media screen and (min-width: 768px) {

@@ -60,7 +60,7 @@ export function BreadcrumbItem(props: BreadcrumbItemProps) {
         {...domProps}
         className={clsx(
           className,
-          'cursor-pointer overflow-hidden whitespace-nowrap rounded px-8',
+          'cursor-pointer overflow-hidden whitespace-nowrap rounded px-8 text-2xl font-semibold',
           !isMenuTrigger && 'py-4 hover:bg-hover',
           !isMenuTrigger && isLink && 'outline-none focus-visible:ring'
         )}

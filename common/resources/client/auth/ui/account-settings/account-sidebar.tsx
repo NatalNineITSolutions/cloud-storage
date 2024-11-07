@@ -20,6 +20,7 @@ import { AdUnitsIcon } from "@common/icons/material/AdUnits";
 import { LoginIcon } from "@common/icons/material/Login";
 import { LocalShippingIcon } from "@common/icons/material/LocalShipping";
 import { GraphicEqIcon } from "@common/icons/material/GraphicEq";
+import { WorkspacesIcon } from "@common/icons/material/Workspaces";
 
 function Accountsidebar() {
   const { isSubscribed } = useAuth();  
@@ -76,14 +77,14 @@ function Accountsidebar() {
             </li>
             <li className="py-2 flex items-center">
               <Link
-                to="/drive/workspace"
+                to="/workspace"
                 className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
-                  location.pathname === '/drive/workspace'
+                  location.pathname === '/workspace'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
                 } hover:bg-gray-100 dark:hover:bg-gray-700`}
               >
-                <TokenIcon />
+                <WorkspacesIcon />
                 Workspace
               </Link>
             </li>

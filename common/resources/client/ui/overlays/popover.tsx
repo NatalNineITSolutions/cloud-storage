@@ -115,8 +115,6 @@ function useCloseOnInteractOutside(
     [ref]
   );
 
-  // Only hide the overlay when it is the topmost visible overlay in the stack.
-  // For context menu, hide it regardless
   const isTopMostPopover = useCallback(() => {
     return visibleOverlays[visibleOverlays.length - 1] === ref;
   }, [ref]);
