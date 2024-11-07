@@ -73,6 +73,11 @@
   border-radius: 8px;
 }
 
+.sidebar-storage a:hover {
+  background-color: white;
+  color: #0061FF;
+}
+
 .storage-meter .h-4 {
   background-color: #c5c6c7;
 }
@@ -83,6 +88,22 @@
 
 .main-sidebar {
   padding: 0 15px;
+}
+
+.sidebar-menus .bg-primary {
+  background: transparent !important;
+}
+
+.drive-text button {
+  font-weight: 600;
+}
+
+.drive-btn {
+  border-radius: 14px;
+}
+
+.drive-text svg {
+  font-weight: 600;
 }
 
 @media screen and (min-width: 768px) {

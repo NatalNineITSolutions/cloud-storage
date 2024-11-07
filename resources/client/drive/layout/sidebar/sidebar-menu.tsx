@@ -48,7 +48,7 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
         className={({isActive}) =>
           clsx(
             className,
-            'h-40 w-full my-4 px-24 rounded',
+            'h-40 w-full my-4 px-24 rounded sidebar-menus',
             isActive
               ? 'text-primary font-bold bg-primary/selected cursor-default'
               : 'hover:bg-hover'

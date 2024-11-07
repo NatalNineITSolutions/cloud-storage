@@ -17,13 +17,13 @@ export function DriveContentHeader() {
   const activePage = useDriveStore((s) => s.activePage);
 
   return (
-    <DashboardContentHeader className="px-8 md:px-26 py-4 mt-20 flex items-center gap-20 h-60">
+    <DashboardContentHeader className="px-8 md:px-26 py-4 mt-20 flex items-center gap-20 h-60 drive-text">
       {isMobileMode ? (
         <DriveSortButton isDisabled={activePage?.disableSort} />
       ) : (
         <PageBreadcrumbs />
       )}
-      <div className="ml-auto flex items-center gap-2"> 
+      <div className="ml-auto flex items-center gap-[10px]"> 
         <ToggleViewModeButton />
         <ToggleDetailsButton />
       </div>
@@ -35,7 +35,7 @@ function ToggleViewModeButton() {
   const viewMode = useDriveStore((s) => s.viewMode);
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-[10px]">
       <Tooltip label={<Trans message="Grid view" />}>
         <IconButton
           size="md"
@@ -43,7 +43,9 @@ function ToggleViewModeButton() {
             driveState().setViewMode('grid');
           }}
           className={clsx(
-            viewMode === 'grid' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white'
+            'bg-white p-2 drive-btn', // Add white background and padding
+            viewMode === 'grid' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white',
+            'shadow' // Optional: Add rounded corners and shadow for better appearance
           )}
         >
           <ViewModuleIcon />
@@ -57,7 +59,9 @@ function ToggleViewModeButton() {
             driveState().setViewMode('list');
           }}
           className={clsx(
-            viewMode === 'list' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white'
+            'bg-white p-2 drive-btn', // Add white background and padding
+            viewMode === 'list' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white',
+            'shadow' // Optional: Add rounded corners and shadow for better appearance
           )}
         >
           <ViewListIcon />
@@ -86,6 +90,7 @@ function ToggleDetailsButton() {
         onClick={() => {
           setRightSidenavStatus(status === 'open' ? 'closed' : 'open');
         }}
+        className="bg-white p-2 drive-btn shadow" // Add white background, padding, rounded corners, and shadow
       >
         <InfoIcon />
       </IconButton>
