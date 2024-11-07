@@ -19,9 +19,9 @@ interface Props {
 export function DetailsSidebarTags({entry}: Props) {
   // use key={entry.id} to force re-render tag chip field when entry changes
   return (
-    <div className="mt-20 border-t pt-20">
+    <div className="mt-20 border-t-2 pt-20">
       <DetailsSidebarSectionHeader margin="mb-10">
-        <Trans message="Tags" />
+        <div className='font-bold text-sm text-gray-800 dark:text-white'><Trans message="Tags" /></div>
       </DetailsSidebarSectionHeader>
       <TagChipField entry={entry} key={entry.id} />
     </div>

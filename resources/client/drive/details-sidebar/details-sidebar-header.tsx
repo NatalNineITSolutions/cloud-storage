@@ -13,7 +13,7 @@ export function DetailsSidebarHeader({entryType, entryName}: HeaderProps) {
   return (
     <div className="flex items-center gap-16 text-text-main mb-38">
       <FileTypeIcon className="w-24 h-24" type={entryType} />
-      <div className="text-xl font-normal text-ellipsis flex-auto mr-auto min-w-0 break-words">
+      <div className="text-xl font-bold text-blue-100 dark:text-white text-ellipsis flex-auto mr-auto min-w-0 break-words">
         {entryName}
       </div>
       {/* <IconButton

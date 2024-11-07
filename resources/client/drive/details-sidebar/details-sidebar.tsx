@@ -17,7 +17,7 @@ export function DetailsSidebar({className}: DetailsSidebarProps) {
     <div
       className={clsx(
         className,
-        'bg p-18 text-sm text-muted border-l h-full overflow-y-auto'
+        'bg-white dark:bg-transparent dark:border rounded-2xl mr-20 p-18 text-sm text-muted h-full overflow-y-auto'
       )}
     >
       {selectedEntry ? (

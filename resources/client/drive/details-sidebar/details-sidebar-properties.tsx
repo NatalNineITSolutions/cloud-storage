@@ -37,16 +37,19 @@ export function DetailsSidebarProperties({entry}: EntryPropertiesProps) {
             <Trans message="Who can access"/>
           </div>
         </DetailsSidebarSectionHeader>
-        <div className="flex items-center gap-14">
+        <div className="">
           {entry.workspace_id ? (
             <div className="rounded-full border w-32 h-32 flex items-center justify-center">
               <GroupsIcon className="icon-md" />
             </div>
           ) : null}
           {entry.users.map(user => (
+            <div className="user-name flex items-center space-x-2 bg-gray-900">
             <Tooltip label={user.display_name} key={user.id}>
               <Avatar src={user.avatar} size="md" circle />
             </Tooltip>
+            <span className="text-sm font-medium text-gray-700">{user.display_name}</span>
+          </div>
           ))}
         </div>
         {entry.permissions['files.update'] && (
@@ -58,7 +61,7 @@ export function DetailsSidebarProperties({entry}: EntryPropertiesProps) {
               driveState().setActiveActionDialog('share', [entry]);
             }}
           >
-            <Trans message="Manage Access" />
+            <div className='font-bold text-sm'><Trans message="Manage Access" /></div>
           </Button>
         )}
       </div>
@@ -82,10 +85,10 @@ function PropertyList({entry}: Props) {
   );
 
   return (
-    <div className="mt-20 border-t pt-20">
-      <DetailsSidebarSectionHeader>
+    <div className="pt-20">
+      {/* <DetailsSidebarSectionHeader>
         <Trans message="Properties" />
-      </DetailsSidebarSectionHeader>
+      </DetailsSidebarSectionHeader> */}
       <PropertyItem
         label={<Trans message="Type" />}
         value={
@@ -138,9 +141,10 @@ interface PropertyItemProps {
 }
 function PropertyItem({label, value}: PropertyItemProps) {
   return (
-    <div className="flex items-center mb-14">
-      <div className="w-1/3 text-xs text-muted">{label}</div>
-      <div className="w-2/3 text-sm text-main">{value}</div>
+    <div className="flex items-center mb-20">
+      <div className="flex w-1/4 text-xs font-bold text-muted">{label}</div>
+      <div className="w-4/12 text-center text-xs font-bold">:</div>
+      <div className="flex-1 text-sm text-muted text-xs font-bold">{value}</div>
     </div>
   );
 }

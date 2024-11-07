@@ -24,6 +24,7 @@ import { useNavigate } from '@common/utils/hooks/use-navigate';
 import { useDialogContext } from '@common/ui/overlays/dialog/dialog-context';
 import { UnfoldMoreIcon } from '@common/icons/material/UnfoldMore';
 import { ButtonBase } from '@common/ui/buttons/button-base';
+import { Link} from 'react-router-dom';
 
 interface WorkspaceSelectorProps {
   className?: string;
@@ -63,7 +64,7 @@ export function WorkspaceSelector({
         className,
       )}
     >
-      <span className="mr-auto block flex-auto overflow-hidden text-left">
+      <span className="default mr-auto block flex-auto overflow-hidden text-left">
         <span className="block overflow-hidden overflow-ellipsis text-sm font-medium text-main">
           {activeWorkspace.default ? (
             <Trans message={activeWorkspace.name} />
@@ -82,7 +83,6 @@ export function WorkspaceSelector({
           )}
         </span>
       </span>
-      <UnfoldMoreIcon className="shrink-0 icon-md" />
     </ButtonBase>
   );
 
@@ -114,6 +114,7 @@ interface WorkspaceAddNewButtonProps {
 
 function WorkspaceAddNewButton({ onChange }: WorkspaceAddNewButtonProps) {
   const { setWorkspaceId } = useActiveWorkspaceId();
+  const navigate = useNavigate(); 
   
   return (
     <div className="add-workspace mb-4 px-4 text-center w-1/5">
@@ -125,6 +126,7 @@ function WorkspaceAddNewButton({ onChange }: WorkspaceAddNewButtonProps) {
           if (workspaceId) {
             setWorkspaceId(workspaceId);
             onChange?.(workspaceId);
+            navigate('/drive');
           }
         }}
         className="relative w-full rounded-xl bg-gradient-to-r from-[#6375f2] to-[#4a52ec] p-80 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300"
@@ -163,6 +165,8 @@ function WorkspaceItem({
 }: WorkspaceItemProps) {
   const { workspaceId, setWorkspaceId } = useActiveWorkspaceId();
   const isActive = workspaceId === workspace.id;
+  const navigate = useNavigate(); 
+
 
   const creationDate = workspace.created_at ? new Date(workspace.created_at) : new Date();
   const formattedTime = creationDate instanceof Date && !isNaN(creationDate.getTime())
@@ -173,16 +177,21 @@ function WorkspaceItem({
     : 'Invalid date';
 
     return (
-      <div
-        onClick={() => {
+      <Link
+        to="/drive" // Set the desired route here
+        onClick={(e) => {
+          // Prevent default navigation to handle workspace logic first
+          e.preventDefault(); // Prevent immediate navigation
+    
+          // Set the workspace ID and trigger onChange
           setWorkspaceId(workspace.id);
           onChange?.(workspace.id);
           setSelectorIsOpen(false);
+    
+          // Now navigate to the /drive page
+          navigate("/drive"); // Trigger the navigation manually
         }}
-        className={clsx(
-          'add-workspace mb-4 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white dark:bg-gray-300 text-black dark:text-white dark:border-2 border-gray-700',
-          isActive && 'bg-primary/5'
-        )}
+        className="add-workspace mb-4 flex cursor-pointer items-center gap-10 p-20 rounded-2xl shadow-md bg-white dark:bg-gray-300 text-black dark:text-white dark:border-2 border-gray-700"
       >
         <div className="w-40 py-2 px-8 bg-gray-100 rounded-2xl flex items-center justify-center">
           <svg
@@ -199,61 +208,30 @@ function WorkspaceItem({
           </svg>
         </div>
         <div className="flex-auto">
-          <div className={clsx('text-lg font-semibold text-gray-800 dark:text-white truncate')}>
+          <div className={clsx('text-lg font-semibold text-black dark:text-white truncate')}>
             {workspace.name}
           </div>
           {workspace.default ? (
-          <div className="text-xs text-muted dark:text-white">
-            Personal Workspace
-          </div>
-        ) : (
-          <div className="text-xs text-muted dark:text-white">
-            {formattedTime} • {formattedDate}
-          </div>
+            <div className="text-xs text-muted dark:text-white">
+              Personal Workspace
+            </div>
+          ) : (
+            <div className="text-xs text-muted dark:text-white">
+              {formattedTime} • {formattedDate}
+            </div>
           )}
         </div>
-      <div>
+        <div>
+        {!workspace.default && (
         <ManageButton
           setSelectorIsOpen={setSelectorIsOpen}
           workspace={workspace}
           onChange={onChange}
         />
-      </div>
-    </div>
-  );
-}
-
-interface LeaveWorkspaceDialogProps {
-  workspace: Workspace;
-  onChange?: (id: number) => void;
-}
-
-function LeaveWorkspaceDialog({
-  workspace,
-  onChange,
-}: LeaveWorkspaceDialogProps) {
-  const removeMember = useRemoveMember();
-  const { user } = useAuth();
-  return (
-    <LeaveWorkspaceConfirmation
-      isLoading={removeMember.isPending}
-      onConfirm={() => {
-        removeMember.mutate(
-          {
-            workspaceId: workspace.id,
-            memberId: user!.id,
-            memberType: 'member',
-          },
-          {
-            onSuccess: () => {
-              close();
-              onChange?.(PersonalWorkspace.id);
-            },
-          },
-        );
-      }}
-    />
-  );
+        )}
+        </div>
+      </Link>
+    );
 }
 
 interface DeleteWorkspaceConfirmationProps {
