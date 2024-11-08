@@ -50,103 +50,110 @@ function Accountsidebar() {
 
       {/* Sidebar */}
       <div
-        className={`h-screen w-240 bg-white dark:bg-gray-300 lg:static transition-transform transform ${
+        className={`h-screen w-240 bg-white dark:bg-gray-300 lg:static w-full main-sidebar transition-transform transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0 z-50 flex flex-col justify-center items-center`}
+        style={{ boxShadow: 'rgba(0, 0, 0, 0.2) 8px 0px 20px' }}
       >
         <div className="p-4 border-b">
           <div className="sticky bottom-0 mt-20 flex items-center justify-center">
             <Logo />
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto py-12 px-16 bg-white dark:bg-gray-300"> 
-          <ul className="list-none p-20 m-0 flex flex-col gap-16"> 
-            <li className="py-2 flex items-center">
+        <div className="flex-1 overflow-y-auto py-12 bg-white dark:bg-gray-300 w-full"> 
+          <ul className="list-none m-0 flex flex-col gap-16"> 
+            <li className="py-2 flex items-center account-list">
               <Link
                 to="/drive"
-                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors account-list duration-200 ${
                   location.pathname === '/drive'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
-                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                }`}
               >
                 <DashboardIcon />
                 Dashboard
               </Link>
             </li>
-            <li className="py-2 flex items-center">
+
+            <li className="py-2 flex items-center account-list">
               <Link
                 to="/drive/workspace"
-                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md account-list transition-colors duration-200 ${
                   location.pathname === '/drive/workspace'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
-                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                }`}
               >
                 <TokenIcon />
                 Workspace
               </Link>
             </li>
-            <li className="py-2 flex items-center">
+
+            <li className="py-2 flex items-center account-list">
               <Link
                 to="/api-docs"
-                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 account-list rounded-md transition-colors duration-200 ${
                   location.pathname === '/api-docs'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
-                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                }`}
               >
                 <ApiIcon />
                 Developer API
               </Link>
             </li>
-            <li className="py-2 flex items-center">
+
+            <li className="py-2 flex items-center account-list">
               <Link
                 to="/integration"
-                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 account-list rounded-md transition-colors duration-200 ${
                   location.pathname === '/integration'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
-                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                }`}
               >
                 <SupportIcon />
                 Integration
               </Link>
             </li>
-            <li className="py-2 flex items-center">
+
+            <li className="py-2 flex items-center account-list">
               <Link
                 to="/supportticket"
-                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 account-list rounded-md transition-colors duration-200 ${
                   location.pathname === '/supportticket'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
-                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                }`}
               >
                 <SupportAgentIcon />
                 Support Ticket
               </Link>
             </li>
-            <li className="py-2 flex items-center">
+
+            <li className="py-2 flex items-center account-list">
               <Link
                 to="/costoptimizer"
-                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 account-list rounded-md transition-colors duration-200 ${
                   location.pathname === '/costoptimizer'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
-                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                }`}
               >
                 <AutoGraphIcon />
                 Cost Optimizer
               </Link>
             </li>
-            <li className="py-2 flex items-center">
+
+            <li className="py-2 flex items-center account-list">
               <Link
                 to="/auditlogs"
-                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
+                className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 account-list rounded-md transition-colors duration-200 ${
                   location.pathname === '/auditlogs'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
-                } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                }`}
               >
                 <GraphicEqIcon />
                 Audit Logs
@@ -154,10 +161,10 @@ function Accountsidebar() {
             </li>
           </ul>
         </div>
-        <div className="mb-20 ml-20 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg">
+        <div className="mb-20 w-200 bg-white dark:bg-gray-300 rounded-2xl shadow-lg sidebar-storage">
           <StorageMeter/>
           {billing?.enable && (
-            <div className="mt-14 mb-20 pl-30">
+            <div className="mt-14 mb-20 pl-20 pr-20">
               <Button
                 elementType={Link}
                 to={isSubscribed ? '/billing/change-plan' : '/pricing'}

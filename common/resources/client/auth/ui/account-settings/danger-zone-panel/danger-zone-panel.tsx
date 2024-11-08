@@ -22,8 +22,8 @@ export function DangerZonePanel() {
           }
         }}
       >
-        <div className='flex justify-center items-center'>
-          <Button variant="flat" color="danger" className="rounded-lg">
+        <div className='flex justify-center items-center bg-gradient-to-r save-btn'>
+          <Button variant="flat" color="danger" className="border-none font-semibold" style={{ backgroundImage: 'linear-gradient(to right, #FF8686, #FF1818)' }}>
             <Trans message="Delete account" />
           </Button>
         </div>

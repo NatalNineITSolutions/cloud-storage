@@ -61,7 +61,7 @@ export function Sidebar({ className, logocolor }: SidebarProps) {
         <div className="mb-20 ml-4 w-200 bg-white dark:bg-gray-300 rounded-2xl sidebar-storage">
           <StorageMeter />
           {billing.enable ? (
-            <div className="mt-14 mb-20 pl-20 pr-20 ">
+            <div className="mt-14 mb-20 pl-20 pr-20">
               <Button
                 elementType={Link}
                 to={isSubscribed ? '/billing/change-plan' : '/pricing'}

@@ -24,6 +24,7 @@ import { SupportticketLayout } from './drive/layout/supportticketlayout';
 import { IntegrationLayout } from './drive/layout/Integrationlayout';
 import { CostoptimizerLayout } from './drive/layout/costoptimizer-layout';
 import { AuditlogLayout } from './drive/layout/auditlog-layout';
+import { WorkspaceLayout } from './drive/layout/workspace-layout';
 
 const AdminRoutes = React.lazy(() => import('@common/admin/admin-routes'));
 const DriveRoutes = React.lazy(() => import('./drive/drive-routes'));

@@ -43,9 +43,11 @@ function ToggleViewModeButton() {
             driveState().setViewMode('grid');
           }}
           className={clsx(
-            'bg-white p-2 drive-btn', // Add white background and padding
-            viewMode === 'grid' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white',
-            'shadow' // Optional: Add rounded corners and shadow for better appearance
+            'bg-white p-2 drive-btn', // White background and padding
+            viewMode === 'grid'
+              ? 'text-[#0061FF]' // Set to #0061FF color when active
+              : 'text-black dark:text-gray-900', // Black in light mode, dark gray in dark mode when inactive
+            'shadow' // Optional: rounded corners and shadow for better appearance
           )}
         >
           <ViewModuleIcon />
@@ -59,9 +61,11 @@ function ToggleViewModeButton() {
             driveState().setViewMode('list');
           }}
           className={clsx(
-            'bg-white p-2 drive-btn', // Add white background and padding
-            viewMode === 'list' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white',
-            'shadow' // Optional: Add rounded corners and shadow for better appearance
+            'bg-white p-2 drive-btn', // White background and padding
+            viewMode === 'list'
+              ? 'text-[#0061FF]' // Set to #0061FF color when active
+              : 'text-black dark:text-gray-900', // Black in light mode, dark gray in dark mode when inactive
+            'shadow' // Optional: rounded corners and shadow for better appearance
           )}
         >
           <ViewListIcon />
@@ -86,11 +90,13 @@ function ToggleDetailsButton() {
     <Tooltip label={tooltip}>
       <IconButton
         size="md"
-        color={status === 'open' ? 'primary' : null}
         onClick={() => {
           setRightSidenavStatus(status === 'open' ? 'closed' : 'open');
         }}
-        className="bg-white p-2 drive-btn shadow" // Add white background, padding, rounded corners, and shadow
+        className={clsx(
+          'bg-white p-2 drive-btn shadow', // Background, padding, and shadow
+          status === 'open' ? 'text-[#0061FF]' : 'text-black dark:text-gray-900' // #0061FF when open, black or dark gray when closed
+        )}
       >
         <InfoIcon />
       </IconButton>

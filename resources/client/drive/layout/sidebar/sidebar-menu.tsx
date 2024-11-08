@@ -41,6 +41,7 @@ interface MenuItemProps extends ComponentPropsWithoutRef<'a'> {
   item: MenuItemConfig;
   className?: string;
 }
+
 export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
   ({item, className, ...domProps}, ref) => {
     return (
@@ -65,6 +66,7 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
 interface TrashMenuItemProps {
   item: MenuItemConfig;
 }
+
 function TrashMenuItem({item}: TrashMenuItemProps) {
   const deleteEntries = useDeleteEntries();
   const [isDragOver, setIsDragOver] = useState(false);

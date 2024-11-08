@@ -22,7 +22,7 @@ export default function SwaggerApiDocsPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col main-api-page">
         <Navbar />
 
         <div className="flex-1 p-4 overflow-y-auto">

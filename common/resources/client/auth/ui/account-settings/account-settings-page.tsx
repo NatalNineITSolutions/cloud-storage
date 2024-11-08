@@ -28,19 +28,19 @@ export function AccountSettingsPage() {
           <Navbar/>
         </div>
         
-        <div className='flex'>
+        <div className='flex main-account'>
           <AccountSettingsSidenav/>
 
-            <div className="container px-8 pl-40 pr-40 mt-60">
+            <div className="container px-8 pl-[2rem] pr-40 mt-60">
               <div>
                 <StaticPageTitle>
                   <Trans message="Account Settings" />
                 </StaticPageTitle>
 
-                  <h1 className="text-3xl">
+                  <h1 className="text-3xl mb-2 text-[#051F61] font-semibold">
                     <Trans message="Account settings" />
                   </h1>
-                  <div className="mb-4 text-base text-muted">
+                  <div className="mb-4 text-base text-muted text-[#757897] font-medium">
                     <Trans message="View and update your account details, profile and more." />
                   </div>
                 </div>
