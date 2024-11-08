@@ -20,6 +20,7 @@
 
 .dark .swagger-ui .info .title{
     color: white;
+    margin-bottom: 15px;
 }
 
 .swagger-ui .info p{
@@ -75,7 +76,7 @@
 }
 
 .dark .swagger-ui .servers-title {
-    color: black;
+    color: white;
 }
 
 .dark .swagger-ui .btn.authorize span {
@@ -99,6 +100,10 @@
 .swagger-ui .btn.authorize{
     border:none;
     color: #3f8cff;
+    padding: 12px 13px;
+    box-shadow: none;
+    border: 1px solid #D8E0F0;
+    border-radius: 14px;
 }
 
 .swagger-ui .btn.authorize svg{
@@ -155,3 +160,60 @@
     color: black;
 }
 
+.swagger-ui .scheme-container {
+    padding: 30px 30px;
+    border-radius: 14px;
+    margin-top: 20px;
+}
+
+.swagger-ui .scheme-container .servers-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.swagger-ui .servers>label select {
+    padding: 12px 13px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #EBF2FF;
+    color: #0061FF;
+}
+
+.swagger-ui .btn.authorize span {
+    padding: 0;
+}
+
+.dark .swagger-ui section {
+    background-color: transparent;
+    border: 1px solid #D8E0F0;
+}
+
+.swagger-ui section {
+    background-color: white;
+    padding: 30px;
+    border-radius: 14px;
+}
+
+.swagger-ui .wrapper {
+    padding: 0;
+}
+
+.dark .swagger-ui .scheme-container {
+    background: transparent;
+    border: 1px solid #D8E0F0;
+}
+
+.dark .swagger-ui .scheme-container .schemes {
+    border: none;
+}
+
+.url {
+    color: #3F8CFF;
+    font-size: 14px;
+}
+
+.swagger-ui .renderedMarkdown code {
+    color: #3F8CFF;
+    font-weight: 700;
+}

@@ -25,10 +25,10 @@ export function StorageMeter() {
   );
 
   return (
-    <div className="pt-24 mt-24 pl-20 flex flex-col items-start gap-16">
+    <div className="pt-24 pl-20 flex flex-col items-start gap-16">
       <img src="./images/Files.png" alt="Storage" className="w-80 h-80" />
       <Meter
-        className="flex-auto max-w-144"
+        className="flex-auto max-w-144 storage-meter"
         size="xs"
         value={roundedPercentage}
         label={label}

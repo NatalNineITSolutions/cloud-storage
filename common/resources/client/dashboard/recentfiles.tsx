@@ -1,4 +1,4 @@
-import {driveState, useDriveStore } from "@app/drive/drive-store";
+import { driveState, useDriveStore } from "@app/drive/drive-store";
 import { FileGrid } from "@app/drive/file-view/file-grid/file-grid";
 import { FileTable } from "@app/drive/file-view/file-table/file-table";
 import { useEntries } from '../../../../resources/client/drive/files/queries/use-entries';
@@ -34,19 +34,19 @@ export default function RecentFiles() {
   const viewMode = useDriveStore((s) => s.viewMode) as "list" | "grid";
   const entries = useEntries();
 
-  const {pathname} = useLocation();
-  const {hash} = useParams();
-  const {workspaceId} = useActiveWorkspaceId();
+  const { pathname } = useLocation();
+  const { hash } = useParams();
+  const { workspaceId } = useActiveWorkspaceId();
 
   useEffect(() => {
     driveState().setActivePage(
       DRIVE_PAGES.find(p => p.path === pathname) ||
-        makePartialFolderPage(hash!),
+      makePartialFolderPage(hash!),
     );
   }, [pathname, hash]);
 
   const urlsContextValue = useMemo(() => {
-    return {workspaceId};
+    return { workspaceId };
   }, [workspaceId]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function RecentFiles() {
       title: "Default Title",
       description: "Default Description",
     };
-  
+
     content = (
       <IllustratedMessage
         className="mt-40"
@@ -77,15 +77,12 @@ export default function RecentFiles() {
       />
     );
   } else if (!query.isLoading) {
-    content =
-      viewMode === 'list' ? (
-        <FileTableDashboard entries={entries} />
-      ) : (
-        <FileGrid entries={entries} />
-      );
+    content = <FileTableDashboard entries={entries} />
+
+
   }
-  
-  
+
+
 
   return (
     <div className="drive-view-list relative flex-auto gap-10 mx-20 px-18 py-18 pb-18 md:px-24 bg-white">

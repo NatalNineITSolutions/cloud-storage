@@ -17,13 +17,13 @@ export function DriveContentHeader() {
   const activePage = useDriveStore((s) => s.activePage);
 
   return (
-    <DashboardContentHeader className="px-8 md:px-26 py-4 mt-20 flex items-center gap-20 h-60">
+    <DashboardContentHeader className="px-8 md:px-26 py-4 mt-20 flex items-center gap-20 h-60 drive-text">
       {isMobileMode ? (
         <DriveSortButton isDisabled={activePage?.disableSort} />
       ) : (
         <PageBreadcrumbs />
       )}
-      <div className="ml-auto flex items-center gap-2"> 
+      <div className="ml-auto flex items-center gap-[10px]"> 
         <ToggleViewModeButton />
         <ToggleDetailsButton />
       </div>
@@ -35,7 +35,7 @@ function ToggleViewModeButton() {
   const viewMode = useDriveStore((s) => s.viewMode);
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-[10px]">
       <Tooltip label={<Trans message="Grid view" />}>
         <IconButton
           size="md"
@@ -43,7 +43,11 @@ function ToggleViewModeButton() {
             driveState().setViewMode('grid');
           }}
           className={clsx(
-            viewMode === 'grid' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white'
+            'bg-white p-2 drive-btn', // White background and padding
+            viewMode === 'grid'
+              ? 'text-[#0061FF]' // Set to #0061FF color when active
+              : 'text-black dark:text-gray-900', // Black in light mode, dark gray in dark mode when inactive
+            'shadow' // Optional: rounded corners and shadow for better appearance
           )}
         >
           <ViewModuleIcon />
@@ -57,7 +61,11 @@ function ToggleViewModeButton() {
             driveState().setViewMode('list');
           }}
           className={clsx(
-            viewMode === 'list' ? 'text-gray-200 dark:text-gray-200' : 'text-black dark:text-white'
+            'bg-white p-2 drive-btn', // White background and padding
+            viewMode === 'list'
+              ? 'text-[#0061FF]' // Set to #0061FF color when active
+              : 'text-black dark:text-gray-900', // Black in light mode, dark gray in dark mode when inactive
+            'shadow' // Optional: rounded corners and shadow for better appearance
           )}
         >
           <ViewListIcon />
@@ -82,10 +90,13 @@ function ToggleDetailsButton() {
     <Tooltip label={tooltip}>
       <IconButton
         size="md"
-        color={status === 'open' ? 'primary' : null}
         onClick={() => {
           setRightSidenavStatus(status === 'open' ? 'closed' : 'open');
         }}
+        className={clsx(
+          'bg-white p-2 drive-btn shadow', // Background, padding, and shadow
+          status === 'open' ? 'text-[#0061FF]' : 'text-black dark:text-gray-900' // #0061FF when open, black or dark gray when closed
+        )}
       >
         <InfoIcon />
       </IconButton>

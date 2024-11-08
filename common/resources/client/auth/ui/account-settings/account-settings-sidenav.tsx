@@ -29,7 +29,8 @@ export function AccountSettingsSidenav() {
     social?.envato || social?.google || social?.facebook || social?.twitter;
 
   return (
-    <aside className="sticky top-10 mt-160 hidden flex-shrink-0 lg:block">
+    <aside className="sticky top-10 mt-[9.3rem] hidden flex-shrink-0 lg:block"
+    >
       <List padding="p-0">
         {auth.accountSettingsPanels?.map(panel => (
           <Item
@@ -40,7 +41,7 @@ export function AccountSettingsSidenav() {
             <Trans {...panel.label} />
           </Item>
         ))}
-        <div className='bg-white dark:bg-gray-300 rounded-lg shadow-lg py-10 px-8 ml-10'>
+        <div className='bg-white dark:bg-gray-300 account-settings-tab py-10 px-8 ml-10' style={{ boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.2)' }}>
           <Item icon={<PersonIcon />} panel={p.AccountDetails}>
             <Trans message="Account details" />
           </Item>

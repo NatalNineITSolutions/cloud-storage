@@ -11,7 +11,7 @@ export function CreateQuickTicket() {
   };
 
   return (
-    <div className="w-4/8 mx-40 mt-40 dark:bg-gray-300 p-40 rounded-2xl shadow-md overflow-visible">
+    <div className="w-4/8 mx-40 mt-40 support-ticket dark:bg-gray-300 p-40 rounded-3xl shadow-md overflow-visible" style={{ boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.2)' }}>
       <h2 className="text-xl font-semibold mb-6 text-black dark:text-white">Create Quick Ticket</h2>
       <p className="text-black dark:text-white">Write and address new queries and issues</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-30 mt-40">
@@ -65,16 +65,16 @@ export function CreateQuickTicket() {
         />
       </div>
 
-      <div className="flex justify-end mt-6 space-x-4">
+      <div className="flex justify-end space-x-4" style={{gap: '15px' , marginTop: '20px'}}>
         <button
           onClick={() => console.log('Cancelled')}
-          className="px-5 py-2 border border-gray-300 text-gray-300 dark:text-white rounded-md hover:bg-gray-100"
+          className="px-5 py-2 border border-gray-300 text-gray-300 dark:text-white rounded-md hover:bg-gray-100 cancel-ticket"
         >
           Cancel
         </button>
         <button
           onClick={handleSendTicket}
-          className="px-6 py-2 text-white rounded-md bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-6 py-2 text-white rounded-md bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 send-ticket"
         >
           Send Ticket
         </button>

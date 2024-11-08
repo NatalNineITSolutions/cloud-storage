@@ -74,12 +74,12 @@ export function BasicInfoPanel({user}: Props) {
         </FileUploadProvider>
           <div className='flex justify-between gap-10 mt-40'>
           <FormTextField
-            className="w-1/2 px-20"
+            className="w-1/2 px-20 form-field"
             name="first_name"
             label={<Trans message="First name" />}
           />
           <FormTextField
-            className="w-1/2 px-20"
+            className="w-1/2 px-20 form-field"
             name="last_name"
             label={<Trans message="Last name" />}
           />

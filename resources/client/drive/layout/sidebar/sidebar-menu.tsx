@@ -18,7 +18,7 @@ export function SidebarMenu() {
   const {workspaceId} = useActiveWorkspaceId();
   return (
     <div className="container" >
-    <div className="text-muted mt-26 px-12">
+    <div className="text-muted mt-26">
       <FolderTree />
       <CustomMenu
         menu={MenuPositions.DriveSidebar}
@@ -41,6 +41,7 @@ interface MenuItemProps extends ComponentPropsWithoutRef<'a'> {
   item: MenuItemConfig;
   className?: string;
 }
+
 export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
   ({item, className, ...domProps}, ref) => {
     return (
@@ -48,7 +49,7 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
         className={({isActive}) =>
           clsx(
             className,
-            'h-40 w-full my-4 px-24 rounded',
+            'h-40 w-full my-4 px-24 rounded sidebar-menus',
             isActive
               ? 'text-primary font-bold bg-primary/selected cursor-default'
               : 'hover:bg-hover'
@@ -65,6 +66,7 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
 interface TrashMenuItemProps {
   item: MenuItemConfig;
 }
+
 function TrashMenuItem({item}: TrashMenuItemProps) {
   const deleteEntries = useDeleteEntries();
   const [isDragOver, setIsDragOver] = useState(false);

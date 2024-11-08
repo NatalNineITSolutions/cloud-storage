@@ -17,7 +17,7 @@ export function NavbarSearch() {
 
   return (
     <form
-      className="max-w-620 flex-auto rounded-lg"
+      className="max-w-620 flex-auto nav-search"
       onSubmit={e => {
         e.preventDefault();
         navigate(
@@ -25,7 +25,7 @@ export function NavbarSearch() {
             pathname: SearchPage.path,
             search: `?query=${inputValue}`,
           },
-          {replace: true},
+          { replace: true }
         );
       }}
     >
@@ -40,13 +40,17 @@ export function NavbarSearch() {
           }
         }}
         startAdornment={
-          <IconButton type="submit">
+          <IconButton type="submit" className="p-2">
             <SearchIcon />
           </IconButton>
         }
-        className="max-w-600 flex-auto rounded-lg"
+        className="w-[330px] flex-auto rounded-lg border-none search-text" // Add this class
         placeholder={trans({ message: 'Search anything here' })}
         aria-label={trans({ message: 'Search files and folders' })}
+        style={{
+          borderRadius: '8px', // Inline style for border-radius
+          border: 'none', // Inline style to remove border
+        }}
       />
     </form>
   );
