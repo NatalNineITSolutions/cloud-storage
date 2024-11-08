@@ -4,6 +4,7 @@ import {DriveLayout} from './layout/drive-layout';
 import {AuthRoute} from '@common/auth/guards/auth-route';
 import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
 import {WorkspaceLayout} from './layout/workspace-layout';
+import { MainDashboardLayout } from './layout/dashboard-layout';
 
 
 const DriveRouteConfig: RouteObject[] = [
@@ -68,6 +69,14 @@ const DriveRouteConfig: RouteObject[] = [
     element: (
       <AuthRoute>
         <WorkspaceLayout/>
+      </AuthRoute>
+    ),
+  },
+  {
+    path: '/dashboard',
+    element: (
+      <AuthRoute>
+        <MainDashboardLayout/>
       </AuthRoute>
     ),
   },

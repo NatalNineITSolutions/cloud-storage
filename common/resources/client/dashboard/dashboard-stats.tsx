@@ -38,11 +38,11 @@ export default function DashboardStats() {
               <div className="text-2xl font-bold">321+</div>
             </div>
             <svg width="62" height="32" viewBox="0 0 62 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 29.7041C2 29.7041 8.14585 31.4949 14.2916 29.7041C28.6144 25.5305 24 -1 35 5.99999C48.1784 14.3863 58.6562 13.9388 60.5 2" stroke="url(#paint0_linear_528_1985)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 29.7041C2 29.7041 8.14585 31.4949 14.2916 29.7041C28.6144 25.5305 24 -1 35 5.99999C48.1784 14.3863 58.6562 13.9388 60.5 2" stroke="url(#paint0_linear_528_1985)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
             <defs>
             <linearGradient id="paint0_linear_528_1985" x1="-35" y1="38" x2="48.5597" y2="-12.866" gradientUnits="userSpaceOnUse">
             <stop stop-color="#4F2CFF"/>
-            <stop offset="1" stop-color="#4F2CFF" stop-opacity="0"/>
+            <stop offset="1" stop-color="#4F2CFF" stopOpacity="0"/>
             </linearGradient>
             </defs>
             </svg>
@@ -95,11 +95,11 @@ export default function DashboardStats() {
                 e.preventDefault();
                 e.stopPropagation();
                 const workspaceId = await openDialog(NewWorkspaceDialog);
-                if (workspaceId) {
-                    setWorkspaceId(workspaceId);
-                    onChange?.(workspaceId);
-                    navigate('/drive');
-                }
+                // if (workspaceId) {
+                //     setWorkspaceId(workspaceId);
+                //     onChange?.(workspaceId);
+                //     navigate('/drive');
+                // }
                 }}
                 className="dashboard-storage relative w-full rounded-xl bg-gradient-to-r from-[#6375f2] to-[#4a52ec] text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300"
             >
@@ -110,11 +110,11 @@ export default function DashboardStats() {
 
                 <div className="absolute top-30 right-8">
                 <svg width="92" height="45" viewBox="0 0 92 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 42.2949C2 42.2949 8.27975 -5.21045 24 16.7949C39.7203 38.8003 46 37.7896 52 20.7949C59.4168 -0.212582 86.758 17.8755 89.5 2.79492" stroke="url(#paint0_linear_26_2666)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 42.2949C2 42.2949 8.27975 -5.21045 24 16.7949C39.7203 38.8003 46 37.7896 52 20.7949C59.4168 -0.212582 86.758 17.8755 89.5 2.79492" stroke="url(#paint0_linear_26_2666)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
                     <defs>
                     <linearGradient id="paint0_linear_26_2666" x1="-1.50002" y1="47.2949" x2="70.5778" y2="-16.1194" gradientUnits="userSpaceOnUse">
                     <stop stop-color="white"/>
-                    <stop offset="1" stop-color="white" stop-opacity="0"/>
+                    <stop offset="1" stop-color="white" stopOpacity="0"/>
                     </linearGradient>
                     </defs>
                 </svg>

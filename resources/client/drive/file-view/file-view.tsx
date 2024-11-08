@@ -66,7 +66,7 @@ export function FileView({className}: FileViewProps) {
     },
   });
 
-  console.log("entries", entries);
+  console.log("entries", useDriveStore());
 
   const {droppableProps} = useDroppable({
     id: 'driveRoot',

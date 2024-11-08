@@ -110,7 +110,7 @@ export function AppRoutes() {
         <Route path="supportticket" element={<SupportticketLayout />}></Route>
         <Route path="costoptimizer" element={<CostoptimizerLayout/>}></Route>
         <Route path="auditlogs" element={<AuditlogLayout />}></Route>
-        <Route path="dashboard" element={<MainDashboardLayout />}></Route>
+        {/* <Route path="dashboard" element={<MainDashboardLayout />}></Route> */}
       </Routes>
       <DialogStoreOutlet />
     </Fragment>

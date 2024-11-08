@@ -185,6 +185,33 @@ export const WorkspacePage: DrivePage = {
   }),
 };
 
+export const DashboardPage: DrivePage = {
+  id: 'dashboard',
+  label: message('Dashboard'),
+  path: '/drive/dashboard',
+  sortDescriptor: {
+    orderBy: 'updated_at',
+    orderDir: 'desc',
+  },
+  noContentMessage: (isSearchingOrFiltering) => {
+    if (isSearchingOrFiltering) {
+      return {
+        title: message('No matching dashboard content'),
+        description: message('Try adjusting your search or filters'),
+        image: addFilesSvg,
+      };
+    }
+    return {
+      title: message('Dashboard is empty'),
+      description: message(
+        'You have not added any widgets or data to your dashboard yet'
+      ),
+      image: addFilesSvg,
+    };
+  },
+};
+
+
 export const DRIVE_PAGES = [
   RootFolderPage,
   RecentPage,
@@ -193,4 +220,5 @@ export const DRIVE_PAGES = [
   TrashPage,
   StarredPage,
   WorkspacePage,
+  DashboardPage
 ];
