@@ -35,7 +35,6 @@ export const AppAppearanceConfig: IAppearanceConfig = {
           '/drive/recent',
           '/drive/starred',
           '/drive/trash',
-          '/drive/workspace',  
         ],
       } as MenuSectionConfig,
     },

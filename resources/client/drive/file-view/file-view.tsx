@@ -163,7 +163,6 @@ export function FileView({className}: FileViewProps) {
         >
           <AdHost slot="drive" className="mb-24" />
           {content}
-          {/* <WorkspaceSwitcher /> */}
           <InfiniteScrollSentinel query={query} />
         </div>
         <div

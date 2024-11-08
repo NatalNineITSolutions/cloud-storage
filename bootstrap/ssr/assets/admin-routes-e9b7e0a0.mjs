@@ -1499,8 +1499,7 @@ const AppAppearanceConfig = {
           "/drive/shares",
           "/drive/recent",
           "/drive/starred",
-          "/drive/trash",
-          "/drive/workspace"
+          "/drive/trash"
         ]
       }
     }

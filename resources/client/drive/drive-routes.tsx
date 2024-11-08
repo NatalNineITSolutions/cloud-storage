@@ -4,8 +4,7 @@ import {DriveLayout} from './layout/drive-layout';
 import {AuthRoute} from '@common/auth/guards/auth-route';
 import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
 import {WorkspaceLayout} from './layout/workspace-layout';
-import { SupportticketLayout } from './layout/supportticketlayout';
-import { IntegrationLayout } from './layout/Integrationlayout';
+
 
 const DriveRouteConfig: RouteObject[] = [
   {

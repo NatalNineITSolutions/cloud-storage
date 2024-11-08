@@ -64,9 +64,9 @@ function Accountsidebar() {
           <ul className="list-none p-20 m-0 flex flex-col gap-16"> 
             <li className="py-2 flex items-center">
               <Link
-                to="/drive"
+                to="/dashboard"
                 className={`text-blue-500 font-semibold flex gap-10 px-4 py-4 rounded-md transition-colors duration-200 ${
-                  location.pathname === '/drive'
+                  location.pathname === '/dashboard'
                     ? 'text-gray-200 dark:text-gray-200'
                     : 'text-gray-400 dark:text-white'
                 } hover:bg-gray-100 dark:hover:bg-gray-700`}

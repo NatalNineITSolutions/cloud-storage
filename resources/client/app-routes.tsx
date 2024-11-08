@@ -25,6 +25,7 @@ import { IntegrationLayout } from './drive/layout/Integrationlayout';
 import { CostoptimizerLayout } from './drive/layout/costoptimizer-layout';
 import { AuditlogLayout } from './drive/layout/auditlog-layout';
 import { WorkspaceLayout } from './drive/layout/workspace-layout';
+import { MainDashboardLayout } from './drive/layout/dashboard-layout';
 
 const AdminRoutes = React.lazy(() => import('@common/admin/admin-routes'));
 const DriveRoutes = React.lazy(() => import('./drive/drive-routes'));
@@ -104,11 +105,12 @@ export function AppRoutes() {
         <Route path="pages/:pageSlug" element={<CustomPageLayout />}></Route>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="accesstoken" element={<AccessTokenPage />}></Route>
+        <Route path="workspace" element={<WorkspaceLayout/>}></Route>
         <Route path="integration" element={<IntegrationLayout />}></Route>
         <Route path="supportticket" element={<SupportticketLayout />}></Route>
         <Route path="costoptimizer" element={<CostoptimizerLayout/>}></Route>
         <Route path="auditlogs" element={<AuditlogLayout />}></Route>
-        <Route path="workspace" element={<WorkspaceLayout />}></Route>
+        <Route path="dashboard" element={<MainDashboardLayout />}></Route>
       </Routes>
       <DialogStoreOutlet />
     </Fragment>

@@ -11,7 +11,6 @@ import { Trans } from '@common/i18n/trans';
 import { NavbarSearch } from '../search/navbar-search';
 import { CreateNewButton } from './create-new-button';
 import { WorkspaceSelector } from '@common/workspace/workspace-selector';
-import { Sidebar } from './sidebar/sidebar';
 import { DashboardLayoutContext } from '@common/ui/layout/dashboard-layout-context'; 
 import { WorkspaceContentHeader } from './workspace-content-header';
 import Accountsidebar from '@common/auth/ui/account-settings/account-sidebar';
@@ -58,7 +57,7 @@ export function WorkspaceLayout() {
           }}>
           <Navbar />
           <DashboardSidenav position="left" size="md">
-            <Sidebar />
+            <Accountsidebar />
           </DashboardSidenav>
           <WorkspaceContentHeader/>
           <WorkspaceSelector/>
