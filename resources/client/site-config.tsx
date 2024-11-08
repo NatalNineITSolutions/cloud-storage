@@ -17,7 +17,7 @@ export const SiteConfig: Partial<SiteConfigContextValue> = {
     options: [{label: message('Landing page'), value: 'landingPage'}],
   },
   auth: {
-    redirectUri: '/drive',
+    redirectUri: '/drive/dashboard',
     adminRedirectUri: '/drive',
   },
   tags: {
