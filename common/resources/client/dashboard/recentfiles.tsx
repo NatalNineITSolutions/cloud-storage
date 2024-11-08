@@ -61,26 +61,8 @@ export default function RecentFiles() {
   let content: ReactNode;
 
 
-  if (!entries.length && (!query.isLoading || query.fetchStatus === 'idle')) {
-    const noContentMessage: NoContentMessage = activePage?.noContentMessage(isSearchingOrFiltering) || {
-      image: "default-image-url",
-      title: "Default Title",
-      description: "Default Description",
-    };
+  content = <FileTableDashboard entries={entries} />
 
-    content = (
-      <IllustratedMessage
-        className="mt-40"
-        image={<SvgImage src={noContentMessage.image} />}
-        title={<Trans message={noContentMessage.title} />}
-        description={<Trans message={noContentMessage.description} />}
-      />
-    );
-  } else if (!query.isLoading) {
-    content = <FileTableDashboard entries={entries} />
-
-
-  }
 
 
 

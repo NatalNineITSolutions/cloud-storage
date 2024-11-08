@@ -15,6 +15,7 @@ class GetAnalyticsHeaderData implements GetAnalyticsHeaderDataAction
     {
         // Get the current user's ID
         $currentUserId = Auth::id();
+
         $usersEmplyeesId =  User::query()
             ->where('admin_user_id', $currentUserId)
             ->pluck('id');

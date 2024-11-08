@@ -8,6 +8,7 @@ import {ReactElement} from 'react';
 import {SvgIconProps} from '@common/icons/svg-icon';
 
 const Endpoint = 'admin/reports';
+const UserEndpoint = 'user/reports';
 
 export interface HeaderDatum {
   icon: IconTree[] | ReactElement<SvgIconProps>;
@@ -49,4 +50,26 @@ function fetchAnalyticsReport({
     params.timezone = dateRange.start.timeZone;
   }
   return apiClient.get(Endpoint, {params}).then(response => response.data);
+}
+
+
+export function useUserReport(payload: Payload = { types: ['header'] }) {
+  return useQuery({
+    queryKey: [UserEndpoint, payload],
+    queryFn: () => fetchUserAnalyticsReport(payload),
+    placeholderData: keepPreviousData,
+  });
+}
+
+function fetchUserAnalyticsReport({
+  types,
+}: Payload): Promise<FetchAnalyticsReportResponse> {
+  const params: Record<string, any> = {};
+  // Set the 'types' parameter to 'header' for fetching only header report
+  if (types) {
+    params.types = types.join(',');
+  }
+  
+  // No need to send dateRange parameters (startDate, endDate)
+  return apiClient.get(UserEndpoint, { params }).then(response => response.data);
 }

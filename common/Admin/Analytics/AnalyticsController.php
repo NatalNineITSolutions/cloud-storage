@@ -1,4 +1,6 @@
-<?php namespace Common\Admin\Analytics;
+<?php
+
+namespace Common\Admin\Analytics;
 
 use Carbon\CarbonImmutable;
 use Common\Admin\Analytics\Actions\BuildAnalyticsReport;
@@ -9,6 +11,10 @@ use Common\Database\Metrics\MetricDateRange;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
+use App\Models\File;
+use App\Models\Folder;
+use App\Models\User;
 
 class AnalyticsController extends BaseController
 {
@@ -16,8 +22,7 @@ class AnalyticsController extends BaseController
         protected Request $request,
         protected BuildAnalyticsReport $getDataAction,
         protected GetAnalyticsHeaderDataAction $getHeaderDataAction,
-    ) {
-    }
+    ) {}
 
     public function report()
     {
@@ -56,6 +61,56 @@ class AnalyticsController extends BaseController
 
         return $this->success($response);
     }
+
+    public function userReport()
+    {
+        // Initialize the response array
+        $response = [];
+
+        $currentUserId = Auth::id();
+        $usersEmplyeesId = User::query()
+            ->where('admin_user_id', $currentUserId)
+            ->pluck('id');
+
+        // Get current user details
+        $currentUser = User::find($currentUserId);
+        $isSuperAdmin = $currentUser->user_type === 'super_admin';
+
+        // --- Get New Files Count ---
+        $newFilesCount = File::withTrashed()
+            ->when(!$isSuperAdmin, function ($query) use ($currentUserId, $usersEmplyeesId) {
+                $query->where('owner_id', $currentUserId)
+                    ->orWhereIn('owner_id', $usersEmplyeesId);
+            })
+            ->count();
+
+        // --- Get New Folders Count ---
+        $newFoldersCount = Folder::withTrashed()
+            ->when(!$isSuperAdmin, function ($query) use ($currentUserId, $usersEmplyeesId) {
+                $query->where('owner_id', $currentUserId)
+                    ->orWhereIn('owner_id', $usersEmplyeesId);
+            })
+            ->count();
+
+        // --- Get Total File Size ---
+        $totalFileSize = File::query()
+            ->when(!$isSuperAdmin, function ($query) use ($currentUserId, $usersEmplyeesId) {
+                $query->where('owner_id', $currentUserId)
+                    ->orWhereIn('owner_id', $usersEmplyeesId);
+            })
+            ->sum('file_size'); // Assuming 'file_size' is a column in the 'files' table
+
+        // Add the data to the response
+        $response['headerReport'] = [
+            'newFiles' => $newFilesCount,
+            'newFolders' => $newFoldersCount,
+            'totalFileSize' => $totalFileSize,
+        ];
+
+        // Return the response
+        return $this->success($response);
+    }
+
 
     protected function getDateRange(): MetricDateRange
     {
